@@ -6,20 +6,9 @@ import java.util.ArrayList;
 public class Venda {
 
 	private int idVenda;
-	private ArrayList<Remedio> remedio;
+	private ArrayList<ItemRemedio> itemRemedio;
+	private ArrayList<ItemProduto> itemProduto;
 	private Date dataVenda;
-
-	public Venda(int idVenda, ArrayList<Remedio> remedio, Date dataVenda) {
-		super();
-		this.idVenda = idVenda;
-		this.remedio = remedio;
-		this.dataVenda = dataVenda;
-	}
-
-	public Venda() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
 	public int getIdVenda() {
 		return idVenda;
@@ -29,12 +18,20 @@ public class Venda {
 		this.idVenda = idVenda;
 	}
 
-	public ArrayList<Remedio> getRemedio() {
-		return remedio;
+	public ArrayList<ItemRemedio> getItemRemedio() {
+		return itemRemedio;
 	}
 
-	public void setRemedio(ArrayList<Remedio> remedio) {
-		this.remedio = remedio;
+	public void setItemRemedio(ArrayList<ItemRemedio> itemRemedio) {
+		this.itemRemedio = itemRemedio;
+	}
+
+	public ArrayList<ItemProduto> getItemProduto() {
+		return itemProduto;
+	}
+
+	public void setItemProduto(ArrayList<ItemProduto> itemProduto) {
+		this.itemProduto = itemProduto;
 	}
 
 	public Date getDataVenda() {
@@ -45,4 +42,16 @@ public class Venda {
 		this.dataVenda = dataVenda;
 	}
 
+	public Venda(int idVenda, ArrayList<ItemRemedio> itemRemedio, ArrayList<ItemProduto> itemProduto, Date dataVenda) {
+		super();
+		this.idVenda = idVenda;
+		this.itemRemedio = itemRemedio;
+		this.itemProduto = itemProduto;
+		this.dataVenda = dataVenda;
+	}
+
+	public Venda() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 }

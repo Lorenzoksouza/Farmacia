@@ -1,38 +1,14 @@
 package model.vo;
 
-public class Remedio {
+import java.util.Date;
 
-	private int idRemedio;
-	private String nome;
-	private double preco;
+public class Remedio extends Mercadoria {
+
 	private String dosagem;
+	private String composicao;
 	private String tipo;
 	private boolean generico;
-	private int estoque;
-
-	public int getIdRemedio() {
-		return idRemedio;
-	}
-
-	public void setIdRemedio(int idRemedio) {
-		this.idRemedio = idRemedio;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public double getPreco() {
-		return preco;
-	}
-
-	public void setPreco(double preco) {
-		this.preco = preco;
-	}
+	private String laboratorio;
 
 	public String getDosagem() {
 		return dosagem;
@@ -40,6 +16,14 @@ public class Remedio {
 
 	public void setDosagem(String dosagem) {
 		this.dosagem = dosagem;
+	}
+
+	public String getComposicao() {
+		return composicao;
+	}
+
+	public void setComposicao(String composicao) {
+		this.composicao = composicao;
 	}
 
 	public String getTipo() {
@@ -58,28 +42,32 @@ public class Remedio {
 		this.generico = generico;
 	}
 
-	public int getEstoque() {
-		return estoque;
+	public String getLaboratorio() {
+		return laboratorio;
 	}
 
-	public void setEstoque(int estoque) {
-		this.estoque = estoque;
+	public void setLaboratorio(String laboratorio) {
+		this.laboratorio = laboratorio;
 	}
 
-	public Remedio(int idRemedio, String nome, double preco, String dosagem, String tipo, boolean generico,
-			int estoque) {
-		super();
-		this.idRemedio = idRemedio;
-		this.nome = nome;
-		this.preco = preco;
+	public Remedio(String codBarra, String nome, Date dataCadastro, double preco, int estoque, String dosagem,
+			String composicao, String tipo, boolean generico, String laboratorio) {
+		super(codBarra, nome, dataCadastro, preco, estoque);
 		this.dosagem = dosagem;
+		this.composicao = composicao;
 		this.tipo = tipo;
 		this.generico = generico;
-		this.estoque = estoque;
+		this.laboratorio = laboratorio;
 	}
 
 	public Remedio() {
 		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Remedio(String codBarra, String nome, Date dataCadastro, double preco, int estoque) {
+		super(codBarra, nome, dataCadastro, preco, estoque);
+		// TODO Auto-generated constructor stub
 	}
 
 }
