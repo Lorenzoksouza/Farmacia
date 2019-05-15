@@ -15,7 +15,7 @@ public class ControllerRemedio {
 		String validacao = validarRemedio(remedio);
 
 		if (validacao == "") {
-			if (remedio.getIdRemedio() > 0) {
+			if (remedio.existeCodBar()) {
 				// UPDATE
 				if (remedioBO.atualizar(remedio) == "") {
 					validacao = "Remedio atualizado com sucesso";

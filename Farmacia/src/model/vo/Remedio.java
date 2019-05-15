@@ -70,4 +70,9 @@ public class Remedio extends Mercadoria {
 		// TODO Auto-generated constructor stub
 	}
 
+	public boolean existeCodBar() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
