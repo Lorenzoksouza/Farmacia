@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 /bin/
 /target/
 /.classpath
 /.project
+=======
+/target/
+/.project
+/bin/
+/.classpath
+>>>>>>> branch 'master' of https://github.com/Lorenzoksouza/Farmacia.git
