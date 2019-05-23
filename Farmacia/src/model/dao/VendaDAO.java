@@ -4,7 +4,7 @@ import model.vo.Venda;
 
 public class VendaDAO {
 
-	public void cadastrarVenda(Venda venda) {
+	public void realizarVenda(Venda venda) {
 
 	}
 

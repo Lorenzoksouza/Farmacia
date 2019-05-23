@@ -2,6 +2,8 @@ package controller;
 
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import model.bo.RemedioBO;
 import model.seletor.RemedioSeletor;
 import model.vo.Remedio;
@@ -16,7 +18,9 @@ public class ControllerRemedio {
 
 		if (validacao == "") {
 			if (remedio.existeCodBar()) {
-				// UPDATE
+				JOptionPane.showConfirmDialog(null,
+						"Remedio ja cadastrado, deseja fazer alteração com os dados inseridos?", "",
+						JOptionPane.OK_CANCEL_OPTION);
 				if (remedioBO.atualizar(remedio) == "") {
 					validacao = "Remedio atualizado com sucesso";
 				} else {

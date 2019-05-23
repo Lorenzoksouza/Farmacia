@@ -7,9 +7,9 @@ public class VendaBO {
 
 	VendaDAO vendaDAO = new VendaDAO();
 
-	public void cadastrarVendaBO(Venda venda) {
+	public void realizarVendaBO(Venda venda) {
 
-		vendaDAO.cadastrarVenda(venda);
+		vendaDAO.realizarVenda(venda);
 	}
 
 }
