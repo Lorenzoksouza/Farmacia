@@ -1,11 +1,11 @@
 package model.bo;
 
-import model.dao.VendaDAO;
+import model.dto.VendaDTO;
 import model.vo.Venda;
 
 public class VendaBO {
 
-	VendaDAO vendaDAO = new VendaDAO();
+	VendaDTO vendaDAO = new VendaDTO();
 
 	public void realizarVendaBO(Venda venda) {
 

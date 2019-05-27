@@ -1,8 +1,8 @@
-package model.dao;
+package model.dto;
 
 import model.vo.Venda;
 
-public class VendaDAO {
+public class VendaDTO {
 
 	public void realizarVenda(Venda venda) {
 

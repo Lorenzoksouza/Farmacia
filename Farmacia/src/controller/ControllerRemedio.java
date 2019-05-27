@@ -22,16 +22,16 @@ public class ControllerRemedio {
 						"Remedio ja cadastrado, deseja fazer alteração com os dados inseridos?", "",
 						JOptionPane.OK_CANCEL_OPTION);
 				if (remedioBO.atualizar(remedio) == "") {
-					validacao = "Remedio atualizado com sucesso";
+					mensagem = "Remedio atualizado com sucesso";
 				} else {
-					validacao = "ERRO ao atualizar remedio";
+					mensagem = "ERRO ao atualizar remedio";
 				}
 			} else {
 				// INSERT
 				if (remedioBO.inserir(remedio) == "") {
-					validacao = "Remedio cadastrado com sucesso";
+					mensagem = "Remedio cadastrado com sucesso";
 				} else {
-					validacao = "ERRO ao cadastrar remedio";
+					mensagem = "ERRO ao cadastrar remedio";
 				}
 			}
 		}

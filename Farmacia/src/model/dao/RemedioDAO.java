@@ -54,11 +54,11 @@ public class RemedioDAO {
 		sql += " where ";
 		boolean primeiro = true;
 
-		if (seletor.getIdRemedio() > 0) {
+		if (seletor.getCodBar() > 0) {
 			if (!primeiro) {
 				sql += " and ";
 			}
-			sql += "r.id = " + seletor.getIdRemedio();
+			sql += "r.id = " + seletor.getCodBar();
 			primeiro = false;
 		}
 		if ((seletor.getNomeRemedio() != null) && (seletor.getNomeRemedio().trim().length() > 0)) {
