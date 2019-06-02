@@ -4,6 +4,7 @@ public class RemedioSeletor {
 
 	private int codBar;
 	private String nomeRemedio;
+	private String composicaoRemedio;
 	private String tipoRemedio;
 	private boolean generico;
 
@@ -24,10 +25,13 @@ public class RemedioSeletor {
 		if ((this.nomeRemedio != null) && (this.nomeRemedio.trim().length() > 0)) {
 			return true;
 		}
+		if ((this.composicaoRemedio != null) && (this.composicaoRemedio.trim().length() > 0)) {
+			return true;
+		}
 		if ((this.tipoRemedio != null) && (this.tipoRemedio.trim().length() > 0)) {
 			return true;
 		}
-		if ((this.generico == true) || (this.generico == false)) {
+		if (this.generico == true) {
 			return true;
 		}
 		return false;
@@ -66,6 +70,14 @@ public class RemedioSeletor {
 
 	public void setNomeRemedio(String nomeRemedio) {
 		this.nomeRemedio = nomeRemedio;
+	}
+
+	public String getComposicaoRemedio() {
+		return composicaoRemedio;
+	}
+
+	public void setComposicaoRemedio(String composicaoRemedio) {
+		this.composicaoRemedio = composicaoRemedio;
 	}
 
 	public String getTipoRemedio() {

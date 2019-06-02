@@ -50,7 +50,7 @@ public class Remedio extends Mercadoria {
 		this.laboratorio = laboratorio;
 	}
 
-	public Remedio(String codBarra, String nome, Date dataCadastro, double preco, int estoque, String dosagem,
+	public Remedio(int codBarra, String nome, Date dataCadastro, double preco, int estoque, String dosagem,
 			String composicao, String tipo, boolean generico, String laboratorio) {
 		super(codBarra, nome, dataCadastro, preco, estoque);
 		this.dosagem = dosagem;
@@ -65,14 +65,9 @@ public class Remedio extends Mercadoria {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Remedio(String codBarra, String nome, Date dataCadastro, double preco, int estoque) {
+	public Remedio(int codBarra, String nome, Date dataCadastro, double preco, int estoque) {
 		super(codBarra, nome, dataCadastro, preco, estoque);
 		// TODO Auto-generated constructor stub
-	}
-
-	public boolean existeCodBar() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 }

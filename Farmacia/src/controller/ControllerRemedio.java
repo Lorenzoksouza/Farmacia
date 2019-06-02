@@ -17,14 +17,17 @@ public class ControllerRemedio {
 		String validacao = validarRemedio(remedio);
 
 		if (validacao == "") {
-			if (remedio.existeCodBar()) {
-				JOptionPane.showConfirmDialog(null,
+			if (remedioBO.existeCodBar()) {
+				// UPDATE
+				int opcao = JOptionPane.showConfirmDialog(null,
 						"Remedio ja cadastrado, deseja fazer alteração com os dados inseridos?", "",
 						JOptionPane.OK_CANCEL_OPTION);
-				if (remedioBO.atualizar(remedio) == "") {
-					mensagem = "Remedio atualizado com sucesso";
-				} else {
-					mensagem = "ERRO ao atualizar remedio";
+				if (opcao == 0) {
+					if (remedioBO.atualizar(remedio) == "") {
+						mensagem = "Remedio atualizado com sucesso";
+					} else {
+						mensagem = "ERRO ao atualizar remedio";
+					}
 				}
 			} else {
 				// INSERT
@@ -38,28 +41,45 @@ public class ControllerRemedio {
 		return mensagem;
 	}
 
-	public String validarRemedio(Remedio remedio) {
+	private String validarRemedio(Remedio remedio) {
 		String validacao = "";
 
 		if (remedio == null) {
 			validacao = "Remédio esta vazio";
 		} else {
 			// validações de campo vazio e nulo
+			if (remedio.getCodBarra() == 0) {
+				validacao = "Remedio deve possuir um codigo";
+			}
 			if (remedio.getNome().trim().equals("") || remedio.getNome() == null) {
 				validacao = "Nome do remedio é obrigatorio";
+			}
+			if (remedio.getComposicao().trim().equals("") || remedio.getComposicao() == null) {
+				validacao = "Composição do remedio é obrigatorio";
+			}
+			if (remedio.getDosagem().trim().equals("") || remedio.getDosagem() == null) {
+				validacao = "Dosagem do remedio é obrigatorio";
+			}
+			if (remedio.getTipo() == "") {
+				validacao = "Tipo deve ser selecionado";
+			}
+			if (remedio.getLaboratorio().trim().equals("") || remedio.getLaboratorio() == null) {
+				validacao = "Dosagem do remedio é obrigatorio";
 			}
 			if (remedio.getPreco() <= 0.0) {
 				validacao = "Preço do remedio deve ser maior que zero";
 			}
-			if (remedio.getDosagem().trim().equals("") || remedio.getDosagem() == null) {
-				validacao = "Dosagem do remedio";
-			}
+
 		}
 		return validacao;
 	}
 
 	public List<Remedio> listarRemedios(RemedioSeletor seletor) {
 		return remedioBO.listarRemedios(seletor);
+	}
+
+	public String excluir(int remedioSelecionado) {
+		return remedioBO.excluir(remedioSelecionado);
 	}
 
 }

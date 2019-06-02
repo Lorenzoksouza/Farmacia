@@ -82,4 +82,14 @@ public class RemedioDAO {
 		// TODO criar depois de criar o banco
 		return null;
 	}
+
+	public boolean existeCodBar() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public String excluir(int remedioSelecionado) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

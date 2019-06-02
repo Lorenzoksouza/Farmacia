@@ -1,0 +1,213 @@
+package view;
+
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
+import controller.ControllerRemedio;
+import model.seletor.RemedioSeletor;
+import model.vo.Remedio;
+import net.miginfocom.swing.MigLayout;
+
+public class ListagemMedicamento extends JInternalFrame {
+	CadastroMedicamento cadastroMedicamento = null;
+
+	private JTextField txtCodBar = null;
+	private JTextField txtNome;
+	private JTextField txtComposicao;
+	private JTable tblRemedios;
+	private JComboBox cmbTipo;
+	private JCheckBox chckbxGenerico;
+	private JButton btnGerarXls;
+
+	private List<Remedio> remediosConsultados;
+	private int totalPaginas = 1;
+	private int paginaAtual = 1;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					ListagemMedicamento frame = new ListagemMedicamento();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public ListagemMedicamento() {
+		setBounds(100, 100, 450, 300);
+		getContentPane().setLayout(new MigLayout("", "[grow][][grow]", "[grow][][][][][][][][][][][][grow]"));
+
+		JLabel lblCodbarras = new JLabel("cod.barras");
+		getContentPane().add(lblCodbarras, "cell 0 0");
+
+		tblRemedios = new JTable();
+		tblRemedios.setColumnSelectionAllowed(true);
+		tblRemedios.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Codigo", "Nome", "Composição",
+				"Dosagem", "Tipo", "Generico", "Preco", "Estoque", "Laboratorio" }));
+		getContentPane().add(tblRemedios, "cell 2 0 1 12,grow");
+
+		txtCodBar = new JTextField();
+		getContentPane().add(txtCodBar, "cell 0 1,growx");
+		txtCodBar.setColumns(10);
+
+		JLabel lblNome = new JLabel("nome");
+		getContentPane().add(lblNome, "cell 0 2");
+
+		txtNome = new JTextField();
+		getContentPane().add(txtNome, "cell 0 3,growx");
+		txtNome.setColumns(10);
+
+		JLabel lblComposicao = new JLabel("composicao");
+		getContentPane().add(lblComposicao, "cell 0 4");
+
+		txtComposicao = new JTextField();
+		getContentPane().add(txtComposicao, "cell 0 5,growx");
+		txtComposicao.setColumns(10);
+
+		JLabel lblTipo = new JLabel("tipo");
+		getContentPane().add(lblTipo, "cell 0 6");
+
+		JComboBox cmbTipo_1 = new JComboBox();
+		getContentPane().add(cmbTipo_1, "cell 0 7,growx");
+
+		JCheckBox chckbxGenerico_1 = new JCheckBox("generico");
+		getContentPane().add(chckbxGenerico_1, "cell 0 9");
+
+		JButton btnPesquisar = new JButton("pesquisar");
+		btnPesquisar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pesquisarMedicamentos();
+			}
+		});
+		getContentPane().add(btnPesquisar, "cell 1 9");
+
+		JButton btnExcluir = new JButton("excluir");
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String mensagem = "";
+				int remedioSelecionado = (int) tblRemedios.getValueAt(tblRemedios.getSelectedRow(), 1);
+				ControllerRemedio controllerRemedio = new ControllerRemedio();
+				mensagem = controllerRemedio.excluir(remedioSelecionado);
+			}
+		});
+		getContentPane().add(btnExcluir, "cell 0 10");
+
+		JButton btnAlterar = new JButton("alterar");
+		btnAlterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Remedio remedio = new Remedio();
+
+//				remedio = remediosConsultados.get(tblRemedios.getSelectedRow());
+				cadastroMedicamento = new CadastroMedicamento(remedio);
+				cadastroMedicamento.setVisible(true);
+
+				// TODO Como abrir o internaFrame de cadastro
+			}
+		});
+		getContentPane().add(btnAlterar, "cell 1 10");
+
+		JButton btnGerarXls = new JButton("relatorio");
+		btnGerarXls.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		getContentPane().add(btnGerarXls, "cell 0 11");
+
+	}
+
+	private void pesquisarMedicamentos() {
+		// lblPaginaAtual.setText(paginaAtual + "");
+
+		ControllerRemedio controlador = new ControllerRemedio();
+		RemedioSeletor seletor = new RemedioSeletor();
+
+		List<Remedio> remedios = controlador.listarRemedios(seletor);
+
+		seletor.setLimite(10);
+
+		int quociente = remedios.size() / seletor.getLimite();
+		int resto = remedios.size() % seletor.getLimite();
+
+		if (resto == 0) {
+			totalPaginas = quociente;
+		} else {
+			totalPaginas = quociente + 1;
+		}
+		// lblTotalPaginas.setText(totalPaginas + "");
+
+		seletor.setPagina(paginaAtual);
+
+		// Preenche os campos de filtro da tela no seletor
+
+		if (txtCodBar != null) {
+			seletor.setCodBar(Integer.parseInt(txtCodBar.getText()));
+		}
+
+		if (!txtNome.getText().trim().equals("")) {
+			seletor.setNomeRemedio(txtNome.getText());
+		}
+
+		if (!txtComposicao.getText().trim().equals("")) {
+			seletor.setComposicaoRemedio(txtNome.getText());
+		}
+
+		if (cmbTipo.getSelectedIndex() > 0) {
+			seletor.setTipoRemedio(cmbTipo.getSelectedItem().toString());
+		}
+
+		if (chckbxGenerico.isSelected()) {
+			seletor.setGenerico(true);
+		}
+
+		remedios = controlador.listarRemedios(seletor);
+		atualizarTabelaMedicamentos(remedios);
+	}
+
+	private void atualizarTabelaMedicamentos(List<Remedio> remedios) {
+		// atualiza o atributo remediosConsultados
+		remediosConsultados = remedios;
+
+		btnGerarXls.setEnabled(remedios != null && remedios.size() > 0);
+
+		// Limpa a tabela
+		tblRemedios.setModel(new DefaultTableModel(
+				new String[][] { { "Codigo", "Nome", "Composição", "Dosagem", "Tipo", "Generico", "Preco", "Estoque",
+						"Laboratorio" }, },
+				new String[] { "Codigo", "Nome", "Composição", "Dosagem", "Tipo", "Generico", "Preco", "Estoque",
+						"Laboratorio" }));
+
+		DefaultTableModel modelo = (DefaultTableModel) tblRemedios.getModel();
+
+		for (Remedio remedio : remedios) {
+			// Crio uma nova linha na tabela
+			// Preencher a linha com os atributos do remedio
+			// na ORDEM do cabeçalho da tabela
+
+			String[] novaLinha = new String[] { remedio.getCodBarra() + "", remedio.getNome(), remedio.getComposicao(),
+					remedio.getDosagem(), remedio.getTipo(), "generico?", "R$" + remedio.getPreco(),
+					"" + remedio.getEstoque(), remedio.getLaboratorio() };
+			modelo.addRow(novaLinha);
+		}
+	}
+}
