@@ -48,22 +48,22 @@ public class ControllerRemedio {
 			validacao = "Remédio esta vazio";
 		} else {
 			// validações de campo vazio e nulo
-			if (remedio.getCodBarra() == 0) {
+			if (remedio.getCodBarra().trim().equals("")) {
 				validacao = "Remedio deve possuir um codigo";
 			}
-			if (remedio.getNome().trim().equals("") || remedio.getNome() == null) {
+			if (remedio.getNome() == null || remedio.getNome().trim().equals("")) {
 				validacao = "Nome do remedio é obrigatorio";
 			}
-			if (remedio.getComposicao().trim().equals("") || remedio.getComposicao() == null) {
+			if (remedio.getComposicao() == null || remedio.getComposicao().trim().equals("")) {
 				validacao = "Composição do remedio é obrigatorio";
 			}
-			if (remedio.getDosagem().trim().equals("") || remedio.getDosagem() == null) {
+			if (remedio.getDosagem() == null || remedio.getDosagem().trim().equals("")) {
 				validacao = "Dosagem do remedio é obrigatorio";
 			}
-			if (remedio.getTipo() == "") {
-				validacao = "Tipo deve ser selecionado";
+			if (remedio.getFormaUso() == "") {
+				validacao = "Forma de uso deve ser selecionado";
 			}
-			if (remedio.getLaboratorio().trim().equals("") || remedio.getLaboratorio() == null) {
+			if (remedio.getLaboratorio() == null || remedio.getLaboratorio().trim().equals("")) {
 				validacao = "Dosagem do remedio é obrigatorio";
 			}
 			if (remedio.getPreco() <= 0.0) {

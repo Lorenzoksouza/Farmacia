@@ -7,7 +7,7 @@ public class VendaBO {
 
 	VendaDTO vendaDAO = new VendaDTO();
 
-	public void realizarVendaBO(Venda venda) {
+	public void finalizarVendaBO(Venda venda) {
 
 		vendaDAO.realizarVenda(venda);
 	}

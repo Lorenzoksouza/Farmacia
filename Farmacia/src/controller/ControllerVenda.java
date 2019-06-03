@@ -9,7 +9,7 @@ public class ControllerVenda {
 
 	public void cadastrarVendaController(Venda venda) {
 
-		vendaBO.realizarVendaBO(venda);
+		vendaBO.finalizarVendaBO(venda);
 
 	}
 

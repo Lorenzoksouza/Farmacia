@@ -46,7 +46,7 @@ public class ControllerProduto {
 			validacao = "Produto esta vazio";
 		} else {
 			// validações de campo vazio e nulo
-			if (produto.getCodBarra() == 0) {
+			if (produto.getCodBarra().trim().equals("")) {
 				validacao = "Produto deve possuir um codigo";
 			}
 			if (produto.getNome().trim().equals("") || produto.getNome() == null) {

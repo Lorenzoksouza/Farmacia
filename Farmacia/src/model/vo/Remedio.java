@@ -6,7 +6,7 @@ public class Remedio extends Mercadoria {
 
 	private String dosagem;
 	private String composicao;
-	private String tipo;
+	private String formaUso;
 	private boolean generico;
 	private String laboratorio;
 
@@ -26,12 +26,12 @@ public class Remedio extends Mercadoria {
 		this.composicao = composicao;
 	}
 
-	public String getTipo() {
-		return tipo;
+	public String getFormaUso() {
+		return formaUso;
 	}
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setFormaUso(String formaUso) {
+		this.formaUso = formaUso;
 	}
 
 	public boolean isGenerico() {
@@ -50,12 +50,12 @@ public class Remedio extends Mercadoria {
 		this.laboratorio = laboratorio;
 	}
 
-	public Remedio(int codBarra, String nome, Date dataCadastro, double preco, int estoque, String dosagem,
+	public Remedio(String codBarra, String nome, Date dataCadastro, double preco, int estoque, String dosagem,
 			String composicao, String tipo, boolean generico, String laboratorio) {
 		super(codBarra, nome, dataCadastro, preco, estoque);
 		this.dosagem = dosagem;
 		this.composicao = composicao;
-		this.tipo = tipo;
+		this.formaUso = tipo;
 		this.generico = generico;
 		this.laboratorio = laboratorio;
 	}
@@ -65,7 +65,7 @@ public class Remedio extends Mercadoria {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Remedio(int codBarra, String nome, Date dataCadastro, double preco, int estoque) {
+	public Remedio(String codBarra, String nome, Date dataCadastro, double preco, int estoque) {
 		super(codBarra, nome, dataCadastro, preco, estoque);
 		// TODO Auto-generated constructor stub
 	}

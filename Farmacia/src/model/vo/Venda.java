@@ -6,9 +6,25 @@ import java.util.ArrayList;
 public class Venda {
 
 	private int idVenda;
-	private ArrayList<ItemRemedio> itemRemedio;
-	private ArrayList<ItemProduto> itemProduto;
+	private Double Valor;
+	private ArrayList<ItemRemedio> itensRemedios;
+	private ArrayList<ItemProduto> itensProdutos;
 	private Date dataVenda;
+
+	public Venda(int idVenda, Double valor, ArrayList<ItemRemedio> itemRemedio, ArrayList<ItemProduto> itemProduto,
+			Date dataVenda) {
+		super();
+		this.idVenda = idVenda;
+		Valor = valor;
+		this.itensRemedios = itemRemedio;
+		this.itensProdutos = itemProduto;
+		this.dataVenda = dataVenda;
+	}
+
+	public Venda() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	public int getIdVenda() {
 		return idVenda;
@@ -18,20 +34,28 @@ public class Venda {
 		this.idVenda = idVenda;
 	}
 
+	public Double getValor() {
+		return Valor;
+	}
+
+	public void setValor(Double valor) {
+		Valor = valor;
+	}
+
 	public ArrayList<ItemRemedio> getItemRemedio() {
-		return itemRemedio;
+		return itensRemedios;
 	}
 
 	public void setItemRemedio(ArrayList<ItemRemedio> itemRemedio) {
-		this.itemRemedio = itemRemedio;
+		this.itensRemedios = itemRemedio;
 	}
 
 	public ArrayList<ItemProduto> getItemProduto() {
-		return itemProduto;
+		return itensProdutos;
 	}
 
 	public void setItemProduto(ArrayList<ItemProduto> itemProduto) {
-		this.itemProduto = itemProduto;
+		this.itensProdutos = itemProduto;
 	}
 
 	public Date getDataVenda() {
@@ -42,16 +66,4 @@ public class Venda {
 		this.dataVenda = dataVenda;
 	}
 
-	public Venda(int idVenda, ArrayList<ItemRemedio> itemRemedio, ArrayList<ItemProduto> itemProduto, Date dataVenda) {
-		super();
-		this.idVenda = idVenda;
-		this.itemRemedio = itemRemedio;
-		this.itemProduto = itemProduto;
-		this.dataVenda = dataVenda;
-	}
-
-	public Venda() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 }

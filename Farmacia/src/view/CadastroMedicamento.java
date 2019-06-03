@@ -31,7 +31,7 @@ public class CadastroMedicamento extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastroMedicamento frame = new CadastroMedicamento(null);
+					CadastroMedicamento frame = new CadastroMedicamento();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,15 +41,10 @@ public class CadastroMedicamento extends JInternalFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Create the frame. INSERT
 	 */
-	public CadastroMedicamento(Remedio remedio) {
+	public CadastroMedicamento() {
 
-		if (remedio == null) {
-			System.out.println("remedio nulo");
-		} else {
-			System.out.println("dnlsadhhdsa");
-		}
 		setClosable(true);
 
 		setBounds(100, 100, 450, 300);
@@ -97,14 +92,14 @@ public class CadastroMedicamento extends JInternalFrame {
 		getContentPane().add(txtLaboratorio, "cell 1 5,growx");
 		txtLaboratorio.setColumns(10);
 
-		JLabel lblTipo = new JLabel("tipo");
-		getContentPane().add(lblTipo, "cell 0 6");
+		JLabel lblFormaUso = new JLabel("tipo");
+		getContentPane().add(lblFormaUso, "cell 0 6");
 
 		JLabel lblEstoque = new JLabel("estoque");
 		getContentPane().add(lblEstoque, "cell 1 6");
 
-		JComboBox cmbTipo = new JComboBox();
-		getContentPane().add(cmbTipo, "cell 0 7,growx");
+		JComboBox cmbFormaUso = new JComboBox();
+		getContentPane().add(cmbFormaUso, "cell 0 7,growx");
 
 		txtEstoque = new JTextField();
 		getContentPane().add(txtEstoque, "cell 1 7,growx");
@@ -113,7 +108,6 @@ public class CadastroMedicamento extends JInternalFrame {
 		JCheckBox chckbxGenerico = new JCheckBox("generico");
 		getContentPane().add(chckbxGenerico, "cell 0 8");
 
-		// TODO preencher os txtbox com dados do remedio selecionado vindo da tela de
 		// listagem
 
 		JButton btnSalvar = new JButton("salvar");
@@ -121,13 +115,13 @@ public class CadastroMedicamento extends JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				Remedio remedio = new Remedio();
 				remedio.setNome(txtNome.getText());
-				remedio.setCodBarra(Integer.parseInt(txtCodBar.getText()));
+				remedio.setCodBarra(txtCodBar.getText());
 				remedio.setPreco(Double.parseDouble(txtPreco.getText()));
 				remedio.setComposicao(txtComposicao.getText());
 				remedio.setDosagem(txtDosagem.getText());
 				remedio.setLaboratorio(txtLaboratorio.getText());
 				remedio.setEstoque(Integer.parseInt(txtEstoque.getText()));
-				remedio.setTipo(cmbTipo.getSelectedItem().toString());
+				remedio.setFormaUso(cmbFormaUso.getSelectedItem().toString());
 				remedio.setGenerico(chckbxGenerico.isSelected());
 
 				ControllerRemedio controllerRemedio = new ControllerRemedio();
@@ -135,6 +129,24 @@ public class CadastroMedicamento extends JInternalFrame {
 			}
 		});
 		getContentPane().add(btnSalvar, "cell 1 8");
+	}
+
+	/**
+	 * Create the frame. UPDATE
+	 * 
+	 * @param remedio
+	 */
+
+	public CadastroMedicamento(Remedio remedio) {
+
+		new CadastroMedicamento();
+		txtNome.setText(remedio.getNome());
+		txtCodBar.setText(remedio.getCodBarra() + "");
+		txtPreco.setText(remedio.getPreco() + "");
+		txtComposicao.setText(remedio.getComposicao());
+		txtDosagem.setText(remedio.getDosagem());
+		txtLaboratorio.setText(remedio.getLaboratorio());
+		txtEstoque.setText(remedio.getEstoque() + "");
 
 	}
 

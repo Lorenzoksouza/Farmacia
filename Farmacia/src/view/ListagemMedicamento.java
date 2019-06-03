@@ -58,7 +58,7 @@ public class ListagemMedicamento extends JInternalFrame {
 	public ListagemMedicamento() {
 		// TODO remover!
 		remediosConsultados = new ArrayList<Remedio>();
-		Remedio remedioTeste = new Remedio(1, "Plasil", new Date(), 10.0, 50, "500", "Água", "Tipo", false, "EMS");
+		Remedio remedioTeste = new Remedio("0011", "Plasil", new Date(), 10.0, 50, "500", "Água", "Tipo", false, "EMS");
 		remediosConsultados.add(remedioTeste);
 
 		setBounds(100, 100, 450, 300);
@@ -124,7 +124,7 @@ public class ListagemMedicamento extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				Remedio remedioSelecionado = new Remedio();
 
-				remedioSelecionado = remediosConsultados.get(tblRemedios.getSelectedRow() - 1);
+				remedioSelecionado = remediosConsultados.get(tblRemedios.getSelectedRow() + 1);
 
 				cadastroMedicamento = new CadastroMedicamento(remedioSelecionado);
 				cadastroMedicamento.setVisible(true);
@@ -215,7 +215,8 @@ public class ListagemMedicamento extends JInternalFrame {
 			// na ORDEM do cabeçalho da tabela
 
 			String[] novaLinha = new String[] { remedio.getCodBarra() + "", remedio.getNome(), remedio.getComposicao(),
-					remedio.getDosagem(), remedio.getTipo(), "generico?", "R$" + remedio.getPreco(), // TODO generico??
+					remedio.getDosagem(), remedio.getFormaUso(), "generico?", "R$" + remedio.getPreco(), // TODO
+																											// generico??
 					"" + remedio.getEstoque(), remedio.getLaboratorio() };
 			modelo.addRow(novaLinha);
 		}

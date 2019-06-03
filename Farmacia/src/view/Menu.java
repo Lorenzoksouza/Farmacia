@@ -80,7 +80,7 @@ public class Menu extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if (temComponenteNaTela(cadastroMedicamento)) {
 				} else {
-					cadastroMedicamento = new CadastroMedicamento(null);
+					cadastroMedicamento = new CadastroMedicamento();
 					desktopPane.add(cadastroMedicamento);
 					// desktopPane.getDesktopManager().maximizeFrame(cadastroMedicamento);
 					cadastroMedicamento.show();

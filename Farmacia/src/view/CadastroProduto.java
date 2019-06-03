@@ -81,7 +81,7 @@ public class CadastroProduto extends JInternalFrame {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Produto produto = new Produto();
-				produto.setCodBarra(Integer.parseInt(txtCodBar.getText()));
+				produto.setCodBarra(txtCodBar.getText());
 				produto.setNome(txtNome.getText());
 				produto.setPreco(Double.parseDouble(txtPreco.getText()));
 				produto.setEstoque(Integer.parseInt(txtEstoque.getText()));

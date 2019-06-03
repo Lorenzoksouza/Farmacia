@@ -14,7 +14,7 @@ public class Produto extends Mercadoria {
 		this.categoria = categoria;
 	}
 
-	public Produto(int codBarra, String nome, Date dataCadastro, double preco, int estoque, String categoria) {
+	public Produto(String codBarra, String nome, Date dataCadastro, double preco, int estoque, String categoria) {
 		super(codBarra, nome, dataCadastro, preco, estoque);
 		this.categoria = categoria;
 	}
@@ -24,7 +24,7 @@ public class Produto extends Mercadoria {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Produto(int codBarra, String nome, Date dataCadastro, double preco, int estoque) {
+	public Produto(String codBarra, String nome, Date dataCadastro, double preco, int estoque) {
 		super(codBarra, nome, dataCadastro, preco, estoque);
 		// TODO Auto-generated constructor stub
 	}

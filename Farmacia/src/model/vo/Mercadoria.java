@@ -4,17 +4,17 @@ import java.util.Date;
 
 public abstract class Mercadoria {
 
-	private int codBarra;
+	private String codBarra;
 	private String nome;
 	private Date dataCadastro;
 	private double preco;
 	private int estoque;
 
-	public int getCodBarra() {
+	public String getCodBarra() {
 		return codBarra;
 	}
 
-	public void setCodBarra(int codBarra) {
+	public void setCodBarra(String codBarra) {
 		this.codBarra = codBarra;
 	}
 
@@ -50,7 +50,7 @@ public abstract class Mercadoria {
 		this.estoque = estoque;
 	}
 
-	public Mercadoria(int codBarra, String nome, Date dataCadastro, double preco, int estoque) {
+	public Mercadoria(String codBarra, String nome, Date dataCadastro, double preco, int estoque) {
 		super();
 		this.codBarra = codBarra;
 		this.nome = nome;
