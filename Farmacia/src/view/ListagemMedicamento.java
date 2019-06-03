@@ -3,6 +3,8 @@ package view;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -54,6 +56,11 @@ public class ListagemMedicamento extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public ListagemMedicamento() {
+		// TODO remover!
+		remediosConsultados = new ArrayList<Remedio>();
+		Remedio remedioTeste = new Remedio(1, "Plasil", new Date(), 10.0, 50, "500", "Água", "Tipo", false, "EMS");
+		remediosConsultados.add(remedioTeste);
+
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new MigLayout("", "[grow][][grow]", "[grow][][][][][][][][][][][][grow]"));
 
@@ -115,18 +122,19 @@ public class ListagemMedicamento extends JInternalFrame {
 		JButton btnAlterar = new JButton("alterar");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Remedio remedio = new Remedio();
+				Remedio remedioSelecionado = new Remedio();
 
-//				remedio = remediosConsultados.get(tblRemedios.getSelectedRow());
-				cadastroMedicamento = new CadastroMedicamento(remedio);
+				remedioSelecionado = remediosConsultados.get(tblRemedios.getSelectedRow() - 1);
+
+				cadastroMedicamento = new CadastroMedicamento(remedioSelecionado);
 				cadastroMedicamento.setVisible(true);
 
-				// TODO Como abrir o internaFrame de cadastro
+				// TODO Como abrir o internalFrame de cadastro
 			}
 		});
 		getContentPane().add(btnAlterar, "cell 1 10");
 
-		JButton btnGerarXls = new JButton("relatorio");
+		btnGerarXls = new JButton("relatorio");
 		btnGerarXls.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -142,46 +150,48 @@ public class ListagemMedicamento extends JInternalFrame {
 		ControllerRemedio controlador = new ControllerRemedio();
 		RemedioSeletor seletor = new RemedioSeletor();
 
-		List<Remedio> remedios = controlador.listarRemedios(seletor);
+		// TODO descomentar
+		// List<Remedio> remedios = controlador.listarRemedios(seletor);
 
 		seletor.setLimite(10);
 
-		int quociente = remedios.size() / seletor.getLimite();
-		int resto = remedios.size() % seletor.getLimite();
-
-		if (resto == 0) {
-			totalPaginas = quociente;
-		} else {
-			totalPaginas = quociente + 1;
-		}
-		// lblTotalPaginas.setText(totalPaginas + "");
-
-		seletor.setPagina(paginaAtual);
+//		int quociente = remedios.size() / seletor.getLimite();
+//		int resto = remedios.size() % seletor.getLimite();
+//
+//		if (resto == 0) {
+//			totalPaginas = quociente;
+//		} else {
+//			totalPaginas = quociente + 1;
+//		}
+//		// lblTotalPaginas.setText(totalPaginas + "");
+//
+//		seletor.setPagina(paginaAtual);
 
 		// Preenche os campos de filtro da tela no seletor
 
-		if (txtCodBar != null) {
-			seletor.setCodBar(Integer.parseInt(txtCodBar.getText()));
-		}
+//		if (txtCodBar != null) {
+//			seletor.setCodBar(Integer.parseInt(txtCodBar.getText()));
+//		}
+//
+//		if (!txtNome.getText().trim().equals("")) {
+//			seletor.setNomeRemedio(txtNome.getText());
+//		}
+//
+//		if (!txtComposicao.getText().trim().equals("")) {
+//			seletor.setComposicaoRemedio(txtNome.getText());
+//		}
+//
+//		if (cmbTipo.getSelectedIndex() > 0) {
+//			seletor.setTipoRemedio(cmbTipo.getSelectedItem().toString());
+//		}
+//
+//		if (chckbxGenerico.isSelected()) {
+//			seletor.setGenerico(true);
+//		}
 
-		if (!txtNome.getText().trim().equals("")) {
-			seletor.setNomeRemedio(txtNome.getText());
-		}
-
-		if (!txtComposicao.getText().trim().equals("")) {
-			seletor.setComposicaoRemedio(txtNome.getText());
-		}
-
-		if (cmbTipo.getSelectedIndex() > 0) {
-			seletor.setTipoRemedio(cmbTipo.getSelectedItem().toString());
-		}
-
-		if (chckbxGenerico.isSelected()) {
-			seletor.setGenerico(true);
-		}
-
-		remedios = controlador.listarRemedios(seletor);
-		atualizarTabelaMedicamentos(remedios);
+		// TODO descomentar!
+		// remedios = controlador.listarRemedios(seletor);
+		atualizarTabelaMedicamentos(this.remediosConsultados);
 	}
 
 	private void atualizarTabelaMedicamentos(List<Remedio> remedios) {
@@ -205,7 +215,7 @@ public class ListagemMedicamento extends JInternalFrame {
 			// na ORDEM do cabeçalho da tabela
 
 			String[] novaLinha = new String[] { remedio.getCodBarra() + "", remedio.getNome(), remedio.getComposicao(),
-					remedio.getDosagem(), remedio.getTipo(), "generico?", "R$" + remedio.getPreco(),
+					remedio.getDosagem(), remedio.getTipo(), "generico?", "R$" + remedio.getPreco(), // TODO generico??
 					"" + remedio.getEstoque(), remedio.getLaboratorio() };
 			modelo.addRow(novaLinha);
 		}

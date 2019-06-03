@@ -4,7 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
 
-public class Sobre extends JInternalFrame {
+public class TelaSobre extends JInternalFrame {
 
 	/**
 	 * Launch the application.
@@ -13,7 +13,7 @@ public class Sobre extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Sobre frame = new Sobre();
+					TelaSobre frame = new TelaSobre();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -25,7 +25,7 @@ public class Sobre extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Sobre() {
+	public TelaSobre() {
 		setTitle("Sobre");
 		setBounds(100, 100, 450, 300);
 

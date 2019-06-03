@@ -51,16 +51,6 @@ public class CadastroMedicamento extends JInternalFrame {
 			System.out.println("dnlsadhhdsa");
 		}
 		setClosable(true);
-//TODO em baixo
-//		final Menu telaPai = (Menu) SwingUtilities.getWindowAncestor(this);
-//		addInternalFrameListener(new InternalFrameAdapter() {
-//			@Override
-//			public void internalFrameClosing(InternalFrameEvent arg0) {
-//				public void actionPerformed(ActionEvent evt) {
-//					telaPai.chamarPai(CadastroMedicamento.class.getName());
-//				}
-//			}
-//		});;
 
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new MigLayout("", "[grow][grow]", "[][][][][][][][][]"));
@@ -123,7 +113,8 @@ public class CadastroMedicamento extends JInternalFrame {
 		JCheckBox chckbxGenerico = new JCheckBox("generico");
 		getContentPane().add(chckbxGenerico, "cell 0 8");
 
-		// preenche os txtbox com dados do remedio selecionado vindo da tela de listagem
+		// TODO preencher os txtbox com dados do remedio selecionado vindo da tela de
+		// listagem
 
 		JButton btnSalvar = new JButton("salvar");
 		btnSalvar.addActionListener(new ActionListener() {

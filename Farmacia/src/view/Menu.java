@@ -14,19 +14,25 @@ import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.SwingUtilities;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 
 import net.miginfocom.swing.MigLayout;
 
-public class Menu {
+public class Menu extends JFrame {
 
-	private JFrame frame;
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JDesktopPane desktopPane;
 	CadastroMedicamento cadastroMedicamento = null;
 	ListagemMedicamento pesquisaMedicamento = null;
 	CadastroProduto cadastroProduto = null;
 	ListagemProduto pesquisaProduto = null;
 	TelaVenda telaVenda = null;
+	TelaSobre telaSobre = null;
 
 	/**
 	 * Launch the application.
@@ -35,8 +41,8 @@ public class Menu {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Menu window = new Menu();
-					window.frame.setVisible(true);
+					Menu menu = new Menu();
+					menu.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -55,17 +61,16 @@ public class Menu {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new MigLayout("", "[grow][]", "[grow][]"));
+		this.setBounds(100, 100, 450, 300);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.getContentPane().setLayout(new MigLayout("", "[grow][]", "[grow][]"));
 
 		desktopPane = new JDesktopPane();
 		desktopPane.setBackground(Color.LIGHT_GRAY);
-		frame.getContentPane().add(desktopPane, "cell 0 0 2 2,grow");
+		this.getContentPane().add(desktopPane, "cell 0 0 2 2,grow");
 
 		JMenuBar menuBar = new JMenuBar();
-		frame.setJMenuBar(menuBar);
+		this.setJMenuBar(menuBar);
 
 		JMenu mnMedicamento = new JMenu("medicamento");
 		menuBar.add(mnMedicamento);
@@ -73,12 +78,20 @@ public class Menu {
 		JMenuItem mntmCadastrarRemedio = new JMenuItem("cadastrar");
 		mntmCadastrarRemedio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (checarComponentesTelaPrincipal(cadastroMedicamento)) {
+				if (temComponenteNaTela(cadastroMedicamento)) {
 				} else {
 					cadastroMedicamento = new CadastroMedicamento(null);
 					desktopPane.add(cadastroMedicamento);
 					// desktopPane.getDesktopManager().maximizeFrame(cadastroMedicamento);
 					cadastroMedicamento.show();
+
+					cadastroMedicamento.addInternalFrameListener(new InternalFrameAdapter() {
+						@Override
+						public void internalFrameClosing(InternalFrameEvent evt) {
+							Menu pai = (Menu) SwingUtilities.getWindowAncestor(cadastroMedicamento);
+							pai.chamarPai(cadastroMedicamento);
+						}
+					});
 				}
 			}
 		});
@@ -87,12 +100,19 @@ public class Menu {
 		JMenuItem mntmPesquisarRemedio = new JMenuItem("pesquisar");
 		mntmPesquisarRemedio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (checarComponentesTelaPrincipal(pesquisaMedicamento)) {
-				} else {
+				if (!temComponenteNaTela(pesquisaMedicamento)) {
 					pesquisaMedicamento = new ListagemMedicamento();
 					desktopPane.add(pesquisaMedicamento);
 					// desktopPane.getDesktopManager().maximizeFrame(pesquisaMedicamento);
 					pesquisaMedicamento.show();
+
+					pesquisaMedicamento.addInternalFrameListener(new InternalFrameAdapter() {
+						@Override
+						public void internalFrameClosing(InternalFrameEvent evt) {
+							Menu pai = (Menu) SwingUtilities.getWindowAncestor(pesquisaMedicamento);
+							pai.chamarPai(pesquisaMedicamento);
+						}
+					});
 				}
 			}
 		});
@@ -104,12 +124,20 @@ public class Menu {
 		JMenuItem mntmCadastrarProduto = new JMenuItem("cadastrar");
 		mntmCadastrarProduto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (checarComponentesTelaPrincipal(pesquisaMedicamento)) {
+				if (temComponenteNaTela(pesquisaMedicamento)) {
 				} else {
-					pesquisaMedicamento = new ListagemMedicamento();
-					desktopPane.add(pesquisaMedicamento);
+					cadastroProduto = new CadastroProduto();
+					desktopPane.add(cadastroProduto);
 					// desktopPane.getDesktopManager().maximizeFrame(pesquisaMedicamento);
-					pesquisaMedicamento.show();
+					cadastroProduto.show();
+
+					cadastroProduto.addInternalFrameListener(new InternalFrameAdapter() {
+						@Override
+						public void internalFrameClosing(InternalFrameEvent evt) {
+							Menu pai = (Menu) SwingUtilities.getWindowAncestor(cadastroProduto);
+							pai.chamarPai(cadastroProduto);
+						}
+					});
 				}
 			}
 		});
@@ -118,12 +146,20 @@ public class Menu {
 		JMenuItem mntmPesquisarProduto = new JMenuItem("pesquisar");
 		mntmPesquisarProduto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (checarComponentesTelaPrincipal(pesquisaProduto)) {
+				if (temComponenteNaTela(pesquisaProduto)) {
 				} else {
 					pesquisaProduto = new ListagemProduto();
 					desktopPane.add(pesquisaProduto);
 					// desktopPane.getDesktopManager().maximizeFrame(pesquisaMedicamento);
 					pesquisaProduto.show();
+
+					pesquisaProduto.addInternalFrameListener(new InternalFrameAdapter() {
+						@Override
+						public void internalFrameClosing(InternalFrameEvent evt) {
+							Menu pai = (Menu) SwingUtilities.getWindowAncestor(pesquisaProduto);
+							pai.chamarPai(pesquisaProduto);
+						}
+					});
 				}
 			}
 		});
@@ -132,34 +168,55 @@ public class Menu {
 		JMenu mnVendas = new JMenu("vendas");
 		mnVendas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (checarComponentesTelaPrincipal(telaVenda)) {
+				if (temComponenteNaTela(telaVenda)) {
 				} else {
 					telaVenda = new TelaVenda();
 					desktopPane.add(telaVenda);
 					// desktopPane.getDesktopManager().maximizeFrame(pesquisaMedicamento);
 					telaVenda.show();
+
+					telaVenda.addInternalFrameListener(new InternalFrameAdapter() {
+						@Override
+						public void internalFrameClosing(InternalFrameEvent evt) {
+							Menu pai = (Menu) SwingUtilities.getWindowAncestor(telaVenda);
+							pai.chamarPai(telaVenda);
+						}
+					});
 				}
 			}
 		});
 		menuBar.add(mnVendas);
 
 		JMenu mnSobre = new JMenu("sobre");
+		mnSobre.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (temComponenteNaTela(telaSobre)) {
+				} else {
+					telaVenda = new TelaVenda();
+					desktopPane.add(telaVenda);
+					// desktopPane.getDesktopManager().maximizeFrame(pesquisaMedicamento);
+					telaVenda.show();
+
+					telaVenda.addInternalFrameListener(new InternalFrameAdapter() {
+						@Override
+						public void internalFrameClosing(InternalFrameEvent evt) {
+							Menu pai = (Menu) SwingUtilities.getWindowAncestor(telaVenda);
+							pai.chamarPai(telaVenda);
+						}
+					});
+				}
+			}
+		});
 		menuBar.add(mnSobre);
 	}
 
-	public boolean checarComponentesTelaPrincipal(Object frame) {
+	public boolean temComponenteNaTela(Object frame) {
 		ArrayList<Component> componentes = new ArrayList<Component>(Arrays.asList(desktopPane.getComponents()));
-		if (componentes.contains(frame)) {
-			return true;
-		} else {
-			return false;
-		}
+		return (componentes.contains(frame));
 	}
 
-	public void chamarPai(String telaFilho) {
-		JInternalFrame tela = new JInternalFrame();
-		tela.setName(telaFilho);
-		tela = null;
+	public void chamarPai(JInternalFrame telaFilho) {
+		telaFilho = null;
 	}
 
 }
