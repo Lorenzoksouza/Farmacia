@@ -82,4 +82,8 @@ public class ControllerRemedio {
 		return remedioBO.excluir(remedioSelecionado);
 	}
 
+	public boolean existeRemedioPorCodBar(int remedioSelecionado) {
+		return remedioBO.existeCodBar();
+	}
+
 }

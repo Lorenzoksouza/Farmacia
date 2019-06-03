@@ -44,6 +44,7 @@ public class CadastroMedicamento extends JInternalFrame {
 	 * Create the frame. INSERT
 	 */
 	public CadastroMedicamento() {
+		setTitle("Cadastro de Medicamentos");
 
 		setClosable(true);
 

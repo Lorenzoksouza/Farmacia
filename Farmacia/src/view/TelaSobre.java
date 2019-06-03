@@ -26,6 +26,7 @@ public class TelaSobre extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public TelaSobre() {
+		setClosable(true);
 		setTitle("Sobre");
 		setBounds(100, 100, 450, 300);
 

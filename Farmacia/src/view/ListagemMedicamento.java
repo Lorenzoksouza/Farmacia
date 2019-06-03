@@ -56,6 +56,8 @@ public class ListagemMedicamento extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public ListagemMedicamento() {
+		setTitle("Pesquisa de Remedios");
+		setClosable(true);
 		// TODO remover!
 		remediosConsultados = new ArrayList<Remedio>();
 		Remedio remedioTeste = new Remedio("0011", "Plasil", new Date(), 10.0, 50, "500", "Água", "Tipo", false, "EMS");
@@ -113,8 +115,14 @@ public class ListagemMedicamento extends JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				String mensagem = "";
 				int remedioSelecionado = (int) tblRemedios.getValueAt(tblRemedios.getSelectedRow(), 1);
+
 				ControllerRemedio controllerRemedio = new ControllerRemedio();
-				mensagem = controllerRemedio.excluir(remedioSelecionado);
+
+				if (controllerRemedio.existeRemedioPorCodBar(remedioSelecionado)) {
+					mensagem = "Remedio não foi cadastrado";
+				} else {
+					mensagem = controllerRemedio.excluir(remedioSelecionado);
+				}
 			}
 		});
 		getContentPane().add(btnExcluir, "cell 0 10");
@@ -124,12 +132,23 @@ public class ListagemMedicamento extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				Remedio remedioSelecionado = new Remedio();
 
-				remedioSelecionado = remediosConsultados.get(tblRemedios.getSelectedRow() + 1);
+//				remedioSelecionado = remediosConsultados.get(tblRemedios.getSelectedRow() - 1);
+
+				remedioSelecionado.setNome(remediosConsultados.get(tblRemedios.getSelectedRow() - 1).getNome());
+				remedioSelecionado.setCodBarra(remediosConsultados.get(tblRemedios.getSelectedRow() - 1).getCodBarra());
+				remedioSelecionado.setPreco(remediosConsultados.get(tblRemedios.getSelectedRow() - 1).getPreco());
+				remedioSelecionado
+						.setComposicao(remediosConsultados.get(tblRemedios.getSelectedRow() - 1).getComposicao());
+				remedioSelecionado.setDosagem(remediosConsultados.get(tblRemedios.getSelectedRow() - 1).getDosagem());
+				remedioSelecionado
+						.setLaboratorio(remediosConsultados.get(tblRemedios.getSelectedRow() - 1).getLaboratorio());
+				remedioSelecionado.setEstoque(remediosConsultados.get(tblRemedios.getSelectedRow() - 1).getEstoque());
+				remedioSelecionado.setFormaUso(remediosConsultados.get(tblRemedios.getSelectedRow() - 1).getFormaUso());
+				remedioSelecionado.setGenerico(remediosConsultados.get(tblRemedios.getSelectedRow() - 1).isGenerico());
 
 				cadastroMedicamento = new CadastroMedicamento(remedioSelecionado);
 				cadastroMedicamento.setVisible(true);
 
-				// TODO Como abrir o internalFrame de cadastro
 			}
 		});
 		getContentPane().add(btnAlterar, "cell 1 10");

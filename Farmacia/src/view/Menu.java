@@ -2,9 +2,13 @@ package view;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -61,7 +65,9 @@ public class Menu extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		this.setBounds(100, 100, 450, 300);
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+		this.setBounds(0, 0, screenSize.width, screenSize.height - 35);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(new MigLayout("", "[grow][]", "[grow][]"));
 
@@ -124,8 +130,7 @@ public class Menu extends JFrame {
 		JMenuItem mntmCadastrarProduto = new JMenuItem("cadastrar");
 		mntmCadastrarProduto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (temComponenteNaTela(pesquisaMedicamento)) {
-				} else {
+				if (!temComponenteNaTela(pesquisaMedicamento)) {
 					cadastroProduto = new CadastroProduto();
 					desktopPane.add(cadastroProduto);
 					// desktopPane.getDesktopManager().maximizeFrame(pesquisaMedicamento);
@@ -146,8 +151,7 @@ public class Menu extends JFrame {
 		JMenuItem mntmPesquisarProduto = new JMenuItem("pesquisar");
 		mntmPesquisarProduto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (temComponenteNaTela(pesquisaProduto)) {
-				} else {
+				if (!temComponenteNaTela(pesquisaProduto)) {
 					pesquisaProduto = new ListagemProduto();
 					desktopPane.add(pesquisaProduto);
 					// desktopPane.getDesktopManager().maximizeFrame(pesquisaMedicamento);
@@ -166,13 +170,13 @@ public class Menu extends JFrame {
 		mnProdutos.add(mntmPesquisarProduto);
 
 		JMenu mnVendas = new JMenu("vendas");
-		mnVendas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (temComponenteNaTela(telaVenda)) {
-				} else {
+		mnVendas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent evt) {
+				if (!temComponenteNaTela(telaVenda)) {
 					telaVenda = new TelaVenda();
 					desktopPane.add(telaVenda);
-					// desktopPane.getDesktopManager().maximizeFrame(pesquisaMedicamento);
+					desktopPane.getDesktopManager().maximizeFrame(telaVenda);
 					telaVenda.show();
 
 					telaVenda.addInternalFrameListener(new InternalFrameAdapter() {
@@ -185,13 +189,13 @@ public class Menu extends JFrame {
 				}
 			}
 		});
+
 		menuBar.add(mnVendas);
 
 		JMenu mnSobre = new JMenu("sobre");
-		mnSobre.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (temComponenteNaTela(telaSobre)) {
-				} else {
+		mnSobre.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent evt) {
+				if (!temComponenteNaTela(telaSobre)) {
 					telaVenda = new TelaVenda();
 					desktopPane.add(telaVenda);
 					// desktopPane.getDesktopManager().maximizeFrame(pesquisaMedicamento);

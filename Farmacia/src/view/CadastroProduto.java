@@ -40,6 +40,8 @@ public class CadastroProduto extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public CadastroProduto() {
+		setTitle("Cadastro de Produto");
+		setClosable(true);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new MigLayout("", "[grow][grow]", "[][][][][][][][]"));
 
@@ -92,6 +94,14 @@ public class CadastroProduto extends JInternalFrame {
 			}
 		});
 		getContentPane().add(btnSalvar, "cell 1 7");
+
+	}
+
+	public CadastroProduto(Produto produto) {
+		txtCodBar.setText(produto.getCodBarra().toString());
+		txtNome.setText(produto.getNome());
+		txtPreco.setText("" + produto.getPreco());
+		txtEstoque.setText("" + produto.getEstoque());
 
 	}
 

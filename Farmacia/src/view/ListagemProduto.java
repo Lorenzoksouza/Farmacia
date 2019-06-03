@@ -19,6 +19,8 @@ import model.vo.Produto;
 import net.miginfocom.swing.MigLayout;
 
 public class ListagemProduto extends JInternalFrame {
+	CadastroProduto cadastroProduto = null;
+
 	private JTextField txtCodBar;
 	private JTextField txtNome;
 	private JTable tblProdutos;
@@ -49,8 +51,10 @@ public class ListagemProduto extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public ListagemProduto() {
+		setTitle("Pesquisa de Produtos");
+		setClosable(true);
 		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(new MigLayout("", "[grow][grow]", "[18.00,grow][][][][][][][][]"));
+		getContentPane().setLayout(new MigLayout("", "[grow][grow]", "[18.00][][][][][][][][]"));
 
 		JLabel lblCodbarras = new JLabel("cod.barras");
 		getContentPane().add(lblCodbarras, "cell 0 0");
@@ -95,7 +99,12 @@ public class ListagemProduto extends JInternalFrame {
 		JButton btnAlterar = new JButton("alterar");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// levar um objeto produto para a tela de cadastro
+				Produto produtoSelecionado = new Produto();
+
+				produtoSelecionado = produtosConsultados.get(tblProdutos.getSelectedRow() + 1);
+
+				cadastroProduto = new CadastroProduto(produtoSelecionado);
+				cadastroProduto.setVisible(true);
 
 			}
 		});
