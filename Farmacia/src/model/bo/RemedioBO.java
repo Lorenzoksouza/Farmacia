@@ -36,8 +36,8 @@ public class RemedioBO {
 
 	}
 
-	public boolean existeCodBar() {
-		return remedioDAO.existeCodBar();
+	public boolean existeCodBar(int CodBar) {
+		return remedioDAO.existeCodBar(CodBar);
 	}
 
 	public String excluir(int remedioSelecionado) {

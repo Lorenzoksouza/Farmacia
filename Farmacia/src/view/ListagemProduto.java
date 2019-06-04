@@ -84,6 +84,7 @@ public class ListagemProduto extends JInternalFrame {
 		JButton btnPesquisar = new JButton("pesquisar");
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				pesquisarProdutos();
 			}
 		});
 		getContentPane().add(btnPesquisar, "cell 0 6");
@@ -91,7 +92,16 @@ public class ListagemProduto extends JInternalFrame {
 		JButton btnExcluir = new JButton("excluir");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String mensagem = "";
+				int produtoSelecionado = (int) tblProdutos.getValueAt(tblProdutos.getSelectedRow(), 1);
 
+				ControllerProduto controllerProduto = new ControllerProduto();
+
+				if (controllerProduto.existeProdutoCodBar(produtoSelecionado)) {
+					mensagem = "Remedio não foi cadastrado";
+				} else {
+					mensagem = controllerProduto.excluir(produtoSelecionado);
+				}
 			}
 		});
 		getContentPane().add(btnExcluir, "flowx,cell 0 7");
@@ -101,7 +111,12 @@ public class ListagemProduto extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				Produto produtoSelecionado = new Produto();
 
-				produtoSelecionado = produtosConsultados.get(tblProdutos.getSelectedRow() + 1);
+//				produtoSelecionado = produtosConsultados.get(tblProdutos.getSelectedRow() + 1);
+
+				produtoSelecionado.setNome(produtosConsultados.get(tblProdutos.getSelectedRow() - 1).getNome());
+				produtoSelecionado.setCodBarra(produtosConsultados.get(tblProdutos.getSelectedRow() - 1).getCodBarra());
+				produtoSelecionado.setPreco(produtosConsultados.get(tblProdutos.getSelectedRow() - 1).getPreco());
+				produtoSelecionado.setEstoque(produtosConsultados.get(tblProdutos.getSelectedRow() - 1).getEstoque());
 
 				cadastroProduto = new CadastroProduto(produtoSelecionado);
 				cadastroProduto.setVisible(true);
@@ -120,7 +135,7 @@ public class ListagemProduto extends JInternalFrame {
 
 	}
 
-	private void pesquisarMedicamentos() {
+	private void pesquisarProdutos() {
 		// lblPaginaAtual.setText(paginaAtual + "");
 
 		ControllerProduto controlador = new ControllerProduto();

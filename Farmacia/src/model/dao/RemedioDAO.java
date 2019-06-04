@@ -191,7 +191,7 @@ public class RemedioDAO {
 		return null;
 	}
 
-	public boolean existeCodBar() {
+	public boolean existeCodBar(int codBar) {
 		// TODO Auto-generated method stub
 		return false;
 	}

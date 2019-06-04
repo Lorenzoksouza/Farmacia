@@ -18,7 +18,7 @@ public class ControllerRemedio {
 		String validacao = validarRemedio(remedio);
 
 		if (validacao == "") {
-			if (remedioBO.existeCodBar()) {
+			if (remedioBO.existeCodBar(Integer.parseInt(remedio.getCodBarra()))) {
 				// UPDATE
 				int opcao = JOptionPane.showConfirmDialog(null,
 						"Remedio ja cadastrado, deseja fazer alteração com os dados inseridos?", "",
@@ -84,7 +84,7 @@ public class ControllerRemedio {
 	}
 
 	public boolean existeRemedioPorCodBar(int remedioSelecionado) {
-		return remedioBO.existeCodBar();
+		return remedioBO.existeCodBar(remedioSelecionado);
 	}
 
 	public ArrayList<String> consultarFormaUso() {

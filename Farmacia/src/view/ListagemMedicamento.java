@@ -104,8 +104,8 @@ public class ListagemMedicamento extends JInternalFrame {
 		getContentPane().add(cmbFormaUso, "cell 0 7,growx");
 		cmbFormaUso.setSelectedIndex(-1);
 
-		JCheckBox chckbxGenerico_1 = new JCheckBox("generico");
-		getContentPane().add(chckbxGenerico_1, "cell 0 9");
+		JCheckBox chckbxGenerico = new JCheckBox("generico");
+		getContentPane().add(chckbxGenerico, "cell 0 9");
 
 		JButton btnPesquisar = new JButton("pesquisar");
 		btnPesquisar.addActionListener(new ActionListener() {
@@ -174,44 +174,43 @@ public class ListagemMedicamento extends JInternalFrame {
 		ControllerRemedio controlador = new ControllerRemedio();
 		RemedioSeletor seletor = new RemedioSeletor();
 
-		// TODO descomentar
-		// List<Remedio> remedios = controlador.listarRemedios(seletor);
+		List<Remedio> remedios = controlador.listarRemedios(seletor);
 
 		seletor.setLimite(10);
 
-//		int quociente = remedios.size() / seletor.getLimite();
-//		int resto = remedios.size() % seletor.getLimite();
-//
-//		if (resto == 0) {
-//			totalPaginas = quociente;
-//		} else {
-//			totalPaginas = quociente + 1;
-//		}
-//		// lblTotalPaginas.setText(totalPaginas + "");
-//
-//		seletor.setPagina(paginaAtual);
+		int quociente = remedios.size() / seletor.getLimite();
+		int resto = remedios.size() % seletor.getLimite();
+
+		if (resto == 0) {
+			totalPaginas = quociente;
+		} else {
+			totalPaginas = quociente + 1;
+		}
+		// lblTotalPaginas.setText(totalPaginas + "");
+
+		seletor.setPagina(paginaAtual);
 
 		// Preenche os campos de filtro da tela no seletor
 
-//		if (txtCodBar != null) {
-//			seletor.setCodBar(Integer.parseInt(txtCodBar.getText()));
-//		}
-//
-//		if (!txtNome.getText().trim().equals("")) {
-//			seletor.setNomeRemedio(txtNome.getText());
-//		}
-//
-//		if (!txtComposicao.getText().trim().equals("")) {
-//			seletor.setComposicaoRemedio(txtNome.getText());
-//		}
-//
-//		if (cmbTipo.getSelectedIndex() > 0) {
-//			seletor.setTipoRemedio(cmbTipo.getSelectedItem().toString());
-//		}
-//
-//		if (chckbxGenerico.isSelected()) {
-//			seletor.setGenerico(true);
-//		}
+		if (txtCodBar != null) {
+			seletor.setCodBar(Integer.parseInt(txtCodBar.getText()));
+		}
+
+		if (!txtNome.getText().trim().equals("")) {
+			seletor.setNomeRemedio(txtNome.getText());
+		}
+
+		if (!txtComposicao.getText().trim().equals("")) {
+			seletor.setComposicaoRemedio(txtNome.getText());
+		}
+
+		if (cmbFormaUso.getSelectedIndex() > -1) {
+			seletor.setTipoRemedio(cmbFormaUso.getSelectedItem().toString());
+		}
+
+		if (chckbxGenerico.isSelected()) {
+			seletor.setGenerico(true);
+		}
 
 		// TODO descomentar!
 		// remedios = controlador.listarRemedios(seletor);

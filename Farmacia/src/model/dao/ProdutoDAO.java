@@ -40,4 +40,9 @@ public class ProdutoDAO {
 		return false;
 	}
 
+	public String excluir(int produtoSelecionado) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

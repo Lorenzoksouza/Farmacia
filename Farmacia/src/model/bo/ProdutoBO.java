@@ -31,8 +31,12 @@ public class ProdutoBO {
 		return produtoDAO.listarComSeletor(seletor);
 	}
 
-	public boolean existeCodBar() {
+	public boolean existeCodBar(int produtoSelecionado) {
 		return produtoDAO.existeCodBar();
+	}
+
+	public String excluir(int produtoSelecionado) {
+		return produtoDAO.excluir(produtoSelecionado);
 	}
 
 }

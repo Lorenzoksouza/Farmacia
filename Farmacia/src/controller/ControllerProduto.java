@@ -17,7 +17,7 @@ public class ControllerProduto {
 		String validacao = validarProduto(produto);
 
 		if (validacao == "") {
-			if (produtoBO.existeCodBar()) {
+			if (produtoBO.existeCodBar(Integer.parseInt(produto.getCodBarra()))) {
 				JOptionPane.showConfirmDialog(null,
 						"Produto ja cadastrado, deseja fazer alteração com os dados inseridos?", "",
 						JOptionPane.OK_CANCEL_OPTION);
@@ -65,6 +65,14 @@ public class ControllerProduto {
 
 	public List<Produto> listarProdutos(ProdutoSeletor seletor) {
 		return produtoBO.listarProdutos(seletor);
+	}
+
+	public boolean existeProdutoCodBar(int produtoSelecionado) {
+		return produtoBO.existeCodBar(produtoSelecionado);
+	}
+
+	public String excluir(int produtoSelecionado) {
+		return produtoBO.excluir(produtoSelecionado);
 	}
 
 }
