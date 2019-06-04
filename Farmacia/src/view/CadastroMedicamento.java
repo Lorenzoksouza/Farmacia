@@ -21,8 +21,9 @@ public class CadastroMedicamento extends JInternalFrame {
 	private JTextField txtPreco;
 	private JTextField txtComposicao;
 	private JTextField txtDosagem;
-	private JTextField txtLaboratorio;
 	private JTextField txtEstoque;
+	private JComboBox<String> cmbLaboratorio;
+	private JComboBox<String> cmbFormaUso;
 
 	/**
 	 * Launch the application.
@@ -82,25 +83,30 @@ public class CadastroMedicamento extends JInternalFrame {
 		JLabel lblDosagem = new JLabel("dosagem");
 		getContentPane().add(lblDosagem, "cell 0 4");
 
-		JLabel lblLaboratorio = new JLabel("laboratorio");
-		getContentPane().add(lblLaboratorio, "cell 1 4");
-
 		txtDosagem = new JTextField();
 		getContentPane().add(txtDosagem, "cell 0 5,growx");
 		txtDosagem.setColumns(10);
 
-		txtLaboratorio = new JTextField();
-		getContentPane().add(txtLaboratorio, "cell 1 5,growx");
-		txtLaboratorio.setColumns(10);
+		consultarLaboratorio();
 
-		JLabel lblFormaUso = new JLabel("tipo");
+		JLabel lblLaboratorio = new JLabel("Laboratório");
+		getContentPane().add(lblLaboratorio, "cell 1 4");
+
+		cmbLaboratorio = new JComboBox<String>();
+//		cmbLaboratorio.setModel(new DefaultComboBoxModel<String>(listaLaboratorios.toArray()));
+		getContentPane().add(cmbLaboratorio, "cell 1 5,growx");
+
+		consultarFormaUso();
+
+		JLabel lblFormaUso = new JLabel("Forma de Uso");
 		getContentPane().add(lblFormaUso, "cell 0 6");
+
+		cmbFormaUso = new JComboBox<String>();
+//		cmbFormaUso.setModel(new DefaultComboBoxModel<String>(listaFormaUso.toArray()));
+		getContentPane().add(cmbFormaUso, "cell 0 7,growx");
 
 		JLabel lblEstoque = new JLabel("estoque");
 		getContentPane().add(lblEstoque, "cell 1 6");
-
-		JComboBox cmbFormaUso = new JComboBox();
-		getContentPane().add(cmbFormaUso, "cell 0 7,growx");
 
 		txtEstoque = new JTextField();
 		getContentPane().add(txtEstoque, "cell 1 7,growx");
@@ -120,7 +126,7 @@ public class CadastroMedicamento extends JInternalFrame {
 				remedio.setPreco(Double.parseDouble(txtPreco.getText()));
 				remedio.setComposicao(txtComposicao.getText());
 				remedio.setDosagem(txtDosagem.getText());
-				remedio.setLaboratorio(txtLaboratorio.getText());
+				remedio.setLaboratorio(cmbLaboratorio.getSelectedItem().toString());
 				remedio.setEstoque(Integer.parseInt(txtEstoque.getText()));
 				remedio.setFormaUso(cmbFormaUso.getSelectedItem().toString());
 				remedio.setGenerico(chckbxGenerico.isSelected());
@@ -132,23 +138,29 @@ public class CadastroMedicamento extends JInternalFrame {
 		getContentPane().add(btnSalvar, "cell 1 8");
 	}
 
-	/**
-	 * Create the frame. UPDATE
-	 * 
-	 * @param remedio
-	 */
-
 	public CadastroMedicamento(Remedio remedio) {
-
 		new CadastroMedicamento();
 		txtNome.setText(remedio.getNome());
 		txtCodBar.setText(remedio.getCodBarra() + "");
 		txtPreco.setText(remedio.getPreco() + "");
 		txtComposicao.setText(remedio.getComposicao());
 		txtDosagem.setText(remedio.getDosagem());
-		txtLaboratorio.setText(remedio.getLaboratorio());
 		txtEstoque.setText(remedio.getEstoque() + "");
-
+		cmbLaboratorio.setSelectedItem(remedio.getLaboratorio());
+		cmbFormaUso.setSelectedItem(remedio.getFormaUso());
 	}
 
+	// Criar os métodos de consultar Lista de Forma de Uso e Laboratório, no DAO já
+	// foi criado!!
+	private void consultarLaboratorio() {
+		// TODO Auto-generated method stub
+		// fazer retornar listaLaboratorios do RemedioDAO!
+		// após isto, descomentar linha 96
+	}
+
+	private void consultarFormaUso() {
+		// TODO Auto-generated method stub
+		// fazer retornar listaFormaUso do RemedioDAO!
+		// após isto, descomentar linha 105
+	}
 }
