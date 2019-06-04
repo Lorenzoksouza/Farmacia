@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -86,4 +87,11 @@ public class ControllerRemedio {
 		return remedioBO.existeCodBar();
 	}
 
+	public ArrayList<String> consultarFormaUso() {
+		return remedioBO.consultarFormaUso();
+	}
+
+	public ArrayList<String> consultarLaboratorio() {
+		return remedioBO.consultarLaboratorio();
+	}
 }

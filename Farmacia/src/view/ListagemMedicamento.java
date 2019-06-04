@@ -28,13 +28,15 @@ public class ListagemMedicamento extends JInternalFrame {
 	private JTextField txtNome;
 	private JTextField txtComposicao;
 	private JTable tblRemedios;
-	private JComboBox cmbTipo;
+	private JComboBox cmbFormaUso;
 	private JCheckBox chckbxGenerico;
 	private JButton btnGerarXls;
 
 	private List<Remedio> remediosConsultados;
 	private int totalPaginas = 1;
 	private int paginaAtual = 1;
+
+	private ArrayList<String> listaFormasUso;
 
 	/**
 	 * Launch the application.
@@ -93,11 +95,14 @@ public class ListagemMedicamento extends JInternalFrame {
 		getContentPane().add(txtComposicao, "cell 0 5,growx");
 		txtComposicao.setColumns(10);
 
-		JLabel lblTipo = new JLabel("tipo");
-		getContentPane().add(lblTipo, "cell 0 6");
+		JLabel lblFormaUso = new JLabel("Forma de Uso");
+		getContentPane().add(lblFormaUso, "cell 0 6");
 
-		JComboBox cmbTipo_1 = new JComboBox();
-		getContentPane().add(cmbTipo_1, "cell 0 7,growx");
+		this.consultarFormaUso();
+
+		cmbFormaUso = new JComboBox(listaFormasUso.toArray());
+		getContentPane().add(cmbFormaUso, "cell 0 7,growx");
+		cmbFormaUso.setSelectedIndex(-1);
 
 		JCheckBox chckbxGenerico_1 = new JCheckBox("generico");
 		getContentPane().add(chckbxGenerico_1, "cell 0 9");
@@ -211,6 +216,14 @@ public class ListagemMedicamento extends JInternalFrame {
 		// TODO descomentar!
 		// remedios = controlador.listarRemedios(seletor);
 		atualizarTabelaMedicamentos(this.remediosConsultados);
+	}
+
+	private void consultarFormaUso() {
+		ControllerRemedio controllerRemedio = new ControllerRemedio();
+		listaFormasUso = controllerRemedio.consultarFormaUso();
+
+		// fazer retornar listaFormaUso do RemedioDAO!
+		// após isto, descomentar linha 105
 	}
 
 	private void atualizarTabelaMedicamentos(List<Remedio> remedios) {

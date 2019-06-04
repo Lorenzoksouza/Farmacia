@@ -84,21 +84,19 @@ public class Menu extends JFrame {
 		JMenuItem mntmCadastrarRemedio = new JMenuItem("cadastrar");
 		mntmCadastrarRemedio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (temComponenteNaTela(cadastroMedicamento)) {
-				} else {
+				if (!temComponenteNaTela(cadastroMedicamento))
 					cadastroMedicamento = new CadastroMedicamento();
-					desktopPane.add(cadastroMedicamento);
-					// desktopPane.getDesktopManager().maximizeFrame(cadastroMedicamento);
-					cadastroMedicamento.show();
+				desktopPane.add(cadastroMedicamento);
+				// desktopPane.getDesktopManager().maximizeFrame(cadastroMedicamento);
+				cadastroMedicamento.show();
 
-					cadastroMedicamento.addInternalFrameListener(new InternalFrameAdapter() {
-						@Override
-						public void internalFrameClosing(InternalFrameEvent evt) {
-							Menu pai = (Menu) SwingUtilities.getWindowAncestor(cadastroMedicamento);
-							pai.chamarPai(cadastroMedicamento);
-						}
-					});
-				}
+				cadastroMedicamento.addInternalFrameListener(new InternalFrameAdapter() {
+					@Override
+					public void internalFrameClosing(InternalFrameEvent evt) {
+						Menu pai = (Menu) SwingUtilities.getWindowAncestor(cadastroMedicamento);
+						pai.chamarPai(cadastroMedicamento);
+					}
+				});
 			}
 		});
 		mnMedicamento.add(mntmCadastrarRemedio);

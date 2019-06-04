@@ -52,21 +52,23 @@ public class RemedioDAO {
 	}
 
 	private int pegarIdFormaUso(Remedio r) {
-		String sql = "SELECT ID_FORMA_USO FROM FORMA_USO WHERE DESCRICAO = ?";
+		String sql = "SELECT ID_FORMA_USO FROM FORMA_USO WHERE DESCRICAO = '?'";
 		Connection conn = Banco.getConnection();
-		PreparedStatement prepStmt = Banco.getPreparedStatement(conn);
+		PreparedStatement prepStmt = Banco.getPreparedStatement(conn, sql);
 		ResultSet resultado = null;
 		int idFormaUso = 0;
 
 		try {
 			prepStmt.setString(1, r.getFormaUso());
+			System.out.println(sql);
 			resultado = prepStmt.executeQuery();
 			// verficar se não precisa de um Parse
-			idFormaUso = resultado.getInt(1);
+			idFormaUso = resultado.getInt("ID_FORMA_USO");
+			System.out.println(idFormaUso);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Erro ao pegar id forma uso. Causa: " + e.getMessage());
 		} finally {
 			Banco.closeResultSet(resultado);
 			Banco.closePreparedStatement(prepStmt);
@@ -77,9 +79,9 @@ public class RemedioDAO {
 	}
 
 	private int pegarIdLaboratorio(Remedio r) {
-		String sql = "SELECT ID_LABORATORIO FROM LABORATORIO WHERE NM_LABORATORIO = ?";
+		String sql = "SELECT ID_LABORATORIO FROM LABORATORIO WHERE NM_LABORATORIO = '?'";
 		Connection conn = Banco.getConnection();
-		PreparedStatement prepStmt = Banco.getPreparedStatement(conn);
+		PreparedStatement prepStmt = Banco.getPreparedStatement(conn, sql);
 		ResultSet resultado = null;
 		int idLaboratorio = 0;
 
@@ -259,11 +261,11 @@ public class RemedioDAO {
 
 		ArrayList<String> listaLaboratorios = new ArrayList<String>();
 
-		String query = "SELECT NM_LABORATARORIO FROM LABORATORIO";
+		String query = "SELECT NM_LABORATORIO FROM LABORATORIO";
 		try {
 			resultado = stmt.executeQuery(query);
 			while (resultado.next()) {
-				listaLaboratorios.add(resultado.getString("DESCRICAO"));
+				listaLaboratorios.add(resultado.getString("NM_LABORATORIO"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

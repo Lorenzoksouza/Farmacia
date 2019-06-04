@@ -3,7 +3,9 @@ package view;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -24,6 +26,9 @@ public class CadastroMedicamento extends JInternalFrame {
 	private JTextField txtEstoque;
 	private JComboBox<String> cmbLaboratorio;
 	private JComboBox<String> cmbFormaUso;
+
+	private ArrayList<String> listaLaboratorios;
+	private ArrayList<String> listaFormasUso;
 
 	/**
 	 * Launch the application.
@@ -92,8 +97,9 @@ public class CadastroMedicamento extends JInternalFrame {
 		JLabel lblLaboratorio = new JLabel("Laboratório");
 		getContentPane().add(lblLaboratorio, "cell 1 4");
 
-		cmbLaboratorio = new JComboBox<String>();
-//		cmbLaboratorio.setModel(new DefaultComboBoxModel<String>(listaLaboratorios.toArray()));
+		cmbLaboratorio = new JComboBox();
+		cmbLaboratorio.setModel(new DefaultComboBoxModel(listaLaboratorios.toArray()));
+		cmbLaboratorio.setSelectedIndex(-1);
 		getContentPane().add(cmbLaboratorio, "cell 1 5,growx");
 
 		consultarFormaUso();
@@ -101,8 +107,9 @@ public class CadastroMedicamento extends JInternalFrame {
 		JLabel lblFormaUso = new JLabel("Forma de Uso");
 		getContentPane().add(lblFormaUso, "cell 0 6");
 
-		cmbFormaUso = new JComboBox<String>();
-//		cmbFormaUso.setModel(new DefaultComboBoxModel<String>(listaFormaUso.toArray()));
+		cmbFormaUso = new JComboBox();
+		cmbFormaUso.setModel(new DefaultComboBoxModel(listaFormasUso.toArray()));
+		cmbFormaUso.setSelectedIndex(-1);
 		getContentPane().add(cmbFormaUso, "cell 0 7,growx");
 
 		JLabel lblEstoque = new JLabel("estoque");
@@ -153,13 +160,17 @@ public class CadastroMedicamento extends JInternalFrame {
 	// Criar os métodos de consultar Lista de Forma de Uso e Laboratório, no DAO já
 	// foi criado!!
 	private void consultarLaboratorio() {
-		// TODO Auto-generated method stub
+		ControllerRemedio controllerRemedio = new ControllerRemedio();
+		listaLaboratorios = controllerRemedio.consultarLaboratorio();
+
 		// fazer retornar listaLaboratorios do RemedioDAO!
 		// após isto, descomentar linha 96
 	}
 
 	private void consultarFormaUso() {
-		// TODO Auto-generated method stub
+		ControllerRemedio controllerRemedio = new ControllerRemedio();
+		listaFormasUso = controllerRemedio.consultarFormaUso();
+
 		// fazer retornar listaFormaUso do RemedioDAO!
 		// após isto, descomentar linha 105
 	}
