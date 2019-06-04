@@ -59,6 +59,7 @@ public class RemedioDAO {
 		int idFormaUso = 0;
 
 		try {
+			System.out.println(r.getFormaUso());
 			resultado = stmt.executeQuery(sql);
 			idFormaUso = resultado.getInt(1);
 
