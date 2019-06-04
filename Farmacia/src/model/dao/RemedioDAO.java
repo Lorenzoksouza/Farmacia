@@ -1,9 +1,11 @@
 package model.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,18 +14,128 @@ import model.vo.Remedio;
 
 public class RemedioDAO {
 
-	public String inserir(Remedio remedio) {
+	public String inserir(Remedio r) {
+		String mensagem = "";
+		String sql = "INSERT INTO REMEDIO(COD_BARRA, DOSAGEM, COMPOSICAO, GENERICO, NM_REMEDIO, DT_CADASTRO, PRECO, ESTOQUE, ID_FORMA_USO, ID_LABORATORIO)"
+				+ " VALUES (?,?,?,?,?,?,?,?,?,?)";
 
-		return null;
+		Connection conn = Banco.getConnection();
+		PreparedStatement prepStmt = Banco.getPreparedStatement(conn, sql, Statement.RETURN_GENERATED_KEYS);
+		try {
+			prepStmt.setString(1, r.getCodBarra());
+			prepStmt.setString(2, r.getDosagem());
+			prepStmt.setString(3, r.getComposicao());
+			prepStmt.setBoolean(4, r.isGenerico());
+			prepStmt.setString(5, r.getNome());
+			prepStmt.setDate(6, (Date) r.getDataCadastro());
+			prepStmt.setDouble(7, r.getPreco());
+			prepStmt.setInt(8, r.getEstoque());
+			prepStmt.setInt(9, pegarIdFormaUso(r));
+			prepStmt.setInt(10, pegarIdLaboratorio(r));
+
+			prepStmt.execute();
+
+			boolean codigoRetorno = prepStmt.execute();
+			if (codigoRetorno == false) {
+				mensagem = "Erro ao executar query de cadastro de Remédio!";
+			}
+
+			System.out.println(codigoRetorno);
+
+		} catch (SQLException e) {
+			System.out.println("Erro ao inserir remédio. Causa: " + e.getMessage());
+		} finally {
+			Banco.closePreparedStatement(prepStmt);
+			Banco.closeConnection(conn);
+		}
+		return mensagem;
 	}
 
-	public String atualizar(Remedio remedio) {
+	private int pegarIdFormaUso(Remedio r) {
+		String sql = "SELECT ID_FORMA_USO FROM FORMA_USO WHERE DESCRICAO = ?";
+		Connection conn = Banco.getConnection();
+		PreparedStatement prepStmt = Banco.getPreparedStatement(conn);
+		ResultSet resultado = null;
+		int idFormaUso = 0;
 
-		return null;
+		try {
+			prepStmt.setString(1, r.getFormaUso());
+			resultado = prepStmt.executeQuery();
+			// verficar se não precisa de um Parse
+			idFormaUso = resultado.getInt(1);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closePreparedStatement(prepStmt);
+			Banco.closeConnection(conn);
+		}
+
+		return idFormaUso;
+	}
+
+	private int pegarIdLaboratorio(Remedio r) {
+		String sql = "SELECT ID_LABORATORIO FROM LABORATORIO WHERE NM_LABORATORIO = ?";
+		Connection conn = Banco.getConnection();
+		PreparedStatement prepStmt = Banco.getPreparedStatement(conn);
+		ResultSet resultado = null;
+		int idLaboratorio = 0;
+
+		try {
+			prepStmt.setString(1, r.getLaboratorio());
+			resultado = prepStmt.executeQuery();
+			// verficar se não precisa de um Parse
+			idLaboratorio = resultado.getInt(1);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closePreparedStatement(prepStmt);
+			Banco.closeConnection(conn);
+		}
+		return idLaboratorio;
+	}
+
+	public String atualizar(Remedio r) {
+		String mensagem = "";
+		String sql = "UPDATE REMEDIO R SET COD_BARRA =?, DOSAGEM =?, COMPOSICAO=?, GENERICO=?, NM_REMEDIO=?, DT_CADASTRO=?, PRECO=?, ESTOQUE=?, ID_FORMA_USO=?, ID_LABORATORIO=?)"
+				+ "WHERE R.COD_BARRA=?";
+
+		Connection conn = Banco.getConnection();
+		PreparedStatement prepStmt = Banco.getPreparedStatement(conn, sql, Statement.RETURN_GENERATED_KEYS);
+		try {
+			prepStmt.setString(1, r.getCodBarra());
+			prepStmt.setString(2, r.getDosagem());
+			prepStmt.setString(3, r.getComposicao());
+			prepStmt.setBoolean(4, r.isGenerico());
+			prepStmt.setString(5, r.getNome());
+			prepStmt.setDate(6, (Date) r.getDataCadastro());
+			prepStmt.setDouble(7, r.getPreco());
+			prepStmt.setInt(8, r.getEstoque());
+			prepStmt.setInt(9, pegarIdFormaUso(r));
+			prepStmt.setInt(10, pegarIdLaboratorio(r));
+
+			prepStmt.execute();
+
+			int codigoRetorno = prepStmt.executeUpdate();
+			if (codigoRetorno == 0) {
+				mensagem = "Erro ao executar query de atualização de Remédio!";
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao atualizar remédio. Causa: " + e.getMessage());
+		} finally {
+			Banco.closePreparedStatement(prepStmt);
+			Banco.closeConnection(conn);
+		}
+		return mensagem;
 	}
 
 	public List<Remedio> listarComSeletor(RemedioSeletor seletor) {
-		String sql = " SELECT * FROM remedio r";
+		String sql = " SELECT * FROM REMEDIO R";
 
 		if (seletor.temFiltro()) {
 			sql = criarFiltros(seletor, sql);
@@ -89,7 +201,80 @@ public class RemedioDAO {
 	}
 
 	public String excluir(int remedioSelecionado) {
-		// TODO Auto-generated method stub
-		return null;
+		// método estava int, mas o cod de barra é varchar, verificar como será feito
+		// este método
+		String mensagem = "";
+
+		String sql = " DELETE FROM REMEDIO " + " WHERE COD_BARRA = ?";
+
+		Connection conexao = Banco.getConnection();
+		PreparedStatement prepStmt = Banco.getPreparedStatement(conexao, sql);
+
+		try {
+			prepStmt.setInt(1, remedioSelecionado);
+
+			int codigoRetorno = prepStmt.executeUpdate();
+			if (codigoRetorno == 0) {// 1 - sucesso na execução
+				mensagem = "Erro ao executar a query de exclusão de remédio!";
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao remover remédio. Causa: " + e.getMessage());
+		} finally {
+			Banco.closePreparedStatement(prepStmt);
+			Banco.closeConnection(conexao);
+		}
+		return mensagem;
+	}
+
+	public ArrayList<String> consultarFormaUso() {
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+
+		ArrayList<String> listaFormaUso = new ArrayList<String>();
+
+		String query = "SELECT DESCRICAO FROM FORMA_USO";
+		try {
+			resultado = stmt.executeQuery(query);
+			while (resultado.next()) {
+				listaFormaUso.add(resultado.getString("DESCRICAO"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Erro ao listar as Formas de Uso!!");
+			e.printStackTrace();
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+
+		return listaFormaUso;
+	}
+
+	public ArrayList<String> consultarLaboratorio() {
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+
+		ArrayList<String> listaLaboratorios = new ArrayList<String>();
+
+		String query = "SELECT NM_LABORATARORIO FROM LABORATORIO";
+		try {
+			resultado = stmt.executeQuery(query);
+			while (resultado.next()) {
+				listaLaboratorios.add(resultado.getString("DESCRICAO"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Erro ao listar os Laboratórios!!");
+			e.printStackTrace();
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+
+		return listaLaboratorios;
 	}
 }
