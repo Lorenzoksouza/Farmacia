@@ -3,7 +3,9 @@ package view;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
@@ -19,6 +21,9 @@ public class CadastroProduto extends JInternalFrame {
 	private JTextField txtPreco;
 	private JTextField txtEstoque;
 	private JTextField txtCodBar;
+	private JComboBox<String> cmbCategoria;
+
+	private ArrayList<String> listaCategorias;
 
 	/**
 	 * Launch the application.
@@ -65,7 +70,9 @@ public class CadastroProduto extends JInternalFrame {
 		JLabel lblEstoque = new JLabel("estoque");
 		getContentPane().add(lblEstoque, "cell 1 4");
 
-		JComboBox cmbCategoria = new JComboBox();
+		cmbCategoria = new JComboBox();
+		cmbCategoria.setModel(new DefaultComboBoxModel(listaCategorias.toArray()));
+		cmbCategoria.setSelectedIndex(-1);
 		getContentPane().add(cmbCategoria, "cell 0 5,growx");
 
 		txtEstoque = new JTextField();
@@ -103,6 +110,14 @@ public class CadastroProduto extends JInternalFrame {
 		txtPreco.setText("" + produto.getPreco());
 		txtEstoque.setText("" + produto.getEstoque());
 
+	}
+
+	private void consultarCategoria() {
+		ControllerProduto controllerProduto = new ControllerProduto();
+		listaCategorias = controllerProduto.consultarCategoria();
+
+		// fazer retornar listaLaboratorios do RemedioDAO!
+		// após isto, descomentar linha 96
 	}
 
 }

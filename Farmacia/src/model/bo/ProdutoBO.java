@@ -1,5 +1,6 @@
 package model.bo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.dao.ProdutoDAO;
@@ -37,6 +38,10 @@ public class ProdutoBO {
 
 	public String excluir(int produtoSelecionado) {
 		return produtoDAO.excluir(produtoSelecionado);
+	}
+
+	public ArrayList<String> consultarCategoria() {
+		return produtoDAO.consultarCategoria();
 	}
 
 }

@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -73,6 +74,10 @@ public class ControllerProduto {
 
 	public String excluir(int produtoSelecionado) {
 		return produtoBO.excluir(produtoSelecionado);
+	}
+
+	public ArrayList<String> consultarCategoria() {
+		return produtoBO.consultarCategoria();
 	}
 
 }
