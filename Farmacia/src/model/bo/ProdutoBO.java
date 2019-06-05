@@ -1,5 +1,6 @@
 package model.bo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.dao.ProdutoDAO;
@@ -31,8 +32,16 @@ public class ProdutoBO {
 		return produtoDAO.listarComSeletor(seletor);
 	}
 
-	public boolean existeCodBar() {
+	public boolean existeCodBar(int produtoSelecionado) {
 		return produtoDAO.existeCodBar();
+	}
+
+	public String excluir(int produtoSelecionado) {
+		return produtoDAO.excluir(produtoSelecionado);
+	}
+
+	public ArrayList<String> consultarCategoria() {
+		return produtoDAO.consultarCategoria();
 	}
 
 }

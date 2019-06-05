@@ -1,10 +1,14 @@
 package view;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -12,7 +16,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import controller.ControllerVenda;
@@ -50,35 +54,43 @@ public class TelaVenda extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public TelaVenda() {
-		setTitle("Vendas");
+		getContentPane().setBackground(Color.WHITE);
+		setResizable(true);
+		setFrameIcon(new ImageIcon(TelaVenda.class.getResource("/icons/vendas3x.png")));
+		setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
+		setBackground(Color.WHITE);
+		setTitle("vendas");
 		setClosable(true);
-		setBounds(100, 100, 600, 390);
-		getContentPane()
-				.setLayout(new MigLayout("", "[grow][grow]", "[21.00][][][25.00][][][][][][][][][grow,bottom]"));
+		setBounds(100, 100, 660, 530);
+		getContentPane().setLayout(new MigLayout("", "[grow][][grow]", "[21.00][][][25.00][][][][][][grow][][]"));
 
-		JLabel lblCodbarra = new JLabel("cod.barra");
-		getContentPane().add(lblCodbarra, "cell 0 0");
+		JLabel lblCodbarra = new JLabel("c\u00F3d.barra:");
+		getContentPane().add(lblCodbarra, "flowx,cell 0 0,growx");
+
+		JLabel lblEspaco = new JLabel("         ");
+		getContentPane().add(lblEspaco, "cell 1 0,alignx left");
 
 		tblVenda = new JTable();
+		tblVenda.setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		tblVenda.setFillsViewportHeight(true);
 		tblVenda.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "nome", "quantidade", "preco" }));
-		getContentPane().add(tblVenda, "cell 1 0 1 11,grow");
+		getContentPane().add(tblVenda, "cell 2 0 1 10,grow");
 
 		txtCodBar = new JTextField();
-		getContentPane().add(txtCodBar, "cell 0 1,growx");
+		getContentPane().add(txtCodBar, "flowx,cell 0 1,growx");
 		txtCodBar.setColumns(10);
 
-		JLabel lblNome = new JLabel("nome");
-		getContentPane().add(lblNome, "flowx,cell 0 2");
-
 		tblPesquisa = new JTable();
+		tblPesquisa.setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		tblPesquisa.setModel(
 				new DefaultTableModel(new Object[][] {}, new String[] { "Codigo", "Nome", "Preco", "Estoque" }));
-		getContentPane().add(tblPesquisa, "cell 0 3 1 9,grow");
+		getContentPane().add(tblPesquisa, "cell 0 3 1 7,grow");
 
-		JButton btnAddItem = new JButton("Add Item");
-		btnAddItem.setVerticalAlignment(SwingConstants.BOTTOM);
-		btnAddItem.setHorizontalAlignment(SwingConstants.RIGHT);
+		JButton btnAddItem = new JButton("adicionar item");
+		btnAddItem.setBackground(Color.WHITE);
+		btnAddItem.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnAddItem.setPreferredSize(new Dimension(90, 30));
+		btnAddItem.setBorder(new LineBorder(Color.gray, 2, true));
 		btnAddItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Mercadoria mercadoria = new Produto();
@@ -95,17 +107,25 @@ public class TelaVenda extends JInternalFrame {
 		});
 
 		JLabel lblTotal = new JLabel("Total:");
-		getContentPane().add(lblTotal, "flowx,cell 1 11,aligny bottom");
+		getContentPane().add(lblTotal, "flowx,cell 2 10,aligny bottom");
 
-		JLabel lblQuantidade = new JLabel("Quantidade:");
-		getContentPane().add(lblQuantidade, "flowx,cell 0 12,aligny bottom");
+		JLabel lblValor_1 = new JLabel("R$0.00");
+		getContentPane().add(lblValor_1, "cell 2 10,aligny bottom");
+
+		JLabel lblQuantidade = new JLabel("quantidade:");
+		getContentPane().add(lblQuantidade, "flowx,cell 0 11,aligny center");
 
 		JSpinner spiQuantidade = new JSpinner();
 		spiQuantidade.setModel(new SpinnerNumberModel(1, 1, 10, 1));
-		getContentPane().add(spiQuantidade, "cell 0 12,aligny bottom");
-		getContentPane().add(btnAddItem, "cell 0 12,aligny bottom");
+		getContentPane().add(spiQuantidade, "cell 0 11,aligny center");
+		getContentPane().add(btnAddItem, "cell 0 11,alignx center,aligny bottom");
 
 		JButton btnRemover = new JButton("Remover");
+		btnRemover.setForeground(Color.RED);
+		btnRemover.setBackground(Color.WHITE);
+		btnRemover.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnRemover.setPreferredSize(new Dimension(100, 30));
+		btnRemover.setBorder(new LineBorder(Color.gray, 2, true));
 		btnRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Mercadoria mercadoria = new Produto();
@@ -116,25 +136,37 @@ public class TelaVenda extends JInternalFrame {
 				lblValor.setText("R$" + (Double.parseDouble(lblValor.getText()) - mercadoria.getPreco()));
 			}
 		});
-		getContentPane().add(btnRemover, "flowx,cell 1 12,alignx leading,aligny bottom");
+		getContentPane().add(btnRemover, "flowx,cell 2 11,alignx center,aligny bottom");
+
+		JLabel lblEspaco2 = new JLabel("                             ");
+		getContentPane().add(lblEspaco2, "cell 2 11");
 
 		JButton btnConcluirVenda = new JButton("Concluir Venda");
-		getContentPane().add(btnConcluirVenda, "cell 1 12,alignx leading,aligny bottom");
-
-		txtNome = new JTextField();
-		getContentPane().add(txtNome, "cell 0 2");
-		txtNome.setColumns(10);
+		btnConcluirVenda.setForeground(new Color(0, 128, 0));
+		btnConcluirVenda.setBackground(Color.WHITE);
+		btnConcluirVenda.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnConcluirVenda.setPreferredSize(new Dimension(30, 30));
+		btnConcluirVenda.setBorder(new LineBorder(Color.gray, 2, true));
+		getContentPane().add(btnConcluirVenda, "cell 2 11,alignx center");
 
 		JButton btnPesquisar = new JButton("pesquisar");
+		btnPesquisar.setBackground(Color.WHITE);
+		btnPesquisar.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnPesquisar.setPreferredSize(new Dimension(200, 30));
+		btnPesquisar.setBorder(new LineBorder(Color.gray, 2, true));
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				pesquisarMercadorias();
 			}
 		});
-		getContentPane().add(btnPesquisar, "cell 0 2");
+		getContentPane().add(btnPesquisar, "cell 0 2,alignx right");
 
-		JLabel lblValor = new JLabel("R$0.00");
-		getContentPane().add(lblValor, "cell 1 11,aligny bottom");
+		JLabel lblNome = new JLabel("nome:");
+		getContentPane().add(lblNome, "cell 0 0,growx");
+
+		txtNome = new JTextField();
+		getContentPane().add(txtNome, "cell 0 1,growx");
+		txtNome.setColumns(10);
 
 	}
 
