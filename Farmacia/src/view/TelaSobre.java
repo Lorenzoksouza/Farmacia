@@ -39,7 +39,7 @@ public class TelaSobre extends JInternalFrame {
 		setBackground(Color.WHITE);
 		setFrameIcon(null);
 		setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
-		setBounds(750, 200, 340, 215);
+		setBounds(500, 100, 340, 215);
 		getContentPane().setLayout(new MigLayout("", "[grow,fill]", "[][][][][]"));
 
 		JLabel lblDesenvolvedores = new JLabel("Desenvolvedores:");

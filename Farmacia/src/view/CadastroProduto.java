@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -80,9 +81,11 @@ public class CadastroProduto extends JInternalFrame {
 		JLabel lblEstoque = new JLabel("estoque:");
 		getContentPane().add(lblEstoque, "cell 2 2");
 
+		consultarCategoria();
+
 		cmbCategoria = new JComboBox();
 		cmbCategoria.setBackground(Color.WHITE);
-		// cmbCategoria.setModel(new DefaultComboBoxModel(listaCategorias.toArray()));
+		cmbCategoria.setModel(new DefaultComboBoxModel(listaCategorias.toArray()));
 		cmbCategoria.setSelectedIndex(-1);
 		getContentPane().add(cmbCategoria, "cell 0 3,growx");
 
