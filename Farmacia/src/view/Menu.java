@@ -205,7 +205,7 @@ public class Menu extends JFrame {
 		});
 		mnProdutos.add(mntmPesquisarProduto);
 
-		JMenu mnVendas = new JMenu("vendas");
+		JMenu mnVendas = new JMenu("Vendas");
 		mnVendas.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
 		mnVendas.setBackground(Color.LIGHT_GRAY);
 		mnVendas.setIcon(new ImageIcon(Menu.class.getResource("/icons/vendas3x.png")));
@@ -215,7 +215,7 @@ public class Menu extends JFrame {
 				if (!temComponenteNaTela(telaVenda)) {
 					telaVenda = new TelaVenda();
 					desktopPane.add(telaVenda);
-					desktopPane.getDesktopManager().maximizeFrame(telaVenda);
+					// desktopPane.getDesktopManager().maximizeFrame(telaVenda);
 					telaVenda.show();
 
 					telaVenda.addInternalFrameListener(new InternalFrameAdapter() {

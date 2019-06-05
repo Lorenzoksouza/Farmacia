@@ -163,27 +163,6 @@ public class Banco {
 	 * @throws SQLException
 	 * 
 	 */
-	public static PreparedStatement getPreparedStatement(Connection conn) {
-		try {
-			PreparedStatement stmt = null;
-			return stmt;
-		} catch (Exception e) {
-			System.out.println("Erro ao obter o PreparedStatement. Causa: " + e.getMessage());
-			return null;
-		}
-	}
-
-	/**
-	 * 
-	 * Solicita um objeto PreparedStatement para uma conexão. Este objeto serve para
-	 * executar as operações SQL.
-	 * 
-	 * @param conn uma conexão anteriormente criada.
-	 * @return stmt um objeto do tipo PreparedStatement
-	 * 
-	 * @throws SQLException
-	 * 
-	 */
 	public static PreparedStatement getPreparedStatement(Connection conn, String sql) {
 		try {
 			PreparedStatement stmt = conn.prepareStatement(sql);

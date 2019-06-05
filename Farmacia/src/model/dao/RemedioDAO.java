@@ -52,16 +52,19 @@ public class RemedioDAO {
 	}
 
 	private int pegarIdFormaUso(Remedio r) {
-		String sql = "SELECT ID_FORMA_USO FROM FORMA_USO WHERE DESCRICAO ='" + r.getFormaUso() + "'";
+		String sql = "SELECT ID_FORMA_USO FROM FORMA_USO WHERE DESCRICAO = ?";
 		Connection conn = Banco.getConnection();
-		Statement stmt = Banco.getPreparedStatement(conn, sql);
+		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
 		ResultSet resultado = null;
 		int idFormaUso = 0;
 
 		try {
-			System.out.println(r.getFormaUso());
-			resultado = stmt.executeQuery(sql);
-			idFormaUso = resultado.getInt(1);
+			stmt.setString(1, r.getFormaUso());
+			resultado = stmt.executeQuery();
+
+			if (resultado.next()) {
+				idFormaUso = resultado.getInt(1);
+			}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -76,15 +79,18 @@ public class RemedioDAO {
 	}
 
 	private int pegarIdLaboratorio(Remedio r) {
-		String sql = "SELECT ID_LABORATORIO FROM LABORATORIO WHERE NM_LABORATORIO = " + r.getLaboratorio();
+		String sql = "SELECT ID_LABORATORIO FROM LABORATORIO WHERE NM_LABORATORIO = '" + r.getLaboratorio() + "'";
 		Connection conn = Banco.getConnection();
-		Statement stmt = Banco.getStatement(conn);
+		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
 		ResultSet resultado = null;
 		int idLaboratorio = 0;
 
 		try {
-			resultado = stmt.executeQuery(sql);
-			idLaboratorio = resultado.getInt(1);
+			resultado = stmt.executeQuery();
+
+			if (resultado.next()) {
+				idLaboratorio = resultado.getInt(1);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
