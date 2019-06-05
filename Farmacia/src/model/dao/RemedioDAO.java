@@ -59,6 +59,7 @@ public class RemedioDAO {
 		int idFormaUso = 0;
 
 		try {
+			System.out.println(r.getFormaUso());
 			resultado = stmt.executeQuery(sql);
 			idFormaUso = resultado.getInt(1);
 
@@ -190,7 +191,7 @@ public class RemedioDAO {
 		return null;
 	}
 
-	public boolean existeCodBar() {
+	public boolean existeCodBar(int codBar) {
 		// TODO Auto-generated method stub
 		return false;
 	}
