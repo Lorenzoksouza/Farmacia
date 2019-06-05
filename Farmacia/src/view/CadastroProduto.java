@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
 import controller.ControllerProduto;
+import model.vo.Categoria;
 import model.vo.Produto;
 import net.miginfocom.swing.MigLayout;
 
@@ -25,9 +26,9 @@ public class CadastroProduto extends JInternalFrame {
 	private JTextField txtPreco;
 	private JTextField txtEstoque;
 	private JTextField txtCodBar;
-	private JComboBox<String> cmbCategoria;
+	private JComboBox<Categoria> cmbCategoria;
 
-	private ArrayList<String> listaCategorias;
+	private ArrayList<Categoria> listaCategorias;
 
 	/**
 	 * Launch the application.

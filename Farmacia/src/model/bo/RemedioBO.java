@@ -5,6 +5,8 @@ import java.util.List;
 
 import model.dao.RemedioDAO;
 import model.seletor.RemedioSeletor;
+import model.vo.FormaUso;
+import model.vo.Laboratorio;
 import model.vo.Remedio;
 
 public class RemedioBO {
@@ -44,11 +46,11 @@ public class RemedioBO {
 		return remedioDAO.excluir(remedioSelecionado);
 	}
 
-	public ArrayList<String> consultarFormaUso() {
+	public ArrayList<FormaUso> consultarFormaUso() {
 		return remedioDAO.consultarFormaUso();
 	}
 
-	public ArrayList<String> consultarLaboratorio() {
+	public ArrayList<Laboratorio> consultarLaboratorio() {
 		return remedioDAO.consultarLaboratorio();
 	}
 

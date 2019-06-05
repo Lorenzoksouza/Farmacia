@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.seletor.RemedioSeletor;
+import model.vo.FormaUso;
+import model.vo.Laboratorio;
 import model.vo.Remedio;
 
 public class RemedioDAO {
@@ -228,7 +230,7 @@ public class RemedioDAO {
 		return mensagem;
 	}
 
-	public ArrayList<String> consultarFormaUso() {
+	public ArrayList<FormaUso> consultarFormaUso() {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
@@ -254,7 +256,7 @@ public class RemedioDAO {
 		return listaFormaUso;
 	}
 
-	public ArrayList<String> consultarLaboratorio() {
+	public ArrayList<Laboratorio> consultarLaboratorio() {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;

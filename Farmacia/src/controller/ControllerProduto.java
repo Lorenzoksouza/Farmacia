@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import model.bo.ProdutoBO;
 import model.seletor.ProdutoSeletor;
+import model.vo.Categoria;
 import model.vo.Produto;
 
 public class ControllerProduto {
@@ -76,7 +77,7 @@ public class ControllerProduto {
 		return produtoBO.excluir(produtoSelecionado);
 	}
 
-	public ArrayList<String> consultarCategoria() {
+	public ArrayList<Categoria> consultarCategoria() {
 		return produtoBO.consultarCategoria();
 	}
 

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.seletor.ProdutoSeletor;
+import model.vo.Categoria;
 import model.vo.Produto;
 
 public class ProdutoDAO {
@@ -49,7 +50,7 @@ public class ProdutoDAO {
 		return null;
 	}
 
-	public ArrayList<String> consultarCategoria() {
+	public ArrayList<Categoria> consultarCategoria() {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;

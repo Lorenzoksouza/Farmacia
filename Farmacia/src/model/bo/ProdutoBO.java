@@ -5,6 +5,7 @@ import java.util.List;
 
 import model.dao.ProdutoDAO;
 import model.seletor.ProdutoSeletor;
+import model.vo.Categoria;
 import model.vo.Produto;
 
 public class ProdutoBO {
@@ -40,7 +41,7 @@ public class ProdutoBO {
 		return produtoDAO.excluir(produtoSelecionado);
 	}
 
-	public ArrayList<String> consultarCategoria() {
+	public ArrayList<Categoria> consultarCategoria() {
 		return produtoDAO.consultarCategoria();
 	}
 

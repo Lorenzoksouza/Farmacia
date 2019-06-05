@@ -18,6 +18,8 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
 import controller.ControllerRemedio;
+import model.vo.FormaUso;
+import model.vo.Laboratorio;
 import model.vo.Remedio;
 import net.miginfocom.swing.MigLayout;
 
@@ -28,11 +30,11 @@ public class CadastroMedicamento extends JInternalFrame {
 	private JTextField txtComposicao;
 	private JTextField txtDosagem;
 	private JTextField txtEstoque;
-	private JComboBox<String> cmbLaboratorio;
-	private JComboBox<String> cmbFormaUso;
+	private JComboBox<Laboratorio> cmbLaboratorio;
+	private JComboBox<FormaUso> cmbFormaUso;
 
-	private ArrayList<String> listaLaboratorios;
-	private ArrayList<String> listaFormasUso;
+	private ArrayList<Laboratorio> listaLaboratorios;
+	private ArrayList<FormaUso> listaFormasUso;
 
 	/**
 	 * Launch the application.

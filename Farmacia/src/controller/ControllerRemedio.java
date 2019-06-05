@@ -7,6 +7,8 @@ import javax.swing.JOptionPane;
 
 import model.bo.RemedioBO;
 import model.seletor.RemedioSeletor;
+import model.vo.FormaUso;
+import model.vo.Laboratorio;
 import model.vo.Remedio;
 
 public class ControllerRemedio {
@@ -87,11 +89,11 @@ public class ControllerRemedio {
 		return remedioBO.existeCodBar(remedioSelecionado);
 	}
 
-	public ArrayList<String> consultarFormaUso() {
+	public ArrayList<FormaUso> consultarFormaUso() {
 		return remedioBO.consultarFormaUso();
 	}
 
-	public ArrayList<String> consultarLaboratorio() {
+	public ArrayList<Laboratorio> consultarLaboratorio() {
 		return remedioBO.consultarLaboratorio();
 	}
 }
