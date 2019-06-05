@@ -1,16 +1,21 @@
 package view;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import controller.ControllerProduto;
@@ -51,45 +56,64 @@ public class ListagemProduto extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public ListagemProduto() {
+		getContentPane().setBackground(Color.WHITE);
+		setFrameIcon(new ImageIcon(ListagemProduto.class.getResource("/icons/prod3x.png")));
+		setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		setTitle("Pesquisa de Produtos");
 		setClosable(true);
-		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(new MigLayout("", "[grow][grow]", "[18.00][][][][][][][][]"));
+		setBounds(100, 100, 680, 540);
+		getContentPane()
+				.setLayout(new MigLayout("", "[211.00][][grow]", "[18.00][][][][][][8px:n][][10px:n][][][grow]"));
 
-		JLabel lblCodbarras = new JLabel("cod.barras");
+		JLabel lblCodbarras = new JLabel("c\u00F3d.barras:");
 		getContentPane().add(lblCodbarras, "cell 0 0");
 
+		JLabel lblEspaco = new JLabel("      ");
+		getContentPane().add(lblEspaco, "cell 1 0");
+
 		tblProdutos = new JTable();
+		tblProdutos.setColumnSelectionAllowed(true);
+		tblProdutos.setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		tblProdutos.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "Código", "Nome", "Preço", "Categoria", "Estoque" }));
-		getContentPane().add(tblProdutos, "cell 1 0 1 9,grow");
+		getContentPane().add(tblProdutos, "cell 2 0 1 12,grow");
 
 		txtCodBar = new JTextField();
 		getContentPane().add(txtCodBar, "cell 0 1,growx");
 		txtCodBar.setColumns(10);
 
-		JLabel lblNome = new JLabel("nome");
+		JLabel lblNome = new JLabel("nome:");
 		getContentPane().add(lblNome, "cell 0 2");
 
 		txtNome = new JTextField();
 		getContentPane().add(txtNome, "cell 0 3,growx");
 		txtNome.setColumns(10);
 
-		JLabel lblCategoria = new JLabel("categoria");
+		JLabel lblCategoria = new JLabel("categoria:");
 		getContentPane().add(lblCategoria, "cell 0 4");
 
 		JComboBox cmbCategoria = new JComboBox();
+		cmbCategoria.setBackground(Color.WHITE);
 		getContentPane().add(cmbCategoria, "cell 0 5,growx");
 
 		JButton btnPesquisar = new JButton("pesquisar");
+		btnPesquisar.setBackground(Color.WHITE);
+		btnPesquisar.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnPesquisar.setPreferredSize(new Dimension(80, 30));
+		btnPesquisar.setBorder(new LineBorder(Color.gray, 2, true));
+
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				pesquisarProdutos();
 			}
 		});
-		getContentPane().add(btnPesquisar, "cell 0 6");
+		getContentPane().add(btnPesquisar, "cell 0 7,growx");
 
 		JButton btnExcluir = new JButton("excluir");
+		btnExcluir.setBackground(Color.WHITE);
+		btnExcluir.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnExcluir.setPreferredSize(new Dimension(80, 30));
+		btnExcluir.setBorder(new LineBorder(Color.gray, 2, true));
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String mensagem = "";
@@ -104,9 +128,13 @@ public class ListagemProduto extends JInternalFrame {
 				}
 			}
 		});
-		getContentPane().add(btnExcluir, "flowx,cell 0 7");
+		getContentPane().add(btnExcluir, "flowx,cell 0 9,growx");
 
 		JButton btnAlterar = new JButton("alterar");
+		btnAlterar.setBackground(Color.WHITE);
+		btnAlterar.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnAlterar.setPreferredSize(new Dimension(80, 30));
+		btnAlterar.setBorder(new LineBorder(Color.gray, 2, true));
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Produto produtoSelecionado = new Produto();
@@ -123,15 +151,19 @@ public class ListagemProduto extends JInternalFrame {
 
 			}
 		});
-		getContentPane().add(btnAlterar, "cell 0 7");
+		getContentPane().add(btnAlterar, "cell 0 9,growx");
 
-		JButton btnGerarXls = new JButton("relatorio");
-		btnGerarXls.addActionListener(new ActionListener() {
+		JButton btnGerarXls_1 = new JButton("relatorio");
+		btnGerarXls_1.setBackground(Color.WHITE);
+		btnGerarXls_1.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnGerarXls_1.setPreferredSize(new Dimension(80, 30));
+		btnGerarXls_1.setBorder(new LineBorder(Color.gray, 2, true));
+		btnGerarXls_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 			}
 		});
-		getContentPane().add(btnGerarXls, "cell 0 8");
+		getContentPane().add(btnGerarXls_1, "cell 0 10,alignx center");
 
 	}
 

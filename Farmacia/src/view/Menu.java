@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +14,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -19,6 +22,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
@@ -58,6 +63,8 @@ public class Menu extends JFrame {
 	 * Create the application.
 	 */
 	public Menu() {
+		setTitle("NOAH PHARM");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/icons/vendas3x.png")));
 		initialize();
 	}
 
@@ -66,22 +73,36 @@ public class Menu extends JFrame {
 	 */
 	private void initialize() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
+		UIManager.put("PopupMenu.border", new LineBorder(Color.LIGHT_GRAY));
 		this.setBounds(0, 0, screenSize.width, screenSize.height - 35);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(new MigLayout("", "[grow][]", "[grow][]"));
 
-		desktopPane = new JDesktopPane();
-		desktopPane.setBackground(Color.LIGHT_GRAY);
+		ImageIcon icon = new ImageIcon(this.getClass().getResource("/icons/pharmacy_Sketch.png"));
+		Image img = icon.getImage();
+
+		desktopPane = new JDesktopPane() {
+			public void paintComponent(Graphics g) {
+				g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
+			}
+		};
+		desktopPane.setBackground(Color.WHITE);
 		this.getContentPane().add(desktopPane, "cell 0 0 2 2,grow");
 
 		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBackground(new Color(245, 245, 245));
 		this.setJMenuBar(menuBar);
 
 		JMenu mnMedicamento = new JMenu("medicamento");
+		mnMedicamento.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
+		mnMedicamento.setBackground(Color.WHITE);
+		mnMedicamento.setIcon(new ImageIcon(Menu.class.getResource("/icons/med3x.png")));
 		menuBar.add(mnMedicamento);
 
 		JMenuItem mntmCadastrarRemedio = new JMenuItem("cadastrar");
+		mntmCadastrarRemedio.setIcon(new ImageIcon(Menu.class.getResource("/icons/espaco.png")));
+		mntmCadastrarRemedio.setBorder(new LineBorder(Color.GRAY, 1));
+		mntmCadastrarRemedio.setBackground(Color.WHITE);
 		mntmCadastrarRemedio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (!temComponenteNaTela(cadastroMedicamento))
@@ -102,6 +123,9 @@ public class Menu extends JFrame {
 		mnMedicamento.add(mntmCadastrarRemedio);
 
 		JMenuItem mntmPesquisarRemedio = new JMenuItem("pesquisar");
+		mntmPesquisarRemedio.setIcon(new ImageIcon(Menu.class.getResource("/icons/espaco.png")));
+		mntmPesquisarRemedio.setBorder(new LineBorder(Color.GRAY, 1));
+		mntmPesquisarRemedio.setBackground(Color.WHITE);
 		mntmPesquisarRemedio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!temComponenteNaTela(pesquisaMedicamento)) {
@@ -122,10 +146,21 @@ public class Menu extends JFrame {
 		});
 		mnMedicamento.add(mntmPesquisarRemedio);
 
+		// espaco entre os botoes
+		JMenu menuSpace = new JMenu("  ");
+		menuSpace.setEnabled(false);
+		menuBar.add(menuSpace);
+
 		JMenu mnProdutos = new JMenu("produtos");
+		mnProdutos.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
+		mnProdutos.setBackground(Color.LIGHT_GRAY);
+		mnProdutos.setIcon(new ImageIcon(Menu.class.getResource("/icons/prod3x.png")));
 		menuBar.add(mnProdutos);
 
 		JMenuItem mntmCadastrarProduto = new JMenuItem("cadastrar");
+		mntmCadastrarProduto.setIcon(new ImageIcon(Menu.class.getResource("/icons/espaco.png")));
+		mntmCadastrarProduto.setBorder(new LineBorder(Color.GRAY, 1));
+		mntmCadastrarProduto.setBackground(Color.WHITE);
 		mntmCadastrarProduto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!temComponenteNaTela(pesquisaMedicamento)) {
@@ -147,6 +182,9 @@ public class Menu extends JFrame {
 		mnProdutos.add(mntmCadastrarProduto);
 
 		JMenuItem mntmPesquisarProduto = new JMenuItem("pesquisar");
+		mntmPesquisarProduto.setIcon(new ImageIcon(Menu.class.getResource("/icons/espaco.png")));
+		mntmPesquisarProduto.setBorder(new LineBorder(Color.GRAY, 1));
+		mntmPesquisarProduto.setBackground(Color.WHITE);
 		mntmPesquisarProduto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!temComponenteNaTela(pesquisaProduto)) {
@@ -168,6 +206,9 @@ public class Menu extends JFrame {
 		mnProdutos.add(mntmPesquisarProduto);
 
 		JMenu mnVendas = new JMenu("vendas");
+		mnVendas.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
+		mnVendas.setBackground(Color.LIGHT_GRAY);
+		mnVendas.setIcon(new ImageIcon(Menu.class.getResource("/icons/vendas3x.png")));
 		mnVendas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent evt) {
@@ -188,27 +229,41 @@ public class Menu extends JFrame {
 			}
 		});
 
+		// espaco entre os botoes
+		JMenu menuSpace2 = new JMenu("  ");
+		menuSpace2.setEnabled(false);
+		menuBar.add(menuSpace2);
+
 		menuBar.add(mnVendas);
 
 		JMenu mnSobre = new JMenu("sobre");
+		mnSobre.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
+		mnSobre.setBackground(Color.LIGHT_GRAY);
+		mnSobre.setIcon(new ImageIcon(Menu.class.getResource("/icons/sobre3x.png")));
 		mnSobre.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
 				if (!temComponenteNaTela(telaSobre)) {
-					telaVenda = new TelaVenda();
-					desktopPane.add(telaVenda);
+					telaSobre = new TelaSobre();
+					desktopPane.add(telaSobre);
 					// desktopPane.getDesktopManager().maximizeFrame(pesquisaMedicamento);
-					telaVenda.show();
+					telaSobre.show();
 
-					telaVenda.addInternalFrameListener(new InternalFrameAdapter() {
+					telaSobre.addInternalFrameListener(new InternalFrameAdapter() {
 						@Override
 						public void internalFrameClosing(InternalFrameEvent evt) {
-							Menu pai = (Menu) SwingUtilities.getWindowAncestor(telaVenda);
-							pai.chamarPai(telaVenda);
+							Menu pai = (Menu) SwingUtilities.getWindowAncestor(telaSobre);
+							pai.chamarPai(telaSobre);
 						}
 					});
 				}
 			}
 		});
+
+		// espaco entre os botoes
+		JMenu menuSpace3 = new JMenu("  ");
+		menuSpace3.setEnabled(false);
+		menuBar.add(menuSpace3);
+
 		menuBar.add(mnSobre);
 	}
 

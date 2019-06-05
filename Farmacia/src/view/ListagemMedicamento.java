@@ -1,12 +1,16 @@
 package view;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -14,6 +18,8 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import controller.ControllerRemedio;
@@ -58,6 +64,9 @@ public class ListagemMedicamento extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public ListagemMedicamento() {
+		setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
+		setFrameIcon(new ImageIcon(ListagemMedicamento.class.getResource("/icons/med3x.png")));
+		getContentPane().setBackground(Color.WHITE);
 		setTitle("Pesquisa de Remedios");
 		setClosable(true);
 		// TODO remover!
@@ -65,74 +74,84 @@ public class ListagemMedicamento extends JInternalFrame {
 		Remedio remedioTeste = new Remedio("0011", "Plasil", new Date(), 10.0, 50, "500", "Água", "Tipo", false, "EMS");
 		remediosConsultados.add(remedioTeste);
 
-		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(new MigLayout("", "[grow][][grow]", "[grow][][][][][][][][][][][][grow]"));
+		setBounds(100, 100, 680, 540);
+		getContentPane()
+				.setLayout(new MigLayout("", "[211.00,grow][][grow]", "[][][][][][][][][][][10px:n][][][grow]"));
 
-		JLabel lblCodbarras = new JLabel("cod.barras");
+		JLabel lblCodbarras = new JLabel("c\u00F3d.barras:");
 		getContentPane().add(lblCodbarras, "cell 0 0");
 
+		JLabel lblespaco2 = new JLabel("      ");
+		getContentPane().add(lblespaco2, "cell 1 0");
+
 		tblRemedios = new JTable();
+		tblRemedios.setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		tblRemedios.setColumnSelectionAllowed(true);
 		tblRemedios.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Codigo", "Nome", "Composição",
 				"Dosagem", "Tipo", "Generico", "Preco", "Estoque", "Laboratorio" }));
-		getContentPane().add(tblRemedios, "cell 2 0 1 12,grow");
+		getContentPane().add(tblRemedios, "cell 2 0 1 14,grow");
 
 		txtCodBar = new JTextField();
-		getContentPane().add(txtCodBar, "cell 0 1,growx");
+		getContentPane().add(txtCodBar, "cell 0 1,growx,aligny center");
 		txtCodBar.setColumns(10);
 
-		JLabel lblNome = new JLabel("nome");
+		JLabel lblNome = new JLabel("nome:");
 		getContentPane().add(lblNome, "cell 0 2");
 
 		txtNome = new JTextField();
 		getContentPane().add(txtNome, "cell 0 3,growx");
 		txtNome.setColumns(10);
 
-		JLabel lblComposicao = new JLabel("composicao");
+		JLabel lblComposicao = new JLabel("composi\u00E7\u00E3o:");
 		getContentPane().add(lblComposicao, "cell 0 4");
 
 		txtComposicao = new JTextField();
 		getContentPane().add(txtComposicao, "cell 0 5,growx");
 		txtComposicao.setColumns(10);
 
-		JLabel lblFormaUso = new JLabel("Forma de Uso");
+		JLabel lblFormaUso = new JLabel("forma de Uso:");
 		getContentPane().add(lblFormaUso, "cell 0 6");
 
 		this.consultarFormaUso();
 
 		cmbFormaUso = new JComboBox(listaFormasUso.toArray());
+		cmbFormaUso.setBackground(Color.WHITE);
 		getContentPane().add(cmbFormaUso, "cell 0 7,growx");
 		cmbFormaUso.setSelectedIndex(-1);
 
-		JCheckBox chckbxGenerico = new JCheckBox("generico");
-		getContentPane().add(chckbxGenerico, "cell 0 9");
-
 		JButton btnPesquisar = new JButton("pesquisar");
+		btnPesquisar.setPreferredSize(new Dimension(80, 30));
+		btnPesquisar.setBorder(new LineBorder(Color.gray, 2, true));
+		btnPesquisar.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnPesquisar.setBackground(Color.WHITE);
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				pesquisarMedicamentos();
 			}
 		});
-		getContentPane().add(btnPesquisar, "cell 1 9");
 
-		JButton btnExcluir = new JButton("excluir");
-		btnExcluir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				String mensagem = "";
-				int remedioSelecionado = (int) tblRemedios.getValueAt(tblRemedios.getSelectedRow(), 1);
+		JCheckBox chckbxGenerico_1 = new JCheckBox("gen\u00E9rico");
+		chckbxGenerico_1.setHorizontalAlignment(SwingConstants.LEFT);
+		chckbxGenerico_1.setBackground(Color.WHITE);
+		getContentPane().add(chckbxGenerico_1, "flowx,cell 0 8,alignx center");
+		getContentPane().add(btnPesquisar, "cell 0 9,growx");
 
-				ControllerRemedio controllerRemedio = new ControllerRemedio();
+		btnGerarXls = new JButton("relatorio");
+		btnGerarXls.setPreferredSize(new Dimension(100, 30));
+		btnGerarXls.setBorder(new LineBorder(Color.gray, 2, true));
+		btnGerarXls.setBackground(Color.WHITE);
+		btnGerarXls.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnGerarXls.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 
-				if (controllerRemedio.existeRemedioPorCodBar(remedioSelecionado)) {
-					mensagem = "Remedio não foi cadastrado";
-				} else {
-					mensagem = controllerRemedio.excluir(remedioSelecionado);
-				}
 			}
 		});
-		getContentPane().add(btnExcluir, "cell 0 10");
 
 		JButton btnAlterar = new JButton("alterar");
+		btnAlterar.setPreferredSize(new Dimension(30, 30));
+		btnAlterar.setBorder(new LineBorder(Color.gray, 2, true));
+		btnAlterar.setBackground(Color.WHITE);
+		btnAlterar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Remedio remedioSelecionado = new Remedio();
@@ -156,15 +175,37 @@ public class ListagemMedicamento extends JInternalFrame {
 
 			}
 		});
-		getContentPane().add(btnAlterar, "cell 1 10");
 
-		btnGerarXls = new JButton("relatorio");
-		btnGerarXls.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		JButton btnExcluir = new JButton("excluir");
+		btnExcluir.setPreferredSize(new Dimension(30, 30));
+		btnExcluir.setBorder(new LineBorder(Color.gray, 2, true));
+		btnExcluir.setBackground(Color.WHITE);
+		btnExcluir.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String mensagem = "";
+				int remedioSelecionado = (int) tblRemedios.getValueAt(tblRemedios.getSelectedRow(), 1);
 
+				ControllerRemedio controllerRemedio = new ControllerRemedio();
+
+				if (controllerRemedio.existeRemedioPorCodBar(remedioSelecionado)) {
+					mensagem = "Remedio não foi cadastrado";
+				} else {
+					mensagem = controllerRemedio.excluir(remedioSelecionado);
+				}
 			}
 		});
-		getContentPane().add(btnGerarXls, "cell 0 11");
+
+		// espaco entre os botoes (pesquisa e excluir)
+		JLabel lblespaco = new JLabel("    ");
+		lblespaco.setEnabled(false);
+		getContentPane().add(lblespaco, "cell 0 10");
+		getContentPane().add(btnExcluir, "flowx,cell 0 11,growx");
+		getContentPane().add(btnAlterar, "cell 0 11,growx");
+		getContentPane().add(btnGerarXls, "cell 0 12,alignx center");
+
+		JLabel lblespaco3 = new JLabel("                        ");
+		getContentPane().add(lblespaco3, "cell 0 8");
 
 	}
 

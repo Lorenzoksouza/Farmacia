@@ -1,17 +1,21 @@
 package view;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
 import controller.ControllerRemedio;
 import model.vo.Remedio;
@@ -50,81 +54,97 @@ public class CadastroMedicamento extends JInternalFrame {
 	 * Create the frame. INSERT
 	 */
 	public CadastroMedicamento() {
+		setFrameIcon(new ImageIcon(CadastroMedicamento.class.getResource("/icons/med3x.png")));
+		getContentPane().setBackground(Color.WHITE);
+		setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		setTitle("Cadastro de Medicamentos");
 
 		setClosable(true);
 
-		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(new MigLayout("", "[grow][grow]", "[][][][][][][][][]"));
+		setBounds(100, 100, 495, 285);
+		getContentPane().setLayout(new MigLayout("", "[][][grow]", "[10px:n][][][][][][][][][]"));
 
-		JLabel lblNome = new JLabel("nome");
-		getContentPane().add(lblNome, "cell 0 0");
+		JLabel lblNome = new JLabel("nome:");
+		getContentPane().add(lblNome, "cell 0 1");
 
-		JLabel lblCodbarras = new JLabel("cod.barras");
-		getContentPane().add(lblCodbarras, "cell 1 0");
+		JLabel lblEspaco = new JLabel("    ");
+		getContentPane().add(lblEspaco, "cell 1 1");
+
+		JLabel lblCodbarras = new JLabel("c\u00F3d.barras:");
+		getContentPane().add(lblCodbarras, "cell 2 1");
 
 		txtNome = new JTextField();
-		getContentPane().add(txtNome, "cell 0 1,growx");
+		getContentPane().add(txtNome, "cell 0 2,growx");
 		txtNome.setColumns(10);
 
 		txtCodBar = new JTextField();
-		getContentPane().add(txtCodBar, "cell 1 1,growx");
+		getContentPane().add(txtCodBar, "cell 2 2,growx");
 		txtCodBar.setColumns(10);
 
-		JLabel lblPreco = new JLabel("preco");
-		getContentPane().add(lblPreco, "cell 0 2");
+		JLabel lblPreco = new JLabel("pre\u00E7o:");
+		getContentPane().add(lblPreco, "cell 0 3");
 
-		JLabel lblComposicao = new JLabel("composicao");
-		getContentPane().add(lblComposicao, "cell 1 2");
+		JLabel lblComposicao = new JLabel("composi\u00E7\u00E3o:");
+		getContentPane().add(lblComposicao, "cell 2 3");
 
 		txtPreco = new JTextField();
-		getContentPane().add(txtPreco, "cell 0 3,growx");
+		getContentPane().add(txtPreco, "cell 0 4,growx");
 		txtPreco.setColumns(10);
 
 		txtComposicao = new JTextField();
-		getContentPane().add(txtComposicao, "cell 1 3,growx");
+		getContentPane().add(txtComposicao, "cell 2 4,growx");
 		txtComposicao.setColumns(10);
 
-		JLabel lblDosagem = new JLabel("dosagem");
-		getContentPane().add(lblDosagem, "cell 0 4");
+		JLabel lblDosagem = new JLabel("dosagem:");
+		getContentPane().add(lblDosagem, "cell 0 5");
 
 		txtDosagem = new JTextField();
-		getContentPane().add(txtDosagem, "cell 0 5,growx");
+		getContentPane().add(txtDosagem, "cell 0 6,growx");
 		txtDosagem.setColumns(10);
 
 		consultarLaboratorio();
 
-		JLabel lblLaboratorio = new JLabel("Laboratório");
-		getContentPane().add(lblLaboratorio, "cell 1 4");
+		JLabel lblLaboratorio = new JLabel("laborat\u00F3rio:");
+		getContentPane().add(lblLaboratorio, "cell 2 5");
 
 		cmbLaboratorio = new JComboBox();
+		cmbLaboratorio.setBackground(Color.WHITE);
 		cmbLaboratorio.setModel(new DefaultComboBoxModel(listaLaboratorios.toArray()));
 		cmbLaboratorio.setSelectedIndex(-1);
-		getContentPane().add(cmbLaboratorio, "cell 1 5,growx");
+		getContentPane().add(cmbLaboratorio, "cell 2 6,growx");
 
 		consultarFormaUso();
 
-		JLabel lblFormaUso = new JLabel("Forma de Uso");
-		getContentPane().add(lblFormaUso, "cell 0 6");
+		JLabel lblFormaUso = new JLabel("forma de Uso:");
+		getContentPane().add(lblFormaUso, "flowx,cell 0 7,alignx left");
 
 		cmbFormaUso = new JComboBox();
+		cmbFormaUso.setBackground(Color.WHITE);
 		cmbFormaUso.setModel(new DefaultComboBoxModel(listaFormasUso.toArray()));
 		cmbFormaUso.setSelectedIndex(-1);
-		getContentPane().add(cmbFormaUso, "cell 0 7,growx");
+		getContentPane().add(cmbFormaUso, "flowx,cell 0 8,growx");
 
-		JLabel lblEstoque = new JLabel("estoque");
-		getContentPane().add(lblEstoque, "cell 1 6");
+		JLabel labelEspaco2 = new JLabel(" ");
+		getContentPane().add(labelEspaco2, "cell 0 8");
 
 		txtEstoque = new JTextField();
-		getContentPane().add(txtEstoque, "cell 1 7,growx");
+		getContentPane().add(txtEstoque, "cell 0 8,growx");
 		txtEstoque.setColumns(10);
 
-		JCheckBox chckbxGenerico = new JCheckBox("generico");
+		JLabel lblEstoque = new JLabel("  estoque:");
+		getContentPane().add(lblEstoque, "cell 0 7,alignx right");
+
+		JCheckBox chckbxGenerico = new JCheckBox("gen\u00E9rico");
+		chckbxGenerico.setBackground(Color.WHITE);
 		getContentPane().add(chckbxGenerico, "cell 0 8");
 
 		// listagem
 
 		JButton btnSalvar = new JButton("salvar");
+		btnSalvar.setBackground(Color.WHITE);
+		btnSalvar.setOpaque(true);
+		btnSalvar.setPreferredSize(new Dimension(80, 30));
+		btnSalvar.setBorder(new LineBorder(Color.gray, 2, true));
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Remedio remedio = new Remedio();
@@ -142,7 +162,7 @@ public class CadastroMedicamento extends JInternalFrame {
 				controllerRemedio.salvar(remedio);
 			}
 		});
-		getContentPane().add(btnSalvar, "cell 1 8");
+		getContentPane().add(btnSalvar, "cell 2 9,alignx right");
 	}
 
 	public CadastroMedicamento(Remedio remedio) {
@@ -174,4 +194,5 @@ public class CadastroMedicamento extends JInternalFrame {
 		// fazer retornar listaFormaUso do RemedioDAO!
 		// após isto, descomentar linha 105
 	}
+
 }
