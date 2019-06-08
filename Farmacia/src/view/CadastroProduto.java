@@ -53,19 +53,19 @@ public class CadastroProduto extends JInternalFrame {
 		setBorder(new LineBorder(new Color(192, 192, 192), 3));
 		setFrameIcon(new ImageIcon(CadastroProduto.class.getResource("/icons/prod3x.png")));
 		getContentPane().setBackground(Color.WHITE);
-		setTitle("Cadastro de Produto");
+		setTitle("Cadastro de produto");
 		setClosable(true);
 		setBounds(100, 100, 380, 195);
 		getContentPane().setLayout(new MigLayout("", "[grow][][]", "[][][][][][]"));
 
-		JLabel lblNome = new JLabel("nome:");
+		JLabel lblNome = new JLabel("Nome:");
 		getContentPane().add(lblNome, "cell 0 0");
 
 		JLabel lblEspaco = new JLabel("    ");
 		lblEspaco.setEnabled(false);
 		getContentPane().add(lblEspaco, "cell 1 0");
 
-		JLabel lblPreco = new JLabel("preco:");
+		JLabel lblPreco = new JLabel("Pre\u00E7o:");
 		getContentPane().add(lblPreco, "cell 2 0");
 
 		txtNome = new JTextField();
@@ -76,10 +76,10 @@ public class CadastroProduto extends JInternalFrame {
 		getContentPane().add(txtPreco, "cell 2 1,alignx left");
 		txtPreco.setColumns(10);
 
-		JLabel lblCategoria = new JLabel("categoria:");
+		JLabel lblCategoria = new JLabel("Categoria:");
 		getContentPane().add(lblCategoria, "cell 0 2,alignx left");
 
-		JLabel lblEstoque = new JLabel("estoque:");
+		JLabel lblEstoque = new JLabel("Estoque:");
 		getContentPane().add(lblEstoque, "cell 2 2");
 
 		consultarCategoria();
@@ -94,14 +94,14 @@ public class CadastroProduto extends JInternalFrame {
 		getContentPane().add(txtEstoque, "cell 2 3,alignx left");
 		txtEstoque.setColumns(10);
 
-		JLabel lblCodbarras = new JLabel("c\u00F3d.barras:");
+		JLabel lblCodbarras = new JLabel("C\u00F3d.barras:");
 		getContentPane().add(lblCodbarras, "cell 0 4");
 
 		txtCodBar = new JTextField(0);
 		getContentPane().add(txtCodBar, "cell 0 5,growx,aligny top");
 		txtCodBar.setColumns(10);
 
-		JButton btnSalvar = new JButton("salvar");
+		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.setPreferredSize(new Dimension(80, 30));
 		btnSalvar.setBorder(new LineBorder(Color.gray, 2, true));
 		btnSalvar.setBackground(Color.WHITE);

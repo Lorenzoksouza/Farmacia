@@ -59,13 +59,13 @@ public class ListagemProduto extends JInternalFrame {
 		getContentPane().setBackground(Color.WHITE);
 		setFrameIcon(new ImageIcon(ListagemProduto.class.getResource("/icons/prod3x.png")));
 		setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
-		setTitle("Pesquisa de Produtos");
+		setTitle("Pesquisa de produtos");
 		setClosable(true);
 		setBounds(100, 100, 680, 540);
 		getContentPane()
 				.setLayout(new MigLayout("", "[211.00][][grow]", "[18.00][][][][][][8px:n][][10px:n][][][grow]"));
 
-		JLabel lblCodbarras = new JLabel("c\u00F3d.barras:");
+		JLabel lblCodbarras = new JLabel("C\u00F3d.barras:");
 		getContentPane().add(lblCodbarras, "cell 0 0");
 
 		JLabel lblEspaco = new JLabel("      ");
@@ -82,21 +82,21 @@ public class ListagemProduto extends JInternalFrame {
 		getContentPane().add(txtCodBar, "cell 0 1,growx");
 		txtCodBar.setColumns(10);
 
-		JLabel lblNome = new JLabel("nome:");
+		JLabel lblNome = new JLabel("Nome:");
 		getContentPane().add(lblNome, "cell 0 2");
 
 		txtNome = new JTextField();
 		getContentPane().add(txtNome, "cell 0 3,growx");
 		txtNome.setColumns(10);
 
-		JLabel lblCategoria = new JLabel("categoria:");
+		JLabel lblCategoria = new JLabel("Categoria:");
 		getContentPane().add(lblCategoria, "cell 0 4");
 
 		JComboBox cmbCategoria = new JComboBox();
 		cmbCategoria.setBackground(Color.WHITE);
 		getContentPane().add(cmbCategoria, "cell 0 5,growx");
 
-		JButton btnPesquisar = new JButton("pesquisar");
+		JButton btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.setBackground(Color.WHITE);
 		btnPesquisar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnPesquisar.setPreferredSize(new Dimension(80, 30));
@@ -109,7 +109,7 @@ public class ListagemProduto extends JInternalFrame {
 		});
 		getContentPane().add(btnPesquisar, "cell 0 7,growx");
 
-		JButton btnExcluir = new JButton("excluir");
+		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.setBackground(Color.WHITE);
 		btnExcluir.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnExcluir.setPreferredSize(new Dimension(80, 30));
@@ -130,7 +130,7 @@ public class ListagemProduto extends JInternalFrame {
 		});
 		getContentPane().add(btnExcluir, "flowx,cell 0 9,growx");
 
-		JButton btnAlterar = new JButton("alterar");
+		JButton btnAlterar = new JButton("Alterar");
 		btnAlterar.setBackground(Color.WHITE);
 		btnAlterar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnAlterar.setPreferredSize(new Dimension(80, 30));
@@ -153,7 +153,7 @@ public class ListagemProduto extends JInternalFrame {
 		});
 		getContentPane().add(btnAlterar, "cell 0 9,growx");
 
-		JButton btnGerarXls_1 = new JButton("relatorio");
+		JButton btnGerarXls_1 = new JButton("Relatorio");
 		btnGerarXls_1.setBackground(Color.WHITE);
 		btnGerarXls_1.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnGerarXls_1.setPreferredSize(new Dimension(80, 30));

@@ -63,8 +63,8 @@ public class Menu extends JFrame {
 	 * Create the application.
 	 */
 	public Menu() {
-		setTitle("NOAH PHARM");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/icons/vendas3x.png")));
+		setTitle("NOAH PHARMACY");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/icons/logo.png")));
 		initialize();
 	}
 
@@ -93,13 +93,13 @@ public class Menu extends JFrame {
 		menuBar.setBackground(new Color(245, 245, 245));
 		this.setJMenuBar(menuBar);
 
-		JMenu mnMedicamento = new JMenu("medicamento");
+		JMenu mnMedicamento = new JMenu("Medicamento");
 		mnMedicamento.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
 		mnMedicamento.setBackground(Color.WHITE);
 		mnMedicamento.setIcon(new ImageIcon(Menu.class.getResource("/icons/med3x.png")));
 		menuBar.add(mnMedicamento);
 
-		JMenuItem mntmCadastrarRemedio = new JMenuItem("cadastrar");
+		JMenuItem mntmCadastrarRemedio = new JMenuItem("Cadastrar");
 		mntmCadastrarRemedio.setIcon(new ImageIcon(Menu.class.getResource("/icons/espaco.png")));
 		mntmCadastrarRemedio.setBorder(new LineBorder(Color.GRAY, 1));
 		mntmCadastrarRemedio.setBackground(Color.WHITE);
@@ -122,7 +122,7 @@ public class Menu extends JFrame {
 		});
 		mnMedicamento.add(mntmCadastrarRemedio);
 
-		JMenuItem mntmPesquisarRemedio = new JMenuItem("pesquisar");
+		JMenuItem mntmPesquisarRemedio = new JMenuItem("Pesquisar");
 		mntmPesquisarRemedio.setIcon(new ImageIcon(Menu.class.getResource("/icons/espaco.png")));
 		mntmPesquisarRemedio.setBorder(new LineBorder(Color.GRAY, 1));
 		mntmPesquisarRemedio.setBackground(Color.WHITE);
@@ -151,13 +151,13 @@ public class Menu extends JFrame {
 		menuSpace.setEnabled(false);
 		menuBar.add(menuSpace);
 
-		JMenu mnProdutos = new JMenu("produtos");
+		JMenu mnProdutos = new JMenu("Produtos");
 		mnProdutos.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
 		mnProdutos.setBackground(Color.LIGHT_GRAY);
 		mnProdutos.setIcon(new ImageIcon(Menu.class.getResource("/icons/prod3x.png")));
 		menuBar.add(mnProdutos);
 
-		JMenuItem mntmCadastrarProduto = new JMenuItem("cadastrar");
+		JMenuItem mntmCadastrarProduto = new JMenuItem("Cadastrar");
 		mntmCadastrarProduto.setIcon(new ImageIcon(Menu.class.getResource("/icons/espaco.png")));
 		mntmCadastrarProduto.setBorder(new LineBorder(Color.GRAY, 1));
 		mntmCadastrarProduto.setBackground(Color.WHITE);
@@ -181,7 +181,7 @@ public class Menu extends JFrame {
 		});
 		mnProdutos.add(mntmCadastrarProduto);
 
-		JMenuItem mntmPesquisarProduto = new JMenuItem("pesquisar");
+		JMenuItem mntmPesquisarProduto = new JMenuItem("Pesquisar");
 		mntmPesquisarProduto.setIcon(new ImageIcon(Menu.class.getResource("/icons/espaco.png")));
 		mntmPesquisarProduto.setBorder(new LineBorder(Color.GRAY, 1));
 		mntmPesquisarProduto.setBackground(Color.WHITE);
@@ -236,10 +236,10 @@ public class Menu extends JFrame {
 
 		menuBar.add(mnVendas);
 
-		JMenu mnSobre = new JMenu("sobre");
+		JMenu mnSobre = new JMenu("Sobre");
 		mnSobre.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
 		mnSobre.setBackground(Color.LIGHT_GRAY);
-		mnSobre.setIcon(new ImageIcon(Menu.class.getResource("/icons/sobre3x.png")));
+		mnSobre.setIcon(new ImageIcon(Menu.class.getResource("/icons/sobre2x.png")));
 		mnSobre.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
 				if (!temComponenteNaTela(telaSobre)) {

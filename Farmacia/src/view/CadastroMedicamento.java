@@ -59,20 +59,20 @@ public class CadastroMedicamento extends JInternalFrame {
 		setFrameIcon(new ImageIcon(CadastroMedicamento.class.getResource("/icons/med3x.png")));
 		getContentPane().setBackground(Color.WHITE);
 		setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
-		setTitle("Cadastro de Medicamentos");
+		setTitle("Cadastro de medicamentos");
 
 		setClosable(true);
 
 		setBounds(100, 100, 495, 285);
 		getContentPane().setLayout(new MigLayout("", "[][][grow]", "[10px:n][][][][][][][][][]"));
 
-		JLabel lblNome = new JLabel("nome:");
+		JLabel lblNome = new JLabel("Nome:");
 		getContentPane().add(lblNome, "cell 0 1");
 
 		JLabel lblEspaco = new JLabel("    ");
 		getContentPane().add(lblEspaco, "cell 1 1");
 
-		JLabel lblCodbarras = new JLabel("c\u00F3d.barras:");
+		JLabel lblCodbarras = new JLabel("C\u00F3d.barras:");
 		getContentPane().add(lblCodbarras, "cell 2 1");
 
 		txtNome = new JTextField();
@@ -83,10 +83,10 @@ public class CadastroMedicamento extends JInternalFrame {
 		getContentPane().add(txtCodBar, "cell 2 2,growx");
 		txtCodBar.setColumns(10);
 
-		JLabel lblPreco = new JLabel("pre\u00E7o:");
+		JLabel lblPreco = new JLabel("Pre\u00E7o:");
 		getContentPane().add(lblPreco, "cell 0 3");
 
-		JLabel lblComposicao = new JLabel("composi\u00E7\u00E3o:");
+		JLabel lblComposicao = new JLabel("Composi\u00E7\u00E3o:");
 		getContentPane().add(lblComposicao, "cell 2 3");
 
 		txtPreco = new JTextField();
@@ -97,7 +97,7 @@ public class CadastroMedicamento extends JInternalFrame {
 		getContentPane().add(txtComposicao, "cell 2 4,growx");
 		txtComposicao.setColumns(10);
 
-		JLabel lblDosagem = new JLabel("dosagem:");
+		JLabel lblDosagem = new JLabel("Dosagem:");
 		getContentPane().add(lblDosagem, "cell 0 5");
 
 		txtDosagem = new JTextField();
@@ -106,7 +106,7 @@ public class CadastroMedicamento extends JInternalFrame {
 
 		consultarLaboratorio();
 
-		JLabel lblLaboratorio = new JLabel("laborat\u00F3rio:");
+		JLabel lblLaboratorio = new JLabel("Laborat\u00F3rio:");
 		getContentPane().add(lblLaboratorio, "cell 2 5");
 
 		cmbLaboratorio = new JComboBox();
@@ -117,7 +117,7 @@ public class CadastroMedicamento extends JInternalFrame {
 
 		consultarFormaUso();
 
-		JLabel lblFormaUso = new JLabel("forma de Uso:");
+		JLabel lblFormaUso = new JLabel("Forma de uso:");
 		getContentPane().add(lblFormaUso, "flowx,cell 0 7,alignx left");
 
 		cmbFormaUso = new JComboBox();
@@ -133,16 +133,16 @@ public class CadastroMedicamento extends JInternalFrame {
 		getContentPane().add(txtEstoque, "cell 0 8,growx");
 		txtEstoque.setColumns(10);
 
-		JLabel lblEstoque = new JLabel("  estoque:");
+		JLabel lblEstoque = new JLabel("    Estoque:");
 		getContentPane().add(lblEstoque, "cell 0 7,alignx right");
 
-		JCheckBox chckbxGenerico = new JCheckBox("gen\u00E9rico");
+		JCheckBox chckbxGenerico = new JCheckBox("Gen\u00E9rico");
 		chckbxGenerico.setBackground(Color.WHITE);
 		getContentPane().add(chckbxGenerico, "cell 0 8");
 
 		// listagem
 
-		JButton btnSalvar = new JButton("salvar");
+		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.setBackground(Color.WHITE);
 		btnSalvar.setOpaque(true);
 		btnSalvar.setPreferredSize(new Dimension(80, 30));

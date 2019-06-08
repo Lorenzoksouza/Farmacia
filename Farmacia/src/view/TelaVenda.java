@@ -59,12 +59,12 @@ public class TelaVenda extends JInternalFrame {
 		setFrameIcon(new ImageIcon(TelaVenda.class.getResource("/icons/vendas3x.png")));
 		setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		setBackground(Color.WHITE);
-		setTitle("vendas");
+		setTitle("Vendas");
 		setClosable(true);
 		setBounds(100, 100, 660, 530);
 		getContentPane().setLayout(new MigLayout("", "[grow][][grow]", "[21.00][][][25.00][][][][][][grow][][]"));
 
-		JLabel lblCodbarra = new JLabel("c\u00F3d.barra:");
+		JLabel lblCodbarra = new JLabel("C\u00F3d.barra:");
 		getContentPane().add(lblCodbarra, "flowx,cell 0 0,growx");
 
 		JLabel lblEspaco = new JLabel("         ");
@@ -86,7 +86,7 @@ public class TelaVenda extends JInternalFrame {
 				new DefaultTableModel(new Object[][] {}, new String[] { "Codigo", "Nome", "Preco", "Estoque" }));
 		getContentPane().add(tblPesquisa, "cell 0 3 1 7,grow");
 
-		JButton btnAddItem = new JButton("adicionar item");
+		JButton btnAddItem = new JButton("Adicionar item");
 		btnAddItem.setBackground(Color.WHITE);
 		btnAddItem.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnAddItem.setPreferredSize(new Dimension(90, 30));
@@ -112,7 +112,7 @@ public class TelaVenda extends JInternalFrame {
 		JLabel lblValor_1 = new JLabel("R$0.00");
 		getContentPane().add(lblValor_1, "cell 2 10,aligny bottom");
 
-		JLabel lblQuantidade = new JLabel("quantidade:");
+		JLabel lblQuantidade = new JLabel("Quantidade:");
 		getContentPane().add(lblQuantidade, "flowx,cell 0 11,aligny center");
 
 		JSpinner spiQuantidade = new JSpinner();
@@ -149,7 +149,7 @@ public class TelaVenda extends JInternalFrame {
 		btnConcluirVenda.setBorder(new LineBorder(Color.gray, 2, true));
 		getContentPane().add(btnConcluirVenda, "cell 2 11,alignx center");
 
-		JButton btnPesquisar = new JButton("pesquisar");
+		JButton btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.setBackground(Color.WHITE);
 		btnPesquisar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnPesquisar.setPreferredSize(new Dimension(200, 30));
@@ -161,7 +161,7 @@ public class TelaVenda extends JInternalFrame {
 		});
 		getContentPane().add(btnPesquisar, "cell 0 2,alignx right");
 
-		JLabel lblNome = new JLabel("nome:");
+		JLabel lblNome = new JLabel("Nome:");
 		getContentPane().add(lblNome, "cell 0 0,growx");
 
 		txtNome = new JTextField();

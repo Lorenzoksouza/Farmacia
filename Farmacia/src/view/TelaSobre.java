@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 
+import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
@@ -35,12 +36,13 @@ public class TelaSobre extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public TelaSobre() {
+		setTitle("Sobre");
 		setClosable(true);
 		setBackground(Color.WHITE);
-		setFrameIcon(null);
+		setFrameIcon(new ImageIcon(TelaSobre.class.getResource("/icons/sobre2x.png")));
 		setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
-		setBounds(500, 100, 340, 215);
-		getContentPane().setLayout(new MigLayout("", "[grow,fill]", "[][][][][]"));
+		setBounds(500, 100, 340, 230);
+		getContentPane().setLayout(new MigLayout("", "[grow,fill]", "[][][][][][]"));
 
 		JLabel lblDesenvolvedores = new JLabel("Desenvolvedores:");
 		lblDesenvolvedores.setHorizontalAlignment(SwingConstants.CENTER);
@@ -62,7 +64,7 @@ public class TelaSobre extends JInternalFrame {
 		lblVitor.setHorizontalAlignment(SwingConstants.CENTER);
 		getContentPane().add(lblVitor, "cell 0 3,alignx center");
 
-		JLabel lblContatoMatheusmartinsalunoscsenacbr = new JLabel("contato:");
+		JLabel lblContatoMatheusmartinsalunoscsenacbr = new JLabel("Contato:");
 		lblContatoMatheusmartinsalunoscsenacbr.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblContatoMatheusmartinsalunoscsenacbr.setHorizontalAlignment(SwingConstants.LEFT);
 		getContentPane().add(lblContatoMatheusmartinsalunoscsenacbr, "flowx,cell 0 4,growx");
@@ -72,6 +74,13 @@ public class TelaSobre extends JInternalFrame {
 		txtrMatheusmartinsalunoscsenacbr.setFont(new Font("Tahoma", Font.BOLD, 13));
 		txtrMatheusmartinsalunoscsenacbr.setText("matheus.martins@aluno.sc.senac.br");
 		getContentPane().add(txtrMatheusmartinsalunoscsenacbr, "cell 0 4,growx");
+
+		JLabel lblV = new JLabel("V.1.0");
+		getContentPane().add(lblV, "flowx,cell 0 5");
+
+		JLabel label = new JLabel("\u00A9 2019");
+		label.setHorizontalAlignment(SwingConstants.RIGHT);
+		getContentPane().add(label, "cell 0 5");
 		String name = UIManager.getSystemLookAndFeelClassName();
 
 	}
