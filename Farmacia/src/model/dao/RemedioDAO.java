@@ -19,7 +19,7 @@ public class RemedioDAO {
 	public String inserir(Remedio r) {
 		String mensagem = "";
 		String sql = "INSERT INTO REMEDIO(COD_BARRA, DOSAGEM, COMPOSICAO, GENERICO, NM_REMEDIO, DT_CADASTRO, PRECO, ESTOQUE, ID_FORMA_USO, ID_LABORATORIO)"
-				+ " VALUES (?,?,?,?,?,?,?,?,?,?)";
+				+ " VALUES (?,?,?,?,?,NOW(),?,?,?,?)";
 
 		Connection conn = Banco.getConnection();
 		PreparedStatement prepStmt = Banco.getPreparedStatement(conn, sql, Statement.RETURN_GENERATED_KEYS);
@@ -29,11 +29,10 @@ public class RemedioDAO {
 			prepStmt.setString(3, r.getComposicao());
 			prepStmt.setBoolean(4, r.isGenerico());
 			prepStmt.setString(5, r.getNome());
-			prepStmt.setDate(6, (Date) r.getDataCadastro());
-			prepStmt.setDouble(7, r.getPreco());
-			prepStmt.setInt(8, r.getEstoque());
-			prepStmt.setInt(9, r.getFormaUso().getIdFormaUso());
-			prepStmt.setInt(10, r.getLaboratorio().getIdLaboratorio());
+			prepStmt.setDouble(6, r.getPreco());
+			prepStmt.setInt(7, r.getEstoque());
+			prepStmt.setInt(8, r.getFormaUso().getIdFormaUso());
+			prepStmt.setInt(9, r.getLaboratorio().getIdLaboratorio());
 
 			prepStmt.execute();
 
