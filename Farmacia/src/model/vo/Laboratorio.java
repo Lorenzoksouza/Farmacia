@@ -31,4 +31,9 @@ public class Laboratorio {
 		super();
 	}
 
+	@Override
+	public String toString() {
+		return nomeLaboratorio;
+	}
+
 }

@@ -31,4 +31,9 @@ public class FormaUso {
 		super();
 	}
 
+	@Override
+	public String toString() {
+		return descricao;
+	}
+
 }
