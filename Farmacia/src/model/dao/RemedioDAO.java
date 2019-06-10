@@ -235,16 +235,18 @@ public class RemedioDAO {
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
 
-		ArrayList<String> listaFormaUso = new ArrayList<String>();
+		ArrayList<FormaUso> listaFormaUso = new ArrayList<FormaUso>();
 
-		String query = "SELECT DESCRICAO FROM FORMA_USO";
+		String query = "SELECT * FROM FORMA_USO";
 		try {
 			resultado = stmt.executeQuery(query);
 			while (resultado.next()) {
-				listaFormaUso.add(resultado.getString("DESCRICAO"));
+				FormaUso f = new FormaUso();
+				f.setIdFormaUso(Integer.parseInt(resultado.getString(1)));
+				f.setDescricao(resultado.getString(2));
+				listaFormaUso.add(f);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			System.out.println("Erro ao listar as Formas de Uso!!");
 			e.printStackTrace();
 		} finally {
@@ -261,16 +263,19 @@ public class RemedioDAO {
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
 
-		ArrayList<String> listaLaboratorios = new ArrayList<String>();
+		ArrayList<Laboratorio> listaLaboratorios = new ArrayList<Laboratorio>();
 
-		String query = "SELECT NM_LABORATORIO FROM LABORATORIO";
+		String query = "SELECT * FROM LABORATORIO";
 		try {
 			resultado = stmt.executeQuery(query);
 			while (resultado.next()) {
-				listaLaboratorios.add(resultado.getString("NM_LABORATORIO"));
+				Laboratorio lab = new Laboratorio();
+				lab.setIdLaboratorio(Integer.parseInt(resultado.getString(1)));
+				lab.setNomeLaboratorio(resultado.getString(2));
+
+				listaLaboratorios.add(lab);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			System.out.println("Erro ao listar os Laboratórios!!");
 			e.printStackTrace();
 		} finally {

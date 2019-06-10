@@ -55,16 +55,18 @@ public class ProdutoDAO {
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
 
-		ArrayList<String> listaCategorias = new ArrayList<String>();
+		ArrayList<Categoria> listaCategorias = new ArrayList<Categoria>();
 
-		String query = "SELECT NM_CATEGORIA FROM CATEGORIA";
+		String query = "SELECT * FROM CATEGORIA";
 		try {
 			resultado = stmt.executeQuery(query);
 			while (resultado.next()) {
-				listaCategorias.add(resultado.getString("NM_CATEGORIA"));
+				Categoria c = new Categoria();
+				c.setIdCategoria(Integer.parseInt(resultado.getString(1)));
+				c.setNomeCategoria(resultado.getString(2));
+				listaCategorias.add(c);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			System.out.println("Erro ao listar os Categorias!!");
 			e.printStackTrace();
 		} finally {
