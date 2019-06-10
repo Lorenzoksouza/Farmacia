@@ -167,7 +167,8 @@ public class RemedioDAO {
 			prepStmt.setInt(1, remedioSelecionado);
 
 			int codigoRetorno = prepStmt.executeUpdate();
-			if (codigoRetorno == 0) {// 1 - sucesso na execução
+			if (codigoRetorno == 0) {
+				// 1 - sucesso na execução
 				mensagem = "Erro ao executar a query de exclusão de remédio!";
 			}
 		} catch (SQLException e) {
@@ -186,7 +187,7 @@ public class RemedioDAO {
 
 		ArrayList<FormaUso> listaFormaUso = new ArrayList<FormaUso>();
 
-		String query = "SELECT * FROM FORMA_USO";
+		String query = "SELECT DESCRICAO FROM FORMA_USO";
 		try {
 			resultado = stmt.executeQuery(query);
 			while (resultado.next()) {
