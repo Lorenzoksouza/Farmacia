@@ -155,9 +155,9 @@ public class CadastroMedicamento extends JInternalFrame {
 				remedio.setPreco(Double.parseDouble(txtPreco.getText()));
 				remedio.setComposicao(txtComposicao.getText());
 				remedio.setDosagem(txtDosagem.getText());
-				remedio.setLaboratorio(cmbLaboratorio.getSelectedItem().toString());
+				remedio.getLaboratorio().setNomeLaboratorio(cmbLaboratorio.getSelectedItem().toString());
 				remedio.setEstoque(Integer.parseInt(txtEstoque.getText()));
-				remedio.setFormaUso(cmbFormaUso.getSelectedItem().toString());
+				remedio.getFormaUso().setDescricao(cmbFormaUso.getSelectedItem().toString());
 				remedio.setGenerico(chckbxGenerico.isSelected());
 
 				ControllerRemedio controllerRemedio = new ControllerRemedio();

@@ -32,8 +32,8 @@ public class RemedioDAO {
 			prepStmt.setDate(6, (Date) r.getDataCadastro());
 			prepStmt.setDouble(7, r.getPreco());
 			prepStmt.setInt(8, r.getEstoque());
-			prepStmt.setInt(9, pegarIdFormaUso(r));
-			prepStmt.setInt(10, pegarIdLaboratorio(r));
+			prepStmt.setInt(9, r.getFormaUso().getIdFormaUso());
+			prepStmt.setInt(10, r.getLaboratorio().getIdLaboratorio());
 
 			prepStmt.execute();
 
@@ -53,57 +53,6 @@ public class RemedioDAO {
 		return mensagem;
 	}
 
-	private int pegarIdFormaUso(Remedio r) {
-		String sql = "SELECT ID_FORMA_USO FROM FORMA_USO WHERE DESCRICAO = ?";
-		Connection conn = Banco.getConnection();
-		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
-		ResultSet resultado = null;
-		int idFormaUso = 0;
-
-		try {
-			stmt.setString(1, r.getFormaUso());
-			resultado = stmt.executeQuery();
-
-			if (resultado.next()) {
-				idFormaUso = resultado.getInt(1);
-			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Erro ao pegar id forma uso. Causa: " + e.getMessage());
-		} finally {
-			Banco.closeResultSet(resultado);
-			Banco.closeStatement(stmt);
-			Banco.closeConnection(conn);
-		}
-
-		return idFormaUso;
-	}
-
-	private int pegarIdLaboratorio(Remedio r) {
-		String sql = "SELECT ID_LABORATORIO FROM LABORATORIO WHERE NM_LABORATORIO = '" + r.getLaboratorio() + "'";
-		Connection conn = Banco.getConnection();
-		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
-		ResultSet resultado = null;
-		int idLaboratorio = 0;
-
-		try {
-			resultado = stmt.executeQuery();
-
-			if (resultado.next()) {
-				idLaboratorio = resultado.getInt(1);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			Banco.closeResultSet(resultado);
-			Banco.closeStatement(stmt);
-			Banco.closeConnection(conn);
-		}
-		return idLaboratorio;
-	}
-
 	public String atualizar(Remedio r) {
 		String mensagem = "";
 		String sql = "UPDATE REMEDIO R SET COD_BARRA =?, DOSAGEM =?, COMPOSICAO=?, GENERICO=?, NM_REMEDIO=?, DT_CADASTRO=?, PRECO=?, ESTOQUE=?, ID_FORMA_USO=?, ID_LABORATORIO=?)"
@@ -120,8 +69,8 @@ public class RemedioDAO {
 			prepStmt.setDate(6, (Date) r.getDataCadastro());
 			prepStmt.setDouble(7, r.getPreco());
 			prepStmt.setInt(8, r.getEstoque());
-			prepStmt.setInt(9, pegarIdFormaUso(r));
-			prepStmt.setInt(10, pegarIdLaboratorio(r));
+			prepStmt.setInt(9, r.getFormaUso().getIdFormaUso());
+			prepStmt.setInt(10, r.getLaboratorio().getIdLaboratorio());
 
 			prepStmt.execute();
 

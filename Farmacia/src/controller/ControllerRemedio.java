@@ -63,10 +63,10 @@ public class ControllerRemedio {
 			if (remedio.getDosagem() == null || remedio.getDosagem().trim().equals("")) {
 				validacao = "Dosagem do remedio é obrigatorio";
 			}
-			if (remedio.getFormaUso() == "") {
+			if (remedio.getFormaUso().getDescricao() == "") {
 				validacao = "Forma de uso deve ser selecionado";
 			}
-			if (remedio.getLaboratorio() == null || remedio.getLaboratorio().trim().equals("")) {
+			if (remedio.getLaboratorio() == null || remedio.getLaboratorio().getNomeLaboratorio().trim().equals("")) {
 				validacao = "Dosagem do remedio é obrigatorio";
 			}
 			if (remedio.getPreco() <= 0.0) {

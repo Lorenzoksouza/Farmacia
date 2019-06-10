@@ -25,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
 import controller.ControllerRemedio;
 import model.seletor.RemedioSeletor;
 import model.vo.FormaUso;
+import model.vo.Laboratorio;
 import model.vo.Remedio;
 import net.miginfocom.swing.MigLayout;
 
@@ -72,7 +73,12 @@ public class ListagemMedicamento extends JInternalFrame {
 		setClosable(true);
 		// TODO remover!
 		remediosConsultados = new ArrayList<Remedio>();
-		Remedio remedioTeste = new Remedio("0011", "Plasil", new Date(), 10.0, 50, "500", "Água", "Tipo", false, "EMS");
+
+		Laboratorio labTeste = new Laboratorio(1, "EMS");
+		FormaUso fTeste = new FormaUso(1, "Via Oral");
+
+		Remedio remedioTeste = new Remedio("0011", "Plasil", new Date(), 10.0, 50, "500", "Água", fTeste, false,
+				labTeste);
 		remediosConsultados.add(remedioTeste);
 
 		setBounds(100, 100, 680, 540);
@@ -288,9 +294,9 @@ public class ListagemMedicamento extends JInternalFrame {
 			// na ORDEM do cabeçalho da tabela
 
 			String[] novaLinha = new String[] { remedio.getCodBarra() + "", remedio.getNome(), remedio.getComposicao(),
-					remedio.getDosagem(), remedio.getFormaUso(), "generico?", "R$" + remedio.getPreco(), // TODO
-																											// generico??
-					"" + remedio.getEstoque(), remedio.getLaboratorio() };
+					remedio.getDosagem(), remedio.getFormaUso().getDescricao(), "generico?", "R$" + remedio.getPreco(), // TODO
+					// generico??
+					"" + remedio.getEstoque(), remedio.getLaboratorio().getNomeLaboratorio() };
 			modelo.addRow(novaLinha);
 		}
 	}
