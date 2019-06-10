@@ -187,7 +187,7 @@ public class RemedioDAO {
 
 		ArrayList<FormaUso> listaFormaUso = new ArrayList<FormaUso>();
 
-		String query = "SELECT DESCRICAO FROM FORMA_USO";
+		String query = "SELECT * FROM FORMA_USO";
 		try {
 			resultado = stmt.executeQuery(query);
 			while (resultado.next()) {
