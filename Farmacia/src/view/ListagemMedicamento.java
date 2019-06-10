@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.ControllerRemedio;
 import model.seletor.RemedioSeletor;
+import model.vo.FormaUso;
 import model.vo.Remedio;
 import net.miginfocom.swing.MigLayout;
 
@@ -42,7 +43,7 @@ public class ListagemMedicamento extends JInternalFrame {
 	private int totalPaginas = 1;
 	private int paginaAtual = 1;
 
-	private ArrayList<String> listaFormasUso;
+	private ArrayList<FormaUso> listaFormasUso;
 
 	/**
 	 * Launch the application.
