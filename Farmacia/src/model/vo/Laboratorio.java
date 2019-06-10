@@ -33,7 +33,7 @@ public class Laboratorio {
 
 	@Override
 	public String toString() {
-		return nomeLaboratorio;
+		return idLaboratorio + " - " + nomeLaboratorio;
 	}
 
 }

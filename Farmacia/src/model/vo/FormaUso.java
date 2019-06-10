@@ -33,7 +33,7 @@ public class FormaUso {
 
 	@Override
 	public String toString() {
-		return descricao;
+		return IdFormaUso + " - " + descricao;
 	}
 
 }
