@@ -14,6 +14,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
@@ -171,7 +172,11 @@ public class CadastroMedicamento extends JInternalFrame {
 				remedio.setGenerico(chckbxGenerico.isSelected());
 
 				ControllerRemedio controllerRemedio = new ControllerRemedio();
-				controllerRemedio.salvar(remedio);
+				String mensagem = "";
+				mensagem = controllerRemedio.salvar(remedio);
+				JOptionPane.showMessageDialog(null, mensagem);
+
+				limparCampos();
 			}
 		});
 		getContentPane().add(btnSalvar, "cell 2 9,alignx right");
@@ -205,6 +210,17 @@ public class CadastroMedicamento extends JInternalFrame {
 
 		// fazer retornar listaFormaUso do RemedioDAO!
 		// após isto, descomentar linha 105
+	}
+
+	public void limparCampos() {
+		txtNome.setText("");
+		txtCodBar.setText("");
+		txtPreco.setText("");
+		txtComposicao.setText("");
+		txtDosagem.setText("");
+		txtEstoque.setText("");
+		cmbLaboratorio.setSelectedItem(-1);
+		cmbFormaUso.setSelectedItem(-1);
 	}
 
 }

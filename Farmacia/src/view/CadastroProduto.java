@@ -139,4 +139,12 @@ public class CadastroProduto extends JInternalFrame {
 		// após isto, descomentar linha 96
 	}
 
+	public void limparCampos() {
+		txtNome.setText("");
+		txtCodBar.setText("");
+		txtPreco.setText("");
+		txtEstoque.setText("");
+		cmbCategoria.setSelectedItem(-1);
+	}
+
 }
