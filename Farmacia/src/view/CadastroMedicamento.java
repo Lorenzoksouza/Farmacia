@@ -162,11 +162,12 @@ public class CadastroMedicamento extends JInternalFrame {
 						listaLaboratorios.get(cmbLaboratorio.getSelectedIndex() - 1).getNomeLaboratorio());
 				remedio.setLaboratorio(lab);
 
-				remedio.setEstoque(Integer.parseInt(txtEstoque.getText()));
-
 				FormaUso formaUso = new FormaUso();
 				formaUso.setIdFormaUso(listaFormasUso.get(cmbLaboratorio.getSelectedIndex() - 1).getIdFormaUso());
 				formaUso.setDescricao(listaFormasUso.get(cmbLaboratorio.getSelectedIndex() - 1).getDescricao());
+				remedio.setFormaUso(formaUso);
+
+				remedio.setEstoque(Integer.parseInt(txtEstoque.getText()));
 				remedio.getFormaUso().setDescricao(cmbFormaUso.getSelectedItem().toString());
 				remedio.setGenerico(chckbxGenerico.isSelected());
 
