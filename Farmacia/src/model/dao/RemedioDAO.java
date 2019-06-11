@@ -22,7 +22,7 @@ public class RemedioDAO {
 				+ " VALUES (?,?,?,?,?,NOW(),?,?,?,?)";
 
 		Connection conn = Banco.getConnection();
-		PreparedStatement prepStmt = Banco.getPreparedStatement(conn, sql, Statement.RETURN_GENERATED_KEYS);
+		PreparedStatement prepStmt = Banco.getPreparedStatement(conn, sql, PreparedStatement.RETURN_GENERATED_KEYS);
 		try {
 			prepStmt.setString(1, r.getCodBarra());
 			prepStmt.setString(2, r.getDosagem());
@@ -34,14 +34,11 @@ public class RemedioDAO {
 			prepStmt.setInt(8, r.getFormaUso().getIdFormaUso());
 			prepStmt.setInt(9, r.getLaboratorio().getIdLaboratorio());
 
-			prepStmt.execute();
-
 			boolean codigoRetorno = prepStmt.execute();
+
 			if (codigoRetorno == false) {
 				mensagem = "Erro ao executar query de cadastro de Remédio!";
 			}
-
-			System.out.println(codigoRetorno);
 
 		} catch (SQLException e) {
 			System.out.println("Erro ao inserir remédio. Causa: " + e.getMessage());
@@ -59,6 +56,7 @@ public class RemedioDAO {
 
 		Connection conn = Banco.getConnection();
 		PreparedStatement prepStmt = Banco.getPreparedStatement(conn, sql, Statement.RETURN_GENERATED_KEYS);
+
 		try {
 			prepStmt.setString(1, r.getCodBarra());
 			prepStmt.setString(2, r.getDosagem());
@@ -153,10 +151,7 @@ public class RemedioDAO {
 	}
 
 	public String excluir(int remedioSelecionado) {
-		// método estava int, mas o cod de barra é varchar, verificar como será feito
-		// este método
 		String mensagem = "";
-
 		String sql = " DELETE FROM REMEDIO " + " WHERE COD_BARRA = ?";
 
 		Connection conexao = Banco.getConnection();
@@ -167,7 +162,6 @@ public class RemedioDAO {
 
 			int codigoRetorno = prepStmt.executeUpdate();
 			if (codigoRetorno == 0) {
-				// 1 - sucesso na execução
 				mensagem = "Erro ao executar a query de exclusão de remédio!";
 			}
 		} catch (SQLException e) {

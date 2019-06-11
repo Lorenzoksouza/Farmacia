@@ -134,9 +134,6 @@ public class CadastroProduto extends JInternalFrame {
 	private void consultarCategoria() {
 		ControllerProduto controllerProduto = new ControllerProduto();
 		listaCategorias = controllerProduto.consultarCategoria();
-
-		// fazer retornar listaLaboratorios do RemedioDAO!
-		// após isto, descomentar linha 96
 	}
 
 	public void limparCampos() {
@@ -144,7 +141,7 @@ public class CadastroProduto extends JInternalFrame {
 		txtCodBar.setText("");
 		txtPreco.setText("");
 		txtEstoque.setText("");
-		cmbCategoria.setSelectedItem(-1);
+		cmbCategoria.setSelectedIndex(-1);
 	}
 
 }

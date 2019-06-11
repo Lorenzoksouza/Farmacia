@@ -23,21 +23,21 @@ public class ControllerRemedio {
 			if (remedioBO.existeCodBar(Integer.parseInt(remedio.getCodBarra()))) {
 				// UPDATE
 				int opcao = JOptionPane.showConfirmDialog(null,
-						"Remedio ja cadastrado, deseja fazer alteração com os dados inseridos?", "",
+						"Remedio já cadastrado, deseja fazer alteração com os dados inseridos?", "",
 						JOptionPane.OK_CANCEL_OPTION);
 				if (opcao == 0) {
 					if (remedioBO.atualizar(remedio) == "") {
-						mensagem = "Remedio atualizado com sucesso";
+						mensagem = "Remédio atualizado com sucesso.";
 					} else {
-						mensagem = "ERRO ao atualizar remedio";
+						mensagem = "Erro ao atualizar Remédio.";
 					}
 				}
 			} else {
 				// INSERT
 				if (remedioBO.inserir(remedio) == "") {
-					mensagem = "Remedio cadastrado com sucesso";
+					mensagem = "Remédio cadastrado com sucesso!";
 				} else {
-					mensagem = "ERRO ao cadastrar remedio";
+					mensagem = "Erro ao inserir Remédio.";
 				}
 			}
 		}

@@ -33,7 +33,7 @@ public class CadastroMedicamento extends JInternalFrame {
 	private JTextField txtEstoque;
 	private JComboBox<Laboratorio> cmbLaboratorio;
 	private JComboBox<FormaUso> cmbFormaUso;
-
+	private JCheckBox chckbxGenerico;
 	private ArrayList<Laboratorio> listaLaboratorios;
 	private ArrayList<FormaUso> listaFormasUso;
 
@@ -137,7 +137,7 @@ public class CadastroMedicamento extends JInternalFrame {
 		JLabel lblEstoque = new JLabel("    Estoque:");
 		getContentPane().add(lblEstoque, "cell 0 7,alignx right");
 
-		JCheckBox chckbxGenerico = new JCheckBox("Gen\u00E9rico");
+		chckbxGenerico = new JCheckBox("Gen\u00E9rico");
 		chckbxGenerico.setBackground(Color.WHITE);
 		getContentPane().add(chckbxGenerico, "cell 0 8");
 
@@ -194,22 +194,14 @@ public class CadastroMedicamento extends JInternalFrame {
 		cmbFormaUso.setSelectedItem(remedio.getFormaUso());
 	}
 
-	// Criar os métodos de consultar Lista de Forma de Uso e Laboratório, no DAO já
-	// foi criado!!
 	private void consultarLaboratorio() {
 		ControllerRemedio controllerRemedio = new ControllerRemedio();
 		listaLaboratorios = controllerRemedio.consultarLaboratorio();
-
-		// fazer retornar listaLaboratorios do RemedioDAO!
-		// após isto, descomentar linha 96
 	}
 
 	private void consultarFormaUso() {
 		ControllerRemedio controllerRemedio = new ControllerRemedio();
 		listaFormasUso = controllerRemedio.consultarFormaUso();
-
-		// fazer retornar listaFormaUso do RemedioDAO!
-		// após isto, descomentar linha 105
 	}
 
 	public void limparCampos() {
@@ -219,8 +211,9 @@ public class CadastroMedicamento extends JInternalFrame {
 		txtComposicao.setText("");
 		txtDosagem.setText("");
 		txtEstoque.setText("");
-		cmbLaboratorio.setSelectedItem(-1);
-		cmbFormaUso.setSelectedItem(-1);
+		cmbLaboratorio.setSelectedIndex(-1);
+		cmbFormaUso.setSelectedIndex(-1);
+		chckbxGenerico.setSelected(isClosed);
 	}
 
 }
