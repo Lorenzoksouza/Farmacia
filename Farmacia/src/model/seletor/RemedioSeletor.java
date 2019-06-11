@@ -2,7 +2,7 @@ package model.seletor;
 
 public class RemedioSeletor {
 
-	private int codBar;
+	private String codBar;
 	private String nomeRemedio;
 	private String composicaoRemedio;
 	private String tipoRemedio;
@@ -19,7 +19,7 @@ public class RemedioSeletor {
 
 	public boolean temFiltro() {
 
-		if (this.codBar > 0) {
+		if (this.codBar != "") {
 			return true;
 		}
 		if ((this.nomeRemedio != null) && (this.nomeRemedio.trim().length() > 0)) {
@@ -56,12 +56,12 @@ public class RemedioSeletor {
 	}
 
 	// Getters & setters
-	public int getCodBar() {
+	public String getCodBar() {
 		return codBar;
 	}
 
-	public void setCodBar(int idRemedio) {
-		this.codBar = idRemedio;
+	public void setCodBar(String codBarRemedio) {
+		this.codBar = codBarRemedio;
 	}
 
 	public String getNomeRemedio() {

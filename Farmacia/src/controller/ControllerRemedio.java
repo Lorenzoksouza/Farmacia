@@ -52,25 +52,25 @@ public class ControllerRemedio {
 		} else {
 			// validações de campo vazio e nulo
 			if (remedio.getCodBarra().trim().equals("")) {
-				validacao = "Remedio deve possuir um codigo";
+				validacao = "Remedio deve possuir um código de barras.";
 			}
 			if (remedio.getNome() == null || remedio.getNome().trim().equals("")) {
-				validacao = "Nome do remedio é obrigatorio";
+				validacao = "Nome do remédio é obrigatório.";
 			}
 			if (remedio.getComposicao() == null || remedio.getComposicao().trim().equals("")) {
-				validacao = "Composição do remedio é obrigatorio";
+				validacao = "Composição do remedio é obrigatório.";
 			}
 			if (remedio.getDosagem() == null || remedio.getDosagem().trim().equals("")) {
-				validacao = "Dosagem do remedio é obrigatorio";
+				validacao = "Dosagem do remédio é obrigatória.";
 			}
 			if (remedio.getFormaUso().getDescricao() == "") {
-				validacao = "Forma de uso deve ser selecionado";
+				validacao = "Forma de uso deve ser selecionado.";
 			}
 			if (remedio.getLaboratorio() == null || remedio.getLaboratorio().getNomeLaboratorio().trim().equals("")) {
-				validacao = "Dosagem do remedio é obrigatorio";
+				validacao = "Laboratório deve ser selecionado.";
 			}
 			if (remedio.getPreco() <= 0.0) {
-				validacao = "Preço do remedio deve ser maior que zero";
+				validacao = "Preço do remédio deve ser maior que zero.";
 			}
 
 		}

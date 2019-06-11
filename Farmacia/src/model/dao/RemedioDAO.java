@@ -88,7 +88,6 @@ public class RemedioDAO {
 		}
 
 		if (seletor.temPaginacao()) {
-			// TODO continuar...
 			sql += " LIMIT " + seletor.getLimite() + " OFFSET " + seletor.getOffset();
 		}
 		Connection conexao = Banco.getConnection();
@@ -109,36 +108,52 @@ public class RemedioDAO {
 	}
 
 	private String criarFiltros(RemedioSeletor seletor, String sql) {
-		sql += " where ";
+		sql += " WHERE ";
 		boolean primeiro = true;
 
-		if (seletor.getCodBar() > 0) {
+		if (seletor.getCodBar() != "") {
 			if (!primeiro) {
-				sql += " and ";
+				sql += " AND ";
 			}
-			sql += "r.id = " + seletor.getCodBar();
+			sql += "R.COD_BARRA = " + seletor.getCodBar();
 			primeiro = false;
 		}
 		if ((seletor.getNomeRemedio() != null) && (seletor.getNomeRemedio().trim().length() > 0)) {
 			if (!primeiro) {
-				sql += " and ";
+				sql += " AND ";
 			}
-			sql += "r.nome like '% " + seletor.getNomeRemedio() + "%'";
+			sql += "R.NM_REMEDIO LIKE '% " + seletor.getNomeRemedio() + "%'";
 			primeiro = false;
 		}
 		if (seletor.isGenerico()) {
 			if (!primeiro) {
-				sql += " and ";
+				sql += " AND ";
 			}
-			sql += "r.generico = true";
+			sql += "R.GENERICO = 1";
 			primeiro = true;
 		}
 		return sql;
 	}
 
 	private Remedio construirProdutoDoResultSet(ResultSet result) {
-		// TODO criar depois de criar o banco
-		return null;
+		Remedio r = new Remedio();
+
+		try {
+			r.setCodBarra(result.getString("COD_BARRA"));
+			r.setNome(result.getString("NM_REMEDIO"));
+			r.setDosagem(result.getString("DOSAGEM"));
+			r.getFormaUso().setIdFormaUso(result.getInt("ID_FORMA_USO"));
+			r.getLaboratorio().setIdLaboratorio(result.getInt("ID_LABORATORIO"));
+			r.setComposicao(result.getString("COMPOSICAO"));
+			r.setPreco(result.getDouble("PRECO"));
+			r.setGenerico(result.getBoolean("GENERICO"));
+			r.setEstoque(result.getInt("ESTOQUE"));
+			r.setDataCadastro(result.getDate("DT_CADASTRO"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return r;
 	}
 
 	public boolean existeCodBar(int codBar) {

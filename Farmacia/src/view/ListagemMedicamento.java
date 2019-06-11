@@ -241,7 +241,7 @@ public class ListagemMedicamento extends JInternalFrame {
 		// Preenche os campos de filtro da tela no seletor
 
 		if (txtCodBar != null) {
-			seletor.setCodBar(Integer.parseInt(txtCodBar.getText()));
+			seletor.setCodBar(txtCodBar.getText());
 		}
 
 		if (!txtNome.getText().trim().equals("")) {
@@ -260,8 +260,7 @@ public class ListagemMedicamento extends JInternalFrame {
 			seletor.setGenerico(true);
 		}
 
-		// TODO descomentar!
-		// remedios = controlador.listarRemedios(seletor);
+		remedios = controlador.listarRemedios(seletor);
 		atualizarTabelaMedicamentos(this.remediosConsultados);
 	}
 
