@@ -34,11 +34,7 @@ public class RemedioDAO {
 			prepStmt.setInt(8, r.getFormaUso().getIdFormaUso());
 			prepStmt.setInt(9, r.getLaboratorio().getIdLaboratorio());
 
-			boolean codigoRetorno = prepStmt.execute();
-
-			if (codigoRetorno == false) {
-				mensagem = "Erro ao executar query de cadastro de Remédio!";
-			}
+			prepStmt.execute();
 
 		} catch (SQLException e) {
 			System.out.println("Erro ao inserir remédio. Causa: " + e.getMessage());
