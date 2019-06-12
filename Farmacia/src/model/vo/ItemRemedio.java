@@ -3,8 +3,8 @@ package model.vo;
 public class ItemRemedio {
 
 	private int idItemRemedio;
-	private int idRemedio;
-	private int idVenda;
+	private Remedio remedio;
+	private Venda venda;
 	private int quantidade;
 
 	public int getIdItemRemedio() {
@@ -15,20 +15,20 @@ public class ItemRemedio {
 		this.idItemRemedio = idItemRemedio;
 	}
 
-	public int getIdRemedio() {
-		return idRemedio;
+	public Remedio getRemedio() {
+		return remedio;
 	}
 
-	public void setIdRemedio(int idRemedio) {
-		this.idRemedio = idRemedio;
+	public void setRemedio(Remedio remedio) {
+		this.remedio = remedio;
 	}
 
-	public int getIdVenda() {
-		return idVenda;
+	public Venda getVenda() {
+		return venda;
 	}
 
-	public void setIdVenda(int idVenda) {
-		this.idVenda = idVenda;
+	public void setVenda(Venda venda) {
+		this.venda = venda;
 	}
 
 	public int getQuantidade() {
@@ -39,11 +39,11 @@ public class ItemRemedio {
 		this.quantidade = quantidade;
 	}
 
-	public ItemRemedio(int idItemRemedio, int idRemedio, int idVenda, int quantidade) {
+	public ItemRemedio(int idItemRemedio, Remedio remedio, Venda venda, int quantidade) {
 		super();
 		this.idItemRemedio = idItemRemedio;
-		this.idRemedio = idRemedio;
-		this.idVenda = idVenda;
+		this.remedio = remedio;
+		this.venda = venda;
 		this.quantidade = quantidade;
 	}
 
@@ -51,4 +51,5 @@ public class ItemRemedio {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
 }

@@ -4,21 +4,20 @@ import java.util.List;
 
 import model.bo.VendaBO;
 import model.seletor.MercadoriaSeletor;
+import model.vo.ItemProduto;
+import model.vo.ItemRemedio;
 import model.vo.Mercadoria;
-import model.vo.Venda;
 
 public class ControllerVenda {
 
 	private VendaBO vendaBO = new VendaBO();
 
-	public void cadastrarVendaController(Venda venda) {
-
-		vendaBO.finalizarVendaBO(venda);
-
-	}
-
 	public List<Mercadoria> listarMercadorias(MercadoriaSeletor seletor) {
 		return vendaBO.listarMercadoriasBO(seletor);
+	}
+
+	public String salvarVenda(double valorTotal, List<ItemProduto> itensProdutos, List<ItemRemedio> itensRemedios) {
+		return vendaBO.salvar(valorTotal, itensProdutos, itensRemedios);
 	}
 
 }

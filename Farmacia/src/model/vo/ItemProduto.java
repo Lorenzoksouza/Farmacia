@@ -3,9 +3,25 @@ package model.vo;
 public class ItemProduto {
 
 	private int idItemProduto;
-	private int idProduto;
-	private int idVenda;
+	private Produto produto;
+	private Venda venda;
 	private int quantidade;
+
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
+	}
+
+	public Venda getVenda() {
+		return venda;
+	}
+
+	public void setVenda(Venda venda) {
+		this.venda = venda;
+	}
 
 	public int getIdItemProduto() {
 		return idItemProduto;
@@ -13,22 +29,6 @@ public class ItemProduto {
 
 	public void setIdItemProduto(int idItemProduto) {
 		this.idItemProduto = idItemProduto;
-	}
-
-	public int getIdProduto() {
-		return idProduto;
-	}
-
-	public void setIdProduto(int idProduto) {
-		this.idProduto = idProduto;
-	}
-
-	public int getIdVenda() {
-		return idVenda;
-	}
-
-	public void setIdVenda(int idVenda) {
-		this.idVenda = idVenda;
 	}
 
 	public int getQuantidade() {
@@ -39,11 +39,11 @@ public class ItemProduto {
 		this.quantidade = quantidade;
 	}
 
-	public ItemProduto(int idItemProduto, int idProduto, int idVenda, int quantidade) {
+	public ItemProduto(int idItemProduto, Produto produto, Venda venda, int quantidade) {
 		super();
 		this.idItemProduto = idItemProduto;
-		this.idProduto = idProduto;
-		this.idVenda = idVenda;
+		this.produto = produto;
+		this.venda = venda;
 		this.quantidade = quantidade;
 	}
 
