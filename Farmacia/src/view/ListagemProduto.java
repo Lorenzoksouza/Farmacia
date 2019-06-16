@@ -6,17 +6,20 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
 import controller.ControllerProduto;
 import model.seletor.ProdutoSeletor;
@@ -78,14 +81,41 @@ public class ListagemProduto extends JInternalFrame {
 				new String[] { "CÛdigo", "Nome", "PreÁo", "Categoria", "Estoque" }));
 		getContentPane().add(tblProdutos, "cell 2 0 1 12,grow");
 
-		txtCodBar = new JTextField();
+		txtCodBar = new JFormattedTextField();
+
+		MaskFormatter formatoCodBar = new MaskFormatter();
+
+		try {
+			formatoCodBar = new MaskFormatter("################");
+		} catch (ParseException e1) { // TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		formatoCodBar.setValidCharacters("0123456789");
+
+		formatoCodBar.install((JFormattedTextField) txtCodBar);
+
 		getContentPane().add(txtCodBar, "cell 0 1,growx");
 		txtCodBar.setColumns(10);
 
 		JLabel lblNome = new JLabel("Nome:");
 		getContentPane().add(lblNome, "cell 0 2");
 
-		txtNome = new JTextField();
+		txtNome = new JFormattedTextField();
+
+		MaskFormatter formatonome = new MaskFormatter();
+
+		try {
+			formatonome = new MaskFormatter("************************************************************");
+		} catch (ParseException e1) { // TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		formatonome.setValidCharacters(
+				"a·‡‚‰bcdeÈËÍÎfghiÌÏÓÔjklmnoÛÙˆpqrstu˙˘˚¸vwxyz-()/:A¡¿¬ƒBCDE…» ÀFGHIÕÃŒœJKLMNO”‘÷PQRSTU⁄Ÿ€‹VWXYZ");
+
+		formatonome.install((JFormattedTextField) txtNome);
+
 		getContentPane().add(txtNome, "cell 0 3,growx");
 		txtNome.setColumns(10);
 

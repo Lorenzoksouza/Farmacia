@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -21,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
 import controller.ControllerRemedio;
 import model.seletor.RemedioSeletor;
@@ -98,21 +101,63 @@ public class ListagemMedicamento extends JInternalFrame {
 				"Dosagem", "Tipo", "Generico", "Preco", "Estoque", "Laboratorio" }));
 		getContentPane().add(tblRemedios, "cell 2 0 1 14,grow");
 
-		txtCodBar = new JTextField();
+		txtCodBar = new JFormattedTextField();
+
+		MaskFormatter formatoCodBar = new MaskFormatter();
+
+		try {
+			formatoCodBar = new MaskFormatter("################");
+		} catch (ParseException e1) { // TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		formatoCodBar.setValidCharacters("0123456789");
+
+		formatoCodBar.install((JFormattedTextField) txtCodBar);
+
 		getContentPane().add(txtCodBar, "cell 0 1,growx,aligny center");
 		txtCodBar.setColumns(10);
 
 		JLabel lblNome = new JLabel("Nome:");
 		getContentPane().add(lblNome, "cell 0 2");
 
-		txtNome = new JTextField();
+		txtNome = new JFormattedTextField();
+
+		MaskFormatter formatonome = new MaskFormatter();
+
+		try {
+			formatonome = new MaskFormatter("************************************************************");
+		} catch (ParseException e1) { // TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		formatonome.setValidCharacters(
+				"a·‡‚‰bcdeÈËÍÎfghiÌÏÓÔjklmnoÛÙˆpqrstu˙˘˚¸vwxyz-()/:A¡¿¬ƒBCDE…» ÀFGHIÕÃŒœJKLMNO”‘÷PQRSTU⁄Ÿ€‹VWXYZ");
+
+		formatonome.install((JFormattedTextField) txtNome);
+
 		getContentPane().add(txtNome, "cell 0 3,growx");
 		txtNome.setColumns(10);
 
 		JLabel lblComposicao = new JLabel("Composi\u00E7\u00E3o:");
 		getContentPane().add(lblComposicao, "cell 0 4");
 
-		txtComposicao = new JTextField();
+		txtComposicao = new JFormattedTextField();
+
+		MaskFormatter formatoComposicao = new MaskFormatter();
+
+		try {
+			formatoComposicao = new MaskFormatter(
+					"************************************************************************************************************************");
+		} catch (ParseException e1) { // TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		formatoComposicao.setValidCharacters(
+				"a·‡‚‰bcdeÈËÍÎfghiÌÏÓÔjklmnoÛÙˆpqrstu˙˘˚¸vwxyz-()/:A¡¿¬ƒBCDE…» ÀFGHIÕÃŒœJKLMNO”‘÷PQRSTU⁄Ÿ€‹VWXYZ");
+
+		formatoComposicao.install((JFormattedTextField) txtComposicao);
+
 		getContentPane().add(txtComposicao, "cell 0 5,growx");
 		txtComposicao.setColumns(10);
 

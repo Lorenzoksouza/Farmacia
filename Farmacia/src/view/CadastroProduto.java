@@ -5,16 +5,19 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+import javax.swing.text.MaskFormatter;
 
 import controller.ControllerProduto;
 import model.vo.Categoria;
@@ -68,11 +71,38 @@ public class CadastroProduto extends JInternalFrame {
 		JLabel lblPreco = new JLabel("Pre\u00E7o:");
 		getContentPane().add(lblPreco, "cell 2 0");
 
-		txtNome = new JTextField();
+		txtNome = new JFormattedTextField();
+
+		MaskFormatter formatonome = new MaskFormatter();
+
+		try {
+			formatonome = new MaskFormatter("************************************************************");
+		} catch (ParseException e1) { // TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		formatonome.setValidCharacters(
+				"a·‡‚‰bcdeÈËÍÎfghiÌÏÓÔjklmnoÛÙˆpqrstu˙˘˚¸vwxyz-()/:A¡¿¬ƒBCDE…» ÀFGHIÕÃŒœJKLMNO”‘÷PQRSTU⁄Ÿ€‹VWXYZ");
+
+		formatonome.install((JFormattedTextField) txtNome);
+
 		getContentPane().add(txtNome, "cell 0 1,growx");
 		txtNome.setColumns(10);
 
-		txtPreco = new JTextField();
+		txtPreco = new JFormattedTextField();
+
+		MaskFormatter formatoPreco = new MaskFormatter();
+
+		try {
+			formatoPreco = new MaskFormatter("R$" + "####,##");
+		} catch (ParseException e1) { // TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		formatoPreco.setValidCharacters("0123456789");
+
+		formatoPreco.install((JFormattedTextField) txtPreco);
+
 		getContentPane().add(txtPreco, "cell 2 1,alignx left");
 		txtPreco.setColumns(10);
 
@@ -90,14 +120,40 @@ public class CadastroProduto extends JInternalFrame {
 		cmbCategoria.setSelectedIndex(-1);
 		getContentPane().add(cmbCategoria, "cell 0 3,growx");
 
-		txtEstoque = new JTextField();
+		txtEstoque = new JFormattedTextField();
+
+		MaskFormatter formatoEstoque = new MaskFormatter();
+
+		try {
+			formatoEstoque = new MaskFormatter("###");
+		} catch (ParseException e1) { // TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		formatoEstoque.setValidCharacters("0123456789");
+
+		formatoEstoque.install((JFormattedTextField) txtEstoque);
+
 		getContentPane().add(txtEstoque, "cell 2 3,alignx left");
 		txtEstoque.setColumns(10);
 
 		JLabel lblCodbarras = new JLabel("C\u00F3d.barras:");
 		getContentPane().add(lblCodbarras, "cell 0 4");
 
-		txtCodBar = new JTextField(0);
+		txtCodBar = new JFormattedTextField();
+
+		MaskFormatter formatoCodBar = new MaskFormatter();
+
+		try {
+			formatoCodBar = new MaskFormatter("################");
+		} catch (ParseException e1) { // TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		formatoCodBar.setValidCharacters("0123456789");
+
+		formatoCodBar.install((JFormattedTextField) txtCodBar);
+
 		getContentPane().add(txtCodBar, "cell 0 5,growx,aligny top");
 		txtCodBar.setColumns(10);
 

@@ -5,8 +5,6 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -29,7 +27,6 @@ import model.vo.FormaUso;
 import model.vo.Laboratorio;
 import model.vo.Remedio;
 import net.miginfocom.swing.MigLayout;
-import util.TextFieldFormatter;
 
 public class CadastroMedicamento extends JInternalFrame {
 	private JTextField txtNome;
@@ -44,7 +41,6 @@ public class CadastroMedicamento extends JInternalFrame {
 	private ArrayList<Laboratorio> listaLaboratorios;
 	private ArrayList<FormaUso> listaFormasUso;
 	protected Scanner teclado = new Scanner(System.in);
-	private MaskFormatter setMascara;
 
 	/**
 	 * Launch the application.
@@ -86,14 +82,6 @@ public class CadastroMedicamento extends JInternalFrame {
 		getContentPane().add(lblCodbarras, "cell 2 1");
 
 		txtNome = new JFormattedTextField();
-		/**
-		 * txtNome.addKeyListener(new KeyAdapter() {
-		 * 
-		 * @Override public void keyReleased(KeyEvent e) { /** TextFieldFormatter tff =
-		 *           new TextFieldFormatter(); tff.setMask("******");
-		 *           tff.setCaracteresValidos("abc"); tff.setTf(txtNome);
-		 *           tff.formatter();
-		 **/
 
 		MaskFormatter formatonome = new MaskFormatter();
 
@@ -103,28 +91,28 @@ public class CadastroMedicamento extends JInternalFrame {
 			e1.printStackTrace();
 		}
 
-		formatonome.setValidCharacters("abcdefghijklmnopqrstuvwxyz");
+		formatonome.setValidCharacters(
+				"a·‡‚‰bcdeÈËÍÎfghiÌÏÓÔjklmnoÛÙˆpqrstu˙˘˚¸vwxyz-()/:A¡¿¬ƒBCDE…» ÀFGHIÕÃŒœJKLMNO”‘÷PQRSTU⁄Ÿ€‹VWXYZ");
 
 		formatonome.install((JFormattedTextField) txtNome);
-
-		// }
-		// });
 
 		getContentPane().add(txtNome, "cell 0 2,growx");
 		txtNome.setColumns(10);
 
-		txtCodBar = new JTextField();
-		txtCodBar.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-				// keytest();
-				TextFieldFormatter tff = new TextFieldFormatter();
-				tff.setMask("#############");
-				tff.setCaracteresValidos("1234567890");
-				tff.setTf(txtCodBar);
-				tff.formatter();
-			}
-		});
+		txtCodBar = new JFormattedTextField();
+
+		MaskFormatter formatoCodBar = new MaskFormatter();
+
+		try {
+			formatoCodBar = new MaskFormatter("################");
+		} catch (ParseException e1) { // TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		formatoCodBar.setValidCharacters("0123456789");
+
+		formatoCodBar.install((JFormattedTextField) txtCodBar);
+
 		getContentPane().add(txtCodBar, "cell 2 2,growx");
 		txtCodBar.setColumns(10);
 
@@ -134,28 +122,59 @@ public class CadastroMedicamento extends JInternalFrame {
 		JLabel lblComposicao = new JLabel("Composi\u00E7\u00E3o:");
 		getContentPane().add(lblComposicao, "cell 2 3");
 
-		txtPreco = new JTextField();
-		txtPreco.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-				TextFieldFormatter tff = new TextFieldFormatter();
-				tff.setMask("###,##");
-				tff.setCaracteresValidos("1234567890");
-				tff.setTf(txtPreco);
-				tff.formatter();
-			}
-		});
+		txtPreco = new JFormattedTextField();
+
+		MaskFormatter formatoPreco = new MaskFormatter();
+
+		try {
+			formatoPreco = new MaskFormatter("R$" + "####,##");
+		} catch (ParseException e1) { // TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		formatoPreco.setValidCharacters("0123456789");
+
+		formatoPreco.install((JFormattedTextField) txtPreco);
+
 		getContentPane().add(txtPreco, "cell 0 4,growx");
 		txtPreco.setColumns(10);
 
-		txtComposicao = new JTextField();
+		txtComposicao = new JFormattedTextField();
+
+		MaskFormatter formatoComposicao = new MaskFormatter();
+
+		try {
+			formatoComposicao = new MaskFormatter(
+					"************************************************************************************************************************");
+		} catch (ParseException e1) { // TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		formatoComposicao.setValidCharacters(
+				"a·‡‚‰bcdeÈËÍÎfghiÌÏÓÔjklmnoÛÙˆpqrstu˙˘˚¸vwxyz-()/:A¡¿¬ƒBCDE…» ÀFGHIÕÃŒœJKLMNO”‘÷PQRSTU⁄Ÿ€‹VWXYZ");
+
+		formatoComposicao.install((JFormattedTextField) txtComposicao);
+
 		getContentPane().add(txtComposicao, "cell 2 4,growx");
 		txtComposicao.setColumns(10);
 
 		JLabel lblDosagem = new JLabel("Dosagem:");
 		getContentPane().add(lblDosagem, "cell 0 5");
 
-		txtDosagem = new JTextField();
+		txtDosagem = new JFormattedTextField();
+
+		MaskFormatter formatoDosagem = new MaskFormatter();
+
+		try {
+			formatoDosagem = new MaskFormatter("#####");
+		} catch (ParseException e1) { // TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		formatoDosagem.setValidCharacters("0123456789");
+
+		formatoDosagem.install((JFormattedTextField) txtDosagem);
+
 		getContentPane().add(txtDosagem, "cell 0 6,growx");
 		txtDosagem.setColumns(10);
 
@@ -184,7 +203,20 @@ public class CadastroMedicamento extends JInternalFrame {
 		JLabel labelEspaco2 = new JLabel(" ");
 		getContentPane().add(labelEspaco2, "cell 0 8");
 
-		txtEstoque = new JTextField();
+		txtEstoque = new JFormattedTextField();
+
+		MaskFormatter formatoEstoque = new MaskFormatter();
+
+		try {
+			formatoEstoque = new MaskFormatter("###");
+		} catch (ParseException e1) { // TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		formatoEstoque.setValidCharacters("0123456789");
+
+		formatoEstoque.install((JFormattedTextField) txtEstoque);
+
 		getContentPane().add(txtEstoque, "cell 0 8,growx");
 		txtEstoque.setColumns(10);
 
@@ -235,18 +267,6 @@ public class CadastroMedicamento extends JInternalFrame {
 		});
 		getContentPane().add(btnSalvar, "cell 2 9,alignx right");
 	}
-
-	/**
-	 * protected void keytest() { // TODO Auto-generated method stub Object x = 0; x
-	 * = teclado.nextInt(); if (x == "a" || x == "b" || x == "c" || x == "d" || x ==
-	 * "e" || x == "f" || x == "g" || x == "h" || x == "i" || x == "g" || x == "h"
-	 * || x == "i" || x == "j" || x == "k" || x == "l" || x == "m" || x == "n" || x
-	 * == "o" || x == "p" || x == "q" || x == "r" || x == "s" || x == "t" || x ==
-	 * "u" || x == "v" || x == "x" || x == "w" || x == "y" || x == "z") x =
-	 * teclado.nextInt(); else x = "";
-	 * 
-	 * }
-	 **/
 
 	public CadastroMedicamento(Remedio remedio) {
 		new CadastroMedicamento();
