@@ -312,9 +312,6 @@ public class ListagemMedicamento extends JInternalFrame {
 	private void consultarFormaUso() {
 		ControllerRemedio controllerRemedio = new ControllerRemedio();
 		listaFormasUso = controllerRemedio.consultarFormaUso();
-
-		// fazer retornar listaFormaUso do RemedioDAO!
-		// após isto, descomentar linha 105
 	}
 
 	private void atualizarTabelaMedicamentos(List<Remedio> remedios) {
