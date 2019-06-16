@@ -41,8 +41,8 @@ public class TelaSobre extends JInternalFrame {
 		setBackground(Color.WHITE);
 		setFrameIcon(new ImageIcon(TelaSobre.class.getResource("/icons/sobre2x.png")));
 		setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
-		setBounds(500, 100, 340, 230);
-		getContentPane().setLayout(new MigLayout("", "[grow,fill]", "[][][][][][]"));
+		setBounds(500, 100, 340, 225);
+		getContentPane().setLayout(new MigLayout("", "[grow,fill]", "[][][][][][][]"));
 
 		JLabel lblDesenvolvedores = new JLabel("Desenvolvedores:");
 		lblDesenvolvedores.setHorizontalAlignment(SwingConstants.CENTER);

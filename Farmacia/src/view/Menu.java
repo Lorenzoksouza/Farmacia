@@ -275,5 +275,4 @@ public class Menu extends JFrame {
 	public void chamarPai(JInternalFrame telaFilho) {
 		telaFilho = null;
 	}
-
 }

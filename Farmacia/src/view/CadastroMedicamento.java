@@ -5,24 +5,31 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+import javax.swing.text.MaskFormatter;
 
 import controller.ControllerRemedio;
 import model.vo.FormaUso;
 import model.vo.Laboratorio;
 import model.vo.Remedio;
 import net.miginfocom.swing.MigLayout;
+import util.TextFieldFormatter;
 
 public class CadastroMedicamento extends JInternalFrame {
 	private JTextField txtNome;
@@ -36,6 +43,8 @@ public class CadastroMedicamento extends JInternalFrame {
 	private JCheckBox chckbxGenerico;
 	private ArrayList<Laboratorio> listaLaboratorios;
 	private ArrayList<FormaUso> listaFormasUso;
+	protected Scanner teclado = new Scanner(System.in);
+	private MaskFormatter setMascara;
 
 	/**
 	 * Launch the application.
@@ -76,11 +85,46 @@ public class CadastroMedicamento extends JInternalFrame {
 		JLabel lblCodbarras = new JLabel("C\u00F3d.barras:");
 		getContentPane().add(lblCodbarras, "cell 2 1");
 
-		txtNome = new JTextField();
+		txtNome = new JFormattedTextField();
+		/**
+		 * txtNome.addKeyListener(new KeyAdapter() {
+		 * 
+		 * @Override public void keyReleased(KeyEvent e) { /** TextFieldFormatter tff =
+		 *           new TextFieldFormatter(); tff.setMask("******");
+		 *           tff.setCaracteresValidos("abc"); tff.setTf(txtNome);
+		 *           tff.formatter();
+		 **/
+
+		MaskFormatter formatonome = new MaskFormatter();
+
+		try {
+			formatonome = new MaskFormatter("************************************************************");
+		} catch (ParseException e1) { // TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		formatonome.setValidCharacters("abcdefghijklmnopqrstuvwxyz");
+
+		formatonome.install((JFormattedTextField) txtNome);
+
+		// }
+		// });
+
 		getContentPane().add(txtNome, "cell 0 2,growx");
 		txtNome.setColumns(10);
 
 		txtCodBar = new JTextField();
+		txtCodBar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// keytest();
+				TextFieldFormatter tff = new TextFieldFormatter();
+				tff.setMask("#############");
+				tff.setCaracteresValidos("1234567890");
+				tff.setTf(txtCodBar);
+				tff.formatter();
+			}
+		});
 		getContentPane().add(txtCodBar, "cell 2 2,growx");
 		txtCodBar.setColumns(10);
 
@@ -91,6 +135,16 @@ public class CadastroMedicamento extends JInternalFrame {
 		getContentPane().add(lblComposicao, "cell 2 3");
 
 		txtPreco = new JTextField();
+		txtPreco.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				TextFieldFormatter tff = new TextFieldFormatter();
+				tff.setMask("###,##");
+				tff.setCaracteresValidos("1234567890");
+				tff.setTf(txtPreco);
+				tff.formatter();
+			}
+		});
 		getContentPane().add(txtPreco, "cell 0 4,growx");
 		txtPreco.setColumns(10);
 
@@ -181,6 +235,18 @@ public class CadastroMedicamento extends JInternalFrame {
 		});
 		getContentPane().add(btnSalvar, "cell 2 9,alignx right");
 	}
+
+	/**
+	 * protected void keytest() { // TODO Auto-generated method stub Object x = 0; x
+	 * = teclado.nextInt(); if (x == "a" || x == "b" || x == "c" || x == "d" || x ==
+	 * "e" || x == "f" || x == "g" || x == "h" || x == "i" || x == "g" || x == "h"
+	 * || x == "i" || x == "j" || x == "k" || x == "l" || x == "m" || x == "n" || x
+	 * == "o" || x == "p" || x == "q" || x == "r" || x == "s" || x == "t" || x ==
+	 * "u" || x == "v" || x == "x" || x == "w" || x == "y" || x == "z") x =
+	 * teclado.nextInt(); else x = "";
+	 * 
+	 * }
+	 **/
 
 	public CadastroMedicamento(Remedio remedio) {
 		new CadastroMedicamento();
