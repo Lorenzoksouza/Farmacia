@@ -1,6 +1,5 @@
 package model.bo;
 
-import java.util.Date;
 import java.util.List;
 
 import model.dao.ItemProdutoDAO;
@@ -25,7 +24,7 @@ public class VendaBO {
 	public String salvar(double valorTotal, List<ItemProduto> itensProdutos, List<ItemRemedio> itensRemedios) {
 
 		String mensagem = "";
-		Venda novaVenda = vendaDAO.inserirVenda(valorTotal, new Date());
+		Venda novaVenda = vendaDAO.inserirVenda(valorTotal);
 
 		if (novaVenda != null) {
 			for (ItemProduto itemProduto : itensProdutos) {
