@@ -191,7 +191,7 @@ public class ListagemMedicamento extends JInternalFrame {
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String mensagem = "";
-				int remedioSelecionado = (int) tblRemedios.getValueAt(tblRemedios.getSelectedRow(), 1);
+				String remedioSelecionado = (String) tblRemedios.getValueAt(tblRemedios.getSelectedRow(), 1);
 
 				ControllerRemedio controllerRemedio = new ControllerRemedio();
 

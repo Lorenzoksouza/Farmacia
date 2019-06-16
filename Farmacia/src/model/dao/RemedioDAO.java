@@ -156,12 +156,31 @@ public class RemedioDAO {
 		return r;
 	}
 
-	public boolean existeCodBar(int codBar) {
-		// TODO Auto-generated method stub
+	public boolean existeCodBar(String codBar) {
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+
+		String sql = "SELECT COD_BARRA, NM_REMEDIO, PRECO, ESTOQUE FROM REMEDIO WHERE COD_BARRA = '" + codBar + "'";
+
+		try {
+			resultado = stmt.executeQuery(sql);
+			if (resultado.next()) {
+				return true;
+			}
+		} catch (SQLException e) {
+			System.out.println(
+					"Erro ao executar Query que verifica existência de Código de Barras. Causa :" + e.getMessage());
+			return false;
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
 		return false;
 	}
 
-	public String excluir(int remedioSelecionado) {
+	public String excluir(String remedioSelecionado) {
 		String mensagem = "";
 		String sql = " DELETE FROM REMEDIO " + " WHERE COD_BARRA = ?";
 
@@ -169,7 +188,7 @@ public class RemedioDAO {
 		PreparedStatement prepStmt = Banco.getPreparedStatement(conexao, sql);
 
 		try {
-			prepStmt.setInt(1, remedioSelecionado);
+			prepStmt.setString(1, remedioSelecionado);
 
 			int codigoRetorno = prepStmt.executeUpdate();
 			if (codigoRetorno == 0) {

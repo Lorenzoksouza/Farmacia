@@ -38,11 +38,11 @@ public class RemedioBO {
 
 	}
 
-	public boolean existeCodBar(int CodBar) {
+	public boolean existeCodBar(String CodBar) {
 		return remedioDAO.existeCodBar(CodBar);
 	}
 
-	public String excluir(int remedioSelecionado) {
+	public String excluir(String remedioSelecionado) {
 		return remedioDAO.excluir(remedioSelecionado);
 	}
 

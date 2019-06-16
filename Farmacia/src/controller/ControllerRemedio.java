@@ -20,7 +20,7 @@ public class ControllerRemedio {
 		String validacao = validarRemedio(remedio);
 
 		if (validacao == "") {
-			if (remedioBO.existeCodBar(Integer.parseInt(remedio.getCodBarra()))) {
+			if (remedioBO.existeCodBar(remedio.getCodBarra())) {
 				// UPDATE
 				int opcao = JOptionPane.showConfirmDialog(null,
 						"Remedio já cadastrado, deseja fazer alteração com os dados inseridos?", "",
@@ -81,11 +81,11 @@ public class ControllerRemedio {
 		return remedioBO.listarRemedios(seletor);
 	}
 
-	public String excluir(int remedioSelecionado) {
+	public String excluir(String remedioSelecionado) {
 		return remedioBO.excluir(remedioSelecionado);
 	}
 
-	public boolean existeRemedioPorCodBar(int remedioSelecionado) {
+	public boolean existeRemedioPorCodBar(String remedioSelecionado) {
 		return remedioBO.existeCodBar(remedioSelecionado);
 	}
 
