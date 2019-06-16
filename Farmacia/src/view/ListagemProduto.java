@@ -53,7 +53,7 @@ public class ListagemProduto extends JInternalFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Create the frame. a
 	 */
 	public ListagemProduto() {
 		getContentPane().setBackground(Color.WHITE);
