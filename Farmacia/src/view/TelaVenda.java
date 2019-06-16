@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -21,8 +22,11 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.ControllerVenda;
 import model.seletor.MercadoriaSeletor;
+import model.vo.ItemProduto;
+import model.vo.ItemRemedio;
 import model.vo.Mercadoria;
 import model.vo.Produto;
+import model.vo.Remedio;
 import net.miginfocom.swing.MigLayout;
 
 public class TelaVenda extends JInternalFrame {
@@ -31,8 +35,16 @@ public class TelaVenda extends JInternalFrame {
 	private JTable tblPesquisa;
 	private JTable tblVenda;
 
-	private List<Mercadoria> mercadoriasConsultadas;
+	private List<Mercadoria> mercadoriasConsultadas = new ArrayList<Mercadoria>();
+	private List<Mercadoria> mercadoriasParaVenda = new ArrayList<Mercadoria>();
+
+	private List<ItemProduto> itensProdutos = new ArrayList<ItemProduto>();
+	private List<ItemRemedio> itensRemedios = new ArrayList<ItemRemedio>();
+	private List<Produto> produtos = new ArrayList<Produto>();
+
+	private double valorTotal;
 	private JLabel lblValor;
+	private JSpinner spiQuantidade;
 
 	/**
 	 * Launch the application.
@@ -93,16 +105,15 @@ public class TelaVenda extends JInternalFrame {
 		btnAddItem.setBorder(new LineBorder(Color.gray, 2, true));
 		btnAddItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Mercadoria mercadoria = new Produto();
+				Mercadoria mercadoriaSelecionada = mercadoriasConsultadas.get(tblPesquisa.getSelectedRow() + 1);
 
-				DefaultTableModel modelo = (DefaultTableModel) tblVenda.getModel();
+				mercadoriasParaVenda.add(mercadoriaSelecionada);
 
-				mercadoria = mercadoriasConsultadas.get(tblPesquisa.getSelectedRow() + 1);
-				String[] novaLinha = new String[] { mercadoria.getCodBarra() + "", mercadoria.getNome(),
-						"R$" + mercadoria.getPreco(), "" + mercadoria.getEstoque(), };
-				modelo.addRow(novaLinha);
+				adicionarItem(mercadoriaSelecionada);
+				atualizarTblVenda(mercadoriasParaVenda);
 
-				lblValor.setText("R$" + (Double.parseDouble(lblValor.getText()) + mercadoria.getPreco()));
+				valorTotal += mercadoriaSelecionada.getPreco();
+				lblValor.setText("R$" + valorTotal);
 			}
 		});
 
@@ -115,7 +126,7 @@ public class TelaVenda extends JInternalFrame {
 		JLabel lblQuantidade = new JLabel("Quantidade:");
 		getContentPane().add(lblQuantidade, "flowx,cell 0 11,aligny center");
 
-		JSpinner spiQuantidade = new JSpinner();
+		spiQuantidade = new JSpinner();
 		spiQuantidade.setModel(new SpinnerNumberModel(1, 1, 10, 1));
 		getContentPane().add(spiQuantidade, "cell 0 11,aligny center");
 		getContentPane().add(btnAddItem, "cell 0 11,alignx center,aligny bottom");
@@ -128,13 +139,17 @@ public class TelaVenda extends JInternalFrame {
 		btnRemover.setBorder(new LineBorder(Color.gray, 2, true));
 		btnRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Mercadoria mercadoria = new Produto();
+				Mercadoria mercadoriaSelecionada = mercadoriasConsultadas.get(tblPesquisa.getSelectedRow() + 1);
 
-				DefaultTableModel modelo = (DefaultTableModel) tblVenda.getModel();
-				modelo.removeRow(tblVenda.getSelectedRow());
+				mercadoriasParaVenda.remove(mercadoriaSelecionada);
 
-				lblValor.setText("R$" + (Double.parseDouble(lblValor.getText()) - mercadoria.getPreco()));
+				removerMercadoria(mercadoriaSelecionada);
+				atualizarTblVenda(mercadoriasConsultadas);
+
+				valorTotal -= mercadoriaSelecionada.getPreco();
+				lblValor.setText("R$" + valorTotal);
 			}
+
 		});
 		getContentPane().add(btnRemover, "flowx,cell 2 11,alignx center,aligny bottom");
 
@@ -142,6 +157,14 @@ public class TelaVenda extends JInternalFrame {
 		getContentPane().add(lblEspaco2, "cell 2 11");
 
 		JButton btnConcluirVenda = new JButton("Concluir Venda");
+		btnConcluirVenda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				ControllerVenda controllerVenda = new ControllerVenda();
+				controllerVenda.salvarVenda(valorTotal, itensProdutos, itensRemedios);
+
+			}
+		});
 		btnConcluirVenda.setForeground(new Color(0, 128, 0));
 		btnConcluirVenda.setBackground(Color.WHITE);
 		btnConcluirVenda.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -179,7 +202,7 @@ public class TelaVenda extends JInternalFrame {
 		// TODO descomentar
 		List<Mercadoria> mercadorias = controlador.listarMercadorias(seletor);
 
-		seletor.setLimite(5);
+//		seletor.setLimite(5);
 
 //		int quociente = remedios.size() / seletor.getLimite();
 //		int resto = remedios.size() % seletor.getLimite();
@@ -226,6 +249,84 @@ public class TelaVenda extends JInternalFrame {
 
 			String[] novaLinha = new String[] { mercadoria.getCodBarra() + "", mercadoria.getNome(),
 					"R$" + mercadoria.getPreco(), "" + mercadoria.getEstoque(), };
+			modelo.addRow(novaLinha);
+		}
+	}
+
+	private void removerMercadoria(Mercadoria mercadoriaSelecionada) {
+		if (mercadoriaSelecionada instanceof Produto) {
+			ItemProduto itemProduto = obterItemProduto((Produto) mercadoriaSelecionada);
+			itensProdutos.remove(itemProduto);
+		}
+
+		if (mercadoriaSelecionada instanceof Remedio) {
+			ItemRemedio itemRemedio = obterItemRemedio((Remedio) mercadoriaSelecionada);
+			itensRemedios.remove(itemRemedio);
+		}
+	}
+
+	private void adicionarItem(Mercadoria mercadoriaSelecionada) {
+		int quantidade = (int) spiQuantidade.getValue();
+		if (mercadoriaSelecionada instanceof Produto) {
+			if (produtos.contains(mercadoriaSelecionada)) {
+				ItemProduto item = obterItemProduto((Produto) mercadoriaSelecionada);
+				item.setQuantidade(item.getQuantidade() + quantidade);
+			} else {
+				ItemProduto novoItem = new ItemProduto();
+				novoItem.setProduto((Produto) mercadoriaSelecionada);
+				novoItem.setQuantidade(quantidade);
+
+				itensProdutos.add(novoItem);
+			}
+		}
+
+		if (mercadoriaSelecionada instanceof Remedio) {
+			if (produtos.contains(mercadoriaSelecionada)) {
+				ItemRemedio item = obterItemRemedio((Remedio) mercadoriaSelecionada);
+				item.setQuantidade(item.getQuantidade() + quantidade);
+			} else {
+				ItemRemedio novoItem = new ItemRemedio();
+				novoItem.setRemedio((Remedio) mercadoriaSelecionada);
+				novoItem.setQuantidade(quantidade);
+
+				itensRemedios.add(novoItem);
+			}
+		}
+	}
+
+	private ItemRemedio obterItemRemedio(Remedio remedioSelecionado) {
+		ItemRemedio item = null;
+
+		for (ItemRemedio i : itensRemedios) {
+			if (i.getRemedio().getCodBarra().equals(remedioSelecionado.getCodBarra())) {
+				item = i;
+				break;
+			}
+		}
+		return item;
+	}
+
+	private ItemProduto obterItemProduto(Produto produtoSelecionado) {
+		ItemProduto item = null;
+
+		for (ItemProduto i : itensProdutos) {
+			if (i.getProduto().getCodBarra().equals(produtoSelecionado.getCodBarra())) {
+				item = i;
+				break;
+			}
+		}
+		return item;
+	}
+
+	private void atualizarTblVenda(List<Mercadoria> mercadorias) {
+		tblVenda.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "nome", "quantidade", "preco" }));
+		getContentPane().add(tblVenda, "cell 2 0 1 10,grow");
+
+		DefaultTableModel modelo = (DefaultTableModel) tblVenda.getModel();
+
+		for (Mercadoria mercadoria : mercadorias) {
+			String[] novaLinha = new String[] { mercadoria.getNome(), "R$" + mercadoria.getPreco(),
+					"" + mercadoria.getEstoque(), };
 			modelo.addRow(novaLinha);
 		}
 	}

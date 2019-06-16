@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Venda {
 
 	private int idVenda;
-	private Double Valor;
+	private Double valor;
 	private ArrayList<ItemRemedio> itensRemedios;
 	private ArrayList<ItemProduto> itensProdutos;
 	private Date dataVenda;
@@ -15,7 +15,7 @@ public class Venda {
 			Date dataVenda) {
 		super();
 		this.idVenda = idVenda;
-		Valor = valor;
+		this.valor = valor;
 		this.itensRemedios = itemRemedio;
 		this.itensProdutos = itemProduto;
 		this.dataVenda = dataVenda;
@@ -35,11 +35,11 @@ public class Venda {
 	}
 
 	public Double getValor() {
-		return Valor;
+		return valor;
 	}
 
 	public void setValor(Double valor) {
-		Valor = valor;
+		this.valor = valor;
 	}
 
 	public ArrayList<ItemRemedio> getItemRemedio() {
