@@ -18,7 +18,7 @@ public class VendaBO {
 	VendaDAO vendaDAO = new VendaDAO();
 
 	public List<Mercadoria> listarMercadoriasBO(MercadoriaSeletor seletor) {
-		return vendaDTO.listarMercadoriasDTO();
+		return vendaDTO.listarMercadoriasDTO(seletor);
 	}
 
 	public String salvar(double valorTotal, List<ItemProduto> itensProdutos, List<ItemRemedio> itensRemedios) {

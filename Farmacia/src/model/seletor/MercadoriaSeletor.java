@@ -1,7 +1,7 @@
 package model.seletor;
 
 public class MercadoriaSeletor {
-	private int codBar;
+	private String codBar;
 	private String nome;
 
 	// Paginação
@@ -15,7 +15,7 @@ public class MercadoriaSeletor {
 
 	public boolean temFiltro() {
 
-		if (this.codBar > 0) {
+		if ((this.codBar != null) && (this.codBar.trim().length() > 0)) {
 			return true;
 		}
 		if ((this.nome != null) && (this.nome.trim().length() > 0)) {
@@ -44,12 +44,12 @@ public class MercadoriaSeletor {
 	}
 
 	// Getters & setters
-	public int getCodBar() {
+	public String getCodBar() {
 		return codBar;
 	}
 
-	public void setCodBar(int codBar) {
-		this.codBar = codBar;
+	public void setCodBar(String i) {
+		this.codBar = i;
 	}
 
 	public String getNome() {

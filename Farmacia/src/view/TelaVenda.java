@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -105,15 +106,20 @@ public class TelaVenda extends JInternalFrame {
 		btnAddItem.setBorder(new LineBorder(Color.gray, 2, true));
 		btnAddItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Mercadoria mercadoriaSelecionada = mercadoriasConsultadas.get(tblPesquisa.getSelectedRow() + 1);
+				if (tblPesquisa.getSelectedRow() > 0) {
+					Mercadoria mercadoriaSelecionada = mercadoriasConsultadas.get(tblPesquisa.getSelectedRow() + 1);
 
-				mercadoriasParaVenda.add(mercadoriaSelecionada);
+					mercadoriasParaVenda.add(mercadoriaSelecionada);
 
-				adicionarItem(mercadoriaSelecionada);
-				atualizarTblVenda(mercadoriasParaVenda);
+					adicionarItem(mercadoriaSelecionada);
+					atualizarTblVenda(mercadoriasParaVenda);
 
-				valorTotal += mercadoriaSelecionada.getPreco();
-				lblValor.setText("R$" + valorTotal);
+					valorTotal += mercadoriaSelecionada.getPreco();
+					lblValor.setText("R$" + valorTotal);
+				} else {
+					JOptionPane.showConfirmDialog(null, "Selecione um item para adicionar a venda");
+				}
+
 			}
 		});
 
@@ -139,15 +145,19 @@ public class TelaVenda extends JInternalFrame {
 		btnRemover.setBorder(new LineBorder(Color.gray, 2, true));
 		btnRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Mercadoria mercadoriaSelecionada = mercadoriasConsultadas.get(tblPesquisa.getSelectedRow() + 1);
+				if (tblVenda.getSelectedRow() > 0) {
+					Mercadoria mercadoriaSelecionada = mercadoriasConsultadas.get(tblVenda.getSelectedRow() + 1);
+					mercadoriasParaVenda.remove(mercadoriaSelecionada);
 
-				mercadoriasParaVenda.remove(mercadoriaSelecionada);
+					removerMercadoria(mercadoriaSelecionada);
+					atualizarTblVenda(mercadoriasConsultadas);
 
-				removerMercadoria(mercadoriaSelecionada);
-				atualizarTblVenda(mercadoriasConsultadas);
+					valorTotal -= mercadoriaSelecionada.getPreco();
+					lblValor.setText("R$" + valorTotal);
+				} else {
+					JOptionPane.showConfirmDialog(null, "Selecione um item para excluir");
+				}
 
-				valorTotal -= mercadoriaSelecionada.getPreco();
-				lblValor.setText("R$" + valorTotal);
 			}
 
 		});
@@ -219,7 +229,7 @@ public class TelaVenda extends JInternalFrame {
 		// Preenche os campos de filtro da tela no seletor
 
 		if (txtCodBar != null) {
-			seletor.setCodBar(Integer.parseInt(txtCodBar.getText()));
+			seletor.setCodBar(txtCodBar.getText());
 		}
 
 		if (!txtNome.getText().trim().equals("")) {
