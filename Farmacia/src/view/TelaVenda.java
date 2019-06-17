@@ -22,6 +22,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import controller.ControllerVenda;
+import model.dto.VendaDTO;
 import model.seletor.MercadoriaSeletor;
 import model.vo.ItemProduto;
 import model.vo.ItemRemedio;
@@ -210,7 +211,7 @@ public class TelaVenda extends JInternalFrame {
 		MercadoriaSeletor seletor = new MercadoriaSeletor();
 
 		// TODO descomentar
-		List<Mercadoria> mercadorias = controlador.listarMercadorias(seletor);
+		List<VendaDTO> mercadorias = controlador.listarMercadorias(seletor);
 
 //		seletor.setLimite(5);
 
