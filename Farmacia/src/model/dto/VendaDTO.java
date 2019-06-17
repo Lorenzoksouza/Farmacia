@@ -17,14 +17,16 @@ public class VendaDTO {
 		String sql = "";
 
 		if (seletor.temFiltro()) {
-			sql = criarFiltros(seletor, sql);
+			criarFiltrosRemedio(seletor, sql);
+			sql += "UNION select p.";
+			criarFiltrosProduto(seletor, sql);
+		} else {
+			sql += "UNION select p.";
 		}
 
 		if (seletor.temPaginacao()) {
 			sql += " LIMIT " + seletor.getLimite() + " OFFSET " + seletor.getOffset();
 		}
-
-		// test
 
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
@@ -39,7 +41,7 @@ public class VendaDTO {
 				// listaMercadorias.add();
 			}
 		} catch (SQLException e) {
-			System.out.println("Erro ao listar as mercadorias!!");
+			System.out.println("Erro ao listar as mercadorias!");
 			e.printStackTrace();
 		} finally {
 			Banco.closeResultSet(resultado);
@@ -50,7 +52,7 @@ public class VendaDTO {
 		return listaMercadorias;
 	}
 
-	private String criarFiltros(MercadoriaSeletor seletor, String sql) {
+	private String criarFiltrosRemedio(MercadoriaSeletor seletor, String sql) {
 		sql += " WHERE ";
 		boolean primeiro = true;
 
@@ -66,6 +68,28 @@ public class VendaDTO {
 				sql += " AND ";
 			}
 			sql += "R.NM_REMEDIO LIKE '% " + seletor.getNome() + "%'";
+			primeiro = false;
+		}
+
+		return sql;
+	}
+
+	private String criarFiltrosProduto(MercadoriaSeletor seletor, String sql) {
+		sql += " WHERE ";
+		boolean primeiro = true;
+
+		if (seletor.getCodBar() != "") {
+			if (!primeiro) {
+				sql += " AND ";
+			}
+			sql += "R.COD_BARRA = " + seletor.getCodBar();
+			primeiro = false;
+		}
+		if ((seletor.getNome() != null) && (seletor.getNome().trim().length() > 0)) {
+			if (!primeiro) {
+				sql += " AND ";
+			}
+			sql += "R.NM_PRODUTO LIKE '% " + seletor.getNome() + "%'";
 			primeiro = false;
 		}
 
