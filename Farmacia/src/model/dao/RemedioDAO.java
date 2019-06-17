@@ -157,6 +157,7 @@ public class RemedioDAO {
 	}
 
 	public boolean existeCodBar(String codBar) {
+		boolean codigoRetorno = false;
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
@@ -166,18 +167,18 @@ public class RemedioDAO {
 		try {
 			resultado = stmt.executeQuery(sql);
 			if (resultado.next()) {
-				return true;
+				codigoRetorno = true;
 			}
 		} catch (SQLException e) {
 			System.out.println(
 					"Erro ao executar Query que verifica existência de Código de Barras. Causa :" + e.getMessage());
-			return false;
+			codigoRetorno = false;
 		} finally {
 			Banco.closeResultSet(resultado);
 			Banco.closeStatement(stmt);
 			Banco.closeConnection(conn);
 		}
-		return false;
+		return codigoRetorno;
 	}
 
 	public String excluir(String remedioSelecionado) {
