@@ -24,6 +24,8 @@ public class VendaDTO {
 			sql += " LIMIT " + seletor.getLimite() + " OFFSET " + seletor.getOffset();
 		}
 
+		// test
+
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
