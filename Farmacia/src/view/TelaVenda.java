@@ -114,7 +114,9 @@ public class TelaVenda extends JInternalFrame {
 					adicionarItem(mercadoriaSelecionada);
 					atualizarTblVenda(mercadoriasParaVenda);
 
-					valorTotal += mercadoriaSelecionada.getPreco();
+					valorTotal += mercadoriaSelecionada.getPreco()
+							* Double.parseDouble((String) spiQuantidade.getValue());
+					spiQuantidade.setValue(1);
 					lblValor.setText("R$" + valorTotal);
 				} else {
 					JOptionPane.showConfirmDialog(null, "Selecione um item para adicionar a venda");
@@ -157,9 +159,7 @@ public class TelaVenda extends JInternalFrame {
 				} else {
 					JOptionPane.showConfirmDialog(null, "Selecione um item para excluir");
 				}
-
 			}
-
 		});
 		getContentPane().add(btnRemover, "flowx,cell 2 11,alignx center,aligny bottom");
 
