@@ -4,6 +4,8 @@ public class VendaDTO {
 
 	private String id;
 	private String nome;
+	private Double preco;
+	private int estoque;
 
 	public String getId() {
 		return id;
@@ -21,5 +23,33 @@ public class VendaDTO {
 		this.nome = nome;
 	}
 
-	// TODO preço e estoque
+	public Double getPreco() {
+		return preco;
+	}
+
+	public void setPreco(Double preco) {
+		this.preco = preco;
+	}
+
+	public int getEstoque() {
+		return estoque;
+	}
+
+	public void setEstoque(int estoque) {
+		this.estoque = estoque;
+	}
+
+	public VendaDTO(String id, String nome, Double preco, int estoque) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.preco = preco;
+		this.estoque = estoque;
+	}
+
+	public VendaDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 }
