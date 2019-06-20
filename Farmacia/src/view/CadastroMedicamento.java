@@ -20,8 +20,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
 import javax.swing.text.MaskFormatter;
 
 import controller.ControllerRemedio;
@@ -85,18 +83,7 @@ public class CadastroMedicamento extends JInternalFrame {
 		getContentPane().add(lblCodbarras, "cell 2 1");
 
 		txtNome = new JFormattedTextField();
-		txtNome.addCaretListener(new CaretListener() {
-			boolean update = false;
 
-			@Override
-			public void caretUpdate(CaretEvent e) {
-				if (!update) {
-					update = true;
-					txtNome.setCaretPosition(txtNome.getText().length());
-					update = false;
-				}
-			}
-		});
 		MaskFormatter formatonome = new MaskFormatter();
 
 		try {
