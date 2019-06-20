@@ -60,7 +60,8 @@ public class VendaDAO {
 				VendaDTO dto = new VendaDTO();
 				dto.setId(resultado.getString("COD_BARRA"));
 				dto.setNome(resultado.getString("NOME"));
-				// TODO colocar preço e estoque.
+				dto.setPreco(resultado.getDouble("PRECO"));
+				dto.setEstoque(resultado.getInt("ESTOQUE"));
 				vendasDTO.add(dto);
 			}
 		} catch (SQLException e) {
