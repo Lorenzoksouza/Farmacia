@@ -20,6 +20,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 import javax.swing.text.MaskFormatter;
 
 import controller.ControllerRemedio;
@@ -27,6 +29,7 @@ import model.vo.FormaUso;
 import model.vo.Laboratorio;
 import model.vo.Remedio;
 import net.miginfocom.swing.MigLayout;
+import util.JNumberFormatField;
 
 public class CadastroMedicamento extends JInternalFrame {
 	private JTextField txtNome;
@@ -82,7 +85,18 @@ public class CadastroMedicamento extends JInternalFrame {
 		getContentPane().add(lblCodbarras, "cell 2 1");
 
 		txtNome = new JFormattedTextField();
+		txtNome.addCaretListener(new CaretListener() {
+			boolean update = false;
 
+			@Override
+			public void caretUpdate(CaretEvent e) {
+				if (!update) {
+					update = true;
+					txtNome.setCaretPosition(txtNome.getText().length());
+					update = false;
+				}
+			}
+		});
 		MaskFormatter formatonome = new MaskFormatter();
 
 		try {
@@ -95,7 +109,7 @@ public class CadastroMedicamento extends JInternalFrame {
 				"a·‡‚‰bcdeÈËÍÎfghiÌÏÓÔjklmnoÛÙˆpqrstu˙˘˚¸vwxyz-()/:A¡¿¬ƒBCDE…» ÀFGHIÕÃŒœJKLMNO”‘÷PQRSTU⁄Ÿ€‹VWXYZ");
 
 		formatonome.install((JFormattedTextField) txtNome);
-
+		txtNome.setCaretPosition(txtNome.getText().length());
 		getContentPane().add(txtNome, "cell 0 2,growx");
 		txtNome.setColumns(10);
 
@@ -122,20 +136,8 @@ public class CadastroMedicamento extends JInternalFrame {
 		JLabel lblComposicao = new JLabel("Composi\u00E7\u00E3o:");
 		getContentPane().add(lblComposicao, "cell 2 3");
 
-		txtPreco = new JFormattedTextField();
-
-		MaskFormatter formatoPreco = new MaskFormatter();
-
-		try {
-			formatoPreco = new MaskFormatter("R$" + "####,##");
-		} catch (ParseException e1) { // TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		formatoPreco.setValidCharacters("0123456789");
-
-		formatoPreco.install((JFormattedTextField) txtPreco);
-
+		JNumberFormatField txtPreco = new JNumberFormatField(2);
+		// txtPreco = new JFormattedTextField();
 		getContentPane().add(txtPreco, "cell 0 4,growx");
 		txtPreco.setColumns(10);
 
