@@ -96,7 +96,6 @@ public class CadastroMedicamento extends JInternalFrame {
 				"aáàâäbcdeéèêëfghiíìîïjklmnoóôöpqrstuúùûüvwxyz-()/:AÁÀÂÄBCDEÉÈÊËFGHIÍÌÎÏJKLMNOÓÔÖPQRSTUÚÙÛÜVWXYZ");
 
 		formatonome.install((JFormattedTextField) txtNome);
-		txtNome.setCaretPosition(txtNome.getText().length());
 		getContentPane().add(txtNome, "cell 0 2,growx");
 		txtNome.setColumns(10);
 
