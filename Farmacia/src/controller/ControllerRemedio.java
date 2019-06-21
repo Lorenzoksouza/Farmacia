@@ -40,6 +40,8 @@ public class ControllerRemedio {
 					mensagem = "Erro ao inserir Remédio.";
 				}
 			}
+		} else {
+			return validacao;
 		}
 		return mensagem;
 	}

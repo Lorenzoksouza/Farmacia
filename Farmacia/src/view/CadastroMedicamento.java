@@ -240,7 +240,7 @@ public class CadastroMedicamento extends JInternalFrame {
 				Remedio remedio = new Remedio();
 				remedio.setNome(txtNome.getText());
 				remedio.setCodBarra(txtCodBar.getText());
-				remedio.setPreco(Double.parseDouble(txtPreco.getText()));
+				remedio.setPreco(Double.parseDouble(txtPreco.getText().replace(",", ".")));
 				remedio.setComposicao(txtComposicao.getText());
 				remedio.setDosagem(txtDosagem.getText());
 
@@ -254,7 +254,7 @@ public class CadastroMedicamento extends JInternalFrame {
 				formaUso.setDescricao(listaFormasUso.get(cmbLaboratorio.getSelectedIndex()).getDescricao());
 				remedio.setFormaUso(formaUso);
 
-				remedio.setEstoque(Integer.parseInt(txtEstoque.getText()));
+				remedio.setEstoque(Integer.parseInt(txtEstoque.getText().trim()));
 				remedio.getFormaUso().setDescricao(cmbFormaUso.getSelectedItem().toString());
 				remedio.setGenerico(chckbxGenerico.isSelected());
 
@@ -263,7 +263,7 @@ public class CadastroMedicamento extends JInternalFrame {
 				mensagem = controllerRemedio.salvar(remedio);
 				JOptionPane.showMessageDialog(null, mensagem);
 
-				limparCampos();
+				// limparCampos();
 			}
 		});
 		getContentPane().add(btnSalvar, "cell 2 9,alignx right");
