@@ -31,7 +31,7 @@ public class RemedioSeletor {
 		if ((this.tipoRemedio != null) && (this.tipoRemedio.trim().length() > 0)) {
 			return true;
 		}
-		if (this.generico == true) {
+		if (this.generico) {
 			return true;
 		}
 		return false;
