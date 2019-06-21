@@ -6,7 +6,7 @@ public class RemedioSeletor {
 	private String nomeRemedio;
 	private String composicaoRemedio;
 	private String tipoRemedio;
-	private String generico;
+	private boolean generico;
 
 	// Paginação
 	private int limite;
@@ -31,10 +31,9 @@ public class RemedioSeletor {
 		if ((this.tipoRemedio != null) && (this.tipoRemedio.trim().length() > 0)) {
 			return true;
 		}
-		if ((this.generico != null) && (this.generico.trim().length() > 0)) {
+		if (this.generico == true) {
 			return true;
 		}
-
 		return false;
 	}
 
@@ -89,22 +88,12 @@ public class RemedioSeletor {
 		this.tipoRemedio = tipoRemedio;
 	}
 
-	public String getGenerico() {
+	public boolean isGenerico() {
 		return generico;
 	}
 
-	public void setGenerico(String generico) {
+	public void setGenerico(boolean generico) {
 		this.generico = generico;
-	}
-
-	public boolean isGenerico() {
-		if (this.getGenerico().equals("Sim")) {
-			return true;
-		}
-		if (this.getGenerico().equals("Não")) {
-			return false;
-		}
-		return false;
 	}
 
 	public int getLimite() {

@@ -111,6 +111,7 @@ public class RemedioDAO {
 	}
 
 	private String criarFiltros(RemedioSeletor seletor, String sql) {
+		// TODO FALTA FILTRO DE FORMA_USO
 		// FALTA AJUSTAR FILTRO DE GENÉRICO
 		sql += " WHERE ";
 		boolean primeiro = true;
@@ -119,30 +120,28 @@ public class RemedioDAO {
 			if (!primeiro) {
 				sql += " AND ";
 			}
-			sql += "R.COD_BARRA LIKE '%" + seletor.getCodBar().trim() + "%' ";
+			sql += "R.COD_BARRA LIKE '%" + seletor.getCodBar().trim() + "%'";
 			primeiro = false;
 		}
 		if ((seletor.getNomeRemedio() != null) && (seletor.getNomeRemedio().trim().length() > 0)) {
 			if (!primeiro) {
 				sql += " AND ";
 			}
-			sql += "R.NM_REMEDIO LIKE '%" + seletor.getNomeRemedio().trim() + "%' ";
+			sql += "R.NM_REMEDIO LIKE '%" + seletor.getNomeRemedio().trim() + "%'";
 			primeiro = false;
 		}
 		if ((seletor.getTipoRemedio() != null) && (seletor.getTipoRemedio().trim().length() > 0)) {
 			if (!primeiro) {
 				sql += " AND ";
 			}
-			sql += "FU.DESCRICAO LIKE '%" + seletor.getTipoRemedio().trim() + "%' ";
-			primeiro = false;
+			sql += "FU.DESCRICAO LIKE '%" + seletor.getTipoRemedio().trim() + "%'";
 		}
 
 		if ((seletor.getComposicaoRemedio() != null) && (seletor.getComposicaoRemedio().trim().length() > 0)) {
 			if (!primeiro) {
 				sql += " AND ";
 			}
-			sql += " R.COMPOSICAO LIKE '%" + seletor.getComposicaoRemedio().trim() + "%' ";
-			primeiro = false;
+			sql += " R.COMPOSICAO LIKE '%" + seletor.getComposicaoRemedio().trim() + "%'";
 		}
 
 		if (seletor.isGenerico()) {
@@ -150,19 +149,11 @@ public class RemedioDAO {
 				sql += " AND ";
 			}
 			sql += "R.GENERICO = 1";
+			// Aqui estava true antes
 			primeiro = false;
 		}
-
-		if (!seletor.isGenerico()) {
-			if (!primeiro) {
-				sql += " AND ";
-			}
-			sql += "R.GENERICO = 0 ";
-			primeiro = false;
-		}
-
 		// Verificando o que retorna nos filtros
-		System.out.println(sql);
+		// System.out.println(sql);
 		return sql;
 	}
 
