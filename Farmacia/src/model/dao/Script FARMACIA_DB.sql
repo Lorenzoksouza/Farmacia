@@ -169,3 +169,15 @@ INSERT INTO `farmacia_db`.`forma_uso` (`DESCRICAO`) VALUES ('Pomada');
 
 INSERT INTO `farmacia_db`.`laboratorio` (`NM_LABORATORIO`) VALUES ('EMS');
 INSERT INTO `farmacia_db`.`laboratorio` (`NM_LABORATORIO`) VALUES ('Bayer');
+
+INSERT INTO `farmacia_db`.`produto`(`COD_BARRA`,`NM_PRODUTO`,`DT_CADASTRO`,`PRECO`,`ESTOQUE`,`ID_CATEGORIA`)
+VALUES( 4800123410113, 'Shampoo Palmolive', NOW(), 12.25, 20 ,1);
+
+INSERT INTO `farmacia_db`.`produto`(`COD_BARRA`,`NM_PRODUTO`,`DT_CADASTRO`,`PRECO`,`ESTOQUE`,`ID_CATEGORIA`)
+VALUES(4800123410114, 'Condicionador Palmolive', NOW(), 13.90, 15 ,1);
+
+INSERT INTO `farmacia_db`.`remedio` (`COD_BARRA`,`DOSAGEM`,`COMPOSICAO`,`GENERICO`,`NM_REMEDIO`,`DT_CADASTRO`,`PRECO`,`ESTOQUE`,`ID_FORMA_USO`,`ID_LABORATORIO`)
+VALUES( 310012340122, '100mg','Metamizol', 1, 'Dipirona Sódica', NOW(), 24.90, 30, 1, 1);
+
+INSERT INTO `farmacia_db`.`remedio` (`COD_BARRA`,`DOSAGEM`,`COMPOSICAO`,`GENERICO`,`NM_REMEDIO`,`DT_CADASTRO`,`PRECO`,`ESTOQUE`,`ID_FORMA_USO`,`ID_LABORATORIO`)
+VALUES( 310012340130, '200mg','Panadol', 0, 'Paracetamol', NOW(), 29.90, 19, 1, 2);

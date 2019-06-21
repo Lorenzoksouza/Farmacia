@@ -169,11 +169,9 @@ public class RemedioDAO {
 			r.setComposicao(result.getString("COMPOSICAO"));
 			r.setGenerico(result.getBoolean("GENERICO"));
 			r.setNome(result.getString("NM_REMEDIO"));
+			r.setDataCadastro(result.getDate("DT_CADASTRO"));
 			r.setPreco(result.getDouble("PRECO"));
 			r.setEstoque(result.getInt("ESTOQUE"));
-
-			// r.getFormaUso().setIdFormaUso(result.getInt("ID_FORMA_USO"));
-			// r.getLaboratorio().setIdLaboratorio(result.getInt("ID_LABORATORIO"));
 			fu.setDescricao(result.getString("DESCRICAO"));
 			r.setFormaUso(fu);
 			l.setNomeLaboratorio(result.getString("NM_LABORATORIO"));
