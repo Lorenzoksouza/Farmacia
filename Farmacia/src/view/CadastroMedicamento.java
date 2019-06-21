@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -69,6 +71,7 @@ public class CadastroMedicamento extends JInternalFrame {
 		setTitle("Cadastro de medicamentos");
 
 		setClosable(true);
+
 		setBounds(100, 100, 495, 285);
 		getContentPane().setLayout(new MigLayout("", "[][][grow]", "[10px:n][][][][][][][][][]"));
 
@@ -94,6 +97,18 @@ public class CadastroMedicamento extends JInternalFrame {
 				"aáàâäbcdeéèêëfghiíìîïjklmnoóôöpqrstuúùûüvwxyz-()/:AÁÀÂÄBCDEÉÈÊËFGHIÍÌÎÏJKLMNOÓÔÖPQRSTUÚÙÛÜVWXYZ ");
 
 		JFormattedTextField txtNome = new JFormattedTextField(formatoNome);
+		txtNome.setFocusLostBehavior(JFormattedTextField.PERSIST);
+		txtNome.addFocusListener(new FocusListener() {
+
+			public void focusGained(FocusEvent e) {
+				txtNome.setText(txtNome.getText().trim());
+			}
+
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 
 		getContentPane().add(txtNome, "cell 0 2,growx");
 		txtNome.setColumns(10);
