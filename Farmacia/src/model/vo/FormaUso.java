@@ -35,5 +35,4 @@ public class FormaUso {
 	public String toString() {
 		return descricao;
 	}
-
 }
