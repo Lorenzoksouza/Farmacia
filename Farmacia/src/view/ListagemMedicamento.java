@@ -19,7 +19,6 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
@@ -70,11 +69,11 @@ public class ListagemMedicamento extends JInternalFrame {
 		setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		setFrameIcon(new ImageIcon(ListagemMedicamento.class.getResource("/icons/med3x.png")));
 		getContentPane().setBackground(Color.WHITE);
-		setTitle("Pesquisa de remedios");
+		setTitle("Pesquisa de medicamentos");
 		setClosable(true);
 		setBounds(100, 100, 680, 540);
-		getContentPane()
-				.setLayout(new MigLayout("", "[211.00,grow][][grow]", "[][][][][][][][][][][10px:n][][][grow]"));
+		getContentPane().setLayout(
+				new MigLayout("", "[211.00,grow][][grow]", "[][][][][][][][][][][10px:n][][10px:n][][][grow]"));
 
 		JLabel lblCodbarras = new JLabel("C\u00F3d.barras:");
 		getContentPane().add(lblCodbarras, "cell 0 0");
@@ -98,7 +97,7 @@ public class ListagemMedicamento extends JInternalFrame {
 		tblRemedios.getColumnModel().getColumn(7).setPreferredWidth(50);
 		tblRemedios.getColumnModel().getColumn(8).setPreferredWidth(62);
 		tblRemedios.getColumnModel().getColumn(9).setPreferredWidth(68);
-		getContentPane().add(tblRemedios, "cell 2 0 1 14,grow");
+		getContentPane().add(tblRemedios, "cell 2 0 1 16,grow");
 
 		txtCodBar = new JFormattedTextField();
 
@@ -164,9 +163,9 @@ public class ListagemMedicamento extends JInternalFrame {
 		getContentPane().add(lblFormaUso, "cell 0 6");
 
 		this.consultarFormaUso();
-
 		cmbFormaUso = new JComboBox(listaFormasUso.toArray());
 		cmbFormaUso.setBackground(Color.WHITE);
+		cmbFormaUso.addItem("Qualquer");
 		getContentPane().add(cmbFormaUso, "cell 0 7,growx");
 		cmbFormaUso.setSelectedIndex(-1);
 
@@ -181,11 +180,9 @@ public class ListagemMedicamento extends JInternalFrame {
 			}
 		});
 
-		JCheckBox chckbxGenerico = new JCheckBox("Gen\u00E9rico");
-		chckbxGenerico.setHorizontalAlignment(SwingConstants.LEFT);
-		chckbxGenerico.setBackground(Color.WHITE);
-		getContentPane().add(chckbxGenerico, "flowx,cell 0 8,alignx center");
-		getContentPane().add(btnPesquisar, "cell 0 9,growx");
+		JLabel lblGenerico = new JLabel("Gen\u00E9rico:");
+		getContentPane().add(lblGenerico, "cell 0 8");
+		getContentPane().add(btnPesquisar, "cell 0 11,growx");
 
 		btnGerarXls = new JButton("Relatorio");
 		btnGerarXls.setPreferredSize(new Dimension(100, 30));
@@ -250,13 +247,15 @@ public class ListagemMedicamento extends JInternalFrame {
 		// espaco entre os botoes (pesquisa e excluir)
 		JLabel lblespaco = new JLabel("    ");
 		lblespaco.setEnabled(false);
-		getContentPane().add(lblespaco, "cell 0 10");
-		getContentPane().add(btnExcluir, "flowx,cell 0 11,growx");
-		getContentPane().add(btnAlterar, "cell 0 11,growx");
-		getContentPane().add(btnGerarXls, "cell 0 12,alignx center");
+		getContentPane().add(lblespaco, "cell 0 12");
+		getContentPane().add(btnExcluir, "flowx,cell 0 13,growx");
+		getContentPane().add(btnAlterar, "cell 0 13,growx");
+		getContentPane().add(btnGerarXls, "cell 0 14,alignx center");
 
-		JLabel lblespaco3 = new JLabel("                        ");
-		getContentPane().add(lblespaco3, "cell 0 8");
+		String[] pGenerico = { "Sim", "Não", "Todos" };
+		JComboBox generico = new JComboBox(pGenerico);
+		generico.setSelectedIndex(2);
+		getContentPane().add(generico, "flowx,cell 0 9,growx");
 
 	}
 

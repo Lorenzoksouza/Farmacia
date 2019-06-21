@@ -69,7 +69,6 @@ public class CadastroMedicamento extends JInternalFrame {
 		setTitle("Cadastro de medicamentos");
 
 		setClosable(true);
-
 		setBounds(100, 100, 495, 285);
 		getContentPane().setLayout(new MigLayout("", "[][][grow]", "[10px:n][][][][][][][][][]"));
 
@@ -82,36 +81,35 @@ public class CadastroMedicamento extends JInternalFrame {
 		JLabel lblCodbarras = new JLabel("C\u00F3d.barras:");
 		getContentPane().add(lblCodbarras, "cell 2 1");
 
-		txtNome = new JFormattedTextField();
-
-		MaskFormatter formatonome = new MaskFormatter();
+		MaskFormatter formatoNome = new MaskFormatter();
 
 		try {
-			formatonome = new MaskFormatter("************************************************************");
+			formatoNome = new MaskFormatter("************************************************************");
+
 		} catch (ParseException e1) { // TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
-		formatonome.setValidCharacters(
-				"aáàâäbcdeéèêëfghiíìîïjklmnoóôöpqrstuúùûüvwxyz-()/:AÁÀÂÄBCDEÉÈÊËFGHIÍÌÎÏJKLMNOÓÔÖPQRSTUÚÙÛÜVWXYZ");
+		formatoNome.setValidCharacters(
+				"aáàâäbcdeéèêëfghiíìîïjklmnoóôöpqrstuúùûüvwxyz-()/:AÁÀÂÄBCDEÉÈÊËFGHIÍÌÎÏJKLMNOÓÔÖPQRSTUÚÙÛÜVWXYZ ");
 
-		formatonome.install((JFormattedTextField) txtNome);
+		JFormattedTextField txtNome = new JFormattedTextField(formatoNome);
+
 		getContentPane().add(txtNome, "cell 0 2,growx");
 		txtNome.setColumns(10);
-
-		txtCodBar = new JFormattedTextField();
 
 		MaskFormatter formatoCodBar = new MaskFormatter();
 
 		try {
-			formatoCodBar = new MaskFormatter("################");
-		} catch (ParseException e1) { // TODO Auto-generated catch block
-			e1.printStackTrace();
+			formatoCodBar = new MaskFormatter("#############");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		formatoCodBar.setValidCharacters("0123456789");
 
-		formatoCodBar.install((JFormattedTextField) txtCodBar);
+		JFormattedTextField txtCodBar = new JFormattedTextField(formatoCodBar);
 
 		getContentPane().add(txtCodBar, "cell 2 2,growx");
 		txtCodBar.setColumns(10);
@@ -133,13 +131,13 @@ public class CadastroMedicamento extends JInternalFrame {
 
 		try {
 			formatoComposicao = new MaskFormatter(
-					"************************************************************************************************************************");
+					"**************************************************************************************************");
 		} catch (ParseException e1) { // TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
 		formatoComposicao.setValidCharacters(
-				"aáàâäbcdeéèêëfghiíìîïjklmnoóôöpqrstuúùûüvwxyz-()/:AÁÀÂÄBCDEÉÈÊËFGHIÍÌÎÏJKLMNOÓÔÖPQRSTUÚÙÛÜVWXYZ");
+				"aáàâäbcdeéèêëfghiíìîïjklmnoóôöpqrstuúùûüvwxyz-()/:AÁÀÂÄBCDEÉÈÊËFGHIÍÌÎÏJKLMNOÓÔÖPQRSTUÚÙÛÜVWXYZ ");
 
 		formatoComposicao.install((JFormattedTextField) txtComposicao);
 
