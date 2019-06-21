@@ -165,9 +165,9 @@ public class ListagemMedicamento extends JInternalFrame {
 		this.consultarFormaUso();
 		cmbFormaUso = new JComboBox(listaFormasUso.toArray());
 		cmbFormaUso.setBackground(Color.WHITE);
-		cmbFormaUso.addItem("Qualquer");
+		cmbFormaUso.addItem("");
 		getContentPane().add(cmbFormaUso, "cell 0 7,growx");
-		cmbFormaUso.setSelectedIndex(-1);
+		cmbFormaUso.setSelectedIndex(0);
 
 		JButton btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.setPreferredSize(new Dimension(80, 30));
@@ -252,9 +252,9 @@ public class ListagemMedicamento extends JInternalFrame {
 		getContentPane().add(btnAlterar, "cell 0 13,growx");
 		getContentPane().add(btnGerarXls, "cell 0 14,alignx center");
 
-		String[] pGenerico = { "Sim", "Não", "Todos" };
+		String[] pGenerico = { "Todas", "Sim", "Não" };
 		JComboBox generico = new JComboBox(pGenerico);
-		generico.setSelectedIndex(2);
+		generico.setSelectedIndex(0);
 		getContentPane().add(generico, "flowx,cell 0 9,growx");
 
 	}
