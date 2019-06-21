@@ -19,7 +19,7 @@ public class RemedioSeletor {
 
 	public boolean temFiltro() {
 
-		if (this.codBar != "") {
+		if ((this.codBar != null) && (this.codBar.trim().length() > 0)) {
 			return true;
 		}
 		if ((this.nomeRemedio != null) && (this.nomeRemedio.trim().length() > 0)) {

@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -28,7 +27,6 @@ import javax.swing.text.MaskFormatter;
 import controller.ControllerRemedio;
 import model.seletor.RemedioSeletor;
 import model.vo.FormaUso;
-import model.vo.Laboratorio;
 import model.vo.Remedio;
 import net.miginfocom.swing.MigLayout;
 
@@ -74,16 +72,6 @@ public class ListagemMedicamento extends JInternalFrame {
 		getContentPane().setBackground(Color.WHITE);
 		setTitle("Pesquisa de remedios");
 		setClosable(true);
-		// TODO remover!
-		remediosConsultados = new ArrayList<Remedio>();
-
-		Laboratorio labTeste = new Laboratorio(1, "EMS");
-		FormaUso fTeste = new FormaUso(1, "Via Oral");
-
-		Remedio remedioTeste = new Remedio("0011", "Plasil", new Date(), 10.0, 50, "500", "Água", fTeste, false,
-				labTeste);
-		remediosConsultados.add(remedioTeste);
-
 		setBounds(100, 100, 680, 540);
 		getContentPane()
 				.setLayout(new MigLayout("", "[211.00,grow][][grow]", "[][][][][][][][][][][10px:n][][][grow]"));
@@ -97,8 +85,19 @@ public class ListagemMedicamento extends JInternalFrame {
 		tblRemedios = new JTable();
 		tblRemedios.setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		tblRemedios.setColumnSelectionAllowed(true);
-		tblRemedios.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Codigo", "Nome", "Composição",
-				"Dosagem", "Tipo", "Generico", "Preco", "Estoque", "Laboratorio" }));
+		tblRemedios.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "C\u00F3digo de Barras", "Dosagem", "Composi\u00E7\u00E3o", "Generico", "Nome",
+						"Data Cad.", "Pre\u00E7o", "Estoque", "Forma Uso", "Laboratorio" }));
+		tblRemedios.getColumnModel().getColumn(0).setPreferredWidth(94);
+		tblRemedios.getColumnModel().getColumn(1).setPreferredWidth(58);
+		tblRemedios.getColumnModel().getColumn(2).setPreferredWidth(69);
+		tblRemedios.getColumnModel().getColumn(3).setPreferredWidth(56);
+		tblRemedios.getColumnModel().getColumn(4).setPreferredWidth(88);
+		tblRemedios.getColumnModel().getColumn(5).setPreferredWidth(61);
+		tblRemedios.getColumnModel().getColumn(6).setPreferredWidth(40);
+		tblRemedios.getColumnModel().getColumn(7).setPreferredWidth(50);
+		tblRemedios.getColumnModel().getColumn(8).setPreferredWidth(62);
+		tblRemedios.getColumnModel().getColumn(9).setPreferredWidth(68);
 		getContentPane().add(tblRemedios, "cell 2 0 1 14,grow");
 
 		txtCodBar = new JFormattedTextField();
@@ -182,10 +181,10 @@ public class ListagemMedicamento extends JInternalFrame {
 			}
 		});
 
-		JCheckBox chckbxGenerico_1 = new JCheckBox("Gen\u00E9rico");
-		chckbxGenerico_1.setHorizontalAlignment(SwingConstants.LEFT);
-		chckbxGenerico_1.setBackground(Color.WHITE);
-		getContentPane().add(chckbxGenerico_1, "flowx,cell 0 8,alignx center");
+		JCheckBox chckbxGenerico = new JCheckBox("Gen\u00E9rico");
+		chckbxGenerico.setHorizontalAlignment(SwingConstants.LEFT);
+		chckbxGenerico.setBackground(Color.WHITE);
+		getContentPane().add(chckbxGenerico, "flowx,cell 0 8,alignx center");
 		getContentPane().add(btnPesquisar, "cell 0 9,growx");
 
 		btnGerarXls = new JButton("Relatorio");
@@ -285,7 +284,7 @@ public class ListagemMedicamento extends JInternalFrame {
 
 		// Preenche os campos de filtro da tela no seletor
 
-		if (txtCodBar != null) {
+		if (!txtCodBar.getText().trim().equals("")) {
 			seletor.setCodBar(txtCodBar.getText());
 		}
 
@@ -299,14 +298,16 @@ public class ListagemMedicamento extends JInternalFrame {
 
 		if (cmbFormaUso.getSelectedIndex() > -1) {
 			seletor.setTipoRemedio(cmbFormaUso.getSelectedItem().toString());
+		} else {
+			seletor.setTipoRemedio("");
 		}
 
-		if (chckbxGenerico.isSelected()) {
-			seletor.setGenerico(true);
-		}
+		// if (chckbxGenerico.isSelected()) {
+		// seletor.setGenerico(true);
+		// }
 
 		remedios = controlador.listarRemedios(seletor);
-		atualizarTabelaMedicamentos(this.remediosConsultados);
+		atualizarTabelaMedicamentos(remedios);
 	}
 
 	private void consultarFormaUso() {
@@ -322,10 +323,10 @@ public class ListagemMedicamento extends JInternalFrame {
 
 		// Limpa a tabela
 		tblRemedios.setModel(new DefaultTableModel(
-				new String[][] { { "Codigo", "Nome", "Composição", "Dosagem", "Tipo", "Generico", "Preco", "Estoque",
-						"Laboratorio" }, },
-				new String[] { "Codigo", "Nome", "Composição", "Dosagem", "Tipo", "Generico", "Preco", "Estoque",
-						"Laboratorio" }));
+				new String[][] { { "Código de Barras", "Dosagem", "Composição", "Generico", "Nome", "Data Cad.",
+						"Preço", "Estoque", "Forma Uso", "Laboratorio" }, },
+				new String[] { "Código de Barras", "Dosagem", "Composição", "Generico", "Nome", "Data Cad.", "Preço",
+						"Estoque", "Forma Uso", "Laboratorio" }));
 
 		DefaultTableModel modelo = (DefaultTableModel) tblRemedios.getModel();
 
@@ -334,10 +335,14 @@ public class ListagemMedicamento extends JInternalFrame {
 			// Preencher a linha com os atributos do remedio
 			// na ORDEM do cabeçalho da tabela
 
-			String[] novaLinha = new String[] { remedio.getCodBarra() + "", remedio.getNome(), remedio.getComposicao(),
-					remedio.getDosagem(), remedio.getFormaUso().getDescricao(), "generico?", "R$" + remedio.getPreco(), // TODO
-					// generico??
-					"" + remedio.getEstoque(), remedio.getLaboratorio().getNomeLaboratorio() };
+			/*
+			 * String isGenerico = ""; if (remedio.isGenerico() == true) { isGenerico =
+			 * "Sim"; } else { isGenerico = "Não"; }
+			 */
+			String[] novaLinha = new String[] { remedio.getCodBarra() + "", remedio.getDosagem(),
+					remedio.getComposicao(), String.valueOf(remedio.isGenerico()), remedio.getNome(),
+					String.valueOf(remedio.getDataCadastro()), "R$" + remedio.getPreco(), "" + remedio.getEstoque(),
+					remedio.getFormaUso().getDescricao(), remedio.getLaboratorio().getNomeLaboratorio() };
 			modelo.addRow(novaLinha);
 		}
 	}

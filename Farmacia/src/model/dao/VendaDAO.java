@@ -34,7 +34,7 @@ public class VendaDAO {
 	}
 
 	public List<VendaDTO> listarMercadorias(MercadoriaSeletor seletor) {
-		String sql = "SELECT R.COD_BARRA, R.NM_REMEDIO as 'NOME', R.PRECO, R.ESTOQUE FROM REMEDIO R";
+		String sql = "SELECT R.COD_BARRA, R.NM_REMEDIO as 'NOME', R.PRECO, R.ESTOQUE FROM REMEDIO R ";
 
 		if (seletor.temFiltro()) {
 			criarFiltrosRemedio(seletor, sql);
@@ -58,6 +58,7 @@ public class VendaDAO {
 			resultado = stmt.executeQuery(sql);
 			while (resultado.next()) {
 				VendaDTO dto = new VendaDTO();
+
 				dto.setId(resultado.getString("COD_BARRA"));
 				dto.setNome(resultado.getString("NOME"));
 				dto.setPreco(resultado.getDouble("PRECO"));
@@ -106,14 +107,14 @@ public class VendaDAO {
 			if (!primeiro) {
 				sql += " AND ";
 			}
-			sql += "R.COD_BARRA = " + seletor.getCodBar();
+			sql += "P.COD_BARRA = " + seletor.getCodBar();
 			primeiro = false;
 		}
 		if ((seletor.getNome() != null) && (seletor.getNome().trim().length() > 0)) {
 			if (!primeiro) {
 				sql += " AND ";
 			}
-			sql += "R.NM_PRODUTO LIKE '% " + seletor.getNome() + "%'";
+			sql += "P.NM_PRODUTO LIKE '% " + seletor.getNome() + "%'";
 			primeiro = false;
 		}
 

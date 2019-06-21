@@ -81,7 +81,9 @@ public class RemedioDAO {
 	}
 
 	public List<Remedio> listarComSeletor(RemedioSeletor seletor) {
-		String sql = " SELECT * FROM REMEDIO R";
+		String sql = " SELECT R.COD_BARRA, R.DOSAGEM, R.COMPOSICAO, R.GENERICO, R.NM_REMEDIO, R.DT_CADASTRO,R.PRECO, R.ESTOQUE, FU.DESCRICAO, L.NM_LABORATORIO "
+				+ " FROM REMEDIO R JOIN FORMA_USO FU ON R.ID_FORMA_USO = FU.ID_FORMA_USO"
+				+ " JOIN LABORATORIO L ON R.ID_LABORATORIO = L.ID_LABORATORIO ";
 
 		if (seletor.temFiltro()) {
 			sql = criarFiltros(seletor, sql);
@@ -105,50 +107,76 @@ public class RemedioDAO {
 			e.printStackTrace();
 		}
 		return remedios;
+
 	}
 
 	private String criarFiltros(RemedioSeletor seletor, String sql) {
+		// TODO FALTA FILTRO DE FORMA_USO
+		// FALTA AJUSTAR FILTRO DE GENÉRICO
 		sql += " WHERE ";
 		boolean primeiro = true;
 
-		if (seletor.getCodBar() != "") {
+		if ((seletor.getCodBar() != null) && (seletor.getCodBar().trim().length() > 0)) {
 			if (!primeiro) {
 				sql += " AND ";
 			}
-			sql += "R.COD_BARRA = " + seletor.getCodBar();
+			sql += "R.COD_BARRA LIKE '%" + seletor.getCodBar().trim() + "%'";
 			primeiro = false;
 		}
 		if ((seletor.getNomeRemedio() != null) && (seletor.getNomeRemedio().trim().length() > 0)) {
 			if (!primeiro) {
 				sql += " AND ";
 			}
-			sql += "R.NM_REMEDIO LIKE '% " + seletor.getNomeRemedio() + "%'";
+			sql += "R.NM_REMEDIO LIKE '%" + seletor.getNomeRemedio().trim() + "%'";
 			primeiro = false;
 		}
+		if ((seletor.getTipoRemedio() != null) && (seletor.getTipoRemedio().trim().length() > 0)) {
+			if (!primeiro) {
+				sql += " AND ";
+			}
+			sql += "FU.DESCRICAO LIKE '%" + seletor.getTipoRemedio().trim() + "%'";
+		}
+
+		if ((seletor.getComposicaoRemedio() != null) && (seletor.getComposicaoRemedio().trim().length() > 0)) {
+			if (!primeiro) {
+				sql += " AND ";
+			}
+			sql += " R.COMPOSICAO LIKE '%" + seletor.getComposicaoRemedio().trim() + "%'";
+		}
+
 		if (seletor.isGenerico()) {
 			if (!primeiro) {
 				sql += " AND ";
 			}
 			sql += "R.GENERICO = 1";
-			primeiro = true;
+			// Aqui estava true antes
+			primeiro = false;
 		}
+		// Verificando o que retorna nos filtros
+		// System.out.println(sql);
 		return sql;
 	}
 
 	private Remedio construirProdutoDoResultSet(ResultSet result) {
 		Remedio r = new Remedio();
+		FormaUso fu = new FormaUso();
+		Laboratorio l = new Laboratorio();
 
 		try {
 			r.setCodBarra(result.getString("COD_BARRA"));
-			r.setNome(result.getString("NM_REMEDIO"));
 			r.setDosagem(result.getString("DOSAGEM"));
-			r.getFormaUso().setIdFormaUso(result.getInt("ID_FORMA_USO"));
-			r.getLaboratorio().setIdLaboratorio(result.getInt("ID_LABORATORIO"));
 			r.setComposicao(result.getString("COMPOSICAO"));
-			r.setPreco(result.getDouble("PRECO"));
 			r.setGenerico(result.getBoolean("GENERICO"));
+			r.setNome(result.getString("NM_REMEDIO"));
+			r.setPreco(result.getDouble("PRECO"));
 			r.setEstoque(result.getInt("ESTOQUE"));
-			r.setDataCadastro(result.getDate("DT_CADASTRO"));
+
+			// r.getFormaUso().setIdFormaUso(result.getInt("ID_FORMA_USO"));
+			// r.getLaboratorio().setIdLaboratorio(result.getInt("ID_LABORATORIO"));
+			fu.setDescricao(result.getString("DESCRICAO"));
+			r.setFormaUso(fu);
+			l.setNomeLaboratorio(result.getString("NM_LABORATORIO"));
+			r.setLaboratorio(l);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
