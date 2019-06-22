@@ -152,10 +152,12 @@ public class TelaVenda extends JInternalFrame {
 					Mercadoria mercadoriaSelecionada = mercadoriasParaVenda.get(tblVenda.getSelectedRow() - 1);
 					mercadoriasParaVenda.remove(mercadoriaSelecionada);
 
+					int qtd = Integer.parseInt(tblVenda.getValueAt(tblVenda.getSelectedRow(), 1).toString());
+
 					removerMercadoria(mercadoriaSelecionada);
 					atualizarTblVenda(mercadoriasParaVenda);
 
-					valorTotal -= mercadoriaSelecionada.getPreco();
+					valorTotal -= mercadoriaSelecionada.getPreco() * qtd;
 					lblValor.setText("R$" + valorTotal);
 				} else {
 					JOptionPane.showMessageDialog(null, "Selecione um item para excluir");
