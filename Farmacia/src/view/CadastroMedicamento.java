@@ -5,8 +5,6 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -97,34 +95,24 @@ public class CadastroMedicamento extends JInternalFrame {
 				"a·‡‚‰bcdeÈËÍÎfghiÌÏÓÔjklmnoÛÙˆpqrstu˙˘˚¸vwxyz-()/:A¡¿¬ƒBCDE…» ÀFGHIÕÃŒœJKLMNO”‘÷PQRSTU⁄Ÿ€‹VWXYZ ");
 
 		JFormattedTextField txtNome = new JFormattedTextField(formatoNome);
-		txtNome.setFocusLostBehavior(JFormattedTextField.PERSIST);
-		txtNome.addFocusListener(new FocusListener() {
 
-			public void focusGained(FocusEvent e) {
-				txtNome.setText(txtNome.getText().trim());
-			}
-
-			public void focusLost(FocusEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+		formatoNome.install((JFormattedTextField) txtNome);
 
 		getContentPane().add(txtNome, "cell 0 2,growx");
 		txtNome.setColumns(10);
 
-		MaskFormatter formatoCodBar = new MaskFormatter();
+		/*
+		 * MaskFormatter formatoCodBar = new MaskFormatter();
+		 * 
+		 * try { formatoCodBar = new MaskFormatter("****"); } catch (ParseException e) {
+		 * // TODO Auto-generated catch block e.printStackTrace(); }
+		 * 
+		 * formatoCodBar.setValidCharacters("0123456789");
+		 */
 
-		try {
-			formatoCodBar = new MaskFormatter("#############");
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		formatoCodBar.setValidCharacters("0123456789");
-
-		JFormattedTextField txtCodBar = new JFormattedTextField(formatoCodBar);
+		// JFormattedTextField txtCodBar = new JFormattedTextField(formatoCodBar);
+		JTextField txtCodBar = new JTextField();
+		// formatoCodBar.install((JFormattedTextField) txtCodBar);
 
 		getContentPane().add(txtCodBar, "cell 2 2,growx");
 		txtCodBar.setColumns(10);
