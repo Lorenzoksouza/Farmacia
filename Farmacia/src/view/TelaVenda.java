@@ -149,16 +149,16 @@ public class TelaVenda extends JInternalFrame {
 		btnRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (tblVenda.getSelectedRow() > 0) {
-					Mercadoria mercadoriaSelecionada = mercadoriasConsultadas.get(tblVenda.getSelectedRow() + 1);
+					Mercadoria mercadoriaSelecionada = mercadoriasParaVenda.get(tblVenda.getSelectedRow() - 1);
 					mercadoriasParaVenda.remove(mercadoriaSelecionada);
 
 					removerMercadoria(mercadoriaSelecionada);
-					atualizarTblVenda(mercadoriasConsultadas);
+					atualizarTblVenda(mercadoriasParaVenda);
 
 					valorTotal -= mercadoriaSelecionada.getPreco();
 					lblValor.setText("R$" + valorTotal);
 				} else {
-					JOptionPane.showConfirmDialog(null, "Selecione um item para excluir");
+					JOptionPane.showMessageDialog(null, "Selecione um item para excluir");
 				}
 			}
 		});
@@ -330,13 +330,13 @@ public class TelaVenda extends JInternalFrame {
 		return item;
 	}
 
-	private void atualizarTblVenda(List<Mercadoria> mercadorias) {
+	private void atualizarTblVenda(List<Mercadoria> mercadoriasParaVenda) {
 		tblVenda.setModel(new DefaultTableModel(new String[][] { { "Nome", "Quantidade", "Preço" } },
 				new String[] { "Nome", "Quantidade", "Preço" }));
 
 		DefaultTableModel modelo = (DefaultTableModel) tblVenda.getModel();
 
-		for (Mercadoria mercadoria : mercadorias) {
+		for (Mercadoria mercadoria : mercadoriasParaVenda) {
 			String[] novaLinha = new String[] { mercadoria.getNome(), spiQuantidade.getValue().toString(),
 					"R$" + mercadoria.getPreco() };
 			modelo.addRow(novaLinha);
