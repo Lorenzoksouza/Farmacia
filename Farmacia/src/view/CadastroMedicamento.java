@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -28,6 +30,7 @@ import model.vo.Laboratorio;
 import model.vo.Remedio;
 import net.miginfocom.swing.MigLayout;
 import util.JNumberFormatField;
+import util.JTextFieldLimit;
 
 public class CadastroMedicamento extends JInternalFrame {
 	private JTextField txtNome;
@@ -71,7 +74,7 @@ public class CadastroMedicamento extends JInternalFrame {
 		setClosable(true);
 
 		setBounds(100, 100, 495, 285);
-		getContentPane().setLayout(new MigLayout("", "[][][grow]", "[10px:n][][][][][][][][][]"));
+		getContentPane().setLayout(new MigLayout("", "[][][grow]", "[10px:n][][][][][][][][][][]"));
 
 		JLabel lblNome = new JLabel("Nome:");
 		getContentPane().add(lblNome, "cell 0 1");
@@ -101,31 +104,39 @@ public class CadastroMedicamento extends JInternalFrame {
 		getContentPane().add(txtNome, "cell 0 2,growx");
 		txtNome.setColumns(10);
 
-		/*
-		 * MaskFormatter formatoCodBar = new MaskFormatter();
-		 * 
-		 * try { formatoCodBar = new MaskFormatter("****"); } catch (ParseException e) {
-		 * // TODO Auto-generated catch block e.printStackTrace(); }
-		 * 
-		 * formatoCodBar.setValidCharacters("0123456789");
-		 */
+		JLabel lblValidacaotxtcodbar = new JLabel("");
 
-		// JFormattedTextField txtCodBar = new JFormattedTextField(formatoCodBar);
-		JTextField txtCodBar = new JTextField();
-		// formatoCodBar.install((JFormattedTextField) txtCodBar);
+		txtCodBar = new JTextField();
+		txtCodBar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				try {
+					Long i = Long.parseLong(txtCodBar.getText());
+					lblValidacaotxtcodbar.setText("");
+
+				} catch (NumberFormatException e) {
+
+					lblValidacaotxtcodbar.setText("invalid number");
+				}
+			}
+		});
+
+		txtCodBar.setDocument(new JTextFieldLimit(13));
 
 		getContentPane().add(txtCodBar, "cell 2 2,growx");
 		txtCodBar.setColumns(10);
 
+		getContentPane().add(lblValidacaotxtcodbar, "cell 2 3,alignx left");
+
 		JLabel lblPreco = new JLabel("Pre\u00E7o:");
-		getContentPane().add(lblPreco, "cell 0 3");
+		getContentPane().add(lblPreco, "cell 0 4");
 
 		JLabel lblComposicao = new JLabel("Composi\u00E7\u00E3o:");
-		getContentPane().add(lblComposicao, "cell 2 3");
+		getContentPane().add(lblComposicao, "cell 2 4");
 
 		JNumberFormatField txtPreco = new JNumberFormatField(2);
 		// txtPreco = new JFormattedTextField();
-		getContentPane().add(txtPreco, "cell 0 4,growx");
+		getContentPane().add(txtPreco, "cell 0 5,growx");
 		txtPreco.setColumns(10);
 
 		txtComposicao = new JFormattedTextField();
@@ -144,11 +155,11 @@ public class CadastroMedicamento extends JInternalFrame {
 
 		formatoComposicao.install((JFormattedTextField) txtComposicao);
 
-		getContentPane().add(txtComposicao, "cell 2 4,growx");
+		getContentPane().add(txtComposicao, "cell 2 5,growx");
 		txtComposicao.setColumns(10);
 
 		JLabel lblDosagem = new JLabel("Dosagem:");
-		getContentPane().add(lblDosagem, "cell 0 5");
+		getContentPane().add(lblDosagem, "cell 0 6");
 
 		txtDosagem = new JFormattedTextField();
 
@@ -164,33 +175,33 @@ public class CadastroMedicamento extends JInternalFrame {
 
 		formatoDosagem.install((JFormattedTextField) txtDosagem);
 
-		getContentPane().add(txtDosagem, "cell 0 6,growx");
+		getContentPane().add(txtDosagem, "cell 0 7,growx");
 		txtDosagem.setColumns(10);
 
 		consultarLaboratorio();
 
 		JLabel lblLaboratorio = new JLabel("Laborat\u00F3rio:");
-		getContentPane().add(lblLaboratorio, "cell 2 5");
+		getContentPane().add(lblLaboratorio, "cell 2 6");
 
 		cmbLaboratorio = new JComboBox();
 		cmbLaboratorio.setBackground(Color.WHITE);
 		cmbLaboratorio.setModel(new DefaultComboBoxModel(listaLaboratorios.toArray()));
 		cmbLaboratorio.setSelectedIndex(-1);
-		getContentPane().add(cmbLaboratorio, "cell 2 6,growx");
+		getContentPane().add(cmbLaboratorio, "cell 2 7,growx");
 
 		consultarFormaUso();
 
 		JLabel lblFormaUso = new JLabel("Forma de uso:");
-		getContentPane().add(lblFormaUso, "flowx,cell 0 7,alignx left");
+		getContentPane().add(lblFormaUso, "flowx,cell 0 8,alignx left");
 
 		cmbFormaUso = new JComboBox();
 		cmbFormaUso.setBackground(Color.WHITE);
 		cmbFormaUso.setModel(new DefaultComboBoxModel(listaFormasUso.toArray()));
 		cmbFormaUso.setSelectedIndex(-1);
-		getContentPane().add(cmbFormaUso, "flowx,cell 0 8,growx");
+		getContentPane().add(cmbFormaUso, "flowx,cell 0 9,growx");
 
 		JLabel labelEspaco2 = new JLabel(" ");
-		getContentPane().add(labelEspaco2, "cell 0 8");
+		getContentPane().add(labelEspaco2, "cell 0 9");
 
 		txtEstoque = new JFormattedTextField();
 
@@ -206,15 +217,15 @@ public class CadastroMedicamento extends JInternalFrame {
 
 		formatoEstoque.install((JFormattedTextField) txtEstoque);
 
-		getContentPane().add(txtEstoque, "cell 0 8,growx");
+		getContentPane().add(txtEstoque, "cell 0 9,growx");
 		txtEstoque.setColumns(10);
 
 		JLabel lblEstoque = new JLabel("    Estoque:");
-		getContentPane().add(lblEstoque, "cell 0 7,alignx right");
+		getContentPane().add(lblEstoque, "cell 0 8,alignx right");
 
 		chckbxGenerico = new JCheckBox("Gen\u00E9rico");
 		chckbxGenerico.setBackground(Color.WHITE);
-		getContentPane().add(chckbxGenerico, "cell 0 8");
+		getContentPane().add(chckbxGenerico, "cell 0 9");
 
 		// listagem
 
@@ -254,7 +265,7 @@ public class CadastroMedicamento extends JInternalFrame {
 				// limparCampos();
 			}
 		});
-		getContentPane().add(btnSalvar, "cell 2 9,alignx right");
+		getContentPane().add(btnSalvar, "cell 2 10,alignx right");
 	}
 
 	public CadastroMedicamento(Remedio remedio) {
