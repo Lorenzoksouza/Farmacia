@@ -172,10 +172,10 @@ public class TelaVenda extends JInternalFrame {
 		JButton btnConcluirVenda = new JButton("Concluir Venda");
 		btnConcluirVenda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String mensagem = "";
+				String mensagemConcluida = "Venda concluida";
 				ControllerVenda controllerVenda = new ControllerVenda();
-				mensagem = controllerVenda.salvarVenda(valorTotal, itensProdutos, itensRemedios);
-				JOptionPane.showMessageDialog(null, mensagem);
+				String mensagem = controllerVenda.salvarVenda(valorTotal, itensProdutos, itensRemedios);
+				JOptionPane.showMessageDialog(null, mensagemConcluida);
 			}
 		});
 		btnConcluirVenda.setForeground(new Color(0, 128, 0));

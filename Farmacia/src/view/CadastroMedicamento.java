@@ -135,7 +135,6 @@ public class CadastroMedicamento extends JInternalFrame {
 		getContentPane().add(lblComposicao, "cell 2 4");
 
 		JNumberFormatField txtPreco = new JNumberFormatField(2);
-		// txtPreco = new JFormattedTextField();
 		getContentPane().add(txtPreco, "cell 0 5,growx");
 		txtPreco.setColumns(10);
 
@@ -146,7 +145,7 @@ public class CadastroMedicamento extends JInternalFrame {
 		try {
 			formatoComposicao = new MaskFormatter(
 					"**************************************************************************************************");
-		} catch (ParseException e1) { // TODO Auto-generated catch block
+		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
 
@@ -167,7 +166,7 @@ public class CadastroMedicamento extends JInternalFrame {
 
 		try {
 			formatoDosagem = new MaskFormatter("#####");
-		} catch (ParseException e1) { // TODO Auto-generated catch block
+		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
 
@@ -209,7 +208,7 @@ public class CadastroMedicamento extends JInternalFrame {
 
 		try {
 			formatoEstoque = new MaskFormatter("###");
-		} catch (ParseException e1) { // TODO Auto-generated catch block
+		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
 
