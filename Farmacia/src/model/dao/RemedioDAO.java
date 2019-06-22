@@ -189,7 +189,7 @@ public class RemedioDAO {
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
 
-		String sql = "SELECT COD_BARRA, NM_REMEDIO, PRECO, ESTOQUE FROM REMEDIO WHERE COD_BARRA = '" + codBar + "'";
+		String sql = "SELECT COD_BARRA FROM REMEDIO WHERE COD_BARRA = '" + codBar + "'";
 
 		try {
 			resultado = stmt.executeQuery(sql);
@@ -217,7 +217,7 @@ public class RemedioDAO {
 
 		try {
 			prepStmt.setString(1, remedioSelecionado);
-
+			mensagem = "remedio excluido com sucesso";
 			int codigoRetorno = prepStmt.executeUpdate();
 			if (codigoRetorno == 0) {
 				mensagem = "Erro ao executar a query de exclusão de remédio!";

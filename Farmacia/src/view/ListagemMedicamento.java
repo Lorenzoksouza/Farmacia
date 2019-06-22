@@ -16,6 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
@@ -230,15 +231,17 @@ public class ListagemMedicamento extends JInternalFrame {
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String mensagem = "";
-				String remedioSelecionado = (String) tblRemedios.getValueAt(tblRemedios.getSelectedRow(), 1);
+				String remedioSelecionado = remediosConsultados.get(tblRemedios.getSelectedRow() - 1).getCodBarra();
 
 				ControllerRemedio controllerRemedio = new ControllerRemedio();
 
+				System.out.println(remedioSelecionado);
 				if (controllerRemedio.existeRemedioPorCodBar(remedioSelecionado)) {
-					mensagem = "Remedio não foi cadastrado";
-				} else {
 					mensagem = controllerRemedio.excluir(remedioSelecionado);
+				} else {
+					mensagem = "Remedio não foi cadastrado";
 				}
+				JOptionPane.showMessageDialog(null, mensagem);
 			}
 		});
 
@@ -331,15 +334,21 @@ public class ListagemMedicamento extends JInternalFrame {
 
 		DefaultTableModel modelo = (DefaultTableModel) tblRemedios.getModel();
 
+		String generico = "";
 		for (Remedio remedio : remedios) {
 			// Crio uma nova linha na tabela
 			// Preencher a linha com os atributos do remedio
 			// na ORDEM do cabe�alho da tabela
+			if (remedio.isGenerico()) {
+				generico = "Sim";
+			} else {
+				generico = "Não";
+			}
 
 			String[] novaLinha = new String[] { remedio.getCodBarra() + "", remedio.getDosagem(),
-					remedio.getComposicao(), String.valueOf(remedio.isGenerico()), remedio.getNome(),
-					String.valueOf(remedio.getDataCadastro()), "R$" + remedio.getPreco(), "" + remedio.getEstoque(),
-					remedio.getFormaUso().getDescricao(), remedio.getLaboratorio().getNomeLaboratorio() };
+					remedio.getComposicao(), generico, remedio.getNome(), String.valueOf(remedio.getDataCadastro()),
+					"R$" + remedio.getPreco(), "" + remedio.getEstoque(), remedio.getFormaUso().getDescricao(),
+					remedio.getLaboratorio().getNomeLaboratorio() };
 			modelo.addRow(novaLinha);
 		}
 	}

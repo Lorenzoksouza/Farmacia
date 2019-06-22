@@ -238,11 +238,11 @@ public class TelaVenda extends JInternalFrame {
 		}
 
 		mercadorias = controlador.listarMercadorias(seletor);
-		atualizarTabelaMedicamentos(this.mercadoriasConsultadas);
+		atualizarTabelaMercadorias(this.mercadoriasConsultadas);
 	}
 
-	private void atualizarTabelaMedicamentos(List<Mercadoria> mercadorias) {
-		// atualiza o atributo remediosConsultados
+	private void atualizarTabelaMercadorias(List<Mercadoria> mercadorias) {
+		// atualiza o atributo merdacoriasConsultadas
 		mercadoriasConsultadas = mercadorias;
 
 		// btnGerarXls.setEnabled(remedios != null && remedios.size() > 0);
