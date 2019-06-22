@@ -22,7 +22,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import controller.ControllerVenda;
-import model.dto.VendaDTO;
 import model.seletor.MercadoriaSeletor;
 import model.vo.ItemProduto;
 import model.vo.ItemRemedio;
@@ -44,7 +43,7 @@ public class TelaVenda extends JInternalFrame {
 	private List<ItemRemedio> itensRemedios = new ArrayList<ItemRemedio>();
 	private List<Produto> produtos = new ArrayList<Produto>();
 
-	private double valorTotal;
+	private double valorTotal = 0.0;
 	private JLabel lblValor;
 	private JSpinner spiQuantidade;
 
@@ -114,9 +113,8 @@ public class TelaVenda extends JInternalFrame {
 
 					adicionarItem(mercadoriaSelecionada);
 					atualizarTblVenda(mercadoriasParaVenda);
-
-					valorTotal += mercadoriaSelecionada.getPreco()
-							* Double.parseDouble((String) spiQuantidade.getValue());
+					int qtd = (int) spiQuantidade.getValue();
+					valorTotal += mercadoriaSelecionada.getPreco() * qtd;
 					spiQuantidade.setValue(1);
 					lblValor.setText("R$" + valorTotal);
 				} else {
@@ -129,8 +127,8 @@ public class TelaVenda extends JInternalFrame {
 		JLabel lblTotal = new JLabel("Total:");
 		getContentPane().add(lblTotal, "flowx,cell 2 10,aligny bottom");
 
-		JLabel lblValor_1 = new JLabel("R$0.00");
-		getContentPane().add(lblValor_1, "cell 2 10,aligny bottom");
+		lblValor = new JLabel("R$0.00");
+		getContentPane().add(lblValor, "cell 2 10,aligny bottom");
 
 		JLabel lblQuantidade = new JLabel("Quantidade:");
 		getContentPane().add(lblQuantidade, "flowx,cell 0 11,aligny center");
@@ -211,7 +209,7 @@ public class TelaVenda extends JInternalFrame {
 		MercadoriaSeletor seletor = new MercadoriaSeletor();
 
 		// TODO descomentar
-		List<VendaDTO> mercadorias = controlador.listarMercadorias(seletor);
+		List<Mercadoria> mercadorias = controlador.listarMercadorias(seletor);
 
 //		seletor.setLimite(5);
 
@@ -237,8 +235,9 @@ public class TelaVenda extends JInternalFrame {
 			seletor.setNome(txtNome.getText());
 		}
 
+		// mercadorias = controlador.listarVendaDTO(seletor);
 		mercadorias = controlador.listarMercadorias(seletor);
-		atualizarTabelaMercadorias(this.mercadoriasConsultadas);
+		atualizarTabelaMercadorias(mercadorias);
 	}
 
 	private void atualizarTabelaMercadorias(List<Mercadoria> mercadorias) {

@@ -10,6 +10,9 @@ import java.util.List;
 
 import model.dto.VendaDTO;
 import model.seletor.MercadoriaSeletor;
+import model.vo.Mercadoria;
+import model.vo.Produto;
+import model.vo.Remedio;
 import model.vo.Venda;
 
 public class VendaDAO {
@@ -33,7 +36,7 @@ public class VendaDAO {
 		return venda;
 	}
 
-	public List<VendaDTO> listarMercadorias(MercadoriaSeletor seletor) {
+	public List<VendaDTO> listarVendaDTO(MercadoriaSeletor seletor) {
 		String sql = "SELECT R.COD_BARRA, R.NM_REMEDIO as 'NOME', R.PRECO, R.ESTOQUE FROM REMEDIO R ";
 
 		if (seletor.temFiltro()) {
@@ -119,6 +122,59 @@ public class VendaDAO {
 		}
 
 		return sql;
+	}
+
+	public List<Mercadoria> listarMercadorias(MercadoriaSeletor seletor) {
+		String sqlRemedio = "SELECT * FROM REMEDIO R";
+		String sqlProduto = "SELECT * FROM PRODUTO P";
+
+		if (seletor.temFiltro()) {
+			criarFiltrosRemedio(seletor, sqlRemedio);
+			criarFiltrosProduto(seletor, sqlProduto);
+		}
+
+		if (seletor.temPaginacao()) {
+			sqlRemedio += " LIMIT " + seletor.getLimite() + " OFFSET " + seletor.getOffset();
+			sqlProduto += " LIMIT " + seletor.getLimite() + " OFFSET " + seletor.getOffset();
+		}
+
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+
+		ArrayList<Mercadoria> mercadorias = new ArrayList<Mercadoria>();
+
+		try {
+			resultado = stmt.executeQuery(sqlRemedio);
+			while (resultado.next()) {
+				Remedio remedio = new Remedio();
+
+				remedio.setCodBarra(resultado.getString("COD_BARRA"));
+				remedio.setNome(resultado.getString("NM_REMEDIO"));
+				remedio.setPreco(resultado.getDouble("PRECO"));
+				remedio.setEstoque(resultado.getInt("ESTOQUE"));
+				mercadorias.add(remedio);
+			}
+			resultado = stmt.executeQuery(sqlProduto);
+			while (resultado.next()) {
+				Produto produto = new Produto();
+
+				produto.setCodBarra(resultado.getString("COD_BARRA"));
+				produto.setNome(resultado.getString("NM_PRODUTO"));
+				produto.setPreco(resultado.getDouble("PRECO"));
+				produto.setEstoque(resultado.getInt("ESTOQUE"));
+				mercadorias.add(produto);
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao listar as mercadorias!");
+			e.printStackTrace();
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+
+		return mercadorias;
 	}
 
 }

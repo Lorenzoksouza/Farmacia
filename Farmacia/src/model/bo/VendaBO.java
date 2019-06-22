@@ -9,6 +9,7 @@ import model.dto.VendaDTO;
 import model.seletor.MercadoriaSeletor;
 import model.vo.ItemProduto;
 import model.vo.ItemRemedio;
+import model.vo.Mercadoria;
 import model.vo.Venda;
 
 public class VendaBO {
@@ -16,8 +17,8 @@ public class VendaBO {
 	VendaDTO vendaDTO = new VendaDTO();
 	VendaDAO vendaDAO = new VendaDAO();
 
-	public List<VendaDTO> listarMercadoriasBO(MercadoriaSeletor seletor) {
-		return vendaDAO.listarMercadorias(seletor);
+	public List<VendaDTO> listarVendaDTO(MercadoriaSeletor seletor) {
+		return vendaDAO.listarVendaDTO(seletor);
 	}
 
 	public String salvar(double valorTotal, List<ItemProduto> itensProdutos, List<ItemRemedio> itensRemedios) {
@@ -39,6 +40,10 @@ public class VendaBO {
 		}
 
 		return mensagem;
+	}
+
+	public List<Mercadoria> listarMercadorias(MercadoriaSeletor seletor) {
+		return vendaDAO.listarMercadorias(seletor);
 	}
 
 }
