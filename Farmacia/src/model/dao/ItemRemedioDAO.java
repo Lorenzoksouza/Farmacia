@@ -14,6 +14,7 @@ public class ItemRemedioDAO {
 		Connection conn = Banco.getConnection();
 		PreparedStatement prepStmt = Banco.getPreparedStatement(conn, sql, PreparedStatement.RETURN_GENERATED_KEYS);
 		try {
+			System.out.println(itemRemedio.getVenda().getIdVenda());
 			prepStmt.setInt(1, itemRemedio.getVenda().getIdVenda());
 			prepStmt.setString(2, itemRemedio.getRemedio().getCodBarra());
 			prepStmt.setInt(3, itemRemedio.getQuantidade());

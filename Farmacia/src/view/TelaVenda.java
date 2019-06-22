@@ -86,7 +86,7 @@ public class TelaVenda extends JInternalFrame {
 		tblVenda = new JTable();
 		tblVenda.setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		tblVenda.setFillsViewportHeight(true);
-		tblVenda.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "nome", "quantidade", "preco" }));
+		tblVenda.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Nome", "Quantidade", "Preço" }));
 		getContentPane().add(tblVenda, "cell 2 0 1 10,grow");
 
 		txtCodBar = new JTextField();
@@ -107,18 +107,20 @@ public class TelaVenda extends JInternalFrame {
 		btnAddItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (tblPesquisa.getSelectedRow() > 0) {
-					Mercadoria mercadoriaSelecionada = mercadoriasConsultadas.get(tblPesquisa.getSelectedRow() + 1);
+					Mercadoria mercadoriaSelecionada = mercadoriasConsultadas.get(tblPesquisa.getSelectedRow() - 1);
+					int qtd = (int) spiQuantidade.getValue();
 
 					mercadoriasParaVenda.add(mercadoriaSelecionada);
 
 					adicionarItem(mercadoriaSelecionada);
 					atualizarTblVenda(mercadoriasParaVenda);
-					int qtd = (int) spiQuantidade.getValue();
+
 					valorTotal += mercadoriaSelecionada.getPreco() * qtd;
-					spiQuantidade.setValue(1);
 					lblValor.setText("R$" + valorTotal);
+
+					spiQuantidade.setValue(1);
 				} else {
-					JOptionPane.showConfirmDialog(null, "Selecione um item para adicionar a venda");
+					JOptionPane.showMessageDialog(null, "Selecione um item para adicionar a venda");
 				}
 
 			}
@@ -168,10 +170,10 @@ public class TelaVenda extends JInternalFrame {
 		JButton btnConcluirVenda = new JButton("Concluir Venda");
 		btnConcluirVenda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
+				String mensagem = "";
 				ControllerVenda controllerVenda = new ControllerVenda();
-				controllerVenda.salvarVenda(valorTotal, itensProdutos, itensRemedios);
-
+				mensagem = controllerVenda.salvarVenda(valorTotal, itensProdutos, itensRemedios);
+				JOptionPane.showMessageDialog(null, mensagem);
 			}
 		});
 		btnConcluirVenda.setForeground(new Color(0, 128, 0));
@@ -329,14 +331,14 @@ public class TelaVenda extends JInternalFrame {
 	}
 
 	private void atualizarTblVenda(List<Mercadoria> mercadorias) {
-		tblVenda.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "nome", "quantidade", "preco" }));
-		getContentPane().add(tblVenda, "cell 2 0 1 10,grow");
+		tblVenda.setModel(new DefaultTableModel(new String[][] { { "Nome", "Quantidade", "Preço" } },
+				new String[] { "Nome", "Quantidade", "Preço" }));
 
 		DefaultTableModel modelo = (DefaultTableModel) tblVenda.getModel();
 
 		for (Mercadoria mercadoria : mercadorias) {
-			String[] novaLinha = new String[] { mercadoria.getNome(), "R$" + mercadoria.getPreco(),
-					"" + mercadoria.getEstoque(), };
+			String[] novaLinha = new String[] { mercadoria.getNome(), spiQuantidade.getValue().toString(),
+					"R$" + mercadoria.getPreco() };
 			modelo.addRow(novaLinha);
 		}
 	}

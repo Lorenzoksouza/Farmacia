@@ -22,9 +22,13 @@ public class VendaBO {
 	}
 
 	public String salvar(double valorTotal, List<ItemProduto> itensProdutos, List<ItemRemedio> itensRemedios) {
-
+		Venda novaVenda = new Venda();
 		String mensagem = "";
-		Venda novaVenda = vendaDAO.inserirVenda(valorTotal);
+		if (vendaDAO.inserirVenda(valorTotal)) {
+			novaVenda = vendaDAO.pegarUltimaVenda();
+		} else {
+			mensagem = "Não foi possivel criar a venda (VendaBO30)";
+		}
 
 		if (novaVenda != null) {
 			for (ItemProduto itemProduto : itensProdutos) {
@@ -38,7 +42,6 @@ public class VendaBO {
 				itemRemedioDAO.inserirItemRemedio(itemRemedio);
 			}
 		}
-
 		return mensagem;
 	}
 

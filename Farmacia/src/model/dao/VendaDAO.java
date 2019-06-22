@@ -17,23 +17,24 @@ import model.vo.Venda;
 
 public class VendaDAO {
 
-	public Venda inserirVenda(double valorTotal) {
-		Venda venda = new Venda();
+	public boolean inserirVenda(double valorTotal) {
 		String sql = "INSERT INTO VENDA(DT_VENDA, VALOR_TOTAL) VALUES (NOW(), ?)";
 
 		Connection conn = Banco.getConnection();
 		PreparedStatement prepStmt = Banco.getPreparedStatement(conn, sql, PreparedStatement.RETURN_GENERATED_KEYS);
+		boolean result;
 		try {
 			prepStmt.setDouble(1, valorTotal);
 			prepStmt.execute();
-
+			result = true;
 		} catch (SQLException e) {
 			System.out.println("Erro ao inserir venda. Causa: " + e.getMessage());
+			result = false;
 		} finally {
 			Banco.closePreparedStatement(prepStmt);
 			Banco.closeConnection(conn);
 		}
-		return venda;
+		return result;
 	}
 
 	public List<VendaDTO> listarVendaDTO(MercadoriaSeletor seletor) {
@@ -175,6 +176,26 @@ public class VendaDAO {
 		}
 
 		return mercadorias;
+	}
+
+	public Venda pegarUltimaVenda() {
+		String sql = "SELECT * FROM VENDA ORDER BY ID_VENDA DESC LIMIT 1";
+
+		Connection conexao = Banco.getConnection();
+		PreparedStatement prepStmt = Banco.getPreparedStatement(conexao, sql);
+		Venda v = new Venda();
+
+		try {
+			ResultSet result = prepStmt.executeQuery();
+			while (result.next()) {
+				v.setIdVenda(result.getInt(1));
+				v.setDataVenda(result.getDate(2));
+				v.setValor(result.getDouble(3));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return v;
 	}
 
 }
