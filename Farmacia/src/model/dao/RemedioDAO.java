@@ -47,23 +47,23 @@ public class RemedioDAO {
 
 	public String atualizar(Remedio r) {
 		String mensagem = "";
-		String sql = "UPDATE REMEDIO R SET COD_BARRA =?, DOSAGEM =?, COMPOSICAO=?, GENERICO=?, NM_REMEDIO=?, DT_CADASTRO=?, PRECO=?, ESTOQUE=?, ID_FORMA_USO=?, ID_LABORATORIO=?)"
+		String sql = "UPDATE REMEDIO R SET DOSAGEM =?, COMPOSICAO=?, GENERICO=?, NM_REMEDIO=?, DT_CADASTRO=?, PRECO=?, ESTOQUE=?, ID_FORMA_USO=?, ID_LABORATORIO=?"
 				+ "WHERE R.COD_BARRA=?";
 
 		Connection conn = Banco.getConnection();
 		PreparedStatement prepStmt = Banco.getPreparedStatement(conn, sql, Statement.RETURN_GENERATED_KEYS);
 
 		try {
-			prepStmt.setString(1, r.getCodBarra());
-			prepStmt.setString(2, r.getDosagem());
-			prepStmt.setString(3, r.getComposicao());
-			prepStmt.setBoolean(4, r.isGenerico());
-			prepStmt.setString(5, r.getNome());
-			prepStmt.setDate(6, (Date) r.getDataCadastro());
-			prepStmt.setDouble(7, r.getPreco());
-			prepStmt.setInt(8, r.getEstoque());
-			prepStmt.setInt(9, r.getFormaUso().getIdFormaUso());
-			prepStmt.setInt(10, r.getLaboratorio().getIdLaboratorio());
+			prepStmt.setString(1, r.getDosagem());
+			prepStmt.setString(2, r.getComposicao());
+			prepStmt.setBoolean(3, r.isGenerico());
+			prepStmt.setString(4, r.getNome());
+			prepStmt.setDate(5, (Date) r.getDataCadastro());
+			prepStmt.setDouble(6, r.getPreco());
+			prepStmt.setInt(7, r.getEstoque());
+			prepStmt.setInt(8, r.getFormaUso().getIdFormaUso());
+			prepStmt.setInt(9, r.getLaboratorio().getIdLaboratorio());
+			prepStmt.setString(10, r.getCodBarra());
 
 			prepStmt.execute();
 

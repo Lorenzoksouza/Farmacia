@@ -42,19 +42,19 @@ public class ProdutoDAO {
 
 	public String atualizar(Produto p) {
 		String mensagem = "";
-		String sql = "UPDATE PRODUTO R SET COD_BARRA = ?, NM_PRODUTO = ?, DT_CADASTRO = ?, PRECO = ?, ESTOQUE = ?, ID_CATEGORIA = ?)"
+		String sql = "UPDATE PRODUTO R SET NM_PRODUTO = ?, DT_CADASTRO = ?, PRECO = ?, ESTOQUE = ?, ID_CATEGORIA = ?"
 				+ "WHERE R.COD_BARRA = ?";
 
 		Connection conn = Banco.getConnection();
 		PreparedStatement prepStmt = Banco.getPreparedStatement(conn, sql, Statement.RETURN_GENERATED_KEYS);
 
 		try {
-			prepStmt.setString(1, p.getCodBarra());
-			prepStmt.setString(2, p.getNome());
-			prepStmt.setDate(3, (Date) p.getDataCadastro());
-			prepStmt.setDouble(4, p.getPreco());
-			prepStmt.setInt(5, p.getEstoque());
-			prepStmt.setInt(6, p.getCategoria().getIdCategoria());
+			prepStmt.setString(1, p.getNome());
+			prepStmt.setDate(2, (Date) p.getDataCadastro());
+			prepStmt.setDouble(3, p.getPreco());
+			prepStmt.setInt(4, p.getEstoque());
+			prepStmt.setInt(5, p.getCategoria().getIdCategoria());
+			prepStmt.setString(6, p.getCodBarra());
 
 			prepStmt.execute();
 

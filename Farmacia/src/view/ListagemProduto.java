@@ -173,7 +173,7 @@ public class ListagemProduto extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				Produto produtoSelecionado = new Produto();
 
-//				produtoSelecionado = produtosConsultados.get(tblProdutos.getSelectedRow() + 1);
+				produtoSelecionado = produtosConsultados.get(tblProdutos.getSelectedRow() + 1);
 
 				produtoSelecionado.setNome(produtosConsultados.get(tblProdutos.getSelectedRow() - 1).getNome());
 				produtoSelecionado.setCodBarra(produtosConsultados.get(tblProdutos.getSelectedRow() - 1).getCodBarra());
