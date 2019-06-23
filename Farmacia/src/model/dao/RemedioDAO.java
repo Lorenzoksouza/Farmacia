@@ -208,8 +208,8 @@ public class RemedioDAO {
 		return codigoRetorno;
 	}
 
-	public String excluir(String remedioSelecionado) {
-		String mensagem = "";
+	public boolean excluir(String remedioSelecionado) {
+		boolean result = false;
 		String sql = " DELETE FROM REMEDIO " + " WHERE COD_BARRA = ?";
 
 		Connection conexao = Banco.getConnection();
@@ -217,18 +217,19 @@ public class RemedioDAO {
 
 		try {
 			prepStmt.setString(1, remedioSelecionado);
-			mensagem = "remedio excluido com sucesso";
+			result = true;
 			int codigoRetorno = prepStmt.executeUpdate();
 			if (codigoRetorno == 0) {
-				mensagem = "Erro ao executar a query de exclusão de remédio!";
+				result = false;
 			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao remover remédio. Causa: " + e.getMessage());
+			result = false;
 		} finally {
 			Banco.closePreparedStatement(prepStmt);
 			Banco.closeConnection(conexao);
 		}
-		return mensagem;
+		return result;
 	}
 
 	public ArrayList<FormaUso> consultarFormaUso() {

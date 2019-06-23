@@ -43,7 +43,13 @@ public class RemedioBO {
 	}
 
 	public String excluir(String remedioSelecionado) {
-		return remedioDAO.excluir(remedioSelecionado);
+		String mensagem = "";
+		if (remedioDAO.excluir(remedioSelecionado)) {
+			mensagem = "Remedio excluido com sucesso";
+		} else {
+			mensagem = "Erro ao excuir Remedio";
+		}
+		return mensagem;
 	}
 
 	public ArrayList<FormaUso> consultarFormaUso() {
