@@ -20,16 +20,14 @@ public class ControllerProduto {
 
 		if (validacao == "") {
 			if (produtoBO.existeCodBar(produto.getCodBarra())) {
-				int opcao = JOptionPane.showConfirmDialog(null,
+				JOptionPane.showConfirmDialog(null,
 						"Produto já cadastrado, deseja fazer alteração com os dados inseridos?", "",
 						JOptionPane.OK_CANCEL_OPTION);
 				// UPDATE
-				if (opcao == 0) {
-					if (produtoBO.atualizar(produto) == "") {
-						mensagem = "Produto atualizado com sucesso";
-					} else {
-						mensagem = "ERRO ao atualizar produto";
-					}
+				if (produtoBO.atualizar(produto) == "") {
+					mensagem = "Produto atualizado com sucesso";
+				} else {
+					mensagem = "ERRO ao atualizar produto";
 				}
 			} else {
 				// INSERT
@@ -39,6 +37,8 @@ public class ControllerProduto {
 					mensagem = "ERRO ao cadastrar produto";
 				}
 			}
+		} else {
+			return validacao;
 		}
 		return mensagem;
 	}

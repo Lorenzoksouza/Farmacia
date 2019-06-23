@@ -40,6 +40,10 @@ public class ListagemProduto extends JInternalFrame {
 	private List<Produto> produtosConsultados;
 	private int totalPaginas = 1;
 	private int paginaAtual = 1;
+	private JLabel lblPaginaAtual;
+	private JLabel lbMax;
+	private int paginaTotal = 1;
+	private JButton btnProximo;
 
 	private ArrayList<Categoria> listaCategoria;
 
@@ -71,7 +75,7 @@ public class ListagemProduto extends JInternalFrame {
 		setClosable(true);
 		setBounds(100, 100, 680, 540);
 		getContentPane()
-				.setLayout(new MigLayout("", "[211.00][][grow]", "[18.00][][][][][][8px:n][][10px:n][][][grow]"));
+				.setLayout(new MigLayout("", "[211.00][][grow]", "[18.00][][][][][][8px:n][][10px:n][][][grow][]"));
 
 		JLabel lblCodbarras = new JLabel("Cód.barras:");
 		getContentPane().add(lblCodbarras, "cell 0 0");
@@ -199,6 +203,46 @@ public class ListagemProduto extends JInternalFrame {
 		});
 		getContentPane().add(btnGerarXls, "cell 0 10,alignx center");
 
+		btnProximo = new JButton("Pr\u00F3ximo>");
+		JButton btnAnterior = new JButton("<Anterior");
+		btnAnterior.setEnabled(false);
+		btnAnterior.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (paginaAtual > 1) {
+					paginaAtual--;
+				}
+				if (paginaAtual == 1) {
+					btnAnterior.setEnabled(false);
+
+				}
+				btnProximo.setEnabled(true);
+				pesquisarProdutos();
+			}
+		});
+		getContentPane().add(btnAnterior, "flowx,cell 2 12");
+
+		lblPaginaAtual = new JLabel("");
+		lblPaginaAtual.setText(paginaAtual + "");
+		getContentPane().add(lblPaginaAtual, "cell 2 12");
+
+		JLabel label = new JLabel("/");
+		getContentPane().add(label, "cell 2 12");
+
+		lbMax = new JLabel("1");
+		getContentPane().add(lbMax, "cell 2 12");
+
+		btnProximo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				paginaAtual++;
+				if (paginaAtual == paginaTotal) {
+					btnProximo.setEnabled(false);
+				}
+				btnAnterior.setEnabled(true);
+				pesquisarProdutos();
+			}
+		});
+		getContentPane().add(btnProximo, "cell 2 12");
+
 	}
 
 	private void consultarCategoria() {
@@ -207,7 +251,7 @@ public class ListagemProduto extends JInternalFrame {
 	}
 
 	private void pesquisarProdutos() {
-		// lblPaginaAtual.setText(paginaAtual + "");
+		lblPaginaAtual.setText(paginaAtual + "");
 
 		ControllerProduto controlador = new ControllerProduto();
 		ProdutoSeletor seletor = new ProdutoSeletor();
@@ -224,7 +268,7 @@ public class ListagemProduto extends JInternalFrame {
 		} else {
 			totalPaginas = quociente + 1;
 		}
-		// lblTotalPaginas.setText(totalPaginas + "");
+		lbMax.setText(totalPaginas + "");
 
 		seletor.setPagina(paginaAtual);
 
