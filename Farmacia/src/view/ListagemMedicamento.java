@@ -224,6 +224,8 @@ public class ListagemMedicamento extends JInternalFrame {
 				System.out.println(remedioSelecionado);
 				if (controllerRemedio.existeRemedioPorCodBar(remedioSelecionado)) {
 					mensagem = controllerRemedio.excluir(remedioSelecionado);
+					remediosConsultados.remove(tblRemedios.getSelectedRow() - 1);
+					atualizarTabelaMedicamentos(remediosConsultados);
 				} else {
 					mensagem = "Remedio não foi cadastrado";
 				}

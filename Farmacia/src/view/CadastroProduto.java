@@ -28,7 +28,7 @@ import util.JTextFieldLimit;
 
 public class CadastroProduto extends JInternalFrame {
 	private JTextField txtNome;
-	private JTextField txtPreco;
+	private JNumberFormatField txtPreco;
 	private JTextField txtEstoque;
 	private JTextField txtCodBar;
 	private JComboBox<Categoria> cmbCategoria;
@@ -75,7 +75,7 @@ public class CadastroProduto extends JInternalFrame {
 
 		// Preço
 
-		JNumberFormatField txtPreco = new JNumberFormatField(2);
+		txtPreco = new JNumberFormatField(2);
 
 		getContentPane().add(txtPreco, "cell 0 5,alignx left");
 		txtPreco.setColumns(10);
@@ -173,11 +173,15 @@ public class CadastroProduto extends JInternalFrame {
 	}
 
 	public CadastroProduto(Produto produto) {
+		txtNome = new JTextField();
+		txtPreco = new JNumberFormatField();
+		txtEstoque = new JTextField();
+		txtCodBar = new JTextField();
+		cmbCategoria = new JComboBox<Categoria>();
 		txtCodBar.setText(produto.getCodBarra().toString());
 		txtNome.setText(produto.getNome());
 		txtPreco.setText("" + produto.getPreco());
 		txtEstoque.setText("" + produto.getEstoque());
-
 	}
 
 	private void consultarCategoria() {

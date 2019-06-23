@@ -154,6 +154,8 @@ public class ListagemProduto extends JInternalFrame {
 
 				if (controllerProduto.existeProdutoCodBar(produtoSelecionado)) {
 					mensagem = controllerProduto.excluir(produtoSelecionado);
+					produtosConsultados.remove(tblProdutos.getSelectedRow() - 1);
+					atualizarTabelaProdutos(produtosConsultados);
 				} else {
 					mensagem = "Remedio não foi cadastrado";
 				}

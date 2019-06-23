@@ -129,7 +129,7 @@ public class CadastroMedicamento extends JInternalFrame {
 
 		// Preço
 
-		JNumberFormatField txtPreco = new JNumberFormatField(2);
+		txtPreco = new JNumberFormatField(2);
 		getContentPane().add(txtPreco, "cell 2 5,growx");
 		txtPreco.setColumns(10);
 
@@ -251,11 +251,11 @@ public class CadastroMedicamento extends JInternalFrame {
 					ControllerRemedio controllerRemedio = new ControllerRemedio();
 					String mensagem = "";
 					mensagem = controllerRemedio.salvar(remedio);
+					limparCampos();
 					JOptionPane.showMessageDialog(null, mensagem);
 				} catch (ArrayIndexOutOfBoundsException e) {
 					JOptionPane.showMessageDialog(null, "Verificar se todas as caixas foram preenchidas");
 				}
-				// limparCampos();
 			}
 		});
 		getContentPane().add(btnSalvar, "cell 2 11,alignx right");
@@ -263,6 +263,14 @@ public class CadastroMedicamento extends JInternalFrame {
 
 	public CadastroMedicamento(Remedio remedio) {
 		new CadastroMedicamento();
+		txtNome = new JTextField();
+		txtCodBar = new JTextField();
+		txtPreco = new JNumberFormatField();
+		txtComposicao = new JTextField();
+		txtDosagem = new JTextField();
+		txtEstoque = new JTextField();
+		cmbLaboratorio = new JComboBox<Laboratorio>();
+		cmbFormaUso = new JComboBox<FormaUso>();
 		txtNome.setText(remedio.getNome());
 		txtCodBar.setText(remedio.getCodBarra() + "");
 		txtPreco.setText(remedio.getPreco() + "");

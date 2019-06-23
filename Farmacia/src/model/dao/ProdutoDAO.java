@@ -115,7 +115,7 @@ public class ProdutoDAO {
 			if (!primeiro) {
 				sql += " AND ";
 			}
-			sql += "R.NM_REMEDIO LIKE '%" + seletor.getNomeProduto().trim() + "%'";
+			sql += "R.NM_PRODUTO LIKE '%" + seletor.getNomeProduto().trim() + "%'";
 			primeiro = false;
 		}
 
@@ -138,7 +138,7 @@ public class ProdutoDAO {
 
 		try {
 			p.setCodBarra(result.getString("COD_BARRA"));
-			p.setNome(result.getString("NM_REMEDIO"));
+			p.setNome(result.getString("NM_PRODUTO"));
 			p.setDataCadastro(result.getDate("DT_CADASTRO"));
 			p.setPreco(result.getDouble("PRECO"));
 			p.setEstoque(result.getInt("ESTOQUE"));
