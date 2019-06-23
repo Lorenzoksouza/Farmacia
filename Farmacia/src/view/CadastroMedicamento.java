@@ -32,7 +32,7 @@ import util.JTextFieldLimit;
 public class CadastroMedicamento extends JInternalFrame {
 	private JTextField txtNome;
 	private JTextField txtCodBar;
-	private JTextField txtPreco;
+	private JNumberFormatField txtPreco;
 	private JTextField txtComposicao;
 	private JTextField txtDosagem;
 	private JTextField txtEstoque;
