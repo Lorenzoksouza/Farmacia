@@ -63,6 +63,7 @@ public class ListagemProduto extends JInternalFrame {
 	 * Create the frame. a
 	 */
 	public ListagemProduto() {
+		setResizable(true);
 		getContentPane().setBackground(Color.WHITE);
 		setFrameIcon(new ImageIcon(ListagemProduto.class.getResource("/icons/product.png")));
 		setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
@@ -72,7 +73,7 @@ public class ListagemProduto extends JInternalFrame {
 		getContentPane()
 				.setLayout(new MigLayout("", "[211.00][][grow]", "[18.00][][][][][][8px:n][][10px:n][][][grow]"));
 
-		JLabel lblCodbarras = new JLabel("C\u00F3d.barras:");
+		JLabel lblCodbarras = new JLabel("Cód.barras:");
 		getContentPane().add(lblCodbarras, "cell 0 0");
 
 		JLabel lblEspaco = new JLabel("      ");
@@ -157,7 +158,7 @@ public class ListagemProduto extends JInternalFrame {
 					produtosConsultados.remove(tblProdutos.getSelectedRow() - 1);
 					atualizarTabelaProdutos(produtosConsultados);
 				} else {
-					mensagem = "Remedio não foi cadastrado";
+					mensagem = "Remédio não foi cadastrado";
 				}
 			}
 		});
@@ -186,7 +187,7 @@ public class ListagemProduto extends JInternalFrame {
 		});
 		getContentPane().add(btnAlterar, "cell 0 9,growx");
 
-		JButton btnGerarXls = new JButton("Relatorio");
+		JButton btnGerarXls = new JButton("Relatório");
 		btnGerarXls.setBackground(Color.WHITE);
 		btnGerarXls.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnGerarXls.setPreferredSize(new Dimension(80, 30));

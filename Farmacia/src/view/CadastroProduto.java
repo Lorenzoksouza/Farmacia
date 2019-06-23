@@ -149,7 +149,7 @@ public class CadastroProduto extends JInternalFrame {
 					Produto produto = new Produto();
 					produto.setCodBarra(txtCodBar.getText());
 					produto.setNome(txtNome.getText());
-					produto.setPreco(Double.parseDouble(txtPreco.getText()));
+					produto.setPreco(Double.parseDouble(txtPreco.getText().replace(",", ".")));
 					produto.setEstoque(Integer.parseInt(txtEstoque.getText()));
 
 					Categoria cat = new Categoria();
