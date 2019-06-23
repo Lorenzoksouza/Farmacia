@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -23,6 +24,7 @@ import javax.swing.text.MaskFormatter;
 
 import controller.ControllerProduto;
 import model.seletor.ProdutoSeletor;
+import model.vo.Categoria;
 import model.vo.Produto;
 import net.miginfocom.swing.MigLayout;
 
@@ -32,12 +34,14 @@ public class ListagemProduto extends JInternalFrame {
 	private JTextField txtCodBar;
 	private JTextField txtNome;
 	private JTable tblProdutos;
-	private JComboBox cmbCategoria;
+	private JComboBox<String> cmbCategoria;
 	private JButton btnGerarXls;
 
 	private List<Produto> produtosConsultados;
 	private int totalPaginas = 1;
 	private int paginaAtual = 1;
+
+	private ArrayList<Categoria> listaCategoria;
 
 	/**
 	 * Launch the application.
@@ -122,9 +126,12 @@ public class ListagemProduto extends JInternalFrame {
 		JLabel lblCategoria = new JLabel("Categoria:");
 		getContentPane().add(lblCategoria, "cell 0 4");
 
-		JComboBox cmbCategoria = new JComboBox();
+		this.consultarCategoria();
+		cmbCategoria = new JComboBox(listaCategoria.toArray());
 		cmbCategoria.setBackground(Color.WHITE);
+		cmbCategoria.addItem("");
 		getContentPane().add(cmbCategoria, "cell 0 5,growx");
+		cmbCategoria.setSelectedIndex(listaCategoria.toArray().length);
 
 		JButton btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.setBackground(Color.WHITE);
@@ -147,14 +154,13 @@ public class ListagemProduto extends JInternalFrame {
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String mensagem = "";
-				int produtoSelecionado = (int) tblProdutos.getValueAt(tblProdutos.getSelectedRow(), 1);
-
+				String produtoSelecionado = produtosConsultados.get(tblProdutos.getSelectedRow() - 1).getCodBarra();
 				ControllerProduto controllerProduto = new ControllerProduto();
 
 				if (controllerProduto.existeProdutoCodBar(produtoSelecionado)) {
-					mensagem = "Remedio não foi cadastrado";
-				} else {
 					mensagem = controllerProduto.excluir(produtoSelecionado);
+				} else {
+					mensagem = "Remedio não foi cadastrado";
 				}
 			}
 		});
@@ -183,18 +189,23 @@ public class ListagemProduto extends JInternalFrame {
 		});
 		getContentPane().add(btnAlterar, "cell 0 9,growx");
 
-		JButton btnGerarXls_1 = new JButton("Relatorio");
-		btnGerarXls_1.setBackground(Color.WHITE);
-		btnGerarXls_1.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnGerarXls_1.setPreferredSize(new Dimension(80, 30));
-		btnGerarXls_1.setBorder(new LineBorder(Color.gray, 2, true));
-		btnGerarXls_1.addActionListener(new ActionListener() {
+		JButton btnGerarXls = new JButton("Relatorio");
+		btnGerarXls.setBackground(Color.WHITE);
+		btnGerarXls.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnGerarXls.setPreferredSize(new Dimension(80, 30));
+		btnGerarXls.setBorder(new LineBorder(Color.gray, 2, true));
+		btnGerarXls.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 			}
 		});
-		getContentPane().add(btnGerarXls_1, "cell 0 10,alignx center");
+		getContentPane().add(btnGerarXls, "cell 0 10,alignx center");
 
+	}
+
+	private void consultarCategoria() {
+		ControllerProduto controllerProduto = new ControllerProduto();
+		listaCategoria = controllerProduto.consultarCategoria();
 	}
 
 	private void pesquisarProdutos() {
@@ -221,16 +232,18 @@ public class ListagemProduto extends JInternalFrame {
 
 		// Preenche os campos de filtro da tela no seletor
 
-		if (txtCodBar != null) {
-			seletor.setCodBar(Integer.parseInt(txtCodBar.getText()));
+		if (txtCodBar.getText().trim().equals("")) {
+			seletor.setCodBar(txtCodBar.getText());
 		}
 
 		if (!txtNome.getText().trim().equals("")) {
 			seletor.setNomeProduto(txtNome.getText());
 		}
 
-		if (cmbCategoria.getSelectedIndex() > 0) {
+		if (cmbCategoria.getSelectedIndex() > -1) {
 			seletor.setCategoria(cmbCategoria.getSelectedItem().toString());
+		} else {
+			seletor.setCategoria("");
 		}
 
 		produtos = controlador.listarProdutos(seletor);
@@ -256,7 +269,7 @@ public class ListagemProduto extends JInternalFrame {
 			// na ORDEM do cabeçalho da tabela
 
 			String[] novaLinha = new String[] { produto.getCodBarra() + "", produto.getNome(),
-					"R$" + produto.getPreco(), produto.getCategoria(), produto.getEstoque() + "" };
+					"R$" + produto.getPreco(), produto.getCategoria().getNomeCategoria(), produto.getEstoque() + "" };
 			modelo.addRow(novaLinha);
 		}
 	}

@@ -33,12 +33,18 @@ public class ProdutoBO {
 		return produtoDAO.listarComSeletor(seletor);
 	}
 
-	public boolean existeCodBar(int produtoSelecionado) {
-		return produtoDAO.existeCodBar();
+	public boolean existeCodBar(String produtoSelecionado) {
+		return produtoDAO.existeCodBar(produtoSelecionado);
 	}
 
-	public String excluir(int produtoSelecionado) {
-		return produtoDAO.excluir(produtoSelecionado);
+	public String excluir(String produtoSelecionado) {
+		String mensagem = "";
+		if (produtoDAO.excluir(produtoSelecionado)) {
+			mensagem = "Produto excluído com sucesso";
+		} else {
+			mensagem = "Erro ao excuir Produto";
+		}
+		return mensagem;
 	}
 
 	public ArrayList<Categoria> consultarCategoria() {

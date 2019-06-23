@@ -19,9 +19,9 @@ public class ControllerProduto {
 		String validacao = validarProduto(produto);
 
 		if (validacao == "") {
-			if (produtoBO.existeCodBar(Integer.parseInt(produto.getCodBarra()))) {
+			if (produtoBO.existeCodBar(produto.getCodBarra())) {
 				JOptionPane.showConfirmDialog(null,
-						"Produto ja cadastrado, deseja fazer alteração com os dados inseridos?", "",
+						"Produto já cadastrado, deseja fazer alteração com os dados inseridos?", "",
 						JOptionPane.OK_CANCEL_OPTION);
 				// UPDATE
 				if (produtoBO.atualizar(produto) == "") {
@@ -54,7 +54,7 @@ public class ControllerProduto {
 			if (produto.getNome().trim().equals("") || produto.getNome() == null) {
 				validacao = "Nome do produto é obrigatorio";
 			}
-			if (produto.getCategoria() == "") {
+			if (produto.getCategoria().getNomeCategoria() == "") {
 				validacao = "Categoria deve ser selecionado";
 			}
 			if (produto.getPreco() <= 0.0) {
@@ -69,11 +69,11 @@ public class ControllerProduto {
 		return produtoBO.listarProdutos(seletor);
 	}
 
-	public boolean existeProdutoCodBar(int produtoSelecionado) {
+	public boolean existeProdutoCodBar(String produtoSelecionado) {
 		return produtoBO.existeCodBar(produtoSelecionado);
 	}
 
-	public String excluir(int produtoSelecionado) {
+	public String excluir(String produtoSelecionado) {
 		return produtoBO.excluir(produtoSelecionado);
 	}
 

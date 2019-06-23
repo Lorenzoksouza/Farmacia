@@ -31,4 +31,9 @@ public class Categoria {
 		super();
 	}
 
+	@Override
+	public String toString() {
+		return nomeCategoria;
+	}
+
 }

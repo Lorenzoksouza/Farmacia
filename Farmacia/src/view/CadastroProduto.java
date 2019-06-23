@@ -169,7 +169,11 @@ public class CadastroProduto extends JInternalFrame {
 				produto.setNome(txtNome.getText());
 				produto.setPreco(Double.parseDouble(txtPreco.getText()));
 				produto.setEstoque(Integer.parseInt(txtEstoque.getText()));
-				produto.setCategoria(cmbCategoria.getSelectedItem().toString());
+
+				Categoria cat = new Categoria();
+				cat.setIdCategoria(listaCategorias.get(cmbCategoria.getSelectedIndex()).getIdCategoria());
+				cat.setNomeCategoria(listaCategorias.get(cmbCategoria.getSelectedIndex()).getNomeCategoria());
+				produto.setCategoria(cat);
 
 				ControllerProduto produtoController = new ControllerProduto();
 				produtoController.salvar(produto);

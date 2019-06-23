@@ -154,7 +154,7 @@ public class RemedioDAO {
 			primeiro = false;
 		}
 		// Verificando o que retorna nos filtros
-		System.out.println(sql);
+		// System.out.println(sql);
 		return sql;
 	}
 

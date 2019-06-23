@@ -2,7 +2,7 @@ package model.seletor;
 
 public class ProdutoSeletor {
 
-	private int codBar;
+	private String codBar;
 	private String nomeProduto;
 	private String categoria;
 
@@ -17,7 +17,7 @@ public class ProdutoSeletor {
 
 	public boolean temFiltro() {
 
-		if (this.codBar > 0) {
+		if ((this.codBar != null) && (this.codBar.trim().length() > 0)) {
 			return true;
 		}
 		if ((this.nomeProduto != null) && (this.nomeProduto.trim().length() > 0)) {
@@ -48,11 +48,11 @@ public class ProdutoSeletor {
 	}
 
 	// Getters & setters
-	public int getCodBar() {
+	public String getCodBar() {
 		return codBar;
 	}
 
-	public void setCodBar(int codBar) {
+	public void setCodBar(String codBar) {
 		this.codBar = codBar;
 	}
 
