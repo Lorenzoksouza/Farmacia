@@ -186,7 +186,6 @@ public class ListagemProduto extends JInternalFrame {
 
 				cadastroProduto = new CadastroProduto(produtoSelecionado);
 				cadastroProduto.setVisible(true);
-
 			}
 		});
 		getContentPane().add(btnAlterar, "cell 0 9,growx");
