@@ -186,16 +186,13 @@ public class ListagemMedicamento extends JInternalFrame {
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Remedio remedioSelecionado = new Remedio();
+				int linhaSelecionada = tblRemedios.getSelectedRow();
 
-				if (remediosConsultados.get(tblRemedios.getSelectedRow()) != null) {
-
-					int linhaSelecionada = tblRemedios.getSelectedRow();
+				if (linhaSelecionada > 0) {
 
 					remedioSelecionado.setCodBarra((String) tblRemedios.getValueAt(linhaSelecionada, 0));
 					remedioSelecionado.setDosagem((String) tblRemedios.getValueAt(linhaSelecionada, 1));
 					remedioSelecionado.setComposicao((String) tblRemedios.getValueAt(linhaSelecionada, 2));
-					// TODO Genérico vai como boolean para tela de alterar, e ele aparece como Sim
-					// ou Não. Verificar isto
 
 					if (tblRemedios.getValueAt(linhaSelecionada, 3) == "Sim") {
 						remedioSelecionado.setGenerico(true);
@@ -225,6 +222,8 @@ public class ListagemMedicamento extends JInternalFrame {
 
 					cadastroMedicamento = new CadastroMedicamento(remedioSelecionado);
 					cadastroMedicamento.setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(null, "Selecione um produto para ser Alterado!!");
 				}
 			}
 		});
