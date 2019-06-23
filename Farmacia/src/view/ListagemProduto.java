@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
@@ -176,16 +177,28 @@ public class ListagemProduto extends JInternalFrame {
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Produto produtoSelecionado = new Produto();
+				int linhaSelecionada = tblProdutos.getSelectedRow();
 
-				produtoSelecionado = produtosConsultados.get(tblProdutos.getSelectedRow() + 1);
+				if (linhaSelecionada > 0) {
 
-				produtoSelecionado.setNome(produtosConsultados.get(tblProdutos.getSelectedRow() - 1).getNome());
-				produtoSelecionado.setCodBarra(produtosConsultados.get(tblProdutos.getSelectedRow() - 1).getCodBarra());
-				produtoSelecionado.setPreco(produtosConsultados.get(tblProdutos.getSelectedRow() - 1).getPreco());
-				produtoSelecionado.setEstoque(produtosConsultados.get(tblProdutos.getSelectedRow() - 1).getEstoque());
+					// "Código", "Nome", "Preço", "Categoria", "Estoque"
+					produtoSelecionado.setCodBarra((String) tblProdutos.getValueAt(linhaSelecionada, 0));
+					produtoSelecionado.setNome((String) tblProdutos.getValueAt(linhaSelecionada, 1));
 
-				cadastroProduto = new CadastroProduto(produtoSelecionado);
-				cadastroProduto.setVisible(true);
+					double precoConversao = Double.parseDouble((String) tblProdutos.getValueAt(linhaSelecionada, 2));
+					produtoSelecionado.setPreco(precoConversao);
+
+					Categoria categoriaConversao = (Categoria) tblProdutos.getValueAt(linhaSelecionada, 3);
+					produtoSelecionado.setCategoria(categoriaConversao);
+
+					int estoqueConversao = Integer.parseInt((String) tblProdutos.getValueAt(linhaSelecionada, 4));
+					produtoSelecionado.setEstoque(estoqueConversao);
+
+					cadastroProduto = new CadastroProduto(produtoSelecionado);
+					cadastroProduto.setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(null, "Selecione um produto para ser Alterado!!");
+				}
 			}
 		});
 		getContentPane().add(btnAlterar, "cell 0 9,growx");
