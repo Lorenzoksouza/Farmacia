@@ -70,7 +70,7 @@ public class CadastroMedicamento extends JInternalFrame {
 
 		setClosable(true);
 
-		setBounds(100, 100, 500, 315);
+		setBounds(100, 100, 420, 315);
 		getContentPane().setLayout(new MigLayout("", "[][][grow]", "[10px:n][][][][][][][][][][][][]"));
 
 		JLabel lblNome = new JLabel("Nome:");
@@ -113,25 +113,25 @@ public class CadastroMedicamento extends JInternalFrame {
 
 		getContentPane().add(lblValidacaoTxtCodBar, "cell 2 3,alignx left");
 
-		JLabel lblPreco = new JLabel("Pre\u00E7o:");
-		getContentPane().add(lblPreco, "cell 0 4");
-
 		JLabel lblDosagem = new JLabel("Dosagem:");
-		getContentPane().add(lblDosagem, "cell 2 4");
+		getContentPane().add(lblDosagem, "cell 0 4");
 
-		// Preço
-
-		JNumberFormatField txtPreco = new JNumberFormatField(2);
-		getContentPane().add(txtPreco, "cell 0 5,growx");
-		txtPreco.setColumns(10);
+		JLabel lblPreco = new JLabel("Pre\u00E7o:");
+		getContentPane().add(lblPreco, "cell 2 4");
 
 		// Dosagem
 		txtDosagem = new JTextField();
 
 		txtDosagem.setDocument(new JTextFieldLimit(15));
 
-		getContentPane().add(txtDosagem, "cell 2 5,growx");
+		getContentPane().add(txtDosagem, "cell 0 5,alignx left");
 		txtDosagem.setColumns(10);
+
+		// Preço
+
+		JNumberFormatField txtPreco = new JNumberFormatField(2);
+		getContentPane().add(txtPreco, "cell 2 5,growx");
+		txtPreco.setColumns(10);
 
 		JLabel lblValidacaoTxtDosagem = new JLabel(" ");
 		lblValidacaoTxtDosagem.setForeground(Color.RED);
@@ -216,32 +216,45 @@ public class CadastroMedicamento extends JInternalFrame {
 		btnSalvar.setBorder(new LineBorder(Color.gray, 2, true));
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Remedio remedio = new Remedio();
-				remedio.setNome(txtNome.getText());
-				remedio.setCodBarra(txtCodBar.getText());
-				remedio.setPreco(Double.parseDouble(txtPreco.getText().replace(",", ".")));
-				remedio.setComposicao(txtComposicao.getText());
-				remedio.setDosagem(txtDosagem.getText());
 
-				Laboratorio lab = new Laboratorio();
-				lab.setIdLaboratorio(listaLaboratorios.get(cmbLaboratorio.getSelectedIndex()).getIdLaboratorio());
-				lab.setNomeLaboratorio(listaLaboratorios.get(cmbLaboratorio.getSelectedIndex()).getNomeLaboratorio());
-				remedio.setLaboratorio(lab);
+				// try & catch apenas para teste, pode mexer neles de boa
+				try {
+					Remedio remedio = new Remedio();
+					remedio.setNome(txtNome.getText());
+					remedio.setCodBarra(txtCodBar.getText());
+					remedio.setPreco(Double.parseDouble(txtPreco.getText().replace(",", ".")));
+					remedio.setComposicao(txtComposicao.getText());
+					remedio.setDosagem(txtDosagem.getText());
 
-				FormaUso formaUso = new FormaUso();
-				formaUso.setIdFormaUso(listaFormasUso.get(cmbLaboratorio.getSelectedIndex()).getIdFormaUso());
-				formaUso.setDescricao(listaFormasUso.get(cmbLaboratorio.getSelectedIndex()).getDescricao());
-				remedio.setFormaUso(formaUso);
+					Laboratorio lab = new Laboratorio();
+					lab.setIdLaboratorio(listaLaboratorios.get(cmbLaboratorio.getSelectedIndex()).getIdLaboratorio());
+					lab.setNomeLaboratorio(
+							listaLaboratorios.get(cmbLaboratorio.getSelectedIndex()).getNomeLaboratorio());
+					remedio.setLaboratorio(lab);
 
-				remedio.setEstoque(Integer.parseInt(txtEstoque.getText().trim()));
-				remedio.getFormaUso().setDescricao(cmbFormaUso.getSelectedItem().toString());
-				remedio.setGenerico(chckbxGenerico.isSelected());
+					FormaUso formaUso = new FormaUso();
+					formaUso.setIdFormaUso(listaFormasUso.get(cmbLaboratorio.getSelectedIndex()).getIdFormaUso());
+					formaUso.setDescricao(listaFormasUso.get(cmbLaboratorio.getSelectedIndex()).getDescricao());
+					remedio.setFormaUso(formaUso);
+					try {
+						remedio.setEstoque(Integer.parseInt(txtEstoque.getText().trim()));
+					} catch (NumberFormatException e) {
+						JOptionPane.showMessageDialog(null, "Verificar se o estoque foi preenchido");
+					}
+					try {
+						remedio.getFormaUso().setDescricao(cmbFormaUso.getSelectedItem().toString());
+					} catch (NumberFormatException e) {
+						JOptionPane.showMessageDialog(null, "Verificar se a forma de uso foi preenchida");
+					}
+					remedio.setGenerico(chckbxGenerico.isSelected());
 
-				ControllerRemedio controllerRemedio = new ControllerRemedio();
-				String mensagem = "";
-				mensagem = controllerRemedio.salvar(remedio);
-				JOptionPane.showMessageDialog(null, mensagem);
-
+					ControllerRemedio controllerRemedio = new ControllerRemedio();
+					String mensagem = "";
+					mensagem = controllerRemedio.salvar(remedio);
+					JOptionPane.showMessageDialog(null, mensagem);
+				} catch (ArrayIndexOutOfBoundsException e) {
+					JOptionPane.showMessageDialog(null, "Verificar se todas as caixas foram preenchidas");
+				}
 				// limparCampos();
 			}
 		});

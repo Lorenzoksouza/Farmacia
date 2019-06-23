@@ -6,27 +6,27 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.MaskFormatter;
 
 import controller.ControllerProduto;
 import model.seletor.ProdutoSeletor;
 import model.vo.Categoria;
 import model.vo.Produto;
 import net.miginfocom.swing.MigLayout;
+import util.JTextFieldLimit;
 
 public class ListagemProduto extends JInternalFrame {
 	CadastroProduto cadastroProduto = null;
@@ -64,7 +64,7 @@ public class ListagemProduto extends JInternalFrame {
 	 */
 	public ListagemProduto() {
 		getContentPane().setBackground(Color.WHITE);
-		setFrameIcon(new ImageIcon(ListagemProduto.class.getResource("/icons/prod3x.png")));
+		setFrameIcon(new ImageIcon(ListagemProduto.class.getResource("/icons/product.png")));
 		setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		setTitle("Pesquisa de produtos");
 		setClosable(true);
@@ -85,19 +85,20 @@ public class ListagemProduto extends JInternalFrame {
 				new String[] { "CÛdigo", "Nome", "PreÁo", "Categoria", "Estoque" }));
 		getContentPane().add(tblProdutos, "cell 2 0 1 12,grow");
 
-		txtCodBar = new JFormattedTextField();
+		// CÛdigo de barras
 
-		MaskFormatter formatoCodBar = new MaskFormatter();
+		txtCodBar = new JTextField();
 
-		try {
-			formatoCodBar = new MaskFormatter("################");
-		} catch (ParseException e1) { // TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		txtCodBar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				char vchar = arg0.getKeyChar();
+				if (!(Character.isDigit(vchar)) || (vchar == KeyEvent.VK_BACK_SPACE) || (vchar == KeyEvent.VK_DELETE))
+					arg0.consume();
+			}
+		});
 
-		formatoCodBar.setValidCharacters("0123456789");
-
-		formatoCodBar.install((JFormattedTextField) txtCodBar);
+		txtCodBar.setDocument(new JTextFieldLimit(13));
 
 		getContentPane().add(txtCodBar, "cell 0 1,growx");
 		txtCodBar.setColumns(10);
@@ -105,20 +106,11 @@ public class ListagemProduto extends JInternalFrame {
 		JLabel lblNome = new JLabel("Nome:");
 		getContentPane().add(lblNome, "cell 0 2");
 
-		txtNome = new JFormattedTextField();
+		// Nome
 
-		MaskFormatter formatonome = new MaskFormatter();
+		txtNome = new JTextField();
 
-		try {
-			formatonome = new MaskFormatter("************************************************************");
-		} catch (ParseException e1) { // TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		formatonome.setValidCharacters(
-				"a·‡‚‰bcdeÈËÍÎfghiÌÏÓÔjklmnoÛÙˆpqrstu˙˘˚¸vwxyz-()/:A¡¿¬ƒBCDE…» ÀFGHIÕÃŒœJKLMNO”‘÷PQRSTU⁄Ÿ€‹VWXYZ");
-
-		formatonome.install((JFormattedTextField) txtNome);
+		txtNome.setDocument(new JTextFieldLimit(150));
 
 		getContentPane().add(txtNome, "cell 0 3,growx");
 		txtNome.setColumns(10);
@@ -134,6 +126,7 @@ public class ListagemProduto extends JInternalFrame {
 		cmbCategoria.setSelectedIndex(listaCategoria.toArray().length);
 
 		JButton btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar.setIcon(new ImageIcon(ListagemProduto.class.getResource("/icons/search.png")));
 		btnPesquisar.setBackground(Color.WHITE);
 		btnPesquisar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnPesquisar.setPreferredSize(new Dimension(80, 30));
@@ -147,6 +140,8 @@ public class ListagemProduto extends JInternalFrame {
 		getContentPane().add(btnPesquisar, "cell 0 7,growx");
 
 		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.setIcon(new ImageIcon(ListagemProduto.class.getResource("/icons/garbage.png")));
+		btnExcluir.setForeground(Color.RED);
 		btnExcluir.setBackground(Color.WHITE);
 		btnExcluir.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnExcluir.setPreferredSize(new Dimension(80, 30));

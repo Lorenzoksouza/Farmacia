@@ -6,6 +6,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +31,7 @@ import model.vo.Mercadoria;
 import model.vo.Produto;
 import model.vo.Remedio;
 import net.miginfocom.swing.MigLayout;
+import util.JTextFieldLimit;
 
 public class TelaVenda extends JInternalFrame {
 	private JTextField txtCodBar;
@@ -69,7 +72,7 @@ public class TelaVenda extends JInternalFrame {
 	public TelaVenda() {
 		getContentPane().setBackground(Color.WHITE);
 		setResizable(true);
-		setFrameIcon(new ImageIcon(TelaVenda.class.getResource("/icons/vendas3x.png")));
+		setFrameIcon(new ImageIcon(TelaVenda.class.getResource("/icons/cart (2).png")));
 		setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		setBackground(Color.WHITE);
 		setTitle("Vendas");
@@ -90,6 +93,16 @@ public class TelaVenda extends JInternalFrame {
 		getContentPane().add(tblVenda, "cell 2 0 1 10,grow");
 
 		txtCodBar = new JTextField();
+		txtCodBar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				char vchar = arg0.getKeyChar();
+				if (!(Character.isDigit(vchar)) || (vchar == KeyEvent.VK_BACK_SPACE) || (vchar == KeyEvent.VK_DELETE))
+					arg0.consume();
+			}
+		});
+
+		txtCodBar.setDocument(new JTextFieldLimit(13));
 		getContentPane().add(txtCodBar, "flowx,cell 0 1,growx");
 		txtCodBar.setColumns(10);
 
@@ -140,6 +153,7 @@ public class TelaVenda extends JInternalFrame {
 		getContentPane().add(btnAddItem, "cell 0 11,alignx center,aligny bottom");
 
 		JButton btnRemover = new JButton("Remover");
+		btnRemover.setIcon(new ImageIcon(TelaVenda.class.getResource("/icons/garbage.png")));
 		btnRemover.setForeground(Color.RED);
 		btnRemover.setBackground(Color.WHITE);
 		btnRemover.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -169,6 +183,7 @@ public class TelaVenda extends JInternalFrame {
 		getContentPane().add(lblEspaco2, "cell 2 11");
 
 		JButton btnConcluirVenda = new JButton("Concluir Venda");
+		btnConcluirVenda.setIcon(new ImageIcon(TelaVenda.class.getResource("/icons/check.png")));
 		btnConcluirVenda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String mensagemConcluida = "Venda concluida";
@@ -185,6 +200,7 @@ public class TelaVenda extends JInternalFrame {
 		getContentPane().add(btnConcluirVenda, "cell 2 11,alignx center");
 
 		JButton btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar.setIcon(new ImageIcon(TelaVenda.class.getResource("/icons/search.png")));
 		btnPesquisar.setBackground(Color.WHITE);
 		btnPesquisar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnPesquisar.setPreferredSize(new Dimension(200, 30));
@@ -200,6 +216,7 @@ public class TelaVenda extends JInternalFrame {
 		getContentPane().add(lblNome, "cell 0 0,growx");
 
 		txtNome = new JTextField();
+		txtNome.setDocument(new JTextFieldLimit(150));
 		getContentPane().add(txtNome, "cell 0 1,growx");
 		txtNome.setColumns(10);
 

@@ -5,24 +5,26 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
-import javax.swing.text.MaskFormatter;
 
 import controller.ControllerProduto;
 import model.vo.Categoria;
 import model.vo.Produto;
 import net.miginfocom.swing.MigLayout;
+import util.JNumberFormatField;
+import util.JTextFieldLimit;
 
 public class CadastroProduto extends JInternalFrame {
 	private JTextField txtNome;
@@ -54,7 +56,7 @@ public class CadastroProduto extends JInternalFrame {
 	 */
 	public CadastroProduto() {
 		setBorder(new LineBorder(new Color(192, 192, 192), 3));
-		setFrameIcon(new ImageIcon(CadastroProduto.class.getResource("/icons/prod3x.png")));
+		setFrameIcon(new ImageIcon(CadastroProduto.class.getResource("/icons/product.png")));
 		getContentPane().setBackground(Color.WHITE);
 		setTitle("Cadastro de produto");
 		setClosable(true);
@@ -68,49 +70,49 @@ public class CadastroProduto extends JInternalFrame {
 		lblEspaco.setEnabled(false);
 		getContentPane().add(lblEspaco, "cell 1 0");
 
-		JLabel lblPreco = new JLabel("Pre\u00E7o:");
-		getContentPane().add(lblPreco, "cell 2 0");
+		JLabel lblCodbarras = new JLabel("C\u00F3d.barras:");
+		getContentPane().add(lblCodbarras, "cell 2 0");
 
-		txtNome = new JFormattedTextField();
+		// PreÁo
 
-		MaskFormatter formatonome = new MaskFormatter();
+		JNumberFormatField txtPreco = new JNumberFormatField(2);
 
-		try {
-			formatonome = new MaskFormatter("************************************************************");
-		} catch (ParseException e1) { // TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		getContentPane().add(txtPreco, "cell 0 5,alignx left");
+		txtPreco.setColumns(10);
 
-		formatonome.setValidCharacters(
-				"a·‡‚‰bcdeÈËÍÎfghiÌÏÓÔjklmnoÛÙˆpqrstu˙˘˚¸vwxyz-()/:A¡¿¬ƒBCDE…» ÀFGHIÕÃŒœJKLMNO”‘÷PQRSTU⁄Ÿ€‹VWXYZ");
+		// Nome
 
-		formatonome.install((JFormattedTextField) txtNome);
+		txtNome = new JTextField();
+
+		txtNome.setDocument(new JTextFieldLimit(150));
 
 		getContentPane().add(txtNome, "cell 0 1,growx");
 		txtNome.setColumns(10);
 
-		txtPreco = new JFormattedTextField();
+		// CÛdigo de barras
 
-		MaskFormatter formatoPreco = new MaskFormatter();
+		txtCodBar = new JTextField();
+		txtCodBar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				char vchar = arg0.getKeyChar();
+				if (!(Character.isDigit(vchar)) || (vchar == KeyEvent.VK_BACK_SPACE) || (vchar == KeyEvent.VK_DELETE))
+					arg0.consume();
+			}
+		});
 
-		try {
-			formatoPreco = new MaskFormatter("R$" + "####,##");
-		} catch (ParseException e1) { // TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		txtCodBar.setDocument(new JTextFieldLimit(13));
 
-		formatoPreco.setValidCharacters("0123456789");
-
-		formatoPreco.install((JFormattedTextField) txtPreco);
-
-		getContentPane().add(txtPreco, "cell 2 1,alignx left");
-		txtPreco.setColumns(10);
+		getContentPane().add(txtCodBar, "cell 2 1,growx,aligny top");
+		txtCodBar.setColumns(10);
 
 		JLabel lblCategoria = new JLabel("Categoria:");
 		getContentPane().add(lblCategoria, "cell 0 2,alignx left");
 
 		JLabel lblEstoque = new JLabel("Estoque:");
 		getContentPane().add(lblEstoque, "cell 2 2");
+
+		// Categoria
 
 		consultarCategoria();
 
@@ -120,66 +122,53 @@ public class CadastroProduto extends JInternalFrame {
 		cmbCategoria.setSelectedIndex(-1);
 		getContentPane().add(cmbCategoria, "cell 0 3,growx");
 
-		txtEstoque = new JFormattedTextField();
+		// Estoque
 
-		MaskFormatter formatoEstoque = new MaskFormatter();
-
-		try {
-			formatoEstoque = new MaskFormatter("###");
-		} catch (ParseException e1) { // TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		formatoEstoque.setValidCharacters("0123456789");
-
-		formatoEstoque.install((JFormattedTextField) txtEstoque);
+		txtEstoque = new JTextField();
+		txtEstoque.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				char vchar = arg0.getKeyChar();
+				if (!(Character.isDigit(vchar)) || (vchar == KeyEvent.VK_BACK_SPACE) || (vchar == KeyEvent.VK_DELETE))
+					arg0.consume();
+			}
+		});
 
 		getContentPane().add(txtEstoque, "cell 2 3,alignx left");
 		txtEstoque.setColumns(10);
 
-		JLabel lblCodbarras = new JLabel("C\u00F3d.barras:");
-		getContentPane().add(lblCodbarras, "cell 0 4");
-
-		txtCodBar = new JFormattedTextField();
-
-		MaskFormatter formatoCodBar = new MaskFormatter();
-
-		try {
-			formatoCodBar = new MaskFormatter("################");
-		} catch (ParseException e1) { // TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		formatoCodBar.setValidCharacters("0123456789");
-
-		formatoCodBar.install((JFormattedTextField) txtCodBar);
-
-		getContentPane().add(txtCodBar, "cell 0 5,growx,aligny top");
-		txtCodBar.setColumns(10);
-
 		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.setIcon(new ImageIcon(CadastroProduto.class.getResource("/icons/check.png")));
 		btnSalvar.setPreferredSize(new Dimension(80, 30));
 		btnSalvar.setBorder(new LineBorder(Color.gray, 2, true));
 		btnSalvar.setBackground(Color.WHITE);
 		btnSalvar.setOpaque(true);
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Produto produto = new Produto();
-				produto.setCodBarra(txtCodBar.getText());
-				produto.setNome(txtNome.getText());
-				produto.setPreco(Double.parseDouble(txtPreco.getText()));
-				produto.setEstoque(Integer.parseInt(txtEstoque.getText()));
+				try {
+					Produto produto = new Produto();
+					produto.setCodBarra(txtCodBar.getText());
+					produto.setNome(txtNome.getText());
+					produto.setPreco(Double.parseDouble(txtPreco.getText()));
+					produto.setEstoque(Integer.parseInt(txtEstoque.getText()));
 
-				Categoria cat = new Categoria();
-				cat.setIdCategoria(listaCategorias.get(cmbCategoria.getSelectedIndex()).getIdCategoria());
-				cat.setNomeCategoria(listaCategorias.get(cmbCategoria.getSelectedIndex()).getNomeCategoria());
-				produto.setCategoria(cat);
+					Categoria cat = new Categoria();
+					cat.setIdCategoria(listaCategorias.get(cmbCategoria.getSelectedIndex()).getIdCategoria());
+					cat.setNomeCategoria(listaCategorias.get(cmbCategoria.getSelectedIndex()).getNomeCategoria());
+					produto.setCategoria(cat);
 
-				ControllerProduto produtoController = new ControllerProduto();
-				produtoController.salvar(produto);
+					ControllerProduto produtoController = new ControllerProduto();
+					produtoController.salvar(produto);
+				} catch (ArrayIndexOutOfBoundsException e) {
+					JOptionPane.showMessageDialog(null, "Verificar se todas as caixas foram preenchidas");
+				}
 			}
 		});
+
 		getContentPane().add(btnSalvar, "cell 2 5,alignx right");
+
+		JLabel lblPreco = new JLabel("Pre\u00E7o:");
+		getContentPane().add(lblPreco, "flowx,cell 0 4");
 
 	}
 

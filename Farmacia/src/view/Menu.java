@@ -154,7 +154,7 @@ public class Menu extends JFrame {
 		JMenu mnProdutos = new JMenu("Produtos");
 		mnProdutos.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
 		mnProdutos.setBackground(Color.LIGHT_GRAY);
-		mnProdutos.setIcon(new ImageIcon(Menu.class.getResource("/icons/prod3x.png")));
+		mnProdutos.setIcon(new ImageIcon(Menu.class.getResource("/icons/product.png")));
 		menuBar.add(mnProdutos);
 
 		JMenuItem mntmCadastrarProduto = new JMenuItem("Cadastrar");
@@ -208,7 +208,7 @@ public class Menu extends JFrame {
 		JMenu mnVendas = new JMenu("Vendas");
 		mnVendas.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
 		mnVendas.setBackground(Color.LIGHT_GRAY);
-		mnVendas.setIcon(new ImageIcon(Menu.class.getResource("/icons/vendas3x.png")));
+		mnVendas.setIcon(new ImageIcon(Menu.class.getResource("/icons/cart (2).png")));
 		mnVendas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent evt) {
@@ -239,7 +239,7 @@ public class Menu extends JFrame {
 		JMenu mnSobre = new JMenu("Sobre");
 		mnSobre.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
 		mnSobre.setBackground(Color.LIGHT_GRAY);
-		mnSobre.setIcon(new ImageIcon(Menu.class.getResource("/icons/sobre2x.png")));
+		mnSobre.setIcon(new ImageIcon(Menu.class.getResource("/icons/network.png")));
 		mnSobre.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
 				if (!temComponenteNaTela(telaSobre)) {

@@ -6,14 +6,14 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -21,13 +21,13 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.MaskFormatter;
 
 import controller.ControllerRemedio;
 import model.seletor.RemedioSeletor;
 import model.vo.FormaUso;
 import model.vo.Remedio;
 import net.miginfocom.swing.MigLayout;
+import util.JTextFieldLimit;
 
 public class ListagemMedicamento extends JInternalFrame {
 	CadastroMedicamento cadastroMedicamento = null;
@@ -66,14 +66,15 @@ public class ListagemMedicamento extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public ListagemMedicamento() {
+		setResizable(true);
 		setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		setFrameIcon(new ImageIcon(ListagemMedicamento.class.getResource("/icons/med3x.png")));
 		getContentPane().setBackground(Color.WHITE);
 		setTitle("Pesquisa de medicamentos");
 		setClosable(true);
 		setBounds(100, 100, 680, 540);
-		getContentPane().setLayout(
-				new MigLayout("", "[211.00,grow][][grow]", "[][][][][][][][][][][10px:n][][10px:n][][][grow]"));
+		getContentPane()
+				.setLayout(new MigLayout("", "[211.00][][grow]", "[][][][][][][][][][][10px:n][][10px:n][][][grow]"));
 
 		JLabel lblCodbarras = new JLabel("C\u00F3d.barras:");
 		getContentPane().add(lblCodbarras, "cell 0 0");
@@ -84,9 +85,10 @@ public class ListagemMedicamento extends JInternalFrame {
 		tblRemedios = new JTable();
 		tblRemedios.setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		tblRemedios.setColumnSelectionAllowed(true);
-		tblRemedios.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Código de Barras", "Dosagem",
-				"Composição", "Genérico", "Nome", "Data Cad.", "Preço", "Estoque", "Forma Uso", "Laboratório" }));
-		tblRemedios.getColumnModel().getColumn(0).setPreferredWidth(94);
+		tblRemedios.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "C\u00F3digo de Barras", "Dosagem", "Composi\u00E7\u00E3o", "Gen\u00E9rico", "Nome",
+						"Data Cad.", "Pre\u00E7o", "Estoque", "Forma Uso", "Laborat\u00F3rio" }));
+		tblRemedios.getColumnModel().getColumn(0).setPreferredWidth(100);
 		tblRemedios.getColumnModel().getColumn(1).setPreferredWidth(58);
 		tblRemedios.getColumnModel().getColumn(2).setPreferredWidth(69);
 		tblRemedios.getColumnModel().getColumn(3).setPreferredWidth(56);
@@ -98,19 +100,19 @@ public class ListagemMedicamento extends JInternalFrame {
 		tblRemedios.getColumnModel().getColumn(9).setPreferredWidth(68);
 		getContentPane().add(tblRemedios, "cell 2 0 1 16,grow");
 
-		txtCodBar = new JFormattedTextField();
+		// Código de barras
 
-		MaskFormatter formatoCodBar = new MaskFormatter();
+		txtCodBar = new JTextField();
+		txtCodBar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				char vchar = arg0.getKeyChar();
+				if (!(Character.isDigit(vchar)) || (vchar == KeyEvent.VK_BACK_SPACE) || (vchar == KeyEvent.VK_DELETE))
+					arg0.consume();
+			}
+		});
 
-		try {
-			formatoCodBar = new MaskFormatter("################");
-		} catch (ParseException e1) { // TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		formatoCodBar.setValidCharacters("0123456789");
-
-		formatoCodBar.install((JFormattedTextField) txtCodBar);
+		txtCodBar.setDocument(new JTextFieldLimit(13));
 
 		getContentPane().add(txtCodBar, "cell 0 1,growx,aligny center");
 		txtCodBar.setColumns(10);
@@ -118,48 +120,29 @@ public class ListagemMedicamento extends JInternalFrame {
 		JLabel lblNome = new JLabel("Nome:");
 		getContentPane().add(lblNome, "cell 0 2");
 
-		txtNome = new JFormattedTextField();
+		// Nomes
 
-		MaskFormatter formatonome = new MaskFormatter();
-
-		try {
-			formatonome = new MaskFormatter("************************************************************");
-		} catch (ParseException e1) { // TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		formatonome.setValidCharacters(
-				"aáàâäbcdeéèêëfghiíìîïjklmnoóôöpqrstuúùûüvwxyz-()/:AÁÀÂÄBCDEÉÈÊËFGHIÍÌÎÏJKLMNOÓÔÖPQRSTUÚÙÛÜVWXYZ");
-
-		formatonome.install((JFormattedTextField) txtNome);
+		txtNome = new JTextField();
 
 		getContentPane().add(txtNome, "cell 0 3,growx");
 		txtNome.setColumns(10);
 
+		txtNome.setDocument(new JTextFieldLimit(150));
+
 		JLabel lblComposicao = new JLabel("Composição:");
 		getContentPane().add(lblComposicao, "cell 0 4");
 
-		txtComposicao = new JFormattedTextField();
+		// Composição
 
-		MaskFormatter formatoComposicao = new MaskFormatter();
-
-		try {
-			formatoComposicao = new MaskFormatter(
-					"************************************************************************************************************************");
-		} catch (ParseException e1) { // TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		formatoComposicao.setValidCharacters(
-				"aáàâäbcdeéèêëfghiíìîïjklmnoóôöpqrstuúùûüvwxyz-()/:AÁÀÂÄBCDEÉÈÊËFGHIÍÌÎÏJKLMNOÓÔÖPQRSTUÚÙÛÜVWXYZ");
-
-		formatoComposicao.install((JFormattedTextField) txtComposicao);
+		txtComposicao = new JTextField();
 
 		getContentPane().add(txtComposicao, "cell 0 5,growx");
 		txtComposicao.setColumns(10);
 
 		JLabel lblFormaUso = new JLabel("Forma de uso:");
 		getContentPane().add(lblFormaUso, "cell 0 6");
+
+		// Forma de uso
 
 		this.consultarFormaUso();
 		cmbFormaUso = new JComboBox(listaFormasUso.toArray());
@@ -169,6 +152,7 @@ public class ListagemMedicamento extends JInternalFrame {
 		cmbFormaUso.setSelectedIndex(listaFormasUso.toArray().length);
 
 		JButton btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar.setIcon(new ImageIcon(ListagemMedicamento.class.getResource("/icons/search.png")));
 		btnPesquisar.setPreferredSize(new Dimension(80, 30));
 		btnPesquisar.setBorder(new LineBorder(Color.gray, 2, true));
 		btnPesquisar.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -224,6 +208,8 @@ public class ListagemMedicamento extends JInternalFrame {
 		});
 
 		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.setIcon(new ImageIcon(ListagemMedicamento.class.getResource("/icons/garbage.png")));
+		btnExcluir.setForeground(Color.RED);
 		btnExcluir.setPreferredSize(new Dimension(30, 30));
 		btnExcluir.setBorder(new LineBorder(Color.gray, 2, true));
 		btnExcluir.setBackground(Color.WHITE);

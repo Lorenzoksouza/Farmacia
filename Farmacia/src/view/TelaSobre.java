@@ -39,7 +39,7 @@ public class TelaSobre extends JInternalFrame {
 		setTitle("Sobre");
 		setClosable(true);
 		setBackground(Color.WHITE);
-		setFrameIcon(new ImageIcon(TelaSobre.class.getResource("/icons/sobre2x.png")));
+		setFrameIcon(new ImageIcon(TelaSobre.class.getResource("/icons/network.png")));
 		setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		setBounds(500, 100, 340, 225);
 		getContentPane().setLayout(new MigLayout("", "[grow,fill]", "[][][][][][][]"));
