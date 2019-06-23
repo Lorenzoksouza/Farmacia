@@ -85,7 +85,7 @@ public class VendaDAO {
 		sql += " WHERE ";
 		boolean primeiro = true;
 
-		if (seletor.getCodBar() != "") {
+		if (!seletor.getCodBar().equals("")) {
 			if (!primeiro) {
 				sql += " AND ";
 			}
@@ -96,7 +96,7 @@ public class VendaDAO {
 			if (!primeiro) {
 				sql += " AND ";
 			}
-			sql += "R.NM_REMEDIO LIKE '% " + seletor.getNome() + "%'";
+			sql += "R.NM_REMEDIO LIKE '%" + seletor.getNome() + "%'";
 			primeiro = false;
 		}
 
@@ -107,7 +107,7 @@ public class VendaDAO {
 		sql += " WHERE ";
 		boolean primeiro = true;
 
-		if (seletor.getCodBar() != "") {
+		if (!seletor.getCodBar().equals("")) {
 			if (!primeiro) {
 				sql += " AND ";
 			}
@@ -118,7 +118,7 @@ public class VendaDAO {
 			if (!primeiro) {
 				sql += " AND ";
 			}
-			sql += "P.NM_PRODUTO LIKE '% " + seletor.getNome() + "%'";
+			sql += "P.NM_PRODUTO LIKE '%" + seletor.getNome() + "%'";
 			primeiro = false;
 		}
 
@@ -130,8 +130,8 @@ public class VendaDAO {
 		String sqlProduto = "SELECT * FROM PRODUTO P";
 
 		if (seletor.temFiltro()) {
-			criarFiltrosRemedio(seletor, sqlRemedio);
-			criarFiltrosProduto(seletor, sqlProduto);
+			sqlRemedio = criarFiltrosRemedio(seletor, sqlRemedio);
+			sqlProduto = criarFiltrosProduto(seletor, sqlProduto);
 		}
 
 		if (seletor.temPaginacao()) {

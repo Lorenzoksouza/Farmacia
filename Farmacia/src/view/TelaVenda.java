@@ -109,7 +109,7 @@ public class TelaVenda extends JInternalFrame {
 				if (tblPesquisa.getSelectedRow() > 0) {
 					Mercadoria mercadoriaSelecionada = mercadoriasConsultadas.get(tblPesquisa.getSelectedRow() - 1);
 					int qtd = (int) spiQuantidade.getValue();
-
+					mercadoriaSelecionada.setEstoque(qtd);
 					mercadoriasParaVenda.add(mercadoriaSelecionada);
 
 					adicionarItem(mercadoriaSelecionada);
@@ -122,7 +122,6 @@ public class TelaVenda extends JInternalFrame {
 				} else {
 					JOptionPane.showMessageDialog(null, "Selecione um item para adicionar a venda");
 				}
-
 			}
 		});
 
@@ -339,7 +338,7 @@ public class TelaVenda extends JInternalFrame {
 		DefaultTableModel modelo = (DefaultTableModel) tblVenda.getModel();
 
 		for (Mercadoria mercadoria : mercadoriasParaVenda) {
-			String[] novaLinha = new String[] { mercadoria.getNome(), spiQuantidade.getValue().toString(),
+			String[] novaLinha = new String[] { mercadoria.getNome(), mercadoria.getEstoque() + "",
 					"R$" + mercadoria.getPreco() };
 			modelo.addRow(novaLinha);
 		}
