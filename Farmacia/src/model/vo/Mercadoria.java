@@ -63,4 +63,9 @@ public abstract class Mercadoria {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+	public String toString() {
+		return "Cód: " + codBarra + " - " + "\nNome: " + nome + "\nData Cad.: " + dataCadastro + "\nPreço: " + preco
+				+ "\nEstoque: " + estoque;
+	}
 }

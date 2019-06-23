@@ -25,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
 import controller.ControllerRemedio;
 import model.seletor.RemedioSeletor;
 import model.vo.FormaUso;
+import model.vo.Laboratorio;
 import model.vo.Remedio;
 import net.miginfocom.swing.MigLayout;
 import util.JTextFieldLimit;
@@ -76,7 +77,7 @@ public class ListagemMedicamento extends JInternalFrame {
 		getContentPane()
 				.setLayout(new MigLayout("", "[211.00][][grow]", "[][][][][][][][][][][10px:n][][10px:n][][][grow]"));
 
-		JLabel lblCodbarras = new JLabel("Cód.barras:");
+		JLabel lblCodbarras = new JLabel("Cï¿½d.barras:");
 		getContentPane().add(lblCodbarras, "cell 0 0");
 
 		JLabel lblespaco2 = new JLabel("      ");
@@ -85,8 +86,8 @@ public class ListagemMedicamento extends JInternalFrame {
 		tblRemedios = new JTable();
 		tblRemedios.setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		tblRemedios.setColumnSelectionAllowed(true);
-		tblRemedios.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Código de Barras", "Dosagem",
-				"Composição", "Genérico", "Nome", "Data Cad.", "Preço", "Estoque", "Forma Uso", "Laboratório" }));
+		tblRemedios.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Cï¿½digo de Barras", "Dosagem",
+				"Composiï¿½ï¿½o", "Genï¿½rico", "Nome", "Data Cad.", "Preï¿½o", "Estoque", "Forma Uso", "Laboratï¿½rio" }));
 		tblRemedios.getColumnModel().getColumn(0).setPreferredWidth(100);
 		tblRemedios.getColumnModel().getColumn(1).setPreferredWidth(58);
 		tblRemedios.getColumnModel().getColumn(2).setPreferredWidth(69);
@@ -99,7 +100,7 @@ public class ListagemMedicamento extends JInternalFrame {
 		tblRemedios.getColumnModel().getColumn(9).setPreferredWidth(68);
 		getContentPane().add(tblRemedios, "cell 2 0 1 16,grow");
 
-		// Código de barras
+		// Cï¿½digo de barras
 
 		txtCodBar = new JTextField();
 		txtCodBar.addKeyListener(new KeyAdapter() {
@@ -128,7 +129,7 @@ public class ListagemMedicamento extends JInternalFrame {
 
 		txtNome.setDocument(new JTextFieldLimit(150));
 
-		JLabel lblComposicao = new JLabel("Composição:");
+		JLabel lblComposicao = new JLabel("Composiï¿½ï¿½o:");
 		getContentPane().add(lblComposicao, "cell 0 4");
 
 		// ComposiÃ§Ã£o
@@ -162,11 +163,11 @@ public class ListagemMedicamento extends JInternalFrame {
 			}
 		});
 
-		JLabel lblGenerico = new JLabel("Genérico:");
+		JLabel lblGenerico = new JLabel("Genï¿½rico:");
 		getContentPane().add(lblGenerico, "cell 0 8");
 		getContentPane().add(btnPesquisar, "cell 0 11,growx");
 
-		btnGerarXls = new JButton("Relatório");
+		btnGerarXls = new JButton("Relatï¿½rio");
 		btnGerarXls.setPreferredSize(new Dimension(100, 30));
 		btnGerarXls.setBorder(new LineBorder(Color.gray, 2, true));
 		btnGerarXls.setBackground(Color.WHITE);
@@ -186,23 +187,45 @@ public class ListagemMedicamento extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				Remedio remedioSelecionado = new Remedio();
 
-//				remedioSelecionado = remediosConsultados.get(tblRemedios.getSelectedRow() - 1);
+				if (remediosConsultados.get(tblRemedios.getSelectedRow()) != null) {
 
-				remedioSelecionado.setNome(remediosConsultados.get(tblRemedios.getSelectedRow() - 1).getNome());
-				remedioSelecionado.setCodBarra(remediosConsultados.get(tblRemedios.getSelectedRow() - 1).getCodBarra());
-				remedioSelecionado.setPreco(remediosConsultados.get(tblRemedios.getSelectedRow() - 1).getPreco());
-				remedioSelecionado
-						.setComposicao(remediosConsultados.get(tblRemedios.getSelectedRow() - 1).getComposicao());
-				remedioSelecionado.setDosagem(remediosConsultados.get(tblRemedios.getSelectedRow() - 1).getDosagem());
-				remedioSelecionado
-						.setLaboratorio(remediosConsultados.get(tblRemedios.getSelectedRow() - 1).getLaboratorio());
-				remedioSelecionado.setEstoque(remediosConsultados.get(tblRemedios.getSelectedRow() - 1).getEstoque());
-				remedioSelecionado.setFormaUso(remediosConsultados.get(tblRemedios.getSelectedRow() - 1).getFormaUso());
-				remedioSelecionado.setGenerico(remediosConsultados.get(tblRemedios.getSelectedRow() - 1).isGenerico());
+					int linhaSelecionada = tblRemedios.getSelectedRow();
 
-				cadastroMedicamento = new CadastroMedicamento(remedioSelecionado);
-				cadastroMedicamento.setVisible(true);
+					remedioSelecionado.setCodBarra((String) tblRemedios.getValueAt(linhaSelecionada, 0));
+					remedioSelecionado.setDosagem((String) tblRemedios.getValueAt(linhaSelecionada, 1));
+					remedioSelecionado.setComposicao((String) tblRemedios.getValueAt(linhaSelecionada, 2));
+					// TODO GenÃ©rico vai como boolean para tela de alterar, e ele aparece como Sim
+					// ou NÃ£o. Verificar isto
 
+					if (tblRemedios.getValueAt(linhaSelecionada, 3) == "Sim") {
+						remedioSelecionado.setGenerico(true);
+					} else {
+						remedioSelecionado.setGenerico(false);
+					}
+
+					remedioSelecionado.setNome((String) tblRemedios.getValueAt(linhaSelecionada, 4));
+
+					double precoConversao = Double.parseDouble((String) tblRemedios.getValueAt(linhaSelecionada, 6));
+					remedioSelecionado.setPreco(precoConversao);
+
+					int estoqueConversao = Integer.parseInt((String) tblRemedios.getValueAt(linhaSelecionada, 7));
+					remedioSelecionado.setEstoque(estoqueConversao);
+
+					String descFU = (String) tblRemedios.getValueAt(linhaSelecionada, 8);
+					FormaUso fuConversao = new FormaUso();
+					fuConversao.setDescricao(descFU);
+
+					remedioSelecionado.setFormaUso(fuConversao);
+
+					String nmLab = (String) tblRemedios.getValueAt(linhaSelecionada, 9);
+					Laboratorio labConversao = new Laboratorio();
+					labConversao.setNomeLaboratorio(nmLab);
+
+					remedioSelecionado.setLaboratorio(labConversao);
+
+					cadastroMedicamento = new CadastroMedicamento(remedioSelecionado);
+					cadastroMedicamento.setVisible(true);
+				}
 			}
 		});
 
@@ -226,7 +249,7 @@ public class ListagemMedicamento extends JInternalFrame {
 					remediosConsultados.remove(tblRemedios.getSelectedRow() - 1);
 					atualizarTabelaMedicamentos(remediosConsultados);
 				} else {
-					mensagem = "Remedio não foi cadastrado";
+					mensagem = "Remedio nï¿½o foi cadastrado";
 				}
 				JOptionPane.showMessageDialog(null, mensagem);
 			}
@@ -240,7 +263,7 @@ public class ListagemMedicamento extends JInternalFrame {
 		getContentPane().add(btnAlterar, "cell 0 13,growx");
 		getContentPane().add(btnGerarXls, "cell 0 14,alignx center");
 
-		String[] pGenerico = { "Sim", "Não", "" };
+		String[] pGenerico = { "Sim", "Nï¿½o", "" };
 		cmbGenerico = new JComboBox(pGenerico);
 		cmbGenerico.setBackground(Color.WHITE);
 		cmbGenerico.setSelectedIndex(2);
@@ -315,10 +338,10 @@ public class ListagemMedicamento extends JInternalFrame {
 
 		// Limpa a tabela
 		tblRemedios.setModel(new DefaultTableModel(
-				new String[][] { { "Código de Barras", "Dosagem", "Composição", "Genérico", "Nome", "Data Cad.",
-						"Preço", "Estoque", "Forma Uso", "Laboratório" }, },
-				new String[] { "Código de Barras", "Dosagem", "Composição", "Genérico", "Nome", "Data Cad.", "Preço",
-						"Estoque", "Forma Uso", "Laboratório" }));
+				new String[][] { { "Cï¿½digo de Barras", "Dosagem", "Composiï¿½ï¿½o", "Genï¿½rico", "Nome", "Data Cad.",
+						"Preï¿½o", "Estoque", "Forma Uso", "Laboratï¿½rio" }, },
+				new String[] { "Cï¿½digo de Barras", "Dosagem", "Composiï¿½ï¿½o", "Genï¿½rico", "Nome", "Data Cad.", "Preï¿½o",
+						"Estoque", "Forma Uso", "Laboratï¿½rio" }));
 
 		DefaultTableModel modelo = (DefaultTableModel) tblRemedios.getModel();
 
@@ -326,16 +349,16 @@ public class ListagemMedicamento extends JInternalFrame {
 		for (Remedio remedio : remedios) {
 			// Crio uma nova linha na tabela
 			// Preencher a linha com os atributos do remedio
-			// na ORDEM do cabeçalho da tabela
+			// na ORDEM do cabeï¿½alho da tabela
 			if (remedio.isGenerico()) {
 				generico = "Sim";
 			} else {
-				generico = "Não";
+				generico = "Nï¿½o";
 			}
 
 			String[] novaLinha = new String[] { remedio.getCodBarra() + "", remedio.getDosagem(),
 					remedio.getComposicao(), generico, remedio.getNome(), String.valueOf(remedio.getDataCadastro()),
-					"R$" + remedio.getPreco(), "" + remedio.getEstoque(), remedio.getFormaUso().getDescricao(),
+					remedio.getPreco() + "", "" + remedio.getEstoque(), remedio.getFormaUso().getDescricao(),
 					remedio.getLaboratorio().getNomeLaboratorio() };
 			modelo.addRow(novaLinha);
 		}
