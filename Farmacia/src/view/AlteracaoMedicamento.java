@@ -29,7 +29,7 @@ import net.miginfocom.swing.MigLayout;
 import util.JNumberFormatField;
 import util.JTextFieldLimit;
 
-public class CadastroMedicamento extends JInternalFrame {
+public class AlteracaoMedicamento extends JInternalFrame {
 	private JTextField txtNome;
 	private JTextField txtCodBar;
 	private JNumberFormatField txtPreco;
@@ -50,7 +50,8 @@ public class CadastroMedicamento extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastroMedicamento frame = new CadastroMedicamento();
+					Remedio r = new Remedio();
+					AlteracaoMedicamento frame = new AlteracaoMedicamento(r);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -62,11 +63,11 @@ public class CadastroMedicamento extends JInternalFrame {
 	/**
 	 * Create the frame. INSERT
 	 */
-	public CadastroMedicamento() {
-		setFrameIcon(new ImageIcon(CadastroMedicamento.class.getResource("/icons/med3x.png")));
+	public AlteracaoMedicamento(Remedio remedioSelecionado) {
+		setFrameIcon(new ImageIcon(AlteracaoMedicamento.class.getResource("/icons/med3x.png")));
 		getContentPane().setBackground(Color.WHITE);
 		setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
-		setTitle("Cadastro de medicamentos");
+		setTitle("Alteração de medicamentos");
 
 		setClosable(true);
 
@@ -85,6 +86,8 @@ public class CadastroMedicamento extends JInternalFrame {
 		// Nome
 
 		txtNome = new JTextField();
+		txtNome.setEnabled(false);
+		txtNome.setEditable(false);
 
 		txtNome.setDocument(new JTextFieldLimit(150));
 
@@ -209,7 +212,7 @@ public class CadastroMedicamento extends JInternalFrame {
 		// listagem
 
 		JButton btnSalvar = new JButton("Salvar");
-		btnSalvar.setIcon(new ImageIcon(CadastroMedicamento.class.getResource("/icons/check.png")));
+		btnSalvar.setIcon(new ImageIcon(AlteracaoMedicamento.class.getResource("/icons/check.png")));
 		btnSalvar.setBackground(Color.WHITE);
 		btnSalvar.setOpaque(true);
 		btnSalvar.setPreferredSize(new Dimension(80, 30));
@@ -250,7 +253,8 @@ public class CadastroMedicamento extends JInternalFrame {
 
 					ControllerRemedio controllerRemedio = new ControllerRemedio();
 					String mensagem = "";
-					mensagem = controllerRemedio.salvar(remedio);
+					mensagem = controllerRemedio.atualizar(remedio);
+
 					limparCampos();
 					JOptionPane.showMessageDialog(null, mensagem);
 				} catch (ArrayIndexOutOfBoundsException e) {
@@ -259,6 +263,19 @@ public class CadastroMedicamento extends JInternalFrame {
 			}
 		});
 		getContentPane().add(btnSalvar, "cell 2 11,alignx right");
+	}
+
+	public void preencherCampos(Remedio remedio) {
+
+		txtCodBar.setText(remedio.getCodBarra());
+		txtNome.setText(remedio.getNome());
+		txtDosagem.setText(remedio.getDosagem());
+		txtPreco.setText(remedio.getPreco() + "");
+		txtComposicao.setText(remedio.getComposicao());
+		cmbLaboratorio.setSelectedItem(remedio.getLaboratorio().getNomeLaboratorio());
+		cmbFormaUso.setSelectedItem(remedio.getFormaUso().getDescricao());
+		txtEstoque.setText(remedio.getEstoque() + "");
+		chckbxGenerico.setSelected(remedio.isGenerico());
 	}
 
 	private void consultarLaboratorio() {

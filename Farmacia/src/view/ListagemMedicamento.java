@@ -77,7 +77,7 @@ public class ListagemMedicamento extends JInternalFrame {
 		getContentPane()
 				.setLayout(new MigLayout("", "[211.00][][grow]", "[][][][][][][][][][][10px:n][][10px:n][][][grow]"));
 
-		JLabel lblCodbarras = new JLabel("C�d.barras:");
+		JLabel lblCodbarras = new JLabel("Cód.barras:");
 		getContentPane().add(lblCodbarras, "cell 0 0");
 
 		JLabel lblespaco2 = new JLabel("      ");
@@ -86,8 +86,8 @@ public class ListagemMedicamento extends JInternalFrame {
 		tblRemedios = new JTable();
 		tblRemedios.setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		tblRemedios.setColumnSelectionAllowed(true);
-		tblRemedios.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "C�digo de Barras", "Dosagem",
-				"Composi��o", "Gen�rico", "Nome", "Data Cad.", "Pre�o", "Estoque", "Forma Uso", "Laborat�rio" }));
+		tblRemedios.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Código de Barras", "Dosagem",
+				"Composição", "Genérico", "Nome", "Data Cad.", "Preço", "Estoque", "Forma Uso", "Laboratório" }));
 		tblRemedios.getColumnModel().getColumn(0).setPreferredWidth(100);
 		tblRemedios.getColumnModel().getColumn(1).setPreferredWidth(58);
 		tblRemedios.getColumnModel().getColumn(2).setPreferredWidth(69);
@@ -185,6 +185,7 @@ public class ListagemMedicamento extends JInternalFrame {
 		btnAlterar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				Remedio remedioSelecionado = new Remedio();
 				int linhaSelecionada = tblRemedios.getSelectedRow();
 
@@ -220,11 +221,15 @@ public class ListagemMedicamento extends JInternalFrame {
 
 					remedioSelecionado.setLaboratorio(labConversao);
 
-					cadastroMedicamento = new CadastroMedicamento(remedioSelecionado);
-					cadastroMedicamento.setVisible(true);
+					AlteracaoMedicamento alterMed = new AlteracaoMedicamento(remedioSelecionado);
+					alterMed.setVisible(true);
+					alterMed.show(true);
+					atualizarTabelaMedicamentos(remediosConsultados);
 				} else {
 					JOptionPane.showMessageDialog(null, "Selecione um produto para ser Alterado!!");
 				}
+				;
+
 			}
 		});
 
@@ -242,7 +247,6 @@ public class ListagemMedicamento extends JInternalFrame {
 
 				ControllerRemedio controllerRemedio = new ControllerRemedio();
 
-				System.out.println(remedioSelecionado);
 				if (controllerRemedio.existeRemedioPorCodBar(remedioSelecionado)) {
 					mensagem = controllerRemedio.excluir(remedioSelecionado);
 					remediosConsultados.remove(tblRemedios.getSelectedRow() - 1);
@@ -262,7 +266,7 @@ public class ListagemMedicamento extends JInternalFrame {
 		getContentPane().add(btnAlterar, "cell 0 13,growx");
 		getContentPane().add(btnGerarXls, "cell 0 14,alignx center");
 
-		String[] pGenerico = { "Sim", "N�o", "" };
+		String[] pGenerico = { "Sim", "Não", "" };
 		cmbGenerico = new JComboBox(pGenerico);
 		cmbGenerico.setBackground(Color.WHITE);
 		cmbGenerico.setSelectedIndex(2);
@@ -337,10 +341,10 @@ public class ListagemMedicamento extends JInternalFrame {
 
 		// Limpa a tabela
 		tblRemedios.setModel(new DefaultTableModel(
-				new String[][] { { "C�digo de Barras", "Dosagem", "Composi��o", "Gen�rico", "Nome", "Data Cad.",
-						"Pre�o", "Estoque", "Forma Uso", "Laborat�rio" }, },
-				new String[] { "C�digo de Barras", "Dosagem", "Composi��o", "Gen�rico", "Nome", "Data Cad.", "Pre�o",
-						"Estoque", "Forma Uso", "Laborat�rio" }));
+				new String[][] { { "Código de Barras", "Dosagem", "Composição", "Genérico", "Nome", "Data Cad.",
+						"Preço", "Estoque", "Forma Uso", "Laboratório" }, },
+				new String[] { "Código de Barras", "Dosagem", "Composição", "Genérico", "Nome", "Data Cad.", "Preço",
+						"Estoque", "Forma Uso", "Laboratório" }));
 
 		DefaultTableModel modelo = (DefaultTableModel) tblRemedios.getModel();
 
@@ -352,7 +356,7 @@ public class ListagemMedicamento extends JInternalFrame {
 			if (remedio.isGenerico()) {
 				generico = "Sim";
 			} else {
-				generico = "N�o";
+				generico = "Não";
 			}
 
 			String[] novaLinha = new String[] { remedio.getCodBarra() + "", remedio.getDosagem(),

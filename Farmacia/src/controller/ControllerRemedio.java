@@ -12,7 +12,6 @@ import model.vo.Laboratorio;
 import model.vo.Remedio;
 
 public class ControllerRemedio {
-
 	private RemedioBO remedioBO = new RemedioBO();
 
 	public String salvar(Remedio remedio) {
@@ -98,4 +97,9 @@ public class ControllerRemedio {
 	public ArrayList<Laboratorio> consultarLaboratorio() {
 		return remedioBO.consultarLaboratorio();
 	}
+
+	public String atualizar(Remedio remedioSelecionado) {
+		return remedioBO.atualizar(remedioSelecionado);
+	}
+
 }
