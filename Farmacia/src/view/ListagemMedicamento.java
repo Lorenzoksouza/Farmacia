@@ -31,7 +31,8 @@ import net.miginfocom.swing.MigLayout;
 import util.JTextFieldLimit;
 
 public class ListagemMedicamento extends JInternalFrame {
-	CadastroMedicamento cadastroMedicamento = null;
+	private CadastroMedicamento cadastroMedicamento = null;
+	private AlteracaoMedicamento alteracaoMedicamento = null;
 
 	private JTextField txtCodBar = null;
 	private JTextField txtNome;
@@ -221,14 +222,15 @@ public class ListagemMedicamento extends JInternalFrame {
 
 					remedioSelecionado.setLaboratorio(labConversao);
 
-					AlteracaoMedicamento alterMed = new AlteracaoMedicamento(remedioSelecionado);
-					alterMed.setVisible(true);
-					alterMed.show(true);
+					cadastroMedicamento = new CadastroMedicamento();
+					cadastroMedicamento.setVisible(true);
+					alteracaoMedicamento = new AlteracaoMedicamento();
+					alteracaoMedicamento.setVisible(true);
+
 					atualizarTabelaMedicamentos(remediosConsultados);
 				} else {
 					JOptionPane.showMessageDialog(null, "Selecione um produto para ser Alterado!!");
 				}
-				;
 
 			}
 		});

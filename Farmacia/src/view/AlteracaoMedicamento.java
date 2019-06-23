@@ -50,8 +50,7 @@ public class AlteracaoMedicamento extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Remedio r = new Remedio();
-					AlteracaoMedicamento frame = new AlteracaoMedicamento(r);
+					AlteracaoMedicamento frame = new AlteracaoMedicamento();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -63,7 +62,7 @@ public class AlteracaoMedicamento extends JInternalFrame {
 	/**
 	 * Create the frame. INSERT
 	 */
-	public AlteracaoMedicamento(Remedio remedioSelecionado) {
+	public AlteracaoMedicamento() {
 		setFrameIcon(new ImageIcon(AlteracaoMedicamento.class.getResource("/icons/med3x.png")));
 		getContentPane().setBackground(Color.WHITE);
 		setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
