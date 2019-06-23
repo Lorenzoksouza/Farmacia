@@ -49,7 +49,6 @@ public class VendaDTO {
 
 	public VendaDTO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 }
