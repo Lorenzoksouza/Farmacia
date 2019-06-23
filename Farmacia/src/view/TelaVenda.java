@@ -31,7 +31,6 @@ import model.vo.Mercadoria;
 import model.vo.Produto;
 import model.vo.Remedio;
 import net.miginfocom.swing.MigLayout;
-import util.JNumberFormatField;
 import util.JTextFieldLimit;
 
 public class TelaVenda extends JInternalFrame {
@@ -48,7 +47,7 @@ public class TelaVenda extends JInternalFrame {
 	private List<Produto> produtos = new ArrayList<Produto>();
 
 	private double valorTotal = 0.0;
-	private JNumberFormatField lblValor;
+	private JLabel lblValor;
 	private JSpinner spiQuantidade;
 
 	/**
@@ -139,14 +138,11 @@ public class TelaVenda extends JInternalFrame {
 			}
 		});
 
-		JLabel lblTotal = new JLabel("Total: R$");
+		JLabel lblTotal = new JLabel("Total:");
 		getContentPane().add(lblTotal, "flowx,cell 2 10,aligny bottom");
 
-		lblValor = new JNumberFormatField(2);
-		lblValor.setForeground(Color.BLACK);
-		lblValor.setBackground(Color.WHITE);
-		lblValor.setEditable(false);
-		getContentPane().add(lblValor, "cell 2 10,growx,aligny bottom");
+		lblValor = new JLabel("R$0.00");
+		getContentPane().add(lblValor, "cell 2 10,aligny bottom");
 
 		JLabel lblQuantidade = new JLabel("Quantidade:");
 		getContentPane().add(lblQuantidade, "flowx,cell 0 11,aligny center");
