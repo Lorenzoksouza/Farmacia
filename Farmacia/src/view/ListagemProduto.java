@@ -38,7 +38,7 @@ public class ListagemProduto extends JInternalFrame {
 	private JComboBox<String> cmbCategoria;
 	private JButton btnGerarXls;
 
-	private List<Produto> produtosConsultados;
+	private List<Produto> produtosConsultados = null;
 	private int totalPaginas = 1;
 	private int paginaAtual = 1;
 	private JLabel lblPaginaAtual;
@@ -188,8 +188,11 @@ public class ListagemProduto extends JInternalFrame {
 					double precoConversao = Double.parseDouble((String) tblProdutos.getValueAt(linhaSelecionada, 2));
 					produtoSelecionado.setPreco(precoConversao);
 
-					Categoria categoriaConversao = (Categoria) tblProdutos.getValueAt(linhaSelecionada, 3);
-					produtoSelecionado.setCategoria(categoriaConversao);
+					String nmCategoria = (String) tblProdutos.getValueAt(linhaSelecionada, 3);
+					Categoria cat = new Categoria();
+					cat.setNomeCategoria(nmCategoria);
+
+					produtoSelecionado.setCategoria(cat);
 
 					int estoqueConversao = Integer.parseInt((String) tblProdutos.getValueAt(linhaSelecionada, 4));
 					produtoSelecionado.setEstoque(estoqueConversao);
@@ -210,7 +213,7 @@ public class ListagemProduto extends JInternalFrame {
 		btnGerarXls.setBorder(new LineBorder(Color.gray, 2, true));
 		btnGerarXls.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				System.out.println("Teste!!");
 			}
 		});
 		getContentPane().add(btnGerarXls, "cell 0 10,alignx center");
@@ -308,7 +311,7 @@ public class ListagemProduto extends JInternalFrame {
 		// atualiza o atributo produtosConsultados
 		produtosConsultados = produtos;
 
-		btnGerarXls.setEnabled(produtos != null && produtos.size() > 0);
+		// btnGerarXls.setEnabled(produtos != null && produtos.size() > 0);
 
 		// Limpa a tabela
 		tblProdutos.setModel(
@@ -322,8 +325,8 @@ public class ListagemProduto extends JInternalFrame {
 			// Preencher a linha com os atributos do remedio
 			// na ORDEM do cabeçalho da tabela
 
-			String[] novaLinha = new String[] { produto.getCodBarra() + "", produto.getNome(),
-					"R$" + produto.getPreco(), produto.getCategoria().getNomeCategoria(), produto.getEstoque() + "" };
+			String[] novaLinha = new String[] { produto.getCodBarra() + "", produto.getNome(), "" + produto.getPreco(),
+					produto.getCategoria().getNomeCategoria(), produto.getEstoque() + "" };
 			modelo.addRow(novaLinha);
 		}
 	}

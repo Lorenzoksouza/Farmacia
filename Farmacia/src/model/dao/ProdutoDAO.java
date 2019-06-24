@@ -87,6 +87,7 @@ public class ProdutoDAO {
 		ArrayList<Produto> produtos = new ArrayList<Produto>();
 
 		try {
+			// System.out.println(sql);
 			ResultSet result = prepStmt.executeQuery();
 
 			while (result.next()) {
@@ -115,7 +116,7 @@ public class ProdutoDAO {
 			if (!primeiro) {
 				sql += " AND ";
 			}
-			sql += "R.NM_PRODUTO LIKE '%" + seletor.getNomeProduto().trim() + "%'";
+			sql += "P.NM_PRODUTO LIKE '%" + seletor.getNomeProduto().trim() + "%'";
 			primeiro = false;
 		}
 
@@ -128,7 +129,7 @@ public class ProdutoDAO {
 
 		}
 		// Verificando o que retorna nos filtros
-		System.out.println(sql);
+		// System.out.println(sql);
 		return sql;
 	}
 

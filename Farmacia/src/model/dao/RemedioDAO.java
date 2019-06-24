@@ -47,8 +47,7 @@ public class RemedioDAO {
 
 	public String atualizar(Remedio r) {
 		String mensagem = "";
-		String sql = "UPDATE REMEDIO R SET DOSAGEM =?, COMPOSICAO=?, GENERICO=?, NM_REMEDIO=?, DT_CADASTRO=?, PRECO=?, ESTOQUE=?, ID_FORMA_USO=?, ID_LABORATORIO=?"
-				+ "WHERE R.COD_BARRA=?";
+		String sql = "UPDATE REMEDIO R SET DOSAGEM =?, COMPOSICAO=?, GENERICO=?, NM_REMEDIO=?, DT_CADASTRO=?, PRECO=?, ESTOQUE=?, ID_FORMA_USO=?, ID_LABORATORIO=? WHERE R.COD_BARRA= ? ";
 
 		Connection conn = Banco.getConnection();
 		PreparedStatement prepStmt = Banco.getPreparedStatement(conn, sql, Statement.RETURN_GENERATED_KEYS);
@@ -73,6 +72,7 @@ public class RemedioDAO {
 			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao atualizar remédio. Causa: " + e.getMessage());
+			mensagem = "Erro ao executar query de atualização de Remédio!";
 		} finally {
 			Banco.closePreparedStatement(prepStmt);
 			Banco.closeConnection(conn);
