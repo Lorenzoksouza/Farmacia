@@ -213,7 +213,6 @@ public class ListagemProduto extends JInternalFrame {
 		btnGerarXls.setBorder(new LineBorder(Color.gray, 2, true));
 		btnGerarXls.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Teste!!");
 			}
 		});
 		getContentPane().add(btnGerarXls, "cell 0 10,alignx center");
