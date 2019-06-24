@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -130,6 +131,9 @@ public class TelaVenda extends JInternalFrame {
 
 					valorTotal += mercadoriaSelecionada.getPreco() * qtd;
 					lblValor.setText("R$" + valorTotal);
+					DecimalFormat df = new DecimalFormat("0.#####");
+					String dx = df.format(valorTotal);
+					lblValor.setText("R$" + dx);
 
 					spiQuantidade.setValue(1);
 				} else {
@@ -172,6 +176,9 @@ public class TelaVenda extends JInternalFrame {
 
 					valorTotal -= mercadoriaSelecionada.getPreco() * qtd;
 					lblValor.setText("R$" + valorTotal);
+					DecimalFormat df = new DecimalFormat("0.#####");
+					String dx = df.format(valorTotal);
+					lblValor.setText("R$" + dx);
 				} else {
 					JOptionPane.showMessageDialog(null, "Selecione um item para excluir");
 				}
