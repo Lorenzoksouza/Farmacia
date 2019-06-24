@@ -14,6 +14,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -215,6 +216,17 @@ public class ListagemProduto extends JInternalFrame {
 		btnGerarXls.setBorder(new LineBorder(Color.gray, 2, true));
 		btnGerarXls.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				JFileChooser jfc = new JFileChooser();
+				jfc.setDialogTitle("Salvar...");
+
+				int resultado = jfc.showSaveDialog(null);
+				if (resultado == JFileChooser.APPROVE_OPTION) {
+					String caminhoEscolhido = jfc.getSelectedFile().getAbsolutePath();
+
+					ControllerProduto produtoController = new ControllerProduto();
+					produtoController.gerarRelatorio(produtosConsultados, caminhoEscolhido,
+							ControllerProduto.TIPO_RELATORIO_XLS);
+				}
 			}
 		});
 		getContentPane().add(btnGerarXls, "cell 0 10,alignx center");

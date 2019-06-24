@@ -10,6 +10,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
+import model.vo.Produto;
 import model.vo.Remedio;
 
 public class GeradorDePlanilha {
@@ -49,6 +50,57 @@ public class GeradorDePlanilha {
 			novaLinha.createCell(7).setCellValue(rem.getEstoque());
 			novaLinha.createCell(8).setCellValue(rem.getFormaUso().getDescricao());
 			novaLinha.createCell(9).setCellValue(rem.getLaboratorio().getNomeLaboratorio());
+		}
+
+		for (int i = 0; i < colunasDaPlanilha.length; i++) {
+			abaPlanilha.autoSizeColumn(i);
+		}
+
+		FileOutputStream fileOut = null;
+		try {
+			fileOut = new FileOutputStream(caminho = ".xls");
+			planilha.write(fileOut);
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (fileOut != null) {
+				try {
+					fileOut.close();
+					planilha.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+	}
+
+	public void gerarPlanilhaProdutos(List<Produto> produtos, String caminho) {
+		String[] colunasDaPlanilha = { "Código", "Nome", "Preço", "Categoria", "Estoque" };
+
+		HSSFWorkbook planilha = new HSSFWorkbook();
+
+		HSSFSheet abaPlanilha = planilha.createSheet("Produtos");
+
+		Row headerRow = abaPlanilha.createRow(0);
+
+		for (int i = 0; i < colunasDaPlanilha.length; i++) {
+			Cell cell = headerRow.createCell(i);
+			cell.setCellValue(colunasDaPlanilha[i]);
+		}
+
+		int rowNum = 1;
+		for (Produto prod : produtos) {
+			Row novaLinha = abaPlanilha.createRow(rowNum++);
+
+			novaLinha.createCell(0).setCellValue(prod.getCodBarra());
+			novaLinha.createCell(1).setCellValue(prod.getNome());
+			novaLinha.createCell(2).setCellValue(prod.getPreco());
+			novaLinha.createCell(3).setCellValue(prod.getCategoria().getNomeCategoria());
+			novaLinha.createCell(4).setCellValue(prod.getEstoque());
 		}
 
 		for (int i = 0; i < colunasDaPlanilha.length; i++) {

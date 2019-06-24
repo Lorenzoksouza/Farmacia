@@ -52,4 +52,9 @@ public class ProdutoBO {
 		return produtoDAO.consultarCategoria();
 	}
 
+	public void gerarPlanilha(List<Produto> produtos, String caminhoEscolhido) {
+		GeradorDePlanilha gerador = new GeradorDePlanilha();
+		gerador.gerarPlanilhaProdutos(produtos, caminhoEscolhido);
+	}
+
 }

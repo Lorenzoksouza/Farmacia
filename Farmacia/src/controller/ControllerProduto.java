@@ -12,6 +12,7 @@ import model.vo.Produto;
 
 public class ControllerProduto {
 
+	public static final String TIPO_RELATORIO_XLS = null;
 	private ProdutoBO produtoBO = new ProdutoBO();
 
 	public String salvar(Produto produto) {
@@ -83,6 +84,10 @@ public class ControllerProduto {
 
 	public ArrayList<Categoria> consultarCategoria() {
 		return produtoBO.consultarCategoria();
+	}
+
+	public void gerarRelatorio(List<Produto> produtos, String caminhoEscolhido, String tipoRelatorioXls) {
+		produtoBO.gerarPlanilha(produtos, caminhoEscolhido);
 	}
 
 }
