@@ -81,7 +81,7 @@ public class ListagemMedicamento extends JInternalFrame {
 		getContentPane()
 				.setLayout(new MigLayout("", "[211.00][][grow]", "[][][][][][][][][][][10px:n][][10px:n][][][grow][]"));
 
-		JLabel lblCodbarras = new JLabel("CÃ³d.barras:");
+		JLabel lblCodbarras = new JLabel("Cód.barras:");
 		getContentPane().add(lblCodbarras, "cell 0 0");
 
 		JLabel lblespaco2 = new JLabel("      ");
@@ -90,8 +90,8 @@ public class ListagemMedicamento extends JInternalFrame {
 		tblRemedios = new JTable();
 		tblRemedios.setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		tblRemedios.setColumnSelectionAllowed(true);
-		tblRemedios.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "CÃ³digo de Barras", "Dosagem",
-				"ComposiÃ§Ã£o", "GenÃ©rico", "Nome", "Data Cad.", "PreÃ§o", "Estoque", "Forma Uso", "LaboratÃ³rio" }));
+		tblRemedios.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Código de Barras", "Dosagem",
+				"Composição", "Genérico", "Nome", "Data Cad.", "Preço", "Estoque", "Forma Uso", "Laboratório" }));
 		tblRemedios.getColumnModel().getColumn(0).setPreferredWidth(100);
 		tblRemedios.getColumnModel().getColumn(1).setPreferredWidth(58);
 		tblRemedios.getColumnModel().getColumn(2).setPreferredWidth(69);
@@ -104,7 +104,7 @@ public class ListagemMedicamento extends JInternalFrame {
 		tblRemedios.getColumnModel().getColumn(9).setPreferredWidth(68);
 		getContentPane().add(tblRemedios, "cell 2 0 1 16,grow");
 
-		// Cï¿½digo de barras
+		// Código de barras
 
 		txtCodBar = new JTextField();
 		txtCodBar.addKeyListener(new KeyAdapter() {
@@ -133,10 +133,10 @@ public class ListagemMedicamento extends JInternalFrame {
 
 		txtNome.setDocument(new JTextFieldLimit(150));
 
-		JLabel lblComposicao = new JLabel("ComposiÃ§Ã£o:");
+		JLabel lblComposicao = new JLabel("Composição:");
 		getContentPane().add(lblComposicao, "cell 0 4");
 
-		// ComposiÃ§Ã£o
+		// Composição
 
 		txtComposicao = new JTextField();
 
@@ -167,11 +167,11 @@ public class ListagemMedicamento extends JInternalFrame {
 			}
 		});
 
-		JLabel lblGenerico = new JLabel("GenÃ©rico:");
+		JLabel lblGenerico = new JLabel("Genérico:");
 		getContentPane().add(lblGenerico, "cell 0 8");
 		getContentPane().add(btnPesquisar, "cell 0 11,growx");
 
-		btnGerarXls = new JButton("RelatÃ³rio");
+		btnGerarXls = new JButton("Relatório");
 		btnGerarXls.setPreferredSize(new Dimension(100, 30));
 		btnGerarXls.setBorder(new LineBorder(Color.gray, 2, true));
 		btnGerarXls.setBackground(Color.WHITE);
@@ -268,7 +268,7 @@ public class ListagemMedicamento extends JInternalFrame {
 					remediosConsultados.remove(tblRemedios.getSelectedRow() - 1);
 					atualizarTabelaMedicamentos(remediosConsultados);
 				} else {
-					mensagem = "Remedio nÃ£o foi cadastrado";
+					mensagem = "Remédio não foi cadastrado";
 				}
 				JOptionPane.showMessageDialog(null, mensagem);
 			}
@@ -282,7 +282,7 @@ public class ListagemMedicamento extends JInternalFrame {
 		// getContentPane().add(btnAlterar, "cell 0 13,growx");
 		getContentPane().add(btnGerarXls, "cell 0 14,alignx center");
 
-		String[] pGenerico = { "Sim", "NÃ£o", "" };
+		String[] pGenerico = { "Sim", "Não", "" };
 		cmbGenerico = new JComboBox(pGenerico);
 		cmbGenerico.setBackground(Color.WHITE);
 		cmbGenerico.setSelectedIndex(2);
@@ -397,10 +397,10 @@ public class ListagemMedicamento extends JInternalFrame {
 
 		// Limpa a tabela
 		tblRemedios.setModel(new DefaultTableModel(
-				new String[][] { { "CÃ³digo de Barras", "Dosagem", "ComposiÃ§Ã£o", "GenÃ©rico", "Nome", "Data Cad.",
-						"PreÃ§o", "Estoque", "Forma Uso", "LaboratÃ³rio" }, },
-				new String[] { "CÃ³digo de Barras", "Dosagem", "ComposiÃ§Ã£o", "GenÃ©rico", "Nome", "Data Cad.",
-						"PreÃ§o", "Estoque", "Forma Uso", "LaboratÃ³rio" }));
+				new String[][] { { "Código de Barras", "Dosagem", "Composição", "Genérico", "Nome", "Data Cad.",
+						"Preço", "Estoque", "Forma Uso", "Laboratório" }, },
+				new String[] { "Código de Barras", "Dosagem", "Composição", "Genérico", "Nome", "Data Cad.", "Preço",
+						"Estoque", "Forma Uso", "Laboratório" }));
 
 		DefaultTableModel modelo = (DefaultTableModel) tblRemedios.getModel();
 
@@ -412,7 +412,7 @@ public class ListagemMedicamento extends JInternalFrame {
 			if (remedio.isGenerico()) {
 				generico = "Sim";
 			} else {
-				generico = "NÃ£o";
+				generico = "Não";
 			}
 
 			String[] novaLinha = new String[] { remedio.getCodBarra() + "", remedio.getDosagem(),
