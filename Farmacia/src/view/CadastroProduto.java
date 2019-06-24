@@ -159,6 +159,7 @@ public class CadastroProduto extends JInternalFrame {
 
 					ControllerProduto produtoController = new ControllerProduto();
 					produtoController.salvar(produto);
+					JOptionPane.showMessageDialog(null, "produto cadastrado");
 				} catch (ArrayIndexOutOfBoundsException e) {
 					JOptionPane.showMessageDialog(null, "Verificar se todas as caixas foram preenchidas");
 				}
