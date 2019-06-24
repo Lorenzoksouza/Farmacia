@@ -12,7 +12,7 @@ public class ProdutoBO {
 
 	ProdutoDAO produtoDAO = new ProdutoDAO();
 
-	public String atualizar(Produto produto) {
+	public String inserir(Produto produto) {
 		String mensagem = "";
 
 		mensagem = produtoDAO.inserir(produto);
@@ -20,7 +20,7 @@ public class ProdutoBO {
 		return mensagem;
 	}
 
-	public String inserir(Produto produto) {
+	public String atualizar(Produto produto) {
 
 		String mensagem = "";
 
