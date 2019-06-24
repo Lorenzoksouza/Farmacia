@@ -289,7 +289,7 @@ public class ListagemProduto extends JInternalFrame {
 
 		// Preenche os campos de filtro da tela no seletor
 
-		if (txtCodBar.getText().trim().equals("")) {
+		if (!txtCodBar.getText().trim().equals("")) {
 			seletor.setCodBar(txtCodBar.getText());
 		}
 
