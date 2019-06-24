@@ -41,9 +41,9 @@ public class ProdutoBO {
 	public String excluir(String produtoSelecionado) {
 		String mensagem = "";
 		if (produtoDAO.excluir(produtoSelecionado)) {
-			mensagem = "Produto excluído com sucesso";
+			mensagem = "Produto excluído com sucesso.";
 		} else {
-			mensagem = "Erro ao excuir Produto";
+			mensagem = "Erro ao excluir Produto.";
 		}
 		return mensagem;
 	}

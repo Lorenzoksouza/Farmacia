@@ -264,7 +264,7 @@ public class ListagemMedicamento extends JInternalFrame {
 					remediosConsultados.remove(tblRemedios.getSelectedRow() - 1);
 					atualizarTabelaMedicamentos(remediosConsultados);
 				} else {
-					mensagem = "Remedio n�o foi cadastrado";
+					mensagem = "Remedio não foi cadastrado";
 				}
 				JOptionPane.showMessageDialog(null, mensagem);
 			}

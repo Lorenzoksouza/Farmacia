@@ -45,9 +45,9 @@ public class RemedioBO {
 	public String excluir(String remedioSelecionado) {
 		String mensagem = "";
 		if (remedioDAO.excluir(remedioSelecionado)) {
-			mensagem = "Remedio excluido com sucesso";
+			mensagem = "Remédio excluído com sucesso.";
 		} else {
-			mensagem = "Erro ao excuir Remedio";
+			mensagem = "Erro ao excluir Remédio.";
 		}
 		return mensagem;
 	}

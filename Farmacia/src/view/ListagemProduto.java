@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
@@ -164,6 +165,7 @@ public class ListagemProduto extends JInternalFrame {
 				} else {
 					mensagem = "Remédio não foi cadastrado";
 				}
+				JOptionPane.showMessageDialog(null, mensagem);
 			}
 		});
 		getContentPane().add(btnExcluir, "flowx,cell 0 9,growx");
