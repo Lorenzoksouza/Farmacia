@@ -62,7 +62,7 @@ public class RemedioBO {
 
 	public void gerarPlanilha(List<Remedio> remedios, String caminhoEscolhido) {
 		GeradorDePlanilha gerador = new GeradorDePlanilha();
-		gerador.gerarPlanilhaRemedios(remedios, caminhoEscolhido);
+		gerador.gerarPlanilhaRemedio(remedios, caminhoEscolhido);
 	}
 
 }

@@ -54,7 +54,7 @@ public class ProdutoBO {
 
 	public void gerarPlanilha(List<Produto> produtos, String caminhoEscolhido) {
 		GeradorDePlanilha gerador = new GeradorDePlanilha();
-		gerador.gerarPlanilhaProdutos(produtos, caminhoEscolhido);
+		gerador.gerarPlanilhaProduto(produtos, caminhoEscolhido);
 	}
 
 }

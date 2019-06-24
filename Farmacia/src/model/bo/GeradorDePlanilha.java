@@ -3,129 +3,148 @@ package model.bo;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import model.dao.ProdutoDAO;
+import model.dao.RemedioDAO;
 import model.vo.Produto;
 import model.vo.Remedio;
 
 public class GeradorDePlanilha {
 
-	public void gerarPlanilhaRemedios(List<Remedio> remedios, String caminho) {
-		String[] colunasDaPlanilha = { "Código de Barras", "Dosagem", "Composição", "Genérico", "Nome", "Data Cad.",
-				"Preço", "Estoque", "Forma Uso", "Laboratório" };
+	public String extensao;
+	public XSSFWorkbook planilha;
+	public XSSFWorkbook Workbook;
 
-		HSSFWorkbook planilha = new HSSFWorkbook();
-
-		HSSFSheet abaPlanilha = planilha.createSheet("Remédios");
-
-		Row headerRow = abaPlanilha.createRow(0);
-
-		for (int i = 0; i < colunasDaPlanilha.length; i++) {
-			Cell cell = headerRow.createCell(i);
-			cell.setCellValue(colunasDaPlanilha[i]);
-		}
-
-		int rowNum = 1;
-		for (Remedio rem : remedios) {
-			Row novaLinha = abaPlanilha.createRow(rowNum++);
-
-			novaLinha.createCell(0).setCellValue(rem.getCodBarra());
-			novaLinha.createCell(1).setCellValue(rem.getDosagem());
-			novaLinha.createCell(2).setCellValue(rem.getComposicao());
-			String isGenerico = "";
-			if (rem.isGenerico()) {
-				isGenerico = "Sim";
-			} else {
-				isGenerico = "Não";
-			}
-			novaLinha.createCell(3).setCellValue(isGenerico);
-			novaLinha.createCell(4).setCellValue(rem.getNome());
-			novaLinha.createCell(5).setCellValue(rem.getDataCadastro());
-			novaLinha.createCell(6).setCellValue(rem.getPreco());
-			novaLinha.createCell(7).setCellValue(rem.getEstoque());
-			novaLinha.createCell(8).setCellValue(rem.getFormaUso().getDescricao());
-			novaLinha.createCell(9).setCellValue(rem.getLaboratorio().getNomeLaboratorio());
-		}
-
-		for (int i = 0; i < colunasDaPlanilha.length; i++) {
-			abaPlanilha.autoSizeColumn(i);
-		}
-
-		FileOutputStream fileOut = null;
+	public String gerarPlanilhaRemedio(List<Remedio> remedios, String caminho) {
+		XSSFWorkbook planilha = null;
+		OutputStream outputStream = null;
 		try {
-			fileOut = new FileOutputStream(caminho = ".xls");
-			planilha.write(fileOut);
+			planilha = new XSSFWorkbook();
+			XSSFSheet sheet = planilha.createSheet("Remédio");
 
+			XSSFRow linhaCabecalho = sheet.createRow(0);
+			linhaCabecalho.createCell(0).setCellValue("Código de barra");
+			linhaCabecalho.createCell(1).setCellValue("Dosagem");
+			linhaCabecalho.createCell(2).setCellValue("Composição");
+			linhaCabecalho.createCell(3).setCellValue("Genérico");
+			linhaCabecalho.createCell(4).setCellValue("Nome");
+			linhaCabecalho.createCell(6).setCellValue("Preco");
+			linhaCabecalho.createCell(7).setCellValue("Estoque");
+			linhaCabecalho.createCell(8).setCellValue("Forma de uso");
+			linhaCabecalho.createCell(9).setCellValue("Laboratorio");
+
+			int linha = 1;
+			for (Remedio remedio : remedios) {
+				XSSFRow novaLinha = sheet.createRow(linha);
+				novaLinha.createCell(0).setCellValue(remedio.getCodBarra());
+				novaLinha.createCell(1).setCellValue(remedio.getDosagem());
+				novaLinha.createCell(2).setCellValue(remedio.getComposicao());
+				String isGenerico = "";
+				if (remedio.isGenerico()) {
+					isGenerico = "Sim";
+				} else {
+					isGenerico = "Não";
+				}
+				novaLinha.createCell(3).setCellValue(isGenerico);
+				novaLinha.createCell(4).setCellValue(remedio.getNome());
+				novaLinha.createCell(6).setCellValue(remedio.getPreco());
+				novaLinha.createCell(7).setCellValue(remedio.getEstoque());
+				novaLinha.createCell(8).setCellValue(remedio.getFormaUso().getDescricao());
+				novaLinha.createCell(9).setCellValue(remedio.getLaboratorio().getNomeLaboratorio());
+				linha++;
+			}
+
+			outputStream = new FileOutputStream(caminho);
+			planilha.write(outputStream);
+			return "Planilha criada com sucesso";
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			return "ERRO ao salvar planilha no: " + caminho;
 		} catch (IOException e) {
-			e.printStackTrace();
+			return "ERRO ao salvar planilha no: " + caminho;
 		} finally {
-			if (fileOut != null) {
+			if (planilha != null) {
 				try {
-					fileOut.close();
 					planilha.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
-		}
-
-	}
-
-	public void gerarPlanilhaProdutos(List<Produto> produtos, String caminho) {
-		String[] colunasDaPlanilha = { "Código", "Nome", "Preço", "Categoria", "Estoque" };
-
-		HSSFWorkbook planilha = new HSSFWorkbook();
-
-		HSSFSheet abaPlanilha = planilha.createSheet("Produtos");
-
-		Row headerRow = abaPlanilha.createRow(0);
-
-		for (int i = 0; i < colunasDaPlanilha.length; i++) {
-			Cell cell = headerRow.createCell(i);
-			cell.setCellValue(colunasDaPlanilha[i]);
-		}
-
-		int rowNum = 1;
-		for (Produto prod : produtos) {
-			Row novaLinha = abaPlanilha.createRow(rowNum++);
-
-			novaLinha.createCell(0).setCellValue(prod.getCodBarra());
-			novaLinha.createCell(1).setCellValue(prod.getNome());
-			novaLinha.createCell(2).setCellValue(prod.getPreco());
-			novaLinha.createCell(3).setCellValue(prod.getCategoria().getNomeCategoria());
-			novaLinha.createCell(4).setCellValue(prod.getEstoque());
-		}
-
-		for (int i = 0; i < colunasDaPlanilha.length; i++) {
-			abaPlanilha.autoSizeColumn(i);
-		}
-
-		FileOutputStream fileOut = null;
-		try {
-			fileOut = new FileOutputStream(caminho = ".xls");
-			planilha.write(fileOut);
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (fileOut != null) {
+			if (outputStream != null) {
 				try {
-					fileOut.close();
-					planilha.close();
+					outputStream.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 		}
-
 	}
+
+	public static void main(String[] args) {
+		RemedioDAO remedioDAO = new RemedioDAO();
+		List<Remedio> remedios = remedioDAO.listarComSeletor(null);
+		new GeradorDePlanilha().gerarPlanilhaRemedio(remedios, "");
+	}
+
+	public String gerarPlanilhaProduto(List<Produto> produtos, String caminho) {
+		XSSFWorkbook planilha = null;
+		OutputStream outputStream = null;
+		try {
+			planilha = new XSSFWorkbook();
+			XSSFSheet sheet = planilha.createSheet("Produto");
+
+			XSSFRow linhaCabecalho = sheet.createRow(0);
+			linhaCabecalho.createCell(0).setCellValue("Código de barra");
+			linhaCabecalho.createCell(1).setCellValue("Nome");
+			linhaCabecalho.createCell(2).setCellValue("Preço");
+			linhaCabecalho.createCell(3).setCellValue("Categoria");
+			linhaCabecalho.createCell(4).setCellValue("Estoque");
+
+			int linha = 1;
+			for (Produto produto : produtos) {
+				XSSFRow novaLinha = sheet.createRow(linha);
+				novaLinha.createCell(0).setCellValue(produto.getCodBarra());
+				novaLinha.createCell(1).setCellValue(produto.getNome());
+				novaLinha.createCell(2).setCellValue(produto.getPreco());
+				novaLinha.createCell(3).setCellValue(produto.getCategoria().getNomeCategoria());
+				novaLinha.createCell(4).setCellValue(produto.getEstoque());
+				linha++;
+			}
+
+			outputStream = new FileOutputStream(caminho);
+			planilha.write(outputStream);
+			return "Planilha criada com sucesso";
+		} catch (FileNotFoundException e) {
+			return "ERRO ao salvar planilha no: " + caminho;
+		} catch (IOException e) {
+			return "ERRO ao salvar planilha no: " + caminho;
+		} finally {
+			if (planilha != null) {
+				try {
+					planilha.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (outputStream != null) {
+				try {
+					outputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	public static void main1(String[] args) {
+		ProdutoDAO produtoDAO = new ProdutoDAO();
+		List<Produto> produtos = produtoDAO.listarComSeletor(null);
+		new GeradorDePlanilha().gerarPlanilhaProduto(produtos, "");
+	}
+
 }
