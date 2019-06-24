@@ -19,7 +19,7 @@ public class GeradorDePlanilha {
 
 	public String extensao;
 	public XSSFWorkbook planilha;
-	public XSSFWorkbook Workbook;
+	public String mensagem = "";
 
 	public String gerarPlanilhaRemedio(List<Remedio> remedios, String caminho) {
 		XSSFWorkbook planilha = null;
@@ -28,20 +28,20 @@ public class GeradorDePlanilha {
 			planilha = new XSSFWorkbook();
 			XSSFSheet sheet = planilha.createSheet("Remédio");
 
-			XSSFRow linhaCabecalho = sheet.createRow(0);
-			linhaCabecalho.createCell(0).setCellValue("Código de barra");
-			linhaCabecalho.createCell(1).setCellValue("Dosagem");
-			linhaCabecalho.createCell(2).setCellValue("Composição");
-			linhaCabecalho.createCell(3).setCellValue("Genérico");
-			linhaCabecalho.createCell(4).setCellValue("Nome");
-			linhaCabecalho.createCell(6).setCellValue("Preco");
-			linhaCabecalho.createCell(7).setCellValue("Estoque");
-			linhaCabecalho.createCell(8).setCellValue("Forma de uso");
-			linhaCabecalho.createCell(9).setCellValue("Laboratorio");
+			XSSFRow linhaHeader = sheet.createRow(0);
+			linhaHeader.createCell(0).setCellValue("Código de barra");
+			linhaHeader.createCell(1).setCellValue("Dosagem");
+			linhaHeader.createCell(2).setCellValue("Composição");
+			linhaHeader.createCell(3).setCellValue("Genérico");
+			linhaHeader.createCell(4).setCellValue("Nome");
+			linhaHeader.createCell(6).setCellValue("Preco");
+			linhaHeader.createCell(7).setCellValue("Estoque");
+			linhaHeader.createCell(8).setCellValue("Forma de uso");
+			linhaHeader.createCell(9).setCellValue("Laboratorio");
 
-			int linha = 1;
+			int count = 1;
 			for (Remedio remedio : remedios) {
-				XSSFRow novaLinha = sheet.createRow(linha);
+				XSSFRow novaLinha = sheet.createRow(count);
 				novaLinha.createCell(0).setCellValue(remedio.getCodBarra());
 				novaLinha.createCell(1).setCellValue(remedio.getDosagem());
 				novaLinha.createCell(2).setCellValue(remedio.getComposicao());
@@ -57,16 +57,19 @@ public class GeradorDePlanilha {
 				novaLinha.createCell(7).setCellValue(remedio.getEstoque());
 				novaLinha.createCell(8).setCellValue(remedio.getFormaUso().getDescricao());
 				novaLinha.createCell(9).setCellValue(remedio.getLaboratorio().getNomeLaboratorio());
-				linha++;
+				count++;
 			}
 
 			outputStream = new FileOutputStream(caminho);
 			planilha.write(outputStream);
-			return "Planilha criada com sucesso";
+			mensagem = "Planilha criada com sucesso";
+			return mensagem;
 		} catch (FileNotFoundException e) {
-			return "ERRO ao salvar planilha no: " + caminho;
+			mensagem = "ERRO ao salvar planilha no: ";
+			return mensagem + caminho;
 		} catch (IOException e) {
-			return "ERRO ao salvar planilha no: " + caminho;
+			mensagem = "ERRO ao salvar planilha no: ";
+			return mensagem + caminho;
 		} finally {
 			if (planilha != null) {
 				try {
@@ -98,31 +101,34 @@ public class GeradorDePlanilha {
 			planilha = new XSSFWorkbook();
 			XSSFSheet sheet = planilha.createSheet("Produto");
 
-			XSSFRow linhaCabecalho = sheet.createRow(0);
-			linhaCabecalho.createCell(0).setCellValue("Código de barra");
-			linhaCabecalho.createCell(1).setCellValue("Nome");
-			linhaCabecalho.createCell(2).setCellValue("Preço");
-			linhaCabecalho.createCell(3).setCellValue("Categoria");
-			linhaCabecalho.createCell(4).setCellValue("Estoque");
+			XSSFRow linhaHeader = sheet.createRow(0);
+			linhaHeader.createCell(0).setCellValue("Código de barra");
+			linhaHeader.createCell(1).setCellValue("Nome");
+			linhaHeader.createCell(2).setCellValue("Preço");
+			linhaHeader.createCell(3).setCellValue("Categoria");
+			linhaHeader.createCell(4).setCellValue("Estoque");
 
-			int linha = 1;
+			int count = 1;
 			for (Produto produto : produtos) {
-				XSSFRow novaLinha = sheet.createRow(linha);
+				XSSFRow novaLinha = sheet.createRow(count);
 				novaLinha.createCell(0).setCellValue(produto.getCodBarra());
 				novaLinha.createCell(1).setCellValue(produto.getNome());
 				novaLinha.createCell(2).setCellValue(produto.getPreco());
 				novaLinha.createCell(3).setCellValue(produto.getCategoria().getNomeCategoria());
 				novaLinha.createCell(4).setCellValue(produto.getEstoque());
-				linha++;
+				count++;
 			}
 
 			outputStream = new FileOutputStream(caminho);
 			planilha.write(outputStream);
-			return "Planilha criada com sucesso";
+			mensagem = "Planilha criada com sucesso";
+			return mensagem;
 		} catch (FileNotFoundException e) {
-			return "ERRO ao salvar planilha no: " + caminho;
+			mensagem = "ERRO ao salvar planilha no: ";
+			return mensagem + caminho;
 		} catch (IOException e) {
-			return "ERRO ao salvar planilha no: " + caminho;
+			mensagem = "ERRO ao salvar planilha no: ";
+			return mensagem + caminho;
 		} finally {
 			if (planilha != null) {
 				try {
