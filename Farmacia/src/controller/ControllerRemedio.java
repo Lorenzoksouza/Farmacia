@@ -12,6 +12,9 @@ import model.vo.Laboratorio;
 import model.vo.Remedio;
 
 public class ControllerRemedio {
+
+	public static final String TIPO_RELATORIO_XLS = "xls";
+
 	private RemedioBO remedioBO = new RemedioBO();
 
 	public String salvar(Remedio remedio) {
@@ -100,6 +103,10 @@ public class ControllerRemedio {
 
 	public String atualizar(Remedio remedioSelecionado) {
 		return remedioBO.atualizar(remedioSelecionado);
+	}
+
+	public void gerarRelatorio(List<Remedio> remedios, String caminhoEscolhido, String tipoRelatorio) {
+		remedioBO.gerarPlanilha(remedios, caminhoEscolhido);
 	}
 
 }

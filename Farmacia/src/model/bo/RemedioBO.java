@@ -60,4 +60,9 @@ public class RemedioBO {
 		return remedioDAO.consultarLaboratorio();
 	}
 
+	public void gerarPlanilha(List<Remedio> remedios, String caminhoEscolhido) {
+		GeradorDePlanilha gerador = new GeradorDePlanilha();
+		gerador.gerarPlanilhaRemedios(remedios, caminhoEscolhido);
+	}
+
 }

@@ -14,6 +14,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -128,7 +129,7 @@ public class ListagemMedicamento extends JInternalFrame {
 
 		txtNome.setDocument(new JTextFieldLimit(150));
 
-		JLabel lblComposicao = new JLabel("Composi��o:");
+		JLabel lblComposicao = new JLabel("Composição:");
 		getContentPane().add(lblComposicao, "cell 0 4");
 
 		// Composição
@@ -162,18 +163,29 @@ public class ListagemMedicamento extends JInternalFrame {
 			}
 		});
 
-		JLabel lblGenerico = new JLabel("Gen�rico:");
+		JLabel lblGenerico = new JLabel("Genérico:");
 		getContentPane().add(lblGenerico, "cell 0 8");
 		getContentPane().add(btnPesquisar, "cell 0 11,growx");
 
-		btnGerarXls = new JButton("Relat�rio");
+		btnGerarXls = new JButton("Relatório");
 		btnGerarXls.setPreferredSize(new Dimension(100, 30));
 		btnGerarXls.setBorder(new LineBorder(Color.gray, 2, true));
 		btnGerarXls.setBackground(Color.WHITE);
 		btnGerarXls.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnGerarXls.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				JFileChooser jfc = new JFileChooser();
+				jfc.setDialogTitle("Salvar...");
 
+				int resultado = jfc.showSaveDialog(null);
+				if (resultado == JFileChooser.APPROVE_OPTION) {
+					String caminhoEscolhido = jfc.getSelectedFile().getAbsolutePath();
+
+					ControllerRemedio remedioController = new ControllerRemedio();
+					remedioController.gerarRelatorio(remediosConsultados, caminhoEscolhido,
+							ControllerRemedio.TIPO_RELATORIO_XLS);
+
+				}
 			}
 		});
 
@@ -343,8 +355,8 @@ public class ListagemMedicamento extends JInternalFrame {
 		tblRemedios.setModel(new DefaultTableModel(
 				new String[][] { { "Código de Barras", "Dosagem", "Composição", "Genérico", "Nome", "Data Cad.",
 						"Preço", "Estoque", "Forma Uso", "Laboratório" }, },
-				new String[] { "Código de Barras", "Dosagem", "Composição", "Genérico", "Nome", "Data Cad.",
-						"Preço", "Estoque", "Forma Uso", "Laboratório" }));
+				new String[] { "Código de Barras", "Dosagem", "Composição", "Genérico", "Nome", "Data Cad.", "Preço",
+						"Estoque", "Forma Uso", "Laboratório" }));
 
 		DefaultTableModel modelo = (DefaultTableModel) tblRemedios.getModel();
 
