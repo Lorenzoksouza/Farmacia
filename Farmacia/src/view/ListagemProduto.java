@@ -163,7 +163,7 @@ public class ListagemProduto extends JInternalFrame {
 					produtosConsultados.remove(tblProdutos.getSelectedRow() - 1);
 					atualizarTabelaProdutos(produtosConsultados);
 				} else {
-					mensagem = "Remédio não foi cadastrado";
+					mensagem = "Produto não foi cadastrado";
 				}
 				JOptionPane.showMessageDialog(null, mensagem);
 			}
@@ -219,7 +219,7 @@ public class ListagemProduto extends JInternalFrame {
 		});
 		getContentPane().add(btnGerarXls, "cell 0 10,alignx center");
 
-		btnProximo = new JButton("Pr\u00F3ximo>");
+		btnProximo = new JButton("Próximo>");
 		JButton btnAnterior = new JButton("<Anterior");
 		btnAnterior.setEnabled(false);
 		btnAnterior.addActionListener(new ActionListener() {

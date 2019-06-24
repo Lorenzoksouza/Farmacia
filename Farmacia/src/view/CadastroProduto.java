@@ -145,7 +145,10 @@ public class CadastroProduto extends JInternalFrame {
 		btnSalvar.setOpaque(true);
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				String mensagem = "";
+
 				try {
+
 					Produto produto = new Produto();
 					produto.setCodBarra(txtCodBar.getText());
 					produto.setNome(txtNome.getText());
@@ -158,11 +161,11 @@ public class CadastroProduto extends JInternalFrame {
 					produto.setCategoria(cat);
 
 					ControllerProduto produtoController = new ControllerProduto();
-					produtoController.salvar(produto);
-					JOptionPane.showMessageDialog(null, "produto cadastrado");
+					mensagem = produtoController.salvar(produto);
 				} catch (ArrayIndexOutOfBoundsException e) {
 					JOptionPane.showMessageDialog(null, "Verificar se todas as caixas foram preenchidas");
 				}
+				JOptionPane.showMessageDialog(null, mensagem);
 			}
 		});
 
