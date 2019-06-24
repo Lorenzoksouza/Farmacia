@@ -44,6 +44,10 @@ public class ListagemMedicamento extends JInternalFrame {
 	private List<Remedio> remediosConsultados;
 	private int totalPaginas = 1;
 	private int paginaAtual = 1;
+	private JLabel lblPaginaAtual;
+	private JLabel lbMax;
+	private int paginaTotal = 1;
+	private JButton btnProximo;
 
 	private ArrayList<FormaUso> listaFormasUso;
 
@@ -75,7 +79,7 @@ public class ListagemMedicamento extends JInternalFrame {
 		setClosable(true);
 		setBounds(100, 100, 680, 540);
 		getContentPane()
-				.setLayout(new MigLayout("", "[211.00][][grow]", "[][][][][][][][][][][10px:n][][10px:n][][][grow]"));
+				.setLayout(new MigLayout("", "[211.00][][grow]", "[][][][][][][][][][][10px:n][][10px:n][][][grow][]"));
 
 		JLabel lblCodbarras = new JLabel("Cód.barras:");
 		getContentPane().add(lblCodbarras, "cell 0 0");
@@ -284,10 +288,50 @@ public class ListagemMedicamento extends JInternalFrame {
 		cmbGenerico.setSelectedIndex(2);
 		getContentPane().add(cmbGenerico, "flowx,cell 0 9,growx");
 
+		btnProximo = new JButton("Pr�ximo>");
+		JButton btnAnterior = new JButton("<Anterior");
+		btnAnterior.setEnabled(false);
+		btnAnterior.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (paginaAtual > 1) {
+					paginaAtual--;
+				}
+				if (paginaAtual == 1) {
+					btnAnterior.setEnabled(false);
+
+				}
+				btnProximo.setEnabled(true);
+				pesquisarMedicamentos();
+			}
+		});
+		getContentPane().add(btnAnterior, "flowx,cell 2 16,alignx center");
+
+		lblPaginaAtual = new JLabel("");
+		lblPaginaAtual.setText(paginaAtual + "");
+		getContentPane().add(lblPaginaAtual, "cell 2 16,alignx center");
+
+		JLabel label = new JLabel("/");
+		getContentPane().add(label, "cell 2 16,alignx center");
+
+		lbMax = new JLabel("1");
+		getContentPane().add(lbMax, "cell 2 16,alignx center");
+
+		btnProximo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				paginaAtual++;
+				if (paginaAtual == paginaTotal) {
+					btnProximo.setEnabled(false);
+				}
+				btnAnterior.setEnabled(true);
+				pesquisarMedicamentos();
+			}
+		});
+		getContentPane().add(btnProximo, "cell 2 16,alignx center");
+
 	}
 
 	private void pesquisarMedicamentos() {
-		// lblPaginaAtual.setText(paginaAtual + "");
+		lblPaginaAtual.setText(paginaAtual + "");
 
 		ControllerRemedio controlador = new ControllerRemedio();
 		RemedioSeletor seletor = new RemedioSeletor();
@@ -304,7 +348,7 @@ public class ListagemMedicamento extends JInternalFrame {
 		} else {
 			totalPaginas = quociente + 1;
 		}
-		// lblTotalPaginas.setText(totalPaginas + "");
+		lbMax.setText(totalPaginas + "");
 
 		seletor.setPagina(paginaAtual);
 
@@ -355,8 +399,8 @@ public class ListagemMedicamento extends JInternalFrame {
 		tblRemedios.setModel(new DefaultTableModel(
 				new String[][] { { "Código de Barras", "Dosagem", "Composição", "Genérico", "Nome", "Data Cad.",
 						"Preço", "Estoque", "Forma Uso", "Laboratório" }, },
-				new String[] { "Código de Barras", "Dosagem", "Composição", "Genérico", "Nome", "Data Cad.", "Preço",
-						"Estoque", "Forma Uso", "Laboratório" }));
+				new String[] { "Código de Barras", "Dosagem", "Composição", "Genérico", "Nome", "Data Cad.",
+						"Preço", "Estoque", "Forma Uso", "Laboratório" }));
 
 		DefaultTableModel modelo = (DefaultTableModel) tblRemedios.getModel();
 

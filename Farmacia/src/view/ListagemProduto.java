@@ -247,17 +247,17 @@ public class ListagemProduto extends JInternalFrame {
 				pesquisarProdutos();
 			}
 		});
-		getContentPane().add(btnAnterior, "flowx,cell 2 12");
+		getContentPane().add(btnAnterior, "flowx,cell 2 12,alignx center");
 
 		lblPaginaAtual = new JLabel("");
 		lblPaginaAtual.setText(paginaAtual + "");
-		getContentPane().add(lblPaginaAtual, "cell 2 12");
+		getContentPane().add(lblPaginaAtual, "cell 2 12,alignx center");
 
 		JLabel label = new JLabel("/");
-		getContentPane().add(label, "cell 2 12");
+		getContentPane().add(label, "cell 2 12,alignx center");
 
 		lbMax = new JLabel("1");
-		getContentPane().add(lbMax, "cell 2 12");
+		getContentPane().add(lbMax, "cell 2 12,alignx center");
 
 		btnProximo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -269,7 +269,7 @@ public class ListagemProduto extends JInternalFrame {
 				pesquisarProdutos();
 			}
 		});
-		getContentPane().add(btnProximo, "cell 2 12");
+		getContentPane().add(btnProximo, "cell 2 12,alignx center");
 
 	}
 
