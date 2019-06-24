@@ -16,7 +16,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
@@ -169,42 +168,43 @@ public class ListagemProduto extends JInternalFrame {
 		});
 		getContentPane().add(btnExcluir, "flowx,cell 0 9,growx");
 
-		JButton btnAlterar = new JButton("Alterar");
-		btnAlterar.setBackground(Color.WHITE);
-		btnAlterar.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnAlterar.setPreferredSize(new Dimension(80, 30));
-		btnAlterar.setBorder(new LineBorder(Color.gray, 2, true));
-		btnAlterar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Produto produtoSelecionado = new Produto();
-				int linhaSelecionada = tblProdutos.getSelectedRow();
-
-				if (linhaSelecionada > 0) {
-
-					// "Código", "Nome", "Preço", "Categoria", "Estoque"
-					produtoSelecionado.setCodBarra((String) tblProdutos.getValueAt(linhaSelecionada, 0));
-					produtoSelecionado.setNome((String) tblProdutos.getValueAt(linhaSelecionada, 1));
-
-					double precoConversao = Double.parseDouble((String) tblProdutos.getValueAt(linhaSelecionada, 2));
-					produtoSelecionado.setPreco(precoConversao);
-
-					String nmCategoria = (String) tblProdutos.getValueAt(linhaSelecionada, 3);
-					Categoria cat = new Categoria();
-					cat.setNomeCategoria(nmCategoria);
-
-					produtoSelecionado.setCategoria(cat);
-
-					int estoqueConversao = Integer.parseInt((String) tblProdutos.getValueAt(linhaSelecionada, 4));
-					produtoSelecionado.setEstoque(estoqueConversao);
-
-					cadastroProduto = new CadastroProduto(produtoSelecionado);
-					cadastroProduto.setVisible(true);
-				} else {
-					JOptionPane.showMessageDialog(null, "Selecione um produto para ser Alterado!!");
-				}
-			}
-		});
-		getContentPane().add(btnAlterar, "cell 0 9,growx");
+		/*
+		 * JButton btnAlterar = new JButton("Alterar");
+		 * btnAlterar.setBackground(Color.WHITE); btnAlterar.setFont(new Font("Tahoma",
+		 * Font.BOLD, 11)); btnAlterar.setPreferredSize(new Dimension(80, 30));
+		 * btnAlterar.setBorder(new LineBorder(Color.gray, 2, true));
+		 * btnAlterar.addActionListener(new ActionListener() { public void
+		 * actionPerformed(ActionEvent e) { Produto produtoSelecionado = new Produto();
+		 * int linhaSelecionada = tblProdutos.getSelectedRow();
+		 * 
+		 * if (linhaSelecionada > 0) {
+		 * 
+		 * // "Código", "Nome", "Preço", "Categoria", "Estoque"
+		 * produtoSelecionado.setCodBarra((String)
+		 * tblProdutos.getValueAt(linhaSelecionada, 0));
+		 * produtoSelecionado.setNome((String) tblProdutos.getValueAt(linhaSelecionada,
+		 * 1));
+		 * 
+		 * double precoConversao = Double.parseDouble((String)
+		 * tblProdutos.getValueAt(linhaSelecionada, 2));
+		 * produtoSelecionado.setPreco(precoConversao);
+		 * 
+		 * String nmCategoria = (String) tblProdutos.getValueAt(linhaSelecionada, 3);
+		 * Categoria cat = new Categoria(); cat.setNomeCategoria(nmCategoria);
+		 * 
+		 * produtoSelecionado.setCategoria(cat);
+		 * 
+		 * int estoqueConversao = Integer.parseInt((String)
+		 * tblProdutos.getValueAt(linhaSelecionada, 4));
+		 * produtoSelecionado.setEstoque(estoqueConversao);
+		 * 
+		 * cadastroProduto = new CadastroProduto(produtoSelecionado);
+		 * cadastroProduto.setVisible(true); } else {
+		 * JOptionPane.showMessageDialog(null,
+		 * "Selecione um produto para ser Alterado!!"); } } });
+		 * 
+		 * getContentPane().add(btnAlterar, "cell 0 9,growx");
+		 */
 
 		JButton btnGerarXls = new JButton("Relatório");
 		btnGerarXls.setBackground(Color.WHITE);
