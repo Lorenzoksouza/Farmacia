@@ -105,8 +105,10 @@ public class Menu extends JFrame {
 		mntmCadastrarRemedio.setBackground(Color.WHITE);
 		mntmCadastrarRemedio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (!temComponenteNaTela(cadastroMedicamento))
-					cadastroMedicamento = new CadastroMedicamento();
+				if (!temComponenteNaTela(cadastroMedicamento)) {
+					cadastroMedicamento = new CadastroMedicamento(null);
+				}
+
 				desktopPane.add(cadastroMedicamento);
 				// desktopPane.getDesktopManager().maximizeFrame(cadastroMedicamento);
 				cadastroMedicamento.show();
@@ -164,7 +166,7 @@ public class Menu extends JFrame {
 		mntmCadastrarProduto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!temComponenteNaTela(pesquisaMedicamento)) {
-					cadastroProduto = new CadastroProduto();
+					cadastroProduto = new CadastroProduto(null);
 					desktopPane.add(cadastroProduto);
 					// desktopPane.getDesktopManager().maximizeFrame(pesquisaMedicamento);
 					cadastroProduto.show();
@@ -274,6 +276,18 @@ public class Menu extends JFrame {
 
 	public void chamarPai(JInternalFrame telaFilho) {
 		telaFilho = null;
+	}
+
+	public void mostrarTelaFilho() {
+
+	}
+
+	public JDesktopPane getDesktopPane() {
+		return desktopPane;
+	}
+
+	public void setDesktopPane(JDesktopPane desktopPane) {
+		this.desktopPane = desktopPane;
 	}
 
 }

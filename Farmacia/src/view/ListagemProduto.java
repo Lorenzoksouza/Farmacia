@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -20,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -79,7 +81,7 @@ public class ListagemProduto extends JInternalFrame {
 		getContentPane()
 				.setLayout(new MigLayout("", "[211.00][][grow]", "[18.00][][][][][][8px:n][][10px:n][][][grow][]"));
 
-		JLabel lblCodbarras = new JLabel("Cód.barras:");
+		JLabel lblCodbarras = new JLabel("Cï¿½d.barras:");
 		getContentPane().add(lblCodbarras, "cell 0 0");
 
 		JLabel lblEspaco = new JLabel("      ");
@@ -89,10 +91,10 @@ public class ListagemProduto extends JInternalFrame {
 		tblProdutos.setColumnSelectionAllowed(true);
 		tblProdutos.setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		tblProdutos.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Código", "Nome", "Preço", "Categoria", "Estoque" }));
+				new String[] { "Cï¿½digo", "Nome", "Preï¿½o", "Categoria", "Estoque" }));
 		getContentPane().add(tblProdutos, "cell 2 0 1 12,grow");
 
-		// Código de barras
+		// Cï¿½digo de barras
 
 		txtCodBar = new JTextField();
 
@@ -164,52 +166,42 @@ public class ListagemProduto extends JInternalFrame {
 					produtosConsultados.remove(tblProdutos.getSelectedRow() - 1);
 					atualizarTabelaProdutos(produtosConsultados);
 				} else {
-					mensagem = "Produto não foi cadastrado";
+					mensagem = "Produto nï¿½o foi cadastrado";
 				}
 				JOptionPane.showMessageDialog(null, mensagem);
 			}
 		});
 		getContentPane().add(btnExcluir, "flowx,cell 0 9,growx");
 
-		/*
-		 * JButton btnAlterar = new JButton("Alterar");
-		 * btnAlterar.setBackground(Color.WHITE); btnAlterar.setFont(new Font("Tahoma",
-		 * Font.BOLD, 11)); btnAlterar.setPreferredSize(new Dimension(80, 30));
-		 * btnAlterar.setBorder(new LineBorder(Color.gray, 2, true));
-		 * btnAlterar.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent e) { Produto produtoSelecionado = new Produto();
-		 * int linhaSelecionada = tblProdutos.getSelectedRow();
-		 * 
-		 * if (linhaSelecionada > 0) {
-		 * 
-		 * // "Código", "Nome", "Preço", "Categoria", "Estoque"
-		 * produtoSelecionado.setCodBarra((String)
-		 * tblProdutos.getValueAt(linhaSelecionada, 0));
-		 * produtoSelecionado.setNome((String) tblProdutos.getValueAt(linhaSelecionada,
-		 * 1));
-		 * 
-		 * double precoConversao = Double.parseDouble((String)
-		 * tblProdutos.getValueAt(linhaSelecionada, 2));
-		 * produtoSelecionado.setPreco(precoConversao);
-		 * 
-		 * String nmCategoria = (String) tblProdutos.getValueAt(linhaSelecionada, 3);
-		 * Categoria cat = new Categoria(); cat.setNomeCategoria(nmCategoria);
-		 * 
-		 * produtoSelecionado.setCategoria(cat);
-		 * 
-		 * int estoqueConversao = Integer.parseInt((String)
-		 * tblProdutos.getValueAt(linhaSelecionada, 4));
-		 * produtoSelecionado.setEstoque(estoqueConversao);
-		 * 
-		 * cadastroProduto = new CadastroProduto(produtoSelecionado);
-		 * cadastroProduto.setVisible(true); } else {
-		 * JOptionPane.showMessageDialog(null,
-		 * "Selecione um produto para ser Alterado!!"); } } });
-		 * 
-		 * getContentPane().add(btnAlterar, "cell 0 9,growx");
-		 */
+		JButton btnAlterar = new JButton("Alterar");
+		btnAlterar.setBackground(Color.WHITE);
+		btnAlterar.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnAlterar.setPreferredSize(new Dimension(80, 30));
+		btnAlterar.setBorder(new LineBorder(Color.gray, 2, true));
+		btnAlterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int linhaSelecionada = tblProdutos.getSelectedRow();
 
-		JButton btnGerarXls = new JButton("Relatório");
+				if (linhaSelecionada > 0) {
+					Produto produtoSelecionado = produtosConsultados.get(linhaSelecionada - 1);
+					cadastroProduto = new CadastroProduto(produtoSelecionado);
+					Menu pai = (Menu) SwingUtilities.getWindowAncestor((Component) e.getSource());
+
+					// TODO criar um mÃ©todo no pai
+					pai.cadastroProduto = cadastroProduto;
+					pai.getDesktopPane().add(cadastroProduto);
+					pai.cadastroProduto.show();
+
+					atualizarTabelaProdutos(produtosConsultados);
+				} else {
+					JOptionPane.showMessageDialog(null, "Selecione um produto para ser Alterado!!");
+				}
+			}
+		});
+
+		getContentPane().add(btnAlterar, "cell 0 9,growx");
+
+		JButton btnGerarXls = new JButton("Relatï¿½rio");
 		btnGerarXls.setBackground(Color.WHITE);
 		btnGerarXls.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnGerarXls.setPreferredSize(new Dimension(80, 30));
@@ -231,7 +223,7 @@ public class ListagemProduto extends JInternalFrame {
 		});
 		getContentPane().add(btnGerarXls, "cell 0 10,alignx center");
 
-		btnProximo = new JButton("Próximo>");
+		btnProximo = new JButton("Prï¿½ximo>");
 		JButton btnAnterior = new JButton("<Anterior");
 		btnAnterior.setEnabled(false);
 		btnAnterior.addActionListener(new ActionListener() {
@@ -328,15 +320,15 @@ public class ListagemProduto extends JInternalFrame {
 
 		// Limpa a tabela
 		tblProdutos.setModel(
-				new DefaultTableModel(new String[][] { { "Código", "Nome", "Preço", "Categoria", "Estoque" }, },
-						new String[] { "Código", "Nome", "Preço", "Categoria", "Estoque" }));
+				new DefaultTableModel(new String[][] { { "Cï¿½digo", "Nome", "Preï¿½o", "Categoria", "Estoque" }, },
+						new String[] { "Cï¿½digo", "Nome", "Preï¿½o", "Categoria", "Estoque" }));
 
 		DefaultTableModel modelo = (DefaultTableModel) tblProdutos.getModel();
 
 		for (Produto produto : produtos) {
 			// Crio uma nova linha na tabela
 			// Preencher a linha com os atributos do remedio
-			// na ORDEM do cabeçalho da tabela
+			// na ORDEM do cabeï¿½alho da tabela
 
 			String[] novaLinha = new String[] { produto.getCodBarra() + "", produto.getNome(), "" + produto.getPreco(),
 					produto.getCategoria().getNomeCategoria(), produto.getEstoque() + "" };

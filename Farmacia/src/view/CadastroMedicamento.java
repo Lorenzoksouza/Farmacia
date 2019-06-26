@@ -42,6 +42,7 @@ public class CadastroMedicamento extends JInternalFrame {
 	private ArrayList<Laboratorio> listaLaboratorios;
 	private ArrayList<FormaUso> listaFormasUso;
 	protected Scanner teclado = new Scanner(System.in);
+	private Remedio remedio;
 
 	/**
 	 * Launch the application.
@@ -50,7 +51,7 @@ public class CadastroMedicamento extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastroMedicamento frame = new CadastroMedicamento();
+					CadastroMedicamento frame = new CadastroMedicamento(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -62,7 +63,7 @@ public class CadastroMedicamento extends JInternalFrame {
 	/**
 	 * Create the frame. INSERT
 	 */
-	public CadastroMedicamento() {
+	public CadastroMedicamento(Remedio remedioSelecionado) {
 		setFrameIcon(new ImageIcon(CadastroMedicamento.class.getResource("/icons/med3x.png")));
 		getContentPane().setBackground(Color.WHITE);
 		setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
@@ -82,16 +83,11 @@ public class CadastroMedicamento extends JInternalFrame {
 		JLabel lblCodbarras = new JLabel("C\u00F3d.barras:");
 		getContentPane().add(lblCodbarras, "cell 2 1");
 
-		// Nome
-
 		txtNome = new JTextField();
-
 		txtNome.setDocument(new JTextFieldLimit(150));
 
 		getContentPane().add(txtNome, "cell 0 2,growx");
 		txtNome.setColumns(10);
-
-		// Código de barra
 
 		JLabel lblValidacaoTxtCodBar = new JLabel(" ");
 		lblValidacaoTxtCodBar.setForeground(Color.RED);
@@ -119,15 +115,11 @@ public class CadastroMedicamento extends JInternalFrame {
 		JLabel lblPreco = new JLabel("Pre\u00E7o:");
 		getContentPane().add(lblPreco, "cell 2 4");
 
-		// Dosagem
 		txtDosagem = new JTextField();
-
 		txtDosagem.setDocument(new JTextFieldLimit(15));
 
 		getContentPane().add(txtDosagem, "cell 0 5,alignx left");
 		txtDosagem.setColumns(10);
-
-		// Preço
 
 		txtPreco = new JNumberFormatField(2);
 		getContentPane().add(txtPreco, "cell 2 5,growx");
@@ -137,8 +129,6 @@ public class CadastroMedicamento extends JInternalFrame {
 		lblValidacaoTxtDosagem.setForeground(Color.RED);
 		getContentPane().add(lblValidacaoTxtDosagem, "cell 2 6");
 
-		// Laboratório
-
 		consultarLaboratorio();
 
 		JLabel lblComposicao = new JLabel("Composi\u00E7\u00E3o:");
@@ -147,10 +137,7 @@ public class CadastroMedicamento extends JInternalFrame {
 		JLabel lblLaboratorio = new JLabel("Laborat\u00F3rio:");
 		getContentPane().add(lblLaboratorio, "cell 2 7");
 
-		// Composição
-
 		txtComposicao = new JTextField();
-
 		txtComposicao.setDocument(new JTextFieldLimit(100));
 
 		getContentPane().add(txtComposicao, "cell 0 8,growx");
@@ -161,8 +148,6 @@ public class CadastroMedicamento extends JInternalFrame {
 		cmbLaboratorio.setModel(new DefaultComboBoxModel(listaLaboratorios.toArray()));
 		cmbLaboratorio.setSelectedIndex(-1);
 		getContentPane().add(cmbLaboratorio, "cell 2 8,growx");
-
-		// Forma de uso
 
 		consultarFormaUso();
 
@@ -182,8 +167,6 @@ public class CadastroMedicamento extends JInternalFrame {
 		JLabel labelEspaco2 = new JLabel("    ");
 		getContentPane().add(labelEspaco2, "cell 0 11");
 
-		// Estoque
-
 		txtEstoque = new JTextField();
 		txtEstoque.addKeyListener(new KeyAdapter() {
 			@Override
@@ -200,13 +183,9 @@ public class CadastroMedicamento extends JInternalFrame {
 		JLabel lblEstoque = new JLabel("    Estoque:");
 		getContentPane().add(lblEstoque, "cell 0 10,alignx right");
 
-		// Genérico
-
 		chckbxGenerico = new JCheckBox("Gen\u00E9rico");
 		chckbxGenerico.setBackground(Color.WHITE);
 		getContentPane().add(chckbxGenerico, "cell 0 11");
-
-		// listagem
 
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.setIcon(new ImageIcon(CadastroMedicamento.class.getResource("/icons/check.png")));
@@ -262,6 +241,16 @@ public class CadastroMedicamento extends JInternalFrame {
 			}
 		});
 		getContentPane().add(btnSalvar, "cell 2 11,alignx right");
+
+		if (remedioSelecionado != null) {
+			this.remedio = remedioSelecionado;
+			this.preencherCampos();
+			this.bloquearCamposEdicao();
+		}
+	}
+
+	private void bloquearCamposEdicao() {
+		this.txtCodBar.setEnabled(false);
 	}
 
 	private void consultarLaboratorio() {
@@ -286,4 +275,15 @@ public class CadastroMedicamento extends JInternalFrame {
 		chckbxGenerico.setSelected(isClosed);
 	}
 
+	public void preencherCampos() {
+		txtCodBar.setText(remedio.getCodBarra());
+		txtNome.setText(remedio.getNome());
+		txtDosagem.setText(remedio.getDosagem());
+		txtPreco.setText(remedio.getPreco() + "");
+		txtComposicao.setText(remedio.getComposicao());
+		cmbLaboratorio.setSelectedItem(remedio.getLaboratorio());
+		cmbFormaUso.setSelectedItem(remedio.getFormaUso());
+		txtEstoque.setText(remedio.getEstoque() + "");
+		chckbxGenerico.setSelected(remedio.isGenerico());
+	}
 }

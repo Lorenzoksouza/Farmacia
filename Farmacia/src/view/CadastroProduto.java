@@ -32,8 +32,8 @@ public class CadastroProduto extends JInternalFrame {
 	private JTextField txtEstoque;
 	private JTextField txtCodBar;
 	private JComboBox<Categoria> cmbCategoria;
-
 	private ArrayList<Categoria> listaCategorias;
+	private Produto produto;
 
 	/**
 	 * Launch the application.
@@ -42,7 +42,7 @@ public class CadastroProduto extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastroProduto frame = new CadastroProduto();
+					CadastroProduto frame = new CadastroProduto(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,7 +54,7 @@ public class CadastroProduto extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CadastroProduto() {
+	public CadastroProduto(Produto produtoSelecionado) {
 		setBorder(new LineBorder(new Color(192, 192, 192), 3));
 		setFrameIcon(new ImageIcon(CadastroProduto.class.getResource("/icons/product.png")));
 		getContentPane().setBackground(Color.WHITE);
@@ -73,7 +73,7 @@ public class CadastroProduto extends JInternalFrame {
 		JLabel lblCodbarras = new JLabel("C\u00F3d.barras:");
 		getContentPane().add(lblCodbarras, "cell 2 0");
 
-		// Preço
+		// Preï¿½o
 
 		txtPreco = new JNumberFormatField(2);
 
@@ -89,7 +89,7 @@ public class CadastroProduto extends JInternalFrame {
 		getContentPane().add(txtNome, "cell 0 1,growx");
 		txtNome.setColumns(10);
 
-		// Código de barras
+		// Cï¿½digo de barras
 
 		txtCodBar = new JTextField();
 		txtCodBar.addKeyListener(new KeyAdapter() {
@@ -177,18 +177,15 @@ public class CadastroProduto extends JInternalFrame {
 		JLabel lblPreco = new JLabel("Pre\u00E7o:");
 		getContentPane().add(lblPreco, "flowx,cell 0 4");
 
+		if (produtoSelecionado != null) {
+			this.produto = produtoSelecionado;
+			this.preencherCampos();
+			this.bloquearCamposEdicao();
+		}
 	}
 
-	public CadastroProduto(Produto produto) {
-		txtNome = new JTextField();
-		txtPreco = new JNumberFormatField();
-		txtEstoque = new JTextField();
-		txtCodBar = new JTextField();
-		cmbCategoria = new JComboBox<Categoria>();
-		txtCodBar.setText(produto.getCodBarra().toString());
-		txtNome.setText(produto.getNome());
-		txtPreco.setText("" + produto.getPreco());
-		txtEstoque.setText("" + produto.getEstoque());
+	private void bloquearCamposEdicao() {
+		this.txtCodBar.setEnabled(false);
 	}
 
 	private void consultarCategoria() {
@@ -202,6 +199,14 @@ public class CadastroProduto extends JInternalFrame {
 		txtPreco.setText("");
 		txtEstoque.setText("");
 		cmbCategoria.setSelectedIndex(-1);
+	}
+
+	public void preencherCampos() {
+		txtNome.setText(produto.getNome());
+		txtCodBar.setText(produto.getCodBarra());
+		txtPreco.setText(produto.getPreco() + "");
+		txtEstoque.setText(produto.getEstoque() + "");
+		cmbCategoria.setSelectedItem(produto.getCategoria());
 	}
 
 }
