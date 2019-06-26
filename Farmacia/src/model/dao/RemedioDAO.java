@@ -37,7 +37,7 @@ public class RemedioDAO {
 			prepStmt.execute();
 
 		} catch (SQLException e) {
-			System.out.println("Erro ao inserir remédio. Causa: " + e.getMessage());
+			System.out.println("Erro ao inserir remï¿½dio. Causa: " + e.getMessage());
 		} finally {
 			Banco.closePreparedStatement(prepStmt);
 			Banco.closeConnection(conn);
@@ -68,11 +68,11 @@ public class RemedioDAO {
 
 			int codigoRetorno = prepStmt.executeUpdate();
 			if (codigoRetorno == 0) {
-				mensagem = "Erro ao executar query de atualização de Remédio!";
+				mensagem = "Erro ao executar query de atualizaï¿½ï¿½o de Remï¿½dio!";
 			}
 		} catch (SQLException e) {
-			System.out.println("Erro ao atualizar remédio. Causa: " + e.getMessage());
-			mensagem = "Erro ao executar query de atualização de Remédio!";
+			System.out.println("Erro ao atualizar remï¿½dio. Causa: " + e.getMessage());
+			mensagem = "Erro ao executar query de atualizaï¿½ï¿½o de Remï¿½dio!";
 		} finally {
 			Banco.closePreparedStatement(prepStmt);
 			Banco.closeConnection(conn);
@@ -81,7 +81,7 @@ public class RemedioDAO {
 	}
 
 	public List<Remedio> listarComSeletor(RemedioSeletor seletor) {
-		String sql = " SELECT R.COD_BARRA, R.DOSAGEM, R.COMPOSICAO, R.GENERICO, R.NM_REMEDIO, R.DT_CADASTRO,R.PRECO, R.ESTOQUE, FU.DESCRICAO, L.NM_LABORATORIO "
+		String sql = " SELECT R.COD_BARRA, R.DOSAGEM, R.COMPOSICAO, R.GENERICO, R.NM_REMEDIO, R.DT_CADASTRO, R.PRECO, R.ESTOQUE,FU.ID_FORMA_USO, FU.DESCRICAO, L.ID_LABORATORIO, L.NM_LABORATORIO "
 				+ " FROM REMEDIO R JOIN FORMA_USO FU ON R.ID_FORMA_USO = FU.ID_FORMA_USO"
 				+ " JOIN LABORATORIO L ON R.ID_LABORATORIO = L.ID_LABORATORIO ";
 
@@ -172,8 +172,10 @@ public class RemedioDAO {
 			r.setDataCadastro(result.getDate("DT_CADASTRO"));
 			r.setPreco(result.getDouble("PRECO"));
 			r.setEstoque(result.getInt("ESTOQUE"));
+			fu.setIdFormaUso(result.getInt("ID_FORMA_USO"));
 			fu.setDescricao(result.getString("DESCRICAO"));
 			r.setFormaUso(fu);
+			l.setIdLaboratorio(result.getInt("ID_LABORATORIO"));
 			l.setNomeLaboratorio(result.getString("NM_LABORATORIO"));
 			r.setLaboratorio(l);
 		} catch (SQLException e) {
@@ -198,7 +200,7 @@ public class RemedioDAO {
 			}
 		} catch (SQLException e) {
 			System.out.println(
-					"Erro ao executar Query que verifica existência de Código de Barras. Causa :" + e.getMessage());
+					"Erro ao executar Query que verifica existï¿½ncia de Cï¿½digo de Barras. Causa :" + e.getMessage());
 			codigoRetorno = false;
 		} finally {
 			Banco.closeResultSet(resultado);
@@ -223,7 +225,7 @@ public class RemedioDAO {
 				result = false;
 			}
 		} catch (SQLException e) {
-			System.out.println("Erro ao remover remédio. Causa: " + e.getMessage());
+			System.out.println("Erro ao remover remï¿½dio. Causa: " + e.getMessage());
 			result = false;
 		} finally {
 			Banco.closePreparedStatement(prepStmt);
@@ -278,7 +280,7 @@ public class RemedioDAO {
 				listaLaboratorios.add(lab);
 			}
 		} catch (SQLException e) {
-			System.out.println("Erro ao listar os Laboratórios!!");
+			System.out.println("Erro ao listar os Laboratï¿½rios!!");
 			e.printStackTrace();
 		} finally {
 			Banco.closeResultSet(resultado);

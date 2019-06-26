@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Scanner;
 
 import javax.swing.DefaultComboBoxModel;
@@ -281,8 +282,17 @@ public class CadastroMedicamento extends JInternalFrame {
 		txtDosagem.setText(remedio.getDosagem());
 		txtPreco.setText(remedio.getPreco() + "");
 		txtComposicao.setText(remedio.getComposicao());
-		cmbLaboratorio.setSelectedItem(remedio.getLaboratorio());
-		cmbFormaUso.setSelectedItem(remedio.getFormaUso());
+
+		// Usando calculo Lambda ;)
+		Optional<Laboratorio> laboratorioSelecionado = listaLaboratorios.stream()
+				.filter(lab -> lab.getIdLaboratorio() == remedio.getLaboratorio().getIdLaboratorio()).findFirst();
+
+		cmbLaboratorio.setSelectedItem(laboratorioSelecionado.get());
+
+		Optional<FormaUso> formaUsoSelecionado = listaFormasUso.stream()
+				.filter(fu -> fu.getIdFormaUso() == remedio.getFormaUso().getIdFormaUso()).findFirst();
+
+		cmbFormaUso.setSelectedItem(formaUsoSelecionado.get());
 		txtEstoque.setText(remedio.getEstoque() + "");
 		chckbxGenerico.setSelected(remedio.isGenerico());
 	}

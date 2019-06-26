@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -206,7 +207,11 @@ public class CadastroProduto extends JInternalFrame {
 		txtCodBar.setText(produto.getCodBarra());
 		txtPreco.setText(produto.getPreco() + "");
 		txtEstoque.setText(produto.getEstoque() + "");
-		cmbCategoria.setSelectedItem(produto.getCategoria());
+
+		Optional<Categoria> categoriaSelecionado = listaCategorias.stream()
+				.filter(cat -> cat.getIdCategoria() == produto.getCategoria().getIdCategoria()).findFirst();
+
+		cmbCategoria.setSelectedItem(categoriaSelecionado.get());
 	}
 
 }

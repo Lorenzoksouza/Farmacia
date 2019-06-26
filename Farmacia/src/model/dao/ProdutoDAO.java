@@ -60,7 +60,7 @@ public class ProdutoDAO {
 
 			int codigoRetorno = prepStmt.executeUpdate();
 			if (codigoRetorno == 0) {
-				mensagem = "Erro ao executar query de atualização de Produto!";
+				mensagem = "Erro ao executar query de atualizaï¿½ï¿½o de Produto!";
 			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao atualizar produto. Causa: " + e.getMessage());
@@ -72,7 +72,7 @@ public class ProdutoDAO {
 	}
 
 	public List<Produto> listarComSeletor(ProdutoSeletor seletor) {
-		String sql = " SELECT P.COD_BARRA, P.NM_PRODUTO, P.DT_CADASTRO, P.PRECO, P.ESTOQUE, C.NM_CATEGORIA "
+		String sql = " SELECT P.COD_BARRA, P.NM_PRODUTO, P.DT_CADASTRO, P.PRECO, P.ESTOQUE, C.ID_CATEGORIA, C.NM_CATEGORIA "
 				+ " FROM PRODUTO P JOIN CATEGORIA C ON P.ID_CATEGORIA = C.ID_CATEGORIA";
 
 		if (seletor.temFiltro()) {
@@ -143,6 +143,7 @@ public class ProdutoDAO {
 			p.setDataCadastro(result.getDate("DT_CADASTRO"));
 			p.setPreco(result.getDouble("PRECO"));
 			p.setEstoque(result.getInt("ESTOQUE"));
+			c.setIdCategoria(result.getInt("ID_CATEGORIA"));
 			c.setNomeCategoria(result.getString("NM_CATEGORIA"));
 			p.setCategoria(c);
 		} catch (SQLException e) {
@@ -167,7 +168,7 @@ public class ProdutoDAO {
 			}
 		} catch (SQLException e) {
 			System.out.println(
-					"Erro ao executar Query que verifica existência de Código de Barras. Causa :" + e.getMessage());
+					"Erro ao executar Query que verifica existï¿½ncia de Cï¿½digo de Barras. Causa :" + e.getMessage());
 			codigoRetorno = false;
 		} finally {
 			Banco.closeResultSet(resultado);
