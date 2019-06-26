@@ -162,7 +162,7 @@ public class CadastroProduto extends JInternalFrame {
 					ControllerProduto produtoController = new ControllerProduto();
 					String mensagem = "";
 					mensagem = produtoController.salvar(produto);
-					if (mensagem == "sucesso") {
+					if (mensagem.contains("sucesso")) {
 						limparCampos();
 					}
 					JOptionPane.showMessageDialog(null, mensagem);
