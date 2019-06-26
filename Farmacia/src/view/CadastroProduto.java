@@ -145,7 +145,6 @@ public class CadastroProduto extends JInternalFrame {
 		btnSalvar.setOpaque(true);
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String mensagem = "";
 
 				try {
 
@@ -161,11 +160,15 @@ public class CadastroProduto extends JInternalFrame {
 					produto.setCategoria(cat);
 
 					ControllerProduto produtoController = new ControllerProduto();
+					String mensagem = "";
 					mensagem = produtoController.salvar(produto);
+					if (mensagem == "sucesso") {
+						limparCampos();
+					}
+					JOptionPane.showMessageDialog(null, mensagem);
 				} catch (ArrayIndexOutOfBoundsException e) {
 					JOptionPane.showMessageDialog(null, "Verificar se todas as caixas foram preenchidas");
 				}
-				JOptionPane.showMessageDialog(null, mensagem);
 			}
 		});
 

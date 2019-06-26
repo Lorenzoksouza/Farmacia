@@ -250,8 +250,11 @@ public class CadastroMedicamento extends JInternalFrame {
 
 					ControllerRemedio controllerRemedio = new ControllerRemedio();
 					String mensagem = "";
+
 					mensagem = controllerRemedio.salvar(remedio);
-					limparCampos();
+					if (mensagem.contains("sucesso")) {
+						limparCampos();
+					}
 					JOptionPane.showMessageDialog(null, mensagem);
 				} catch (ArrayIndexOutOfBoundsException e) {
 					JOptionPane.showMessageDialog(null, "Verificar se todas as caixas foram preenchidas");
