@@ -26,13 +26,13 @@ public class GeradorDePlanilha {
 		OutputStream outputStream = null;
 		try {
 			planilha = new XSSFWorkbook();
-			XSSFSheet sheet = planilha.createSheet("Remédio");
-			// .
+			XSSFSheet sheet = planilha.createSheet("Remï¿½dio");
+			//
 			XSSFRow linhaHeader = sheet.createRow(0);
-			linhaHeader.createCell(0).setCellValue("Código de barra");
+			linhaHeader.createCell(0).setCellValue("CÃ³digo de barra");
 			linhaHeader.createCell(1).setCellValue("Dosagem");
-			linhaHeader.createCell(2).setCellValue("Composição");
-			linhaHeader.createCell(3).setCellValue("Genérico");
+			linhaHeader.createCell(2).setCellValue("Composiï¿½ï¿½o");
+			linhaHeader.createCell(3).setCellValue("Genï¿½rico");
 			linhaHeader.createCell(4).setCellValue("Nome");
 			linhaHeader.createCell(6).setCellValue("Preco");
 			linhaHeader.createCell(7).setCellValue("Estoque");
@@ -49,7 +49,7 @@ public class GeradorDePlanilha {
 				if (remedio.isGenerico()) {
 					isGenerico = "Sim";
 				} else {
-					isGenerico = "Não";
+					isGenerico = "Nï¿½o";
 				}
 				novaLinha.createCell(3).setCellValue(isGenerico);
 				novaLinha.createCell(4).setCellValue(remedio.getNome());
@@ -102,9 +102,9 @@ public class GeradorDePlanilha {
 			XSSFSheet sheet = planilha.createSheet("Produto");
 
 			XSSFRow linhaHeader = sheet.createRow(0);
-			linhaHeader.createCell(0).setCellValue("Código de barra");
+			linhaHeader.createCell(0).setCellValue("Cï¿½digo de barra");
 			linhaHeader.createCell(1).setCellValue("Nome");
-			linhaHeader.createCell(2).setCellValue("Preço");
+			linhaHeader.createCell(2).setCellValue("Preï¿½o");
 			linhaHeader.createCell(3).setCellValue("Categoria");
 			linhaHeader.createCell(4).setCellValue("Estoque");
 
