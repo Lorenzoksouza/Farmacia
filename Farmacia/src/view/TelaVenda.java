@@ -90,7 +90,7 @@ public class TelaVenda extends JInternalFrame {
 		tblVenda = new JTable();
 		tblVenda.setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		tblVenda.setFillsViewportHeight(true);
-		tblVenda.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Nome", "Quantidade", "Preço" }));
+		tblVenda.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Nome", "Quantidade", "Preï¿½o" }));
 		getContentPane().add(tblVenda, "cell 2 0 1 10,grow");
 
 		txtCodBar = new JTextField();
@@ -193,10 +193,17 @@ public class TelaVenda extends JInternalFrame {
 		btnConcluirVenda.setIcon(new ImageIcon(TelaVenda.class.getResource("/icons/check.png")));
 		btnConcluirVenda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String mensagemConcluida = "Venda concluida";
-				ControllerVenda controllerVenda = new ControllerVenda();
-				String mensagem = controllerVenda.salvarVenda(valorTotal, itensProdutos, itensRemedios);
-				JOptionPane.showMessageDialog(null, mensagemConcluida);
+				String mensagem = "";
+				if (!mercadoriasParaVenda.isEmpty()) {
+					ControllerVenda controllerVenda = new ControllerVenda();
+					mensagem = controllerVenda.salvarVenda(valorTotal, itensProdutos, itensRemedios);
+					if (mensagem == "") {
+						mensagem = "Venda concluida";
+					}
+				} else {
+					mensagem = "Selecione algum produto para realizar uma venda";
+				}
+				JOptionPane.showMessageDialog(null, mensagem);
 			}
 		});
 		btnConcluirVenda.setForeground(new Color(0, 128, 0));
@@ -282,7 +289,7 @@ public class TelaVenda extends JInternalFrame {
 		for (Mercadoria mercadoria : mercadorias) {
 			// Crio uma nova linha na tabela
 			// Preencher a linha com os atributos do remedio
-			// na ORDEM do cabeçalho da tabela
+			// na ORDEM do cabeï¿½alho da tabela
 
 			String[] novaLinha = new String[] { mercadoria.getCodBarra() + "", mercadoria.getNome(),
 					"R$" + mercadoria.getPreco(), "" + mercadoria.getEstoque(), };
@@ -356,8 +363,8 @@ public class TelaVenda extends JInternalFrame {
 	}
 
 	private void atualizarTblVenda(List<Mercadoria> mercadoriasParaVenda) {
-		tblVenda.setModel(new DefaultTableModel(new String[][] { { "Nome", "Quantidade", "Preço" } },
-				new String[] { "Nome", "Quantidade", "Preço" }));
+		tblVenda.setModel(new DefaultTableModel(new String[][] { { "Nome", "Quantidade", "Preï¿½o" } },
+				new String[] { "Nome", "Quantidade", "Preï¿½o" }));
 
 		DefaultTableModel modelo = (DefaultTableModel) tblVenda.getModel();
 
