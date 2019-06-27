@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -205,7 +206,8 @@ public class CadastroProduto extends JInternalFrame {
 	public void preencherCampos() {
 		txtNome.setText(produto.getNome());
 		txtCodBar.setText(produto.getCodBarra());
-		txtPreco.setText(produto.getPreco() + "");
+		DecimalFormat format = new DecimalFormat("0.00");
+		txtPreco.setText(format.format(produto.getPreco()) + "");
 		txtEstoque.setText(produto.getEstoque() + "");
 
 		Optional<Categoria> categoriaSelecionado = listaCategorias.stream()

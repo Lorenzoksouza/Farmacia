@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Scanner;
@@ -281,7 +282,8 @@ public class CadastroMedicamento extends JInternalFrame {
 		txtCodBar.setText(remedio.getCodBarra());
 		txtNome.setText(remedio.getNome());
 		txtDosagem.setText(remedio.getDosagem());
-		txtPreco.setText(remedio.getPreco() + "");
+		DecimalFormat format = new DecimalFormat("0.00");
+		txtPreco.setText(format.format(remedio.getPreco()) + "");
 		txtComposicao.setText(remedio.getComposicao());
 
 		// Usando calculo Lambda ;)

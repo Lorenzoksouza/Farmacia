@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -387,11 +388,11 @@ public class ListagemMedicamento extends JInternalFrame {
 			} else {
 				generico = "N�o";
 			}
-
+			DecimalFormat format = new DecimalFormat("0.00");
 			String[] novaLinha = new String[] { remedio.getCodBarra() + "", remedio.getDosagem(),
 					remedio.getComposicao(), generico, remedio.getNome(), String.valueOf(remedio.getDataCadastro()),
-					remedio.getPreco() + "", "" + remedio.getEstoque(), remedio.getFormaUso().getDescricao(),
-					remedio.getLaboratorio().getNomeLaboratorio() };
+					format.format(remedio.getPreco()) + "", "" + remedio.getEstoque(),
+					remedio.getFormaUso().getDescricao(), remedio.getLaboratorio().getNomeLaboratorio() };
 			modelo.addRow(novaLinha);
 		}
 	}

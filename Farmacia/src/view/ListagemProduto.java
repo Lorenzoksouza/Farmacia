@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -324,14 +325,15 @@ public class ListagemProduto extends JInternalFrame {
 						new String[] { "C�digo", "Nome", "Pre�o", "Categoria", "Estoque" }));
 
 		DefaultTableModel modelo = (DefaultTableModel) tblProdutos.getModel();
-
+		DecimalFormat format = new DecimalFormat("0.00");
 		for (Produto produto : produtos) {
 			// Crio uma nova linha na tabela
 			// Preencher a linha com os atributos do remedio
 			// na ORDEM do cabe�alho da tabela
 
-			String[] novaLinha = new String[] { produto.getCodBarra() + "", produto.getNome(), "" + produto.getPreco(),
-					produto.getCategoria().getNomeCategoria(), produto.getEstoque() + "" };
+			String[] novaLinha = new String[] { produto.getCodBarra() + "", produto.getNome(),
+					format.format(produto.getPreco()) + "", produto.getCategoria().getNomeCategoria(),
+					produto.getEstoque() + "" };
 			modelo.addRow(novaLinha);
 		}
 	}
