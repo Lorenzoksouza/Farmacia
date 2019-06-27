@@ -65,7 +65,7 @@ public abstract class Mercadoria {
 	}
 
 	public String toString() {
-		return "Cód: " + codBarra + " - " + "\nNome: " + nome + "\nData Cad.: " + dataCadastro + "\nPreço: " + preco
+		return "Cï¿½d: " + codBarra + " - " + "\nNome: " + nome + "\nData Cad.: " + dataCadastro + "\nPreï¿½o: " + preco
 				+ "\nEstoque: " + estoque;
 	}
 }
