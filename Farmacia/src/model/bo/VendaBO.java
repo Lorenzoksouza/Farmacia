@@ -7,6 +7,7 @@ import model.dao.ItemRemedioDAO;
 import model.dao.VendaDAO;
 import model.dto.VendaDTO;
 import model.seletor.MercadoriaSeletor;
+import model.seletor.VendaSeletor;
 import model.vo.ItemProduto;
 import model.vo.ItemRemedio;
 import model.vo.Mercadoria;
@@ -27,7 +28,7 @@ public class VendaBO {
 		if (vendaDAO.inserirVenda(valorTotal)) {
 			novaVenda = vendaDAO.pegarUltimaVenda();
 		} else {
-			mensagem = "Não foi possivel criar a venda (VendaBO30)";
+			mensagem = "Nï¿½o foi possivel criar a venda (VendaBO30)";
 		}
 
 		if (novaVenda != null) {
@@ -47,6 +48,10 @@ public class VendaBO {
 
 	public List<Mercadoria> listarMercadorias(MercadoriaSeletor seletor) {
 		return vendaDAO.listarMercadorias(seletor);
+	}
+
+	public List<Venda> listarVendas(VendaSeletor seletor) {
+		return vendaDAO.listarVenda(seletor);
 	}
 
 }

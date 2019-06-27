@@ -10,6 +10,7 @@ import java.util.List;
 
 import model.dto.VendaDTO;
 import model.seletor.MercadoriaSeletor;
+import model.seletor.VendaSeletor;
 import model.vo.Mercadoria;
 import model.vo.Produto;
 import model.vo.Remedio;
@@ -196,6 +197,110 @@ public class VendaDAO {
 			e.printStackTrace();
 		}
 		return v;
+	}
+
+	public List<Venda> listarVenda(VendaSeletor seletor) {
+		String sql = "SELECT * FROM VENDA V";
+
+		if (seletor.temFiltro()) {
+			sql = criarFiltrosVenda(seletor, sql);
+		}
+
+		if (seletor.temPaginacao()) {
+			sql += " LIMIT " + seletor.getLimite() + " OFFSET " + seletor.getOffset();
+		}
+
+		Connection conexao = Banco.getConnection();
+		PreparedStatement prepStmt = Banco.getPreparedStatement(conexao, sql);
+		ArrayList<Venda> vendas = new ArrayList<Venda>();
+
+		try {
+			ResultSet result = prepStmt.executeQuery();
+			while (result.next()) {
+				Venda v = new Venda();
+				v.setIdVenda(result.getInt(1));
+				v.setDataVenda(result.getDate(2));
+				v.setValor(result.getDouble(3));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return vendas;
+	}
+
+	private String criarFiltrosVenda(VendaSeletor seletor, String sql) {
+		sql += " WHERE ";
+		boolean primeiro = true;
+
+		if (seletor.getId() > 0) {
+			if (!primeiro) {
+				sql += " AND ";
+			}
+			sql += "V.ID_VENDA LIKE '%" + seletor.getId() + "%'";
+			primeiro = false;
+		}
+
+//		if ((seletor.getValor() != null) && (seletor.getValor() > 0)) {
+//			if (!primeiro) {
+//				sql += " AND ";
+//			}
+//			sql += "R.VALOR_TOTAL LIKE '%" + seletor.getValor() + "%'";
+//			primeiro = false;
+//		}
+
+		if ((seletor.getDataMenor() != null) && (seletor.getDataMaior() != null)) {
+			// Regra composta, olha as 3 opções de preenchimento do período
+
+			// Todo o período preenchido (início E fim)
+			if (!primeiro) {
+				sql += " AND ";
+			}
+			sql += "V.DT_VENDA BETWEEN" + seletor.getDataMenor() + " AND " + seletor.getDataMaior();
+			primeiro = false;
+		} else if (seletor.getDataMenor() != null) {
+			// só o início
+			if (!primeiro) {
+				sql += " AND ";
+			}
+			sql += "V.DT_VENDA >= " + seletor.getDataMenor();
+			primeiro = false;
+		} else if (seletor.getDataMaior() != null) {
+			// só o fim
+			if (!primeiro) {
+				sql += " AND ";
+			}
+			sql += "V.DT_VENDA <= " + seletor.getDataMaior();
+			primeiro = false;
+		}
+
+		if ((seletor.getValorMenor() != null) && (seletor.getValorMaior() != null)) {
+			// Regra composta, olha as 3 opções de preenchimento do período
+
+			// Todo o período preenchido (maior E menor)
+			if (!primeiro) {
+				sql += " AND ";
+			}
+			sql += "V.VALOR_TOTAL BETWEEN" + seletor.getValorMenor() + " AND " + seletor.getValorMaior();
+			primeiro = false;
+		} else if (seletor.getValorMenor() != null) {
+			// só o início
+			if (!primeiro) {
+				sql += " AND ";
+			}
+			sql += "V.VALOR_TOTAL >= " + seletor.getValorMenor();
+			primeiro = false;
+		} else if (seletor.getValorMaior() != null) {
+			// só o fim
+			if (!primeiro) {
+				sql += " AND ";
+			}
+			sql += "V.VALOR_TOTAL <= " + seletor.getValorMaior();
+			primeiro = false;
+		}
+
+		// Verificando o que retorna nos filtros
+		// System.out.println(sql);
+		return sql;
 	}
 
 }
