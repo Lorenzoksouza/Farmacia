@@ -59,7 +59,7 @@ public class RemedioDAO {
 			prepStmt.setString(4, r.getNome());
 			prepStmt.setDate(5, (Date) r.getDataCadastro());
 			prepStmt.setDouble(6, r.getPreco());
-			prepStmt.setInt(7, r.getEstoque());
+			prepStmt.setInt(7, consultarEstoque(r) + r.getEstoque());
 			prepStmt.setInt(8, r.getFormaUso().getIdFormaUso());
 			prepStmt.setInt(9, r.getLaboratorio().getIdLaboratorio());
 			prepStmt.setString(10, r.getCodBarra());
@@ -78,6 +78,30 @@ public class RemedioDAO {
 			Banco.closeConnection(conn);
 		}
 		return mensagem;
+	}
+
+	private int consultarEstoque(Remedio r) {
+
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+		int estoque = 0;
+
+		String query = "SELECT ESTOQUE FROM REMEDIO R WHERE R.COD_BARRA = " + r.getCodBarra();
+
+		try {
+			resultado = stmt.executeQuery(query);
+			while (resultado.next()) {
+				estoque = resultado.getInt("ESTOQUE");
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao executar a Query de Consulta de Prato. Causa:" + e.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return estoque;
 	}
 
 	public List<Remedio> listarComSeletor(RemedioSeletor seletor) {

@@ -52,7 +52,7 @@ public class ProdutoDAO {
 			prepStmt.setString(1, p.getNome());
 			prepStmt.setDate(2, (Date) p.getDataCadastro());
 			prepStmt.setDouble(3, p.getPreco());
-			prepStmt.setInt(4, p.getEstoque());
+			prepStmt.setInt(4, consultarEstoque(p) + p.getEstoque());
 			prepStmt.setInt(5, p.getCategoria().getIdCategoria());
 			prepStmt.setString(6, p.getCodBarra());
 
@@ -69,6 +69,30 @@ public class ProdutoDAO {
 			Banco.closeConnection(conn);
 		}
 		return mensagem;
+	}
+
+	private int consultarEstoque(Produto p) {
+
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+		int estoque = 0;
+
+		String query = "SELECT ESTOQUE FROM PRODUTO P WHERE P.COD_BARRA = " + p.getCodBarra();
+
+		try {
+			resultado = stmt.executeQuery(query);
+			while (resultado.next()) {
+				estoque = resultado.getInt("ESTOQUE");
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao executar a Query de Consulta de Prato. Causa:" + e.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return estoque;
 	}
 
 	public List<Produto> listarComSeletor(ProdutoSeletor seletor) {
