@@ -45,9 +45,9 @@ public class RemedioBO {
 	public String excluir(String remedioSelecionado) {
 		String mensagem = "";
 		if (remedioDAO.excluir(remedioSelecionado)) {
-			mensagem = "Rem�dio exclu�do com sucesso.";
+			mensagem = "Remédio excluído com sucesso.";
 		} else {
-			mensagem = "Erro ao excluir Rem�dio.";
+			mensagem = "Erro: Remédios que já foram vendidos não podem ser excluídos!";
 		}
 		return mensagem;
 	}

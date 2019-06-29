@@ -34,6 +34,10 @@ import net.miginfocom.swing.MigLayout;
 import util.JTextFieldLimit;
 
 public class ListagemMedicamento extends JInternalFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6012516348434889292L;
 	private CadastroMedicamento cadastroMedicamento = null;
 	private JTextField txtCodBar = null;
 	private JTextField txtNome;
@@ -92,8 +96,8 @@ public class ListagemMedicamento extends JInternalFrame {
 		tblRemedios = new JTable();
 		tblRemedios.setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		tblRemedios.setColumnSelectionAllowed(true);
-		tblRemedios.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "C�digo de Barras", "Dosagem",
-				"Composi��o", "Gen�rico", "Nome", "Data Cad.", "Pre�o", "Estoque", "Forma Uso", "Laborat�rio" }));
+		tblRemedios.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Código de Barras", "Dosagem",
+				"Composição", "Genérico", "Nome", "Data Cad.", "Preço", "Estoque", "Forma Uso", "Laboratório" }));
 		tblRemedios.getColumnModel().getColumn(0).setPreferredWidth(100);
 		tblRemedios.getColumnModel().getColumn(1).setPreferredWidth(58);
 		tblRemedios.getColumnModel().getColumn(2).setPreferredWidth(69);
@@ -210,14 +214,13 @@ public class ListagemMedicamento extends JInternalFrame {
 					cadastroMedicamento = new CadastroMedicamento(remedioSelecionado);
 					Menu pai = (Menu) SwingUtilities.getWindowAncestor((Component) e.getSource());
 
-					// TODO criar um método no pai
 					pai.cadastroMedicamento = cadastroMedicamento;
 					pai.getDesktopPane().add(cadastroMedicamento);
 					pai.cadastroMedicamento.show();
 
 					atualizarTabelaMedicamentos(remediosConsultados);
 				} else {
-					JOptionPane.showMessageDialog(null, "Selecione um produto para ser Alterado!!");
+					JOptionPane.showMessageDialog(null, "Selecione um remédio para ser Alterado!!");
 				}
 
 			}
@@ -232,19 +235,24 @@ public class ListagemMedicamento extends JInternalFrame {
 		btnExcluir.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String mensagem = "";
-				String remedioSelecionado = remediosConsultados.get(tblRemedios.getSelectedRow() - 1).getCodBarra();
+				int linhaSelecionada = tblRemedios.getSelectedRow();
 
-				ControllerRemedio controllerRemedio = new ControllerRemedio();
+				if (linhaSelecionada > 0) {
+					String mensagem = "";
+					String remedioSelecionado = remediosConsultados.get(linhaSelecionada - 1).getCodBarra();
 
-				if (controllerRemedio.existeRemedioPorCodBar(remedioSelecionado)) {
-					mensagem = controllerRemedio.excluir(remedioSelecionado);
-					remediosConsultados.remove(tblRemedios.getSelectedRow() - 1);
-					atualizarTabelaMedicamentos(remediosConsultados);
+					ControllerRemedio controllerRemedio = new ControllerRemedio();
+
+					if (controllerRemedio.existeRemedioPorCodBar(remedioSelecionado)) {
+						mensagem = controllerRemedio.excluir(remedioSelecionado);
+						atualizarTabelaMedicamentos(remediosConsultados);
+					} else {
+						mensagem = "Remédio não foi cadastrado";
+					}
+					JOptionPane.showMessageDialog(null, mensagem);
 				} else {
-					mensagem = "Rem�dio n�o foi cadastrado";
+					JOptionPane.showMessageDialog(null, "Selecione um remédio para ser Excluído!!");
 				}
-				JOptionPane.showMessageDialog(null, mensagem);
 			}
 		});
 
@@ -371,10 +379,10 @@ public class ListagemMedicamento extends JInternalFrame {
 
 		// Limpa a tabela
 		tblRemedios.setModel(new DefaultTableModel(
-				new String[][] { { "C�digo de Barras", "Dosagem", "Composi��o", "Gen�rico", "Nome", "Data Cad.",
-						"Pre�o", "Estoque", "Forma Uso", "Laborat�rio" }, },
-				new String[] { "C�digo de Barras", "Dosagem", "Composi��o", "Gen�rico", "Nome", "Data Cad.", "Pre�o",
-						"Estoque", "Forma Uso", "Laborat�rio" }));
+				new String[][] { { "Código de Barras", "Dosagem", "Composição", "Genérico", "Nome", "Data Cad.",
+						"Preço", "Estoque", "Forma Uso", "Laboratório" }, },
+				new String[] { "Código de Barras", "Dosagem", "Composição", "Genérico", "Nome", "Data Cad.", "Preço",
+						"Estoque", "Forma Uso", "Laboratório" }));
 
 		DefaultTableModel modelo = (DefaultTableModel) tblRemedios.getModel();
 
@@ -386,7 +394,7 @@ public class ListagemMedicamento extends JInternalFrame {
 			if (remedio.isGenerico()) {
 				generico = "Sim";
 			} else {
-				generico = "N�o";
+				generico = "Não";
 			}
 			DecimalFormat format = new DecimalFormat("0.00");
 			String[] novaLinha = new String[] { remedio.getCodBarra() + "", remedio.getDosagem(),

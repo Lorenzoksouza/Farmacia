@@ -1,7 +1,6 @@
 package model.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -47,7 +46,7 @@ public class RemedioDAO {
 
 	public String atualizar(Remedio r) {
 		String mensagem = "";
-		String sql = "UPDATE REMEDIO R SET DOSAGEM =?, COMPOSICAO=?, GENERICO=?, NM_REMEDIO=?, DT_CADASTRO=?, PRECO=?, ESTOQUE=?, ID_FORMA_USO=?, ID_LABORATORIO=? WHERE R.COD_BARRA= ? ";
+		String sql = "UPDATE REMEDIO R SET DOSAGEM =?, COMPOSICAO=?, GENERICO=?, NM_REMEDIO=?, PRECO=?, ESTOQUE=?, ID_FORMA_USO=?, ID_LABORATORIO=? WHERE R.COD_BARRA= ? ";
 
 		Connection conn = Banco.getConnection();
 		PreparedStatement prepStmt = Banco.getPreparedStatement(conn, sql, Statement.RETURN_GENERATED_KEYS);
@@ -57,22 +56,21 @@ public class RemedioDAO {
 			prepStmt.setString(2, r.getComposicao());
 			prepStmt.setBoolean(3, r.isGenerico());
 			prepStmt.setString(4, r.getNome());
-			prepStmt.setDate(5, (Date) r.getDataCadastro());
-			prepStmt.setDouble(6, r.getPreco());
-			prepStmt.setInt(7, consultarEstoque(r) + r.getEstoque());
-			prepStmt.setInt(8, r.getFormaUso().getIdFormaUso());
-			prepStmt.setInt(9, r.getLaboratorio().getIdLaboratorio());
-			prepStmt.setString(10, r.getCodBarra());
+			prepStmt.setDouble(5, r.getPreco());
+			prepStmt.setInt(6, consultarEstoque(r) + r.getEstoque());
+			prepStmt.setInt(7, r.getFormaUso().getIdFormaUso());
+			prepStmt.setInt(8, r.getLaboratorio().getIdLaboratorio());
+			prepStmt.setString(9, r.getCodBarra());
 
 			prepStmt.execute();
 
 			int codigoRetorno = prepStmt.executeUpdate();
 			if (codigoRetorno == 0) {
-				mensagem = "Erro ao executar query de atualiza��o de Rem�dio!";
+				mensagem = "Erro ao executar query de atualização de Rem�dio!";
 			}
 		} catch (SQLException e) {
-			System.out.println("Erro ao atualizar rem�dio. Causa: " + e.getMessage());
-			mensagem = "Erro ao executar query de atualiza��o de Rem�dio!";
+			System.out.println("Erro ao atualizar remédio. Causa: " + e.getMessage());
+			mensagem = "Erro ao executar query de atualização de Remédio!";
 		} finally {
 			Banco.closePreparedStatement(prepStmt);
 			Banco.closeConnection(conn);
@@ -249,7 +247,7 @@ public class RemedioDAO {
 				result = false;
 			}
 		} catch (SQLException e) {
-			System.out.println("Erro ao remover rem�dio. Causa: " + e.getMessage());
+			System.out.println("Erro ao remover remédio. Causa: " + e.getMessage());
 			result = false;
 		} finally {
 			Banco.closePreparedStatement(prepStmt);

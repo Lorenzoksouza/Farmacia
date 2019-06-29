@@ -34,13 +34,17 @@ import net.miginfocom.swing.MigLayout;
 import util.JTextFieldLimit;
 
 public class ListagemProduto extends JInternalFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4465473469800344264L;
+
 	CadastroProduto cadastroProduto = null;
 
 	private JTextField txtCodBar;
 	private JTextField txtNome;
 	private JTable tblProdutos;
 	private JComboBox<String> cmbCategoria;
-	private JButton btnGerarXls;
 
 	private List<Produto> produtosConsultados = null;
 	private int totalPaginas = 1;
@@ -71,6 +75,7 @@ public class ListagemProduto extends JInternalFrame {
 	/**
 	 * Create the frame. a
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public ListagemProduto() {
 		setResizable(true);
 		getContentPane().setBackground(Color.WHITE);
@@ -82,7 +87,7 @@ public class ListagemProduto extends JInternalFrame {
 		getContentPane()
 				.setLayout(new MigLayout("", "[211.00][][grow]", "[18.00][][][][][][8px:n][][10px:n][][][grow][]"));
 
-		JLabel lblCodbarras = new JLabel("C�d.barras:");
+		JLabel lblCodbarras = new JLabel("Cód.barras:");
 		getContentPane().add(lblCodbarras, "cell 0 0");
 
 		JLabel lblEspaco = new JLabel("      ");
@@ -92,10 +97,8 @@ public class ListagemProduto extends JInternalFrame {
 		tblProdutos.setColumnSelectionAllowed(true);
 		tblProdutos.setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		tblProdutos.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "C�digo", "Nome", "Pre�o", "Categoria", "Estoque" }));
+				new String[] { "Código", "Nome", "Preço", "Categoria", "Estoque" }));
 		getContentPane().add(tblProdutos, "cell 2 0 1 12,grow");
-
-		// C�digo de barras
 
 		txtCodBar = new JTextField();
 
@@ -115,8 +118,6 @@ public class ListagemProduto extends JInternalFrame {
 
 		JLabel lblNome = new JLabel("Nome:");
 		getContentPane().add(lblNome, "cell 0 2");
-
-		// Nome
 
 		txtNome = new JTextField();
 
@@ -158,19 +159,25 @@ public class ListagemProduto extends JInternalFrame {
 		btnExcluir.setBorder(new LineBorder(Color.gray, 2, true));
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String mensagem = "";
-				String produtoSelecionado = produtosConsultados.get(tblProdutos.getSelectedRow() - 1).getCodBarra();
-				ControllerProduto controllerProduto = new ControllerProduto();
+				int linhaSelecionada = tblProdutos.getSelectedRow();
 
-				if (controllerProduto.existeProdutoCodBar(produtoSelecionado)) {
-					mensagem = controllerProduto.excluir(produtoSelecionado);
-					produtosConsultados.remove(tblProdutos.getSelectedRow() - 1);
-					atualizarTabelaProdutos(produtosConsultados);
+				if (linhaSelecionada > 0) {
+					String mensagem = "";
+					String produtoSelecionado = produtosConsultados.get(linhaSelecionada - 1).getCodBarra();
+					ControllerProduto controllerProduto = new ControllerProduto();
+
+					if (controllerProduto.existeProdutoCodBar(produtoSelecionado)) {
+						mensagem = controllerProduto.excluir(produtoSelecionado);
+						atualizarTabelaProdutos(produtosConsultados);
+					} else {
+						mensagem = "Produto não foi cadastrado";
+					}
+					JOptionPane.showMessageDialog(null, mensagem);
 				} else {
-					mensagem = "Produto n�o foi cadastrado";
+					JOptionPane.showMessageDialog(null, "Selecione um produto para ser excluído!!");
 				}
-				JOptionPane.showMessageDialog(null, mensagem);
 			}
+
 		});
 		getContentPane().add(btnExcluir, "flowx,cell 0 9,growx");
 
@@ -188,7 +195,6 @@ public class ListagemProduto extends JInternalFrame {
 					cadastroProduto = new CadastroProduto(produtoSelecionado);
 					Menu pai = (Menu) SwingUtilities.getWindowAncestor((Component) e.getSource());
 
-					// TODO criar um método no pai
 					pai.cadastroProduto = cadastroProduto;
 					pai.getDesktopPane().add(cadastroProduto);
 					pai.cadastroProduto.show();
@@ -202,7 +208,7 @@ public class ListagemProduto extends JInternalFrame {
 
 		getContentPane().add(btnAlterar, "cell 0 9,growx");
 
-		JButton btnGerarXls = new JButton("Relat�rio");
+		JButton btnGerarXls = new JButton("Relatório");
 		btnGerarXls.setBackground(Color.WHITE);
 		btnGerarXls.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnGerarXls.setPreferredSize(new Dimension(80, 30));
@@ -224,7 +230,7 @@ public class ListagemProduto extends JInternalFrame {
 		});
 		getContentPane().add(btnGerarXls, "cell 0 10,alignx center");
 
-		btnProximo = new JButton("Pr�ximo>");
+		btnProximo = new JButton("Próximo>");
 		JButton btnAnterior = new JButton("<Anterior");
 		btnAnterior.setEnabled(false);
 		btnAnterior.addActionListener(new ActionListener() {
@@ -293,8 +299,6 @@ public class ListagemProduto extends JInternalFrame {
 
 		seletor.setPagina(paginaAtual);
 
-		// Preenche os campos de filtro da tela no seletor
-
 		if (!txtCodBar.getText().trim().equals("")) {
 			seletor.setCodBar(txtCodBar.getText());
 		}
@@ -314,22 +318,15 @@ public class ListagemProduto extends JInternalFrame {
 	}
 
 	private void atualizarTabelaProdutos(List<Produto> produtos) {
-		// atualiza o atributo produtosConsultados
 		produtosConsultados = produtos;
 
-		// btnGerarXls.setEnabled(produtos != null && produtos.size() > 0);
-
-		// Limpa a tabela
 		tblProdutos.setModel(
-				new DefaultTableModel(new String[][] { { "C�digo", "Nome", "Pre�o", "Categoria", "Estoque" }, },
-						new String[] { "C�digo", "Nome", "Pre�o", "Categoria", "Estoque" }));
+				new DefaultTableModel(new String[][] { { "Código", "Nome", "Preço", "Categoria", "Estoque" }, },
+						new String[] { "Código", "Nome", "Preço", "Categoria", "Estoque" }));
 
 		DefaultTableModel modelo = (DefaultTableModel) tblProdutos.getModel();
 		DecimalFormat format = new DecimalFormat("0.00");
 		for (Produto produto : produtos) {
-			// Crio uma nova linha na tabela
-			// Preencher a linha com os atributos do remedio
-			// na ORDEM do cabe�alho da tabela
 
 			String[] novaLinha = new String[] { produto.getCodBarra() + "", produto.getNome(),
 					format.format(produto.getPreco()) + "", produto.getCategoria().getNomeCategoria(),

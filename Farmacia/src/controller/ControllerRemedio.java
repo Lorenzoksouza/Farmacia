@@ -25,21 +25,23 @@ public class ControllerRemedio {
 			if (remedioBO.existeCodBar(remedio.getCodBarra())) {
 				// UPDATE
 				int opcao = JOptionPane.showConfirmDialog(null,
-						"Remedio já cadastrado, deseja fazer alteração com os dados inseridos?", "",
+						"Remedio jÃ¡ cadastrado, deseja fazer alteraï¿½ï¿½o com os dados inseridos?", "",
 						JOptionPane.OK_CANCEL_OPTION);
 				if (opcao == 0) {
 					if (remedioBO.atualizar(remedio) == "") {
-						mensagem = "Remédio atualizado com sucesso.";
+						mensagem = "RemÃ©dio atualizado com sucesso.";
 					} else {
-						mensagem = "Erro ao atualizar Remédio.";
+						mensagem = "Erro ao atualizar RemÃ©dio.";
 					}
+				} else {
+					mensagem = "Nenhuma alteraÃ§Ã£o feita.";
 				}
 			} else {
 				// INSERT
 				if (remedioBO.inserir(remedio) == "") {
-					mensagem = "Remédio cadastrado com sucesso!";
+					mensagem = "Remï¿½dio cadastrado com sucesso!";
 				} else {
-					mensagem = "Erro ao inserir Remédio.";
+					mensagem = "Erro ao inserir Remï¿½dio.";
 				}
 			}
 		} else {
@@ -52,29 +54,29 @@ public class ControllerRemedio {
 		String validacao = "";
 
 		if (remedio == null) {
-			validacao = "Remédio esta vazio";
+			validacao = "Remï¿½dio esta vazio";
 		} else {
-			// validações de campo vazio e nulo
+			// validaï¿½ï¿½es de campo vazio e nulo
 			if (remedio.getCodBarra().trim().equals("")) {
-				validacao = "Remedio deve possuir um código de barras.";
+				validacao = "Remedio deve possuir um cï¿½digo de barras.";
 			}
 			if (remedio.getNome() == null || remedio.getNome().trim().equals("")) {
-				validacao = "Nome do remédio é obrigatório.";
+				validacao = "Nome do remï¿½dio ï¿½ obrigatï¿½rio.";
 			}
 			if (remedio.getComposicao() == null || remedio.getComposicao().trim().equals("")) {
-				validacao = "Composição do remedio é obrigatório.";
+				validacao = "Composiï¿½ï¿½o do remedio ï¿½ obrigatï¿½rio.";
 			}
 			if (remedio.getDosagem() == null || remedio.getDosagem().trim().equals("")) {
-				validacao = "Dosagem do remédio é obrigatória.";
+				validacao = "Dosagem do remï¿½dio ï¿½ obrigatï¿½ria.";
 			}
 			if (remedio.getFormaUso().getDescricao() == "") {
 				validacao = "Forma de uso deve ser selecionado.";
 			}
 			if (remedio.getLaboratorio() == null || remedio.getLaboratorio().getNomeLaboratorio().trim().equals("")) {
-				validacao = "Laboratório deve ser selecionado.";
+				validacao = "Laboratï¿½rio deve ser selecionado.";
 			}
 			if (remedio.getPreco() <= 0.0) {
-				validacao = "Preço do remédio deve ser maior que zero.";
+				validacao = "Preï¿½o do remï¿½dio deve ser maior que zero.";
 			}
 
 		}

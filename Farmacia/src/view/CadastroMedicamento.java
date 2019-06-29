@@ -32,6 +32,10 @@ import util.JNumberFormatField;
 import util.JTextFieldLimit;
 
 public class CadastroMedicamento extends JInternalFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField txtNome;
 	private JTextField txtCodBar;
 	private JNumberFormatField txtPreco;
@@ -65,6 +69,7 @@ public class CadastroMedicamento extends JInternalFrame {
 	/**
 	 * Create the frame. INSERT
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public CadastroMedicamento(Remedio remedioSelecionado) {
 		setFrameIcon(new ImageIcon(CadastroMedicamento.class.getResource("/icons/med3x.png")));
 		getContentPane().setBackground(Color.WHITE);
@@ -144,7 +149,7 @@ public class CadastroMedicamento extends JInternalFrame {
 		getContentPane().add(txtComposicao, "cell 0 8,growx");
 		txtComposicao.setColumns(10);
 
-		cmbLaboratorio = new JComboBox();
+		cmbLaboratorio = new JComboBox<Laboratorio>();
 		cmbLaboratorio.setBackground(Color.WHITE);
 		cmbLaboratorio.setModel(new DefaultComboBoxModel(listaLaboratorios.toArray()));
 		cmbLaboratorio.setSelectedIndex(-1);
@@ -205,26 +210,30 @@ public class CadastroMedicamento extends JInternalFrame {
 					remedio.setComposicao(txtComposicao.getText());
 					remedio.setDosagem(txtDosagem.getText());
 
-					Laboratorio lab = new Laboratorio();
-					lab.setIdLaboratorio(listaLaboratorios.get(cmbLaboratorio.getSelectedIndex()).getIdLaboratorio());
-					lab.setNomeLaboratorio(
-							listaLaboratorios.get(cmbLaboratorio.getSelectedIndex()).getNomeLaboratorio());
-					remedio.setLaboratorio(lab);
-					remedio.setDataCadastro(remedioSelecionado.getDataCadastro());
+					if (cmbLaboratorio.getSelectedIndex() > -1) {
+						Laboratorio lab = new Laboratorio();
+						lab.setIdLaboratorio(
+								listaLaboratorios.get(cmbLaboratorio.getSelectedIndex()).getIdLaboratorio());
+						lab.setNomeLaboratorio(
+								listaLaboratorios.get(cmbLaboratorio.getSelectedIndex()).getNomeLaboratorio());
+						remedio.setLaboratorio(lab);
+					} else {
+						JOptionPane.showMessageDialog(null, "Verificar se o Laboratório foi selecionado.");
+					}
 
-					FormaUso formaUso = new FormaUso();
-					formaUso.setIdFormaUso(listaFormasUso.get(cmbLaboratorio.getSelectedIndex()).getIdFormaUso());
-					formaUso.setDescricao(listaFormasUso.get(cmbLaboratorio.getSelectedIndex()).getDescricao());
-					remedio.setFormaUso(formaUso);
 					try {
 						remedio.setEstoque(Integer.parseInt(txtEstoque.getText().trim()));
 					} catch (NumberFormatException e) {
 						JOptionPane.showMessageDialog(null, "Verificar se o estoque foi preenchido");
 					}
-					try {
-						remedio.getFormaUso().setDescricao(cmbFormaUso.getSelectedItem().toString());
-					} catch (NumberFormatException e) {
-						JOptionPane.showMessageDialog(null, "Verificar se a forma de uso foi preenchida");
+					if (cmbFormaUso.getSelectedIndex() > -1) {
+						FormaUso formaUso = new FormaUso();
+						formaUso.setIdFormaUso(listaFormasUso.get(cmbLaboratorio.getSelectedIndex()).getIdFormaUso());
+						formaUso.setDescricao(listaFormasUso.get(cmbLaboratorio.getSelectedIndex()).getDescricao());
+						remedio.setFormaUso(formaUso);
+
+					} else {
+						JOptionPane.showMessageDialog(null, "Verificar se a forma de uso foi selecionada.");
 					}
 					remedio.setGenerico(chckbxGenerico.isSelected());
 

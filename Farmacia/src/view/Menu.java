@@ -82,6 +82,11 @@ public class Menu extends JFrame {
 		Image img = icon.getImage();
 
 		desktopPane = new JDesktopPane() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 6974299825891675087L;
+
 			public void paintComponent(Graphics g) {
 				g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
 			}

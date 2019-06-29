@@ -154,12 +154,21 @@ public class CadastroProduto extends JInternalFrame {
 					produto.setCodBarra(txtCodBar.getText());
 					produto.setNome(txtNome.getText());
 					produto.setPreco(Double.parseDouble(txtPreco.getText().replace(",", ".")));
-					produto.setEstoque(Integer.parseInt(txtEstoque.getText()));
 
-					Categoria cat = new Categoria();
-					cat.setIdCategoria(listaCategorias.get(cmbCategoria.getSelectedIndex()).getIdCategoria());
-					cat.setNomeCategoria(listaCategorias.get(cmbCategoria.getSelectedIndex()).getNomeCategoria());
-					produto.setCategoria(cat);
+					try {
+						produto.setEstoque(Integer.parseInt(txtEstoque.getText().trim()));
+					} catch (NumberFormatException e) {
+						JOptionPane.showMessageDialog(null, "Verificar se o estoque foi preenchido");
+					}
+
+					if (cmbCategoria.getSelectedIndex() > -1) {
+						Categoria cat = new Categoria();
+						cat.setIdCategoria(listaCategorias.get(cmbCategoria.getSelectedIndex()).getIdCategoria());
+						cat.setNomeCategoria(listaCategorias.get(cmbCategoria.getSelectedIndex()).getNomeCategoria());
+						produto.setCategoria(cat);
+					} else {
+						JOptionPane.showMessageDialog(null, "Verificar se o Laboratório foi selecionado.");
+					}
 
 					ControllerProduto produtoController = new ControllerProduto();
 					String mensagem = "";

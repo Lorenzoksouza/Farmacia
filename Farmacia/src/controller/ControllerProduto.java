@@ -22,7 +22,7 @@ public class ControllerProduto {
 		if (validacao == "") {
 			if (produtoBO.existeCodBar(produto.getCodBarra())) {
 				int opcao = JOptionPane.showConfirmDialog(null,
-						"Produto já cadastrado, deseja fazer alteração com os dados inseridos?", "",
+						"Produto jï¿½ cadastrado, deseja fazer alteraï¿½ï¿½o com os dados inseridos?", "",
 						JOptionPane.OK_CANCEL_OPTION);
 				// UPDATE
 				if (opcao == 0) {
@@ -52,20 +52,19 @@ public class ControllerProduto {
 		if (produto == null) {
 			validacao = "Produto esta vazio";
 		} else {
-			// validações de campo vazio e nulo
+			// validaï¿½ï¿½es de campo vazio e nulo
 			if (produto.getCodBarra().trim().equals("")) {
 				validacao = "Produto deve possuir um codigo";
 			}
 			if (produto.getNome().trim().equals("") || produto.getNome() == null) {
-				validacao = "Nome do produto é obrigatorio";
+				validacao = "Nome do produto ï¿½ obrigatorio";
 			}
 			if (produto.getCategoria().getNomeCategoria() == "") {
 				validacao = "Categoria deve ser selecionado";
 			}
 			if (produto.getPreco() <= 0.0) {
-				validacao = "Preço do produto deve ser maior que zero";
+				validacao = "Preï¿½o do produto deve ser maior que zero";
 			}
-
 		}
 		return validacao;
 	}

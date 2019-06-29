@@ -35,6 +35,10 @@ import net.miginfocom.swing.MigLayout;
 import util.JTextFieldLimit;
 
 public class TelaVenda extends JInternalFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField txtCodBar;
 	private JTextField txtNome;
 	private JTable tblPesquisa;
@@ -90,7 +94,7 @@ public class TelaVenda extends JInternalFrame {
 		tblVenda = new JTable();
 		tblVenda.setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		tblVenda.setFillsViewportHeight(true);
-		tblVenda.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Nome", "Quantidade", "Pre�o" }));
+		tblVenda.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Nome", "Quantidade", "Preço" }));
 		getContentPane().add(tblVenda, "cell 2 0 1 10,grow");
 
 		txtCodBar = new JTextField();
