@@ -70,7 +70,6 @@ public class CadastroMedicamento extends JInternalFrame {
 		getContentPane().setBackground(Color.WHITE);
 		setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		setTitle("Cadastro de medicamentos");
-
 		setClosable(true);
 
 		setBounds(100, 100, 420, 315);
@@ -198,7 +197,6 @@ public class CadastroMedicamento extends JInternalFrame {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				// try & catch apenas para teste, pode mexer neles de boa
 				try {
 					Remedio remedio = new Remedio();
 					remedio.setNome(txtNome.getText());
