@@ -54,6 +54,12 @@ public class TelaVenda extends JInternalFrame {
 	private double valorTotal = 0.0;
 	private JLabel lblValor;
 	private JSpinner spiQuantidade;
+	private int totalPaginas = 1;
+	private int paginaAtual = 1;
+	private JLabel lblPaginaAtual;
+	private JLabel lbMax;
+	private int paginaTotal = 1;
+	private JButton btnProximo;
 
 	/**
 	 * Launch the application.
@@ -85,7 +91,7 @@ public class TelaVenda extends JInternalFrame {
 		setBounds(100, 100, 660, 530);
 		getContentPane().setLayout(new MigLayout("", "[grow][][grow]", "[21.00][][][25.00][][][][][][grow][][]"));
 
-		JLabel lblCodbarra = new JLabel("C\u00F3d.barra:");
+		JLabel lblCodbarra = new JLabel("Cód.barra:");
 		getContentPane().add(lblCodbarra, "flowx,cell 0 0,growx");
 
 		JLabel lblEspaco = new JLabel("         ");
@@ -114,7 +120,7 @@ public class TelaVenda extends JInternalFrame {
 		tblPesquisa = new JTable();
 		tblPesquisa.setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		tblPesquisa.setModel(
-				new DefaultTableModel(new Object[][] {}, new String[] { "Codigo", "Nome", "Preco", "Estoque" }));
+				new DefaultTableModel(new Object[][] {}, new String[] { "Código", "Nome", "Preco", "Estoque" }));
 		getContentPane().add(tblPesquisa, "cell 0 3 1 7,grow");
 
 		JButton btnAddItem = new JButton("Adicionar item");
@@ -145,6 +151,32 @@ public class TelaVenda extends JInternalFrame {
 				}
 			}
 		});
+
+		btnProximo = new JButton("Próximo>");
+		btnProximo.setBorder(new LineBorder(Color.gray, 2, true));
+		btnProximo.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnProximo.setBackground(Color.WHITE);
+		btnProximo.setPreferredSize(new Dimension(80, 30));
+		JButton btnAnterior = new JButton("<Anterior");
+		btnAnterior.setBorder(new LineBorder(Color.gray, 2, true));
+		btnAnterior.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnAnterior.setBackground(Color.WHITE);
+		btnAnterior.setPreferredSize(new Dimension(80, 30));
+		btnAnterior.setEnabled(false);
+		btnAnterior.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (paginaAtual > 1) {
+					paginaAtual--;
+				}
+				if (paginaAtual == 1) {
+					btnAnterior.setEnabled(false);
+
+				}
+				btnProximo.setEnabled(true);
+				pesquisarMercadorias();
+			}
+		});
+		getContentPane().add(btnAnterior, "flowx,cell 0 10");
 
 		JLabel lblTotal = new JLabel("Total:");
 		getContentPane().add(lblTotal, "flowx,cell 2 10,aligny bottom");
@@ -203,12 +235,14 @@ public class TelaVenda extends JInternalFrame {
 					mensagem = controllerVenda.salvarVenda(valorTotal, itensProdutos, itensRemedios);
 					if (mensagem == "") {
 						mensagem = "Venda concluida";
+						limparVendas();
 					}
 				} else {
 					mensagem = "Selecione algum produto para realizar uma venda";
 				}
 				JOptionPane.showMessageDialog(null, mensagem);
 			}
+
 		});
 		btnConcluirVenda.setForeground(new Color(0, 128, 0));
 		btnConcluirVenda.setBackground(Color.WHITE);
@@ -238,10 +272,32 @@ public class TelaVenda extends JInternalFrame {
 		getContentPane().add(txtNome, "cell 0 1,growx");
 		txtNome.setColumns(10);
 
+		lblPaginaAtual = new JLabel("");
+		lblPaginaAtual.setText(paginaAtual + "");
+		getContentPane().add(lblPaginaAtual, "cell 0 10");
+
+		JLabel lbLabel = new JLabel("/");
+		getContentPane().add(lbLabel, "cell 0 10");
+
+		lbMax = new JLabel("1");
+		getContentPane().add(lbMax, "cell 0 10");
+
+		btnProximo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				paginaAtual++;
+				if (paginaAtual == paginaTotal) {
+					btnProximo.setEnabled(false);
+				}
+				btnAnterior.setEnabled(true);
+				pesquisarMercadorias();
+			}
+		});
+		getContentPane().add(btnProximo, "cell 0 10");
+
 	}
 
 	private void pesquisarMercadorias() {
-		// lblPaginaAtual.setText(paginaAtual + "");
+		lblPaginaAtual.setText(paginaAtual + "");
 
 		ControllerVenda controlador = new ControllerVenda();
 		MercadoriaSeletor seletor = new MercadoriaSeletor();
@@ -249,20 +305,18 @@ public class TelaVenda extends JInternalFrame {
 		// TODO descomentar
 		List<Mercadoria> mercadorias = controlador.listarMercadorias(seletor);
 
-//		seletor.setLimite(5);
+		seletor.setLimite(5);
 
-//		int quociente = remedios.size() / seletor.getLimite();
-//		int resto = remedios.size() % seletor.getLimite();
-//
-//		if (resto == 0) {
-//			totalPaginas = quociente;
-//		} else {
-//			totalPaginas = quociente + 1;
-//		}
-//		lblTotalPaginas.setText(totalPaginas + "");
-//
-//		seletor.setPagina(paginaAtual);
+		int quociente = mercadorias.size() / seletor.getLimite();
+		int resto = mercadorias.size() % seletor.getLimite();
 
+		if (resto == 0) {
+			totalPaginas = quociente;
+		} else {
+			totalPaginas = quociente + 1;
+		}
+		lbMax.setText(totalPaginas + "");
+		seletor.setPagina(paginaAtual);
 		// Preenche os campos de filtro da tela no seletor
 
 		if (txtCodBar != null) {
@@ -367,8 +421,8 @@ public class TelaVenda extends JInternalFrame {
 	}
 
 	private void atualizarTblVenda(List<Mercadoria> mercadoriasParaVenda) {
-		tblVenda.setModel(new DefaultTableModel(new String[][] { { "Nome", "Quantidade", "Pre�o" } },
-				new String[] { "Nome", "Quantidade", "Pre�o" }));
+		tblVenda.setModel(new DefaultTableModel(new String[][] { { "Nome", "Quantidade", "Preço" } },
+				new String[] { "Nome", "Quantidade", "Preço" }));
 
 		DefaultTableModel modelo = (DefaultTableModel) tblVenda.getModel();
 
@@ -377,5 +431,14 @@ public class TelaVenda extends JInternalFrame {
 					"R$" + mercadoria.getPreco() };
 			modelo.addRow(novaLinha);
 		}
+	}
+
+	private void limparVendas() {
+		tblVenda.setModel(new DefaultTableModel(new String[][] { { "Nome", "Quantidade", "Preço" } },
+				new String[] { "Nome", "Quantidade", "Preço" }));
+		int row = tblVenda.getRowCount();
+		int modelRow = tblVenda.convertRowIndexToModel(row);
+		DefaultTableModel model = (DefaultTableModel) tblVenda.getModel();
+		model.removeRow(modelRow);
 	}
 }
