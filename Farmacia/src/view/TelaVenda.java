@@ -240,6 +240,7 @@ public class TelaVenda extends JInternalFrame {
 						mensagem = "Venda concluída com sucesso! Valor total de: R$" + dx;
 						removerMercadorias(mercadoriasParaVenda);
 						atualizarTblVenda(mercadoriasParaVenda);
+						valorTotal = 0;
 					}
 				} else {
 					mensagem = "Selecione algum produto para realizar uma venda";
