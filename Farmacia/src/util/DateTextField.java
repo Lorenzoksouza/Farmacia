@@ -33,7 +33,7 @@ import javax.swing.event.ChangeListener;
 
 public class DateTextField extends JTextField {
 
-	private static String DEFAULT_DATE_FORMAT = "MM/dd/yyyy";
+	private static String DEFAULT_DATE_FORMAT = "dd/MM/yyyy";
 	private static final int DIALOG_WIDTH = 200;
 	private static final int DIALOG_HEIGHT = 200;
 
