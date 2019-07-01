@@ -146,7 +146,9 @@ public class ListagemProduto extends JInternalFrame {
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				pesquisarProdutos();
-				btnProximo.setEnabled(true);
+				if (paginaAtual != totalPaginas) {
+					btnProximo.setEnabled(true);
+				}
 			}
 		});
 		getContentPane().add(btnPesquisar, "cell 0 7,growx");

@@ -54,6 +54,7 @@ public class ListagemMedicamento extends JInternalFrame {
 	private JLabel lbMax;
 	private int paginaTotal = 1;
 	private JButton btnProximo;
+	private JButton btnAnterior;
 
 	private ArrayList<FormaUso> listaFormasUso;
 
@@ -170,7 +171,9 @@ public class ListagemMedicamento extends JInternalFrame {
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				pesquisarMedicamentos();
-				btnProximo.setEnabled(true);
+				if (paginaAtual != totalPaginas) {
+					btnProximo.setEnabled(true);
+				}
 			}
 		});
 
@@ -277,7 +280,7 @@ public class ListagemMedicamento extends JInternalFrame {
 		btnProximo.setBackground(Color.WHITE);
 		btnProximo.setPreferredSize(new Dimension(80, 30));
 		btnProximo.setEnabled(false);
-		JButton btnAnterior = new JButton("<Anterior");
+		btnAnterior = new JButton("<Anterior");
 		btnAnterior.setBorder(new LineBorder(Color.gray, 2, true));
 		btnAnterior.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnAnterior.setBackground(Color.WHITE);
