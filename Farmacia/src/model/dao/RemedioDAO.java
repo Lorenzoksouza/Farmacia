@@ -36,7 +36,7 @@ public class RemedioDAO {
 			prepStmt.execute();
 
 		} catch (SQLException e) {
-			System.out.println("Erro ao inserir rem�dio. Causa: " + e.getMessage());
+			System.out.println("Erro ao inserir remédio. Causa: " + e.getMessage());
 		} finally {
 			Banco.closePreparedStatement(prepStmt);
 			Banco.closeConnection(conn);
@@ -66,7 +66,7 @@ public class RemedioDAO {
 
 			int codigoRetorno = prepStmt.executeUpdate();
 			if (codigoRetorno == 0) {
-				mensagem = "Erro ao executar query de atualização de Rem�dio!";
+				mensagem = "Erro ao executar query de atualização de Remédio!";
 			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao atualizar remédio. Causa: " + e.getMessage());
@@ -222,7 +222,7 @@ public class RemedioDAO {
 			}
 		} catch (SQLException e) {
 			System.out.println(
-					"Erro ao executar Query que verifica exist�ncia de C�digo de Barras. Causa :" + e.getMessage());
+					"Erro ao executar Query que verifica existência de Código de Barras. Causa :" + e.getMessage());
 			codigoRetorno = false;
 		} finally {
 			Banco.closeResultSet(resultado);
@@ -302,7 +302,7 @@ public class RemedioDAO {
 				listaLaboratorios.add(lab);
 			}
 		} catch (SQLException e) {
-			System.out.println("Erro ao listar os Laborat�rios!!");
+			System.out.println("Erro ao listar os Laboratórios!!");
 			e.printStackTrace();
 		} finally {
 			Banco.closeResultSet(resultado);
