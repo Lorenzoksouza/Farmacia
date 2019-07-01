@@ -41,6 +41,7 @@ public class Menu extends JFrame {
 	CadastroProduto cadastroProduto = null;
 	ListagemProduto pesquisaProduto = null;
 	TelaVenda telaVenda = null;
+	ListagemVenda listagemVenda = null;
 	TelaSobre telaSobre = null;
 
 	/**
@@ -98,7 +99,7 @@ public class Menu extends JFrame {
 		menuBar.setBackground(new Color(245, 245, 245));
 		this.setJMenuBar(menuBar);
 
-		JMenu mnMedicamento = new JMenu("Medicamento");
+		JMenu mnMedicamento = new JMenu("Medicamentos");
 		mnMedicamento.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
 		mnMedicamento.setBackground(Color.WHITE);
 		mnMedicamento.setIcon(new ImageIcon(Menu.class.getResource("/icons/med3x.png")));
@@ -216,9 +217,35 @@ public class Menu extends JFrame {
 		mnVendas.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
 		mnVendas.setBackground(Color.LIGHT_GRAY);
 		mnVendas.setIcon(new ImageIcon(Menu.class.getResource("/icons/cart (2).png")));
-		mnVendas.addMouseListener(new MouseAdapter() {
+		/*
+		 * mnVendas.addMouseListener(new MouseAdapter() {
+		 * 
+		 * @Override public void mouseClicked(MouseEvent evt) { if
+		 * (!temComponenteNaTela(telaVenda)) { telaVenda = new TelaVenda();
+		 * desktopPane.add(telaVenda); //
+		 * desktopPane.getDesktopManager().maximizeFrame(telaVenda); telaVenda.show();
+		 * 
+		 * telaVenda.addInternalFrameListener(new InternalFrameAdapter() {
+		 * 
+		 * @Override public void internalFrameClosing(InternalFrameEvent evt) { Menu pai
+		 * = (Menu) SwingUtilities.getWindowAncestor(telaVenda);
+		 * pai.chamarPai(telaVenda); } }); } } });
+		 */
+
+		// espaco entre os botoes
+		JMenu menuSpace2 = new JMenu("  ");
+		menuSpace2.setEnabled(false);
+		menuBar.add(menuSpace2);
+
+		menuBar.add(mnVendas);
+
+		JMenuItem mntmNovaVenda = new JMenuItem("Nova Venda");
+		mntmNovaVenda.setBorder(new LineBorder(Color.GRAY, 1));
+		mntmNovaVenda.setBackground(Color.WHITE);
+		mntmNovaVenda.setIcon(new ImageIcon(Menu.class.getResource("/icons/espaco.png")));
+		mntmNovaVenda.addActionListener(new ActionListener() {
 			@Override
-			public void mouseClicked(MouseEvent evt) {
+			public void actionPerformed(ActionEvent e) {
 				if (!temComponenteNaTela(telaVenda)) {
 					telaVenda = new TelaVenda();
 					desktopPane.add(telaVenda);
@@ -235,13 +262,32 @@ public class Menu extends JFrame {
 				}
 			}
 		});
+		mnVendas.add(mntmNovaVenda);
 
-		// espaco entre os botoes
-		JMenu menuSpace2 = new JMenu("  ");
-		menuSpace2.setEnabled(false);
-		menuBar.add(menuSpace2);
+		JMenuItem mntmRelatorio = new JMenuItem("Relatório");
+		mntmRelatorio.setBorder(new LineBorder(Color.GRAY, 1));
+		mntmRelatorio.setBackground(Color.WHITE);
+		mntmRelatorio.setIcon(new ImageIcon(Menu.class.getResource("/icons/espaco.png")));
+		mntmRelatorio.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!temComponenteNaTela(listagemVenda)) {
+					listagemVenda = new ListagemVenda();
+					desktopPane.add(listagemVenda);
+					// desktopPane.getDesktopManager().maximizeFrame(telaVenda);
+					listagemVenda.show();
 
-		menuBar.add(mnVendas);
+					listagemVenda.addInternalFrameListener(new InternalFrameAdapter() {
+						@Override
+						public void internalFrameClosing(InternalFrameEvent evt) {
+							Menu pai = (Menu) SwingUtilities.getWindowAncestor(listagemVenda);
+							pai.chamarPai(listagemVenda);
+						}
+					});
+				}
+			}
+		});
+		mnVendas.add(mntmRelatorio);
 
 		JMenu mnSobre = new JMenu("Sobre");
 		mnSobre.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
@@ -294,5 +340,4 @@ public class Menu extends JFrame {
 	public void setDesktopPane(JDesktopPane desktopPane) {
 		this.desktopPane = desktopPane;
 	}
-
 }

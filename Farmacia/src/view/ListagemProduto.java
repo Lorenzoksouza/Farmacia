@@ -231,7 +231,15 @@ public class ListagemProduto extends JInternalFrame {
 		getContentPane().add(btnGerarXls, "cell 0 10,alignx center");
 
 		btnProximo = new JButton("Próximo>");
+		btnProximo.setBorder(new LineBorder(Color.gray, 2, true));
+		btnProximo.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnProximo.setBackground(Color.WHITE);
+		btnProximo.setPreferredSize(new Dimension(80, 30));
 		JButton btnAnterior = new JButton("<Anterior");
+		btnAnterior.setBorder(new LineBorder(Color.gray, 2, true));
+		btnAnterior.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnAnterior.setBackground(Color.WHITE);
+		btnAnterior.setPreferredSize(new Dimension(80, 30));
 		btnAnterior.setEnabled(false);
 		btnAnterior.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
