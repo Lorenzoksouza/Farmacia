@@ -47,12 +47,12 @@ public class ListagemProduto extends JInternalFrame {
 	private JComboBox<String> cmbCategoria;
 
 	private List<Produto> produtosConsultados = null;
-	private int totalPaginas = 1;
-	private int paginaAtual = 1;
 	private JLabel lblPaginaAtual;
 	private JLabel lbMax;
-	private int paginaTotal = 1;
 	private JButton btnProximo;
+	private int totalPaginas = 1;
+	private int paginaAtual = 1;
+	private int paginaTotal = 1;
 
 	private ArrayList<Categoria> listaCategoria;
 
@@ -231,12 +231,7 @@ public class ListagemProduto extends JInternalFrame {
 		});
 		getContentPane().add(btnGerarXls, "cell 0 10,alignx center");
 
-		btnProximo = new JButton("Próximo>");
-		btnProximo.setBorder(new LineBorder(Color.gray, 2, true));
-		btnProximo.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnProximo.setBackground(Color.WHITE);
-		btnProximo.setPreferredSize(new Dimension(80, 30));
-		btnProximo.setEnabled(false);
+		JButton btnProximo = new JButton("Próximo>");
 		JButton btnAnterior = new JButton("<Anterior");
 		btnAnterior.setBorder(new LineBorder(Color.gray, 2, true));
 		btnAnterior.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -268,6 +263,11 @@ public class ListagemProduto extends JInternalFrame {
 		lbMax = new JLabel("1");
 		getContentPane().add(lbMax, "cell 2 12,alignx center");
 
+		btnProximo.setBorder(new LineBorder(Color.gray, 2, true));
+		btnProximo.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnProximo.setBackground(Color.WHITE);
+		btnProximo.setPreferredSize(new Dimension(80, 30));
+		btnProximo.setEnabled(false);
 		btnProximo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				paginaAtual++;

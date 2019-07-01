@@ -235,7 +235,9 @@ public class TelaVenda extends JInternalFrame {
 					ControllerVenda controllerVenda = new ControllerVenda();
 					mensagem = controllerVenda.salvarVenda(valorTotal, itensProdutos, itensRemedios);
 					if (mensagem == "") {
-						mensagem = "Venda concluída com sucesso! Valor total de: R$" + valorTotal;
+						DecimalFormat df = new DecimalFormat("0.#####");
+						String dx = df.format(valorTotal);
+						mensagem = "Venda concluída com sucesso! Valor total de: R$" + dx;
 						removerMercadorias(mercadoriasParaVenda);
 						atualizarTblVenda(mercadoriasParaVenda);
 					}
