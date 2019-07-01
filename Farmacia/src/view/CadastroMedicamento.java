@@ -138,10 +138,10 @@ public class CadastroMedicamento extends JInternalFrame {
 
 		consultarLaboratorio();
 
-		JLabel lblComposicao = new JLabel("Composi\u00E7\u00E3o:");
+		JLabel lblComposicao = new JLabel("Composicão:");
 		getContentPane().add(lblComposicao, "cell 0 7");
 
-		JLabel lblLaboratorio = new JLabel("Laborat\u00F3rio:");
+		JLabel lblLaboratorio = new JLabel("Laboratório:");
 		getContentPane().add(lblLaboratorio, "cell 2 7");
 
 		txtComposicao = new JTextField();

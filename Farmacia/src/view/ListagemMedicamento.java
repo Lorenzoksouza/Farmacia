@@ -139,7 +139,7 @@ public class ListagemMedicamento extends JInternalFrame {
 
 		txtNome.setDocument(new JTextFieldLimit(150));
 
-		JLabel lblComposicao = new JLabel("Composi��o:");
+		JLabel lblComposicao = new JLabel("Composição:");
 		getContentPane().add(lblComposicao, "cell 0 4");
 
 		// Composi��o
@@ -170,6 +170,7 @@ public class ListagemMedicamento extends JInternalFrame {
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				pesquisarMedicamentos();
+				btnProximo.setEnabled(true);
 			}
 		});
 
@@ -275,6 +276,7 @@ public class ListagemMedicamento extends JInternalFrame {
 		btnProximo.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnProximo.setBackground(Color.WHITE);
 		btnProximo.setPreferredSize(new Dimension(80, 30));
+		btnProximo.setEnabled(false);
 		JButton btnAnterior = new JButton("<Anterior");
 		btnAnterior.setBorder(new LineBorder(Color.gray, 2, true));
 		btnAnterior.setFont(new Font("Tahoma", Font.BOLD, 11));

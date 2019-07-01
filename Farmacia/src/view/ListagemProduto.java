@@ -146,6 +146,7 @@ public class ListagemProduto extends JInternalFrame {
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				pesquisarProdutos();
+				btnProximo.setEnabled(true);
 			}
 		});
 		getContentPane().add(btnPesquisar, "cell 0 7,growx");
@@ -235,6 +236,7 @@ public class ListagemProduto extends JInternalFrame {
 		btnProximo.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnProximo.setBackground(Color.WHITE);
 		btnProximo.setPreferredSize(new Dimension(80, 30));
+		btnProximo.setEnabled(false);
 		JButton btnAnterior = new JButton("<Anterior");
 		btnAnterior.setBorder(new LineBorder(Color.gray, 2, true));
 		btnAnterior.setFont(new Font("Tahoma", Font.BOLD, 11));

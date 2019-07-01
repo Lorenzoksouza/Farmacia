@@ -193,7 +193,7 @@ public class DateTextField extends JTextField {
 		}
 
 		private JPanel createWeekAndDayPanal() {
-			String colname[] = { "S", "M", "T", "W", "T", "F", "S" };
+			String colname[] = { "D", "S", "T", "Q", "Q", "S", "S" };
 			JPanel panel = new JPanel();
 			panel.setFont(new Font("Arial", Font.PLAIN, 10));
 			panel.setLayout(new GridLayout(7, 7));
