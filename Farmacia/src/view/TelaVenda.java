@@ -241,6 +241,7 @@ public class TelaVenda extends JInternalFrame {
 						removerMercadorias(mercadoriasParaVenda);
 						atualizarTblVenda(mercadoriasParaVenda);
 						valorTotal = 0;
+						lblValor.setText("R$" + valorTotal);
 					}
 				} else {
 					mensagem = "Selecione algum produto para realizar uma venda";
@@ -265,6 +266,9 @@ public class TelaVenda extends JInternalFrame {
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				pesquisarMercadorias();
+				if (paginaAtual != totalPaginas) {
+					btnProximo.setEnabled(false);
+				}
 			}
 		});
 		getContentPane().add(btnPesquisar, "cell 0 2,alignx right");
@@ -298,6 +302,7 @@ public class TelaVenda extends JInternalFrame {
 			}
 		});
 		getContentPane().add(btnProximo, "cell 0 10");
+		btnProximo.setEnabled(false);
 
 	}
 
