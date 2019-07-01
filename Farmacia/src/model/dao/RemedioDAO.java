@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -194,8 +195,14 @@ public class RemedioDAO {
 			r.setComposicao(result.getString("COMPOSICAO"));
 			r.setGenerico(result.getBoolean("GENERICO"));
 			r.setNome(result.getString("NM_REMEDIO"));
+
+			// TODO converter java.sql.Date para java.util.Date
 			r.setDataCadastro(result.getDate("DT_CADASTRO"));
 			r.setPreco(result.getDouble("PRECO"));
+
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			String hora = sdf.format(r.getDataCadastro());
+
 			r.setEstoque(result.getInt("ESTOQUE"));
 			fu.setIdFormaUso(result.getInt("ID_FORMA_USO"));
 			fu.setDescricao(result.getString("DESCRICAO"));
