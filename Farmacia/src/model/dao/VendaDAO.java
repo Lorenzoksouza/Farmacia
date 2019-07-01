@@ -249,39 +249,39 @@ public class VendaDAO {
 //			primeiro = false;
 //		}
 
-		if ((seletor.getDataMenor() != null) && (seletor.getDataMaior() != null)) {
-			if (!primeiro) {
-				sql += " AND ";
-			}
-			sql += "V.DT_VENDA BETWEEN" + seletor.getDataMenor() + " AND " + seletor.getDataMaior();
-			primeiro = false;
-		} else if (seletor.getDataMenor() != null) {
-			if (!primeiro) {
-				sql += " AND ";
-			}
-			sql += "V.DT_VENDA >= " + seletor.getDataMenor();
-			primeiro = false;
-		} else if (seletor.getDataMaior() != null) {
-			if (!primeiro) {
-				sql += " AND ";
-			}
-			sql += "V.DT_VENDA <= " + seletor.getDataMaior();
-			primeiro = false;
-		}
+//		if ((seletor.getDataMenor() != null) && (seletor.getDataMaior() != null)) {
+//			if (!primeiro) {
+//				sql += " AND ";
+//			}
+//			sql += "V.DT_VENDA BETWEEN " + seletor.getDataMenor() + " AND " + seletor.getDataMaior();
+//			primeiro = false;
+//		} else if (seletor.getDataMenor() != null) {
+//			if (!primeiro) {
+//				sql += " AND ";
+//			}
+//			sql += "V.DT_VENDA >= " + seletor.getDataMenor();
+//			primeiro = false;
+//		} else if (seletor.getDataMaior() != null) {
+//			if (!primeiro) {
+//				sql += " AND ";
+//			}
+//			sql += "V.DT_VENDA <= " + seletor.getDataMaior();
+//			primeiro = false;
+//		}
 
-		if ((seletor.getValorMenor() != null) && (seletor.getValorMaior() != null)) {
+		if ((seletor.getValorMenor() != 0.00) && (seletor.getValorMaior() != 0.00)) {
 			if (!primeiro) {
 				sql += " AND ";
 			}
-			sql += "V.VALOR_TOTAL BETWEEN" + seletor.getValorMenor() + " AND " + seletor.getValorMaior();
+			sql += "V.VALOR_TOTAL BETWEEN " + seletor.getValorMenor() + " AND " + seletor.getValorMaior();
 			primeiro = false;
-		} else if (seletor.getValorMenor() != null) {
+		} else if (seletor.getValorMenor() != 0.00) {
 			if (!primeiro) {
 				sql += " AND ";
 			}
 			sql += "V.VALOR_TOTAL >= " + seletor.getValorMenor();
 			primeiro = false;
-		} else if (seletor.getValorMaior() != null) {
+		} else if (seletor.getValorMaior() != 0.00) {
 			if (!primeiro) {
 				sql += " AND ";
 			}

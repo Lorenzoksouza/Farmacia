@@ -34,12 +34,10 @@ public class ListagemVenda extends JInternalFrame {
 	private JLabel lblPaginaAtual;
 	private JLabel lbMax;
 	private JTextField txtId;
-	private JTextField textFieldDataMin;
-	private JTextField textField;
 	private JTextField txtValorMin;
 	private JTextField txtValorMax;
-	private JTextField dataMin;
-	private JTextField dataMax;
+	private JTextField txtDataMin;
+	private JTextField txtDataMax;
 	private JButton btnProximo;
 	private JButton btnAnterior;
 
@@ -97,8 +95,8 @@ public class ListagemVenda extends JInternalFrame {
 		JLabel lblEspaco = new JLabel(" ");
 		getContentPane().add(lblEspaco, "cell 1 2");
 
-		dataMin = new JTextField();
-		dataMin.addKeyListener(new KeyAdapter() {
+		txtDataMin = new JTextField();
+		txtDataMin.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent arg0) {
 				char vchar = arg0.getKeyChar();
@@ -106,8 +104,8 @@ public class ListagemVenda extends JInternalFrame {
 					arg0.consume();
 			}
 		});
-		dataMin.setDocument(new JTextFieldLimit(8));
-		getContentPane().add(dataMin, "cell 0 3,growx");
+		txtDataMin.setDocument(new JTextFieldLimit(8));
+		getContentPane().add(txtDataMin, "cell 0 3,growx");
 
 		JLabel lblDataMax = new JLabel("Data max. (DD/MM/AAAA)");
 		getContentPane().add(lblDataMax, "cell 0 4");
@@ -115,8 +113,8 @@ public class ListagemVenda extends JInternalFrame {
 		JLabel lblEspaco_1 = new JLabel(" ");
 		getContentPane().add(lblEspaco_1, "cell 2 2");
 
-		dataMax = new JTextField();
-		dataMax.addKeyListener(new KeyAdapter() {
+		txtDataMax = new JTextField();
+		txtDataMax.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent arg0) {
 				char vchar = arg0.getKeyChar();
@@ -125,8 +123,8 @@ public class ListagemVenda extends JInternalFrame {
 			}
 		});
 		// dataMax.setDate(Calendar.getInstance().getTime());
-		dataMax.setDocument(new JTextFieldLimit(8));
-		getContentPane().add(dataMax, "cell 0 5,growx");
+		txtDataMax.setDocument(new JTextFieldLimit(8));
+		getContentPane().add(txtDataMax, "cell 0 5,growx");
 
 		JLabel lblValorMin = new JLabel("Valor min.");
 		getContentPane().add(lblValorMin, "cell 0 6");
@@ -243,6 +241,7 @@ public class ListagemVenda extends JInternalFrame {
 
 		int quociente = vendas.size() / seletor.getLimite();
 		int resto = vendas.size() % seletor.getLimite();
+		DecimalFormat format = new DecimalFormat("0.00");
 
 		if (resto == 0) {
 			totalPaginas = quociente;
@@ -250,6 +249,18 @@ public class ListagemVenda extends JInternalFrame {
 			totalPaginas = quociente + 1;
 		}
 		lbMax.setText(totalPaginas + "");
+
+		if (!txtId.getText().trim().equals("")) {
+			seletor.setId(Integer.parseInt(txtId.getText()));
+		}
+
+		if (!txtValorMin.getText().equals("") || txtValorMin.getText().equals("0.00")) {
+			seletor.setValorMenor(Double.parseDouble(txtValorMin.getText().replace(",", ".")));
+		}
+
+		if (!txtValorMax.getText().equals("") || txtValorMax.getText().equals("0.00")) {
+			seletor.setValorMaior(Double.parseDouble(txtValorMax.getText().replace(",", ".")));
+		}
 
 		seletor.setPagina(paginaAtual);
 
