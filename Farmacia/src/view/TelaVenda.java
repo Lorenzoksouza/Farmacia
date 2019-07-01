@@ -234,8 +234,9 @@ public class TelaVenda extends JInternalFrame {
 					ControllerVenda controllerVenda = new ControllerVenda();
 					mensagem = controllerVenda.salvarVenda(valorTotal, itensProdutos, itensRemedios);
 					if (mensagem == "") {
-						mensagem = "Venda concluida";
-						limparVendas();
+						mensagem = "Venda concluída com sucesso! Valor total de: R$" + valorTotal;
+						removerMercadorias(mercadoriasParaVenda);
+						atualizarTblVenda(mercadoriasParaVenda);
 					}
 				} else {
 					mensagem = "Selecione algum produto para realizar uma venda";
@@ -367,6 +368,12 @@ public class TelaVenda extends JInternalFrame {
 		}
 	}
 
+	private void removerMercadorias(List<Mercadoria> listaMercadorias) {
+		for (int i = 0; i <= listaMercadorias.size(); i++) {
+			listaMercadorias.remove(i);
+		}
+	}
+
 	private void adicionarItem(Mercadoria mercadoriaSelecionada) {
 		int quantidade = (int) spiQuantidade.getValue();
 		if (mercadoriaSelecionada instanceof Produto) {
@@ -431,14 +438,5 @@ public class TelaVenda extends JInternalFrame {
 					"R$" + mercadoria.getPreco() };
 			modelo.addRow(novaLinha);
 		}
-	}
-
-	private void limparVendas() {
-		tblVenda.setModel(new DefaultTableModel(new String[][] { { "Nome", "Quantidade", "Preço" } },
-				new String[] { "Nome", "Quantidade", "Preço" }));
-		int row = tblVenda.getRowCount();
-		int modelRow = tblVenda.convertRowIndexToModel(row);
-		DefaultTableModel model = (DefaultTableModel) tblVenda.getModel();
-		model.removeRow(modelRow);
 	}
 }
