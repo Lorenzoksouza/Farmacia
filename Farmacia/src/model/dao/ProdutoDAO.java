@@ -43,7 +43,7 @@ public class ProdutoDAO {
 	public String atualizar(Produto p) {
 		String mensagem = "";
 		String sql = "UPDATE PRODUTO R SET NM_PRODUTO = ?, DT_CADASTRO = ?, PRECO = ?, ESTOQUE = ?, ID_CATEGORIA = ?"
-				+ "WHERE R.COD_BARRA = ?";
+				+ " WHERE R.COD_BARRA = ?";
 
 		Connection conn = Banco.getConnection();
 		PreparedStatement prepStmt = Banco.getPreparedStatement(conn, sql, Statement.RETURN_GENERATED_KEYS);
