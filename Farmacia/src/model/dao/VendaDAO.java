@@ -200,7 +200,7 @@ public class VendaDAO {
 	}
 
 	public List<Venda> listarVenda(VendaSeletor seletor) {
-		String sql = "SELECT * FROM VENDA V";
+		String sql = "SELECT V.ID_VENDA, V.VALOR_TOTAL, V.DT_VENDA FROM VENDA V ";
 
 		if (seletor.temFiltro()) {
 			sql = criarFiltrosVenda(seletor, sql);
@@ -219,8 +219,9 @@ public class VendaDAO {
 			while (result.next()) {
 				Venda v = new Venda();
 				v.setIdVenda(result.getInt(1));
-				v.setDataVenda(result.getDate(2));
-				v.setValor(result.getDouble(3));
+				v.setValor(result.getDouble(2));
+				v.setDataVenda(result.getDate(3));
+				vendas.add(v);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -249,23 +250,18 @@ public class VendaDAO {
 //		}
 
 		if ((seletor.getDataMenor() != null) && (seletor.getDataMaior() != null)) {
-			// Regra composta, olha as 3 opções de preenchimento do período
-
-			// Todo o período preenchido (início E fim)
 			if (!primeiro) {
 				sql += " AND ";
 			}
 			sql += "V.DT_VENDA BETWEEN" + seletor.getDataMenor() + " AND " + seletor.getDataMaior();
 			primeiro = false;
 		} else if (seletor.getDataMenor() != null) {
-			// só o início
 			if (!primeiro) {
 				sql += " AND ";
 			}
 			sql += "V.DT_VENDA >= " + seletor.getDataMenor();
 			primeiro = false;
 		} else if (seletor.getDataMaior() != null) {
-			// só o fim
 			if (!primeiro) {
 				sql += " AND ";
 			}
@@ -274,23 +270,18 @@ public class VendaDAO {
 		}
 
 		if ((seletor.getValorMenor() != null) && (seletor.getValorMaior() != null)) {
-			// Regra composta, olha as 3 opções de preenchimento do período
-
-			// Todo o período preenchido (maior E menor)
 			if (!primeiro) {
 				sql += " AND ";
 			}
 			sql += "V.VALOR_TOTAL BETWEEN" + seletor.getValorMenor() + " AND " + seletor.getValorMaior();
 			primeiro = false;
 		} else if (seletor.getValorMenor() != null) {
-			// só o início
 			if (!primeiro) {
 				sql += " AND ";
 			}
 			sql += "V.VALOR_TOTAL >= " + seletor.getValorMenor();
 			primeiro = false;
 		} else if (seletor.getValorMaior() != null) {
-			// só o fim
 			if (!primeiro) {
 				sql += " AND ";
 			}
@@ -298,8 +289,6 @@ public class VendaDAO {
 			primeiro = false;
 		}
 
-		// Verificando o que retorna nos filtros
-		// System.out.println(sql);
 		return sql;
 	}
 

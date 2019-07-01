@@ -23,7 +23,6 @@ public class Venda {
 
 	public Venda() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public int getIdVenda() {

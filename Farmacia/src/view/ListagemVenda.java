@@ -64,8 +64,8 @@ public class ListagemVenda extends JInternalFrame {
 		getContentPane().add(lblEspaco, "cell 0 0");
 
 		tblVendas = new JTable();
-		tblVendas.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "    Id", "Valor", "Data da venda", "Produtos", "Remedios" }));
+		tblVendas.setModel(
+				new DefaultTableModel(new Object[][] {}, new String[] { "    Id", "Valor", "Data da venda" }));
 		tblVendas.setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		getContentPane().add(tblVendas, "flowx,cell 1 0,grow");
 
@@ -169,27 +169,20 @@ public class ListagemVenda extends JInternalFrame {
 	}
 
 	private void atualizarTabelaVendas(List<Venda> vendas) {
-		// atualiza o atributo remediosConsultados
 		vendasConsultadas = vendas;
 
 		// btnGerarXls.setEnabled(vendas != null && vendas.size() > 0);
 
-		// Limpa a tabela
-		tblVendas.setModel(new DefaultTableModel(
-				new String[][] { { "    Id", "Valor", "Data da venda", "Produtos", "Remedios" }, },
-				new String[] { "    Id", "Valor", "Data da venda", "Produtos", "Remedios" }));
+		tblVendas.setModel(new DefaultTableModel(new String[][] { { "    Id", "Valor", "Data da venda" }, },
+				new String[] { "    Id", "Valor", "Data da venda" }));
 
 		DefaultTableModel modelo = (DefaultTableModel) tblVendas.getModel();
 
 		for (Venda venda : vendas) {
-			// Crio uma nova linha na tabela
-			// Preencher a linha com os atributos do remedio
-			// na ORDEM do cabe�alho da tabela
 
 			DecimalFormat format = new DecimalFormat("0.00");
 			String[] novaLinha = new String[] { venda.getIdVenda() + "", format.format(venda.getValor()),
-					String.valueOf(venda.getDataVenda()), String.valueOf(venda.getItemProduto()),
-					String.valueOf(venda.getItemRemedio()) };
+					String.valueOf(venda.getDataVenda()) };
 			modelo.addRow(novaLinha);
 		}
 	}
