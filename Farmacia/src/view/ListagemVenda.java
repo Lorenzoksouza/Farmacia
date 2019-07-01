@@ -6,8 +6,9 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -25,8 +26,8 @@ import controller.ControllerVenda;
 import model.seletor.VendaSeletor;
 import model.vo.Venda;
 import net.miginfocom.swing.MigLayout;
-import util.DateTextField;
 import util.JNumberFormatField;
+import util.JTextFieldLimit;
 
 public class ListagemVenda extends JInternalFrame {
 	private JTable tblVendas;
@@ -37,8 +38,8 @@ public class ListagemVenda extends JInternalFrame {
 	private JTextField textField;
 	private JTextField txtValorMin;
 	private JTextField txtValorMax;
-	private DateTextField dataMin;
-	private DateTextField dataMax;
+	private JTextField dataMin;
+	private JTextField dataMax;
 	private JButton btnProximo;
 	private JButton btnAnterior;
 
@@ -90,25 +91,41 @@ public class ListagemVenda extends JInternalFrame {
 		getContentPane().add(txtId, "cell 0 1");
 		txtId.setColumns(10);
 
-		JLabel lblDataMinima = new JLabel("Data min.");
+		JLabel lblDataMinima = new JLabel("Data min. (DD/MM/AAAA)");
 		getContentPane().add(lblDataMinima, "cell 0 2");
 
 		JLabel lblEspaco = new JLabel(" ");
 		getContentPane().add(lblEspaco, "cell 1 2");
 
-		dataMin = new DateTextField();
-		dataMin.setDate(Calendar.getInstance().getTime());
-
+		dataMin = new JTextField();
+		dataMin.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				char vchar = arg0.getKeyChar();
+				if (!(Character.isDigit(vchar)) || (vchar == KeyEvent.VK_BACK_SPACE) || (vchar == KeyEvent.VK_DELETE))
+					arg0.consume();
+			}
+		});
+		dataMin.setDocument(new JTextFieldLimit(8));
 		getContentPane().add(dataMin, "cell 0 3,growx");
 
-		JLabel lblDataMax = new JLabel("Data max.");
+		JLabel lblDataMax = new JLabel("Data max. (DD/MM/AAAA)");
 		getContentPane().add(lblDataMax, "cell 0 4");
 
 		JLabel lblEspaco_1 = new JLabel(" ");
 		getContentPane().add(lblEspaco_1, "cell 2 2");
 
-		dataMax = new DateTextField();
-		dataMax.setDate(Calendar.getInstance().getTime());
+		dataMax = new JTextField();
+		dataMax.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				char vchar = arg0.getKeyChar();
+				if (!(Character.isDigit(vchar)) || (vchar == KeyEvent.VK_BACK_SPACE) || (vchar == KeyEvent.VK_DELETE))
+					arg0.consume();
+			}
+		});
+		// dataMax.setDate(Calendar.getInstance().getTime());
+		dataMax.setDocument(new JTextFieldLimit(8));
 		getContentPane().add(dataMax, "cell 0 5,growx");
 
 		JLabel lblValorMin = new JLabel("Valor min.");
