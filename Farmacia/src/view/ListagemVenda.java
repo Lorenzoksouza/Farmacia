@@ -30,18 +30,22 @@ import util.JNumberFormatField;
 
 public class ListagemVenda extends JInternalFrame {
 	private JTable tblVendas;
-	private List<Venda> vendasConsultadas;
-	private int totalPaginas = 1;
-	private int paginaAtual = 1;
 	private JLabel lblPaginaAtual;
 	private JLabel lbMax;
-	private int paginaTotal = 1;
-	private JButton btnProximo;
-	private JTextField textFieldId;
+	private JTextField txtId;
 	private JTextField textFieldDataMin;
 	private JTextField textField;
-	private JTextField textFieldValorMin;
-	private JTextField textFieldValorMax;
+	private JTextField txtValorMin;
+	private JTextField txtValorMax;
+	private DateTextField dataMin;
+	private DateTextField dataMax;
+	private JButton btnProximo;
+
+	private List<Venda> vendasConsultadas;
+
+	private int paginaTotal = 1;
+	private int paginaAtual = 1;
+	private int totalPaginas = 1;
 
 	/**
 	 * Launch the application.
@@ -76,14 +80,14 @@ public class ListagemVenda extends JInternalFrame {
 
 		tblVendas = new JTable();
 		tblVendas.setModel(
-				new DefaultTableModel(new Object[][] {}, new String[] { " ", "    Id", "Valor", "Data da venda" }));
+				new DefaultTableModel(new Object[][] {}, new String[] { " ", "Codigo", "Valor", "Data da venda" }));
 		tblVendas.getColumnModel().getColumn(0).setPreferredWidth(15);
 		tblVendas.setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		getContentPane().add(tblVendas, "flowx,cell 2 0 1 12,grow");
 
-		textFieldId = new JTextField();
-		getContentPane().add(textFieldId, "cell 0 1");
-		textFieldId.setColumns(10);
+		txtId = new JTextField();
+		getContentPane().add(txtId, "cell 0 1");
+		txtId.setColumns(10);
 
 		JLabel lblDataMinima = new JLabel("Data min.");
 		getContentPane().add(lblDataMinima, "cell 0 2");
@@ -91,7 +95,7 @@ public class ListagemVenda extends JInternalFrame {
 		JLabel lblEspaco = new JLabel(" ");
 		getContentPane().add(lblEspaco, "cell 1 2");
 
-		DateTextField dataMin = new DateTextField();
+		dataMin = new DateTextField();
 		dataMin.setDate(Calendar.getInstance().getTime());
 
 		getContentPane().add(dataMin, "cell 0 3,growx");
@@ -102,23 +106,23 @@ public class ListagemVenda extends JInternalFrame {
 		JLabel lblEspaco_1 = new JLabel(" ");
 		getContentPane().add(lblEspaco_1, "cell 2 2");
 
-		DateTextField dataMax = new DateTextField();
+		dataMax = new DateTextField();
 		dataMax.setDate(Calendar.getInstance().getTime());
 		getContentPane().add(dataMax, "cell 0 5,growx");
 
 		JLabel lblValorMin = new JLabel("Valor min.");
 		getContentPane().add(lblValorMin, "cell 0 6");
 
-		textFieldValorMin = new JNumberFormatField(2);
-		getContentPane().add(textFieldValorMin, "cell 0 7,growx");
-		textFieldValorMin.setColumns(10);
+		txtValorMin = new JNumberFormatField(2);
+		getContentPane().add(txtValorMin, "cell 0 7,growx");
+		txtValorMin.setColumns(10);
 
 		JLabel lblValorMax = new JLabel("Valor max.");
 		getContentPane().add(lblValorMax, "cell 0 8");
 
-		textFieldValorMax = new JNumberFormatField(2);
-		getContentPane().add(textFieldValorMax, "cell 0 9,growx");
-		textFieldValorMax.setColumns(10);
+		txtValorMax = new JNumberFormatField(2);
+		getContentPane().add(txtValorMax, "cell 0 9,growx");
+		txtValorMax.setColumns(10);
 
 		JButton btnGerarLista = new JButton("Gerar lista");
 		btnGerarLista.setIcon(new ImageIcon(ListagemVenda.class.getResource("/icons/search.png")));
@@ -236,8 +240,8 @@ public class ListagemVenda extends JInternalFrame {
 
 		// btnGerarXls.setEnabled(vendas != null && vendas.size() > 0);
 
-		tblVendas.setModel(new DefaultTableModel(new String[][] { { "    Id", "Valor", "Data da venda" }, },
-				new String[] { "    Id", "Valor", "Data da venda" }));
+		tblVendas.setModel(new DefaultTableModel(new String[][] { { "Codigo", "Valor", "Data da venda" }, },
+				new String[] { "Codigo", "Valor", "Data da venda" }));
 
 		DefaultTableModel modelo = (DefaultTableModel) tblVendas.getModel();
 
