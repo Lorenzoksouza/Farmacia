@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -241,33 +242,27 @@ public class VendaDAO {
 			primeiro = false;
 		}
 
-//		if ((seletor.getValor() != null) && (seletor.getValor() > 0)) {
-//			if (!primeiro) {
-//				sql += " AND ";
-//			}
-//			sql += "R.VALOR_TOTAL LIKE '%" + seletor.getValor() + "%'";
-//			primeiro = false;
-//		}
-
-//		if ((seletor.getDataMenor() != null) && (seletor.getDataMaior() != null)) {
-//			if (!primeiro) {
-//				sql += " AND ";
-//			}
-//			sql += "V.DT_VENDA BETWEEN " + seletor.getDataMenor() + " AND " + seletor.getDataMaior();
-//			primeiro = false;
-//		} else if (seletor.getDataMenor() != null) {
-//			if (!primeiro) {
-//				sql += " AND ";
-//			}
-//			sql += "V.DT_VENDA >= " + seletor.getDataMenor();
-//			primeiro = false;
-//		} else if (seletor.getDataMaior() != null) {
-//			if (!primeiro) {
-//				sql += " AND ";
-//			}
-//			sql += "V.DT_VENDA <= " + seletor.getDataMaior();
-//			primeiro = false;
-//		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		if ((seletor.getDataMenor() != null) && (seletor.getDataMaior() != null)) {
+			if (!primeiro) {
+				sql += " AND ";
+			}
+			sql += "V.DT_VENDA BETWEEN '" + sdf.format(seletor.getDataMenor()) + "' AND '"
+					+ sdf.format(seletor.getDataMaior() + "'");
+			primeiro = false;
+		} else if (seletor.getDataMenor() != null) {
+			if (!primeiro) {
+				sql += " AND ";
+			}
+			sql += "V.DT_VENDA >= '" + sdf.format(seletor.getDataMenor() + "'");
+			primeiro = false;
+		} else if (seletor.getDataMaior() != null) {
+			if (!primeiro) {
+				sql += " AND ";
+			}
+			sql += "V.DT_VENDA <= '" + sdf.format(seletor.getDataMaior()) + "'";
+			primeiro = false;
+		}
 
 		if ((seletor.getValorMenor() != 0.00) && (seletor.getValorMaior() != 0.00)) {
 			if (!primeiro) {

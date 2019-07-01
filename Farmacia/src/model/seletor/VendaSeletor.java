@@ -1,6 +1,6 @@
 package model.seletor;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class VendaSeletor {
 	private int id;
@@ -19,28 +19,9 @@ public class VendaSeletor {
 	}
 
 	public boolean temFiltro() {
-
-		if (this.id > 0) {
-			return true;
-		}
-
-		if ((this.valorMenor != null) && (this.valorMenor > 0)) {
-			return true;
-		}
-
-		if ((this.valorMaior != null) && (this.valorMaior > 0)) {
-			return true;
-		}
-
-		if (this.dataMenor != null) {
-			return true;
-		}
-
-		if (this.dataMaior != null) {
-			return true;
-		}
-
-		return false;
+		return (this.id > 0) || ((this.valorMenor != null) && (this.valorMenor > 0))
+				|| ((this.valorMaior != null) && (this.valorMaior > 0)) || (this.dataMenor != null)
+				|| (this.dataMaior != null);
 	}
 
 	/**

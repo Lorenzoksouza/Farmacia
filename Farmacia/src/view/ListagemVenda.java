@@ -6,7 +6,11 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -25,6 +29,7 @@ import model.seletor.VendaSeletor;
 import model.vo.Venda;
 import net.miginfocom.swing.MigLayout;
 import util.JNumberFormatField;
+import util.JTextFieldLimit;
 
 public class ListagemVenda extends JInternalFrame {
 	private JTable tblVendas;
@@ -86,42 +91,42 @@ public class ListagemVenda extends JInternalFrame {
 		getContentPane().add(txtId, "cell 0 1");
 		txtId.setColumns(10);
 
-//		JLabel lblDataMinima = new JLabel("Data min. (DD/MM/AAAA)");
-//		getContentPane().add(lblDataMinima, "cell 0 2");
-//
-//		JLabel lblEspaco = new JLabel(" ");
-//		getContentPane().add(lblEspaco, "cell 1 2");
-//
-//		txtDataMin = new JTextField();
-//		txtDataMin.addKeyListener(new KeyAdapter() {
+		JLabel lblDataMinima = new JLabel("Data min. (DD/MM/AAAA)");
+		getContentPane().add(lblDataMinima, "cell 0 2");
+
+		JLabel lblEspaco = new JLabel(" ");
+		getContentPane().add(lblEspaco, "cell 1 2");
+
+		txtDataMin = new JTextField();
+		txtDataMin.addKeyListener(new KeyAdapter() {
 //			@Override
 //			public void keyTyped(KeyEvent arg0) {
 //				char vchar = arg0.getKeyChar();
 //				if (!(Character.isDigit(vchar)) || (vchar == KeyEvent.VK_BACK_SPACE) || (vchar == KeyEvent.VK_DELETE))
 //					arg0.consume();
 //			}
-//		});
-//		txtDataMin.setDocument(new JTextFieldLimit(8));
-//		getContentPane().add(txtDataMin, "cell 0 3,growx");
-//
-//		JLabel lblDataMax = new JLabel("Data max. (DD/MM/AAAA)");
-//		getContentPane().add(lblDataMax, "cell 0 4");
-//
-//		JLabel lblEspaco_1 = new JLabel(" ");
-//		getContentPane().add(lblEspaco_1, "cell 2 2");
-//
-//		txtDataMax = new JTextField();
-//		txtDataMax.addKeyListener(new KeyAdapter() {
+		});
+		txtDataMin.setDocument(new JTextFieldLimit(10));
+		getContentPane().add(txtDataMin, "cell 0 3,growx");
+
+		JLabel lblDataMax = new JLabel("Data max. (DD/MM/AAAA)");
+		getContentPane().add(lblDataMax, "cell 0 4");
+
+		JLabel lblEspaco_1 = new JLabel(" ");
+		getContentPane().add(lblEspaco_1, "cell 2 2");
+
+		txtDataMax = new JTextField();
+		txtDataMax.addKeyListener(new KeyAdapter() {
 //			@Override
 //			public void keyTyped(KeyEvent arg0) {
 //				char vchar = arg0.getKeyChar();
 //				if (!(Character.isDigit(vchar)) || (vchar == KeyEvent.VK_BACK_SPACE) || (vchar == KeyEvent.VK_DELETE))
 //					arg0.consume();
 //			}
-//		});
-//		// dataMax.setDate(Calendar.getInstance().getTime());
-//		txtDataMax.setDocument(new JTextFieldLimit(8));
-//		getContentPane().add(txtDataMax, "cell 0 5,growx");
+		});
+		// dataMax.setDate(Calendar.getInstance().getTime());
+		txtDataMax.setDocument(new JTextFieldLimit(10));
+		getContentPane().add(txtDataMax, "cell 0 5,growx");
 
 		JLabel lblValorMin = new JLabel("Valor min.");
 		getContentPane().add(lblValorMin, "cell 0 6");
@@ -257,6 +262,29 @@ public class ListagemVenda extends JInternalFrame {
 
 		if (!txtValorMax.getText().equals("") || txtValorMax.getText().equals("0.00")) {
 			seletor.setValorMaior(Double.parseDouble(txtValorMax.getText().replace(",", ".")));
+		}
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		if (!txtDataMin.getText().isEmpty()) {
+			Date dataMenor;
+			try {
+				dataMenor = sdf.parse(txtDataMin.getText());
+				seletor.setDataMenor(dataMenor);
+			} catch (ParseException e) {
+				// TODO tratar a mensagem
+				e.printStackTrace();
+			}
+		}
+
+		if (!txtDataMax.getText().isEmpty()) {
+			Date dataMaior;
+			try {
+				dataMaior = sdf.parse(txtDataMax.getText());
+				seletor.setDataMaior(dataMaior);
+			} catch (ParseException e) {
+				// TODO tratar a mensagem
+				e.printStackTrace();
+			}
 		}
 
 		seletor.setPagina(paginaAtual);
