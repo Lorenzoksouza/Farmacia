@@ -157,6 +157,7 @@ public class TelaVenda extends JInternalFrame {
 		btnProximo.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnProximo.setBackground(Color.WHITE);
 		btnProximo.setPreferredSize(new Dimension(80, 30));
+
 		JButton btnAnterior = new JButton("<Anterior");
 		btnAnterior.setBorder(new LineBorder(Color.gray, 2, true));
 		btnAnterior.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -369,9 +370,7 @@ public class TelaVenda extends JInternalFrame {
 	}
 
 	private void removerMercadorias(List<Mercadoria> listaMercadorias) {
-		for (int i = 0; i <= listaMercadorias.size(); i++) {
-			listaMercadorias.remove(i);
-		}
+		listaMercadorias.clear();
 	}
 
 	private void adicionarItem(Mercadoria mercadoriaSelecionada) {
