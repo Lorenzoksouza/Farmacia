@@ -68,4 +68,10 @@ public class Remedio extends Mercadoria {
 		super(codBarra, nome, dataCadastro, preco, estoque);
 	}
 
+	@Override
+	public String toString() {
+		return "Remedio [dosagem=" + dosagem + ", composicao=" + composicao + ", formaUso=" + formaUso + ", generico="
+				+ generico + ", laboratorio=" + laboratorio + "]" + super.toString();
+	}
+
 }

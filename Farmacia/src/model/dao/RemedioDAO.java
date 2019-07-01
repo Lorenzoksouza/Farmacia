@@ -128,6 +128,9 @@ public class RemedioDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
+		System.out.println(remedios.toString());
+
 		return remedios;
 
 	}

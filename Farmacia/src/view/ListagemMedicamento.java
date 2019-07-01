@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -410,8 +411,11 @@ public class ListagemMedicamento extends JInternalFrame {
 				generico = "Não";
 			}
 			DecimalFormat format = new DecimalFormat("0.00");
+
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
 			String[] novaLinha = new String[] { remedio.getCodBarra() + "", remedio.getDosagem(),
-					remedio.getComposicao(), generico, remedio.getNome(), String.valueOf(remedio.getDataCadastro()),
+					remedio.getComposicao(), generico, remedio.getNome(), sdf.format(remedio.getDataCadastro()),
 					"R$" + format.format(remedio.getPreco()) + "", "" + remedio.getEstoque(),
 					remedio.getFormaUso().getDescricao(), remedio.getLaboratorio().getNomeLaboratorio() };
 			modelo.addRow(novaLinha);
