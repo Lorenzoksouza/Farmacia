@@ -11,12 +11,14 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import controller.ControllerProduto;
 import controller.ControllerVenda;
 import model.seletor.VendaSeletor;
 import model.vo.Venda;
@@ -65,7 +67,8 @@ public class ListagemVenda extends JInternalFrame {
 
 		tblVendas = new JTable();
 		tblVendas.setModel(
-				new DefaultTableModel(new Object[][] {}, new String[] { "    Id", "Valor", "Data da venda" }));
+				new DefaultTableModel(new Object[][] {}, new String[] { " ", "    Id", "Valor", "Data da venda" }));
+		tblVendas.getColumnModel().getColumn(0).setPreferredWidth(15);
 		tblVendas.setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		getContentPane().add(tblVendas, "flowx,cell 1 0,grow");
 
@@ -108,12 +111,27 @@ public class ListagemVenda extends JInternalFrame {
 		});
 		getContentPane().add(btnGerarLista, "flowx,cell 1 2,alignx center");
 
-		JButton btnRelatorio = new JButton("Relatorio");
-		btnRelatorio.setBorder(new LineBorder(Color.gray, 2, true));
-		btnRelatorio.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnRelatorio.setBackground(Color.WHITE);
-		btnRelatorio.setPreferredSize(new Dimension(80, 30));
-		getContentPane().add(btnRelatorio, "cell 1 2,alignx center");
+		JButton btnGerarXls = new JButton("Relatório");
+		btnGerarXls.setBorder(new LineBorder(Color.gray, 2, true));
+		btnGerarXls.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnGerarXls.setBackground(Color.WHITE);
+		btnGerarXls.setPreferredSize(new Dimension(80, 30));
+		btnGerarXls.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser jfc = new JFileChooser();
+				jfc.setDialogTitle("Salvar...");
+
+				int resultado = jfc.showSaveDialog(null);
+				if (resultado == JFileChooser.APPROVE_OPTION) {
+					String caminhoEscolhido = jfc.getSelectedFile().getAbsolutePath();
+
+					ControllerVenda vendaController = new ControllerVenda();
+					vendaController.gerarRelatorio(vendasConsultadas, caminhoEscolhido,
+							ControllerProduto.TIPO_RELATORIO_XLS);
+				}
+			}
+		});
+		getContentPane().add(btnGerarXls, "cell 1 2,alignx center");
 
 		lblPaginaAtual = new JLabel("");
 		lblPaginaAtual.setText(paginaAtual + "");
@@ -181,7 +199,7 @@ public class ListagemVenda extends JInternalFrame {
 		for (Venda venda : vendas) {
 
 			DecimalFormat format = new DecimalFormat("0.00");
-			String[] novaLinha = new String[] { venda.getIdVenda() + "", format.format(venda.getValor()),
+			String[] novaLinha = new String[] { venda.getIdVenda() + "", "R$" + format.format(venda.getValor()),
 					String.valueOf(venda.getDataVenda()) };
 			modelo.addRow(novaLinha);
 		}

@@ -407,7 +407,7 @@ public class ListagemMedicamento extends JInternalFrame {
 			DecimalFormat format = new DecimalFormat("0.00");
 			String[] novaLinha = new String[] { remedio.getCodBarra() + "", remedio.getDosagem(),
 					remedio.getComposicao(), generico, remedio.getNome(), String.valueOf(remedio.getDataCadastro()),
-					format.format(remedio.getPreco()) + "", "" + remedio.getEstoque(),
+					"R$" + format.format(remedio.getPreco()) + "", "" + remedio.getEstoque(),
 					remedio.getFormaUso().getDescricao(), remedio.getLaboratorio().getNomeLaboratorio() };
 			modelo.addRow(novaLinha);
 		}
