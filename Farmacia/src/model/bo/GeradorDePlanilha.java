@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -28,6 +30,8 @@ public class GeradorDePlanilha {
 		OutputStream outputStream = null;
 		try {
 			planilha = new XSSFWorkbook();
+			DateFormat data = new SimpleDateFormat("dd/MM/yyyy");
+
 			XSSFSheet sheet = planilha.createSheet("Remédio");
 			//
 			XSSFRow linhaHeader = sheet.createRow(0);
@@ -40,6 +44,7 @@ public class GeradorDePlanilha {
 			linhaHeader.createCell(7).setCellValue("Estoque");
 			linhaHeader.createCell(8).setCellValue("Forma de uso");
 			linhaHeader.createCell(9).setCellValue("Laboratorio");
+			linhaHeader.createCell(10).setCellValue("Data");
 
 			int count = 1;
 			for (Remedio remedio : remedios) {
@@ -51,7 +56,7 @@ public class GeradorDePlanilha {
 				if (remedio.isGenerico()) {
 					isGenerico = "Sim";
 				} else {
-					isGenerico = "N�o";
+					isGenerico = "Não";
 				}
 				novaLinha.createCell(3).setCellValue(isGenerico);
 				novaLinha.createCell(4).setCellValue(remedio.getNome());
@@ -59,6 +64,7 @@ public class GeradorDePlanilha {
 				novaLinha.createCell(7).setCellValue(remedio.getEstoque());
 				novaLinha.createCell(8).setCellValue(remedio.getFormaUso().getDescricao());
 				novaLinha.createCell(9).setCellValue(remedio.getLaboratorio().getNomeLaboratorio());
+				novaLinha.createCell(10).setCellValue(data.format(remedio.getDataCadastro()));
 				count++;
 			}
 
@@ -101,6 +107,8 @@ public class GeradorDePlanilha {
 		OutputStream outputStream = null;
 		try {
 			planilha = new XSSFWorkbook();
+			DateFormat data = new SimpleDateFormat("dd/MM/yyyy");
+
 			XSSFSheet sheet = planilha.createSheet("Produto");
 
 			XSSFRow linhaHeader = sheet.createRow(0);
@@ -109,6 +117,7 @@ public class GeradorDePlanilha {
 			linhaHeader.createCell(2).setCellValue("Preço");
 			linhaHeader.createCell(3).setCellValue("Categoria");
 			linhaHeader.createCell(4).setCellValue("Estoque");
+			linhaHeader.createCell(5).setCellValue("Data");
 
 			int count = 1;
 			for (Produto produto : produtos) {
@@ -118,6 +127,7 @@ public class GeradorDePlanilha {
 				novaLinha.createCell(2).setCellValue("R$" + produto.getPreco());
 				novaLinha.createCell(3).setCellValue(produto.getCategoria().getNomeCategoria());
 				novaLinha.createCell(4).setCellValue(produto.getEstoque());
+				novaLinha.createCell(5).setCellValue(data.format(produto.getDataCadastro()));
 				count++;
 			}
 
@@ -160,6 +170,9 @@ public class GeradorDePlanilha {
 		OutputStream outputStream = null;
 		try {
 			planilha = new XSSFWorkbook();
+
+			DateFormat data = new SimpleDateFormat("dd/MM/yyyy");
+
 			XSSFSheet sheet = planilha.createSheet("Venda");
 
 			XSSFRow linhaHeader = sheet.createRow(0);
@@ -172,7 +185,7 @@ public class GeradorDePlanilha {
 				XSSFRow novaLinha = sheet.createRow(count);
 				novaLinha.createCell(0).setCellValue(venda.getIdVenda());
 				novaLinha.createCell(1).setCellValue("R$" + venda.getValor());
-				novaLinha.createCell(2).setCellValue(venda.getDataVenda());
+				novaLinha.createCell(2).setCellValue(data.format(venda.getDataVenda()));
 				count++;
 			}
 

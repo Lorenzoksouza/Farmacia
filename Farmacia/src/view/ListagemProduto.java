@@ -269,7 +269,7 @@ public class ListagemProduto extends JInternalFrame {
 		btnProximo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				paginaAtual++;
-				if (paginaAtual == paginaTotal) {
+				if (paginaAtual == totalPaginas) {
 					btnProximo.setEnabled(false);
 				}
 				btnAnterior.setEnabled(true);

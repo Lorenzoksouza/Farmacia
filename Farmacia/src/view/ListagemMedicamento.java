@@ -87,7 +87,7 @@ public class ListagemMedicamento extends JInternalFrame {
 		getContentPane()
 				.setLayout(new MigLayout("", "[211.00][][grow]", "[][][][][][][][][][][10px:n][][10px:n][][][grow][]"));
 
-		JLabel lblCodbarras = new JLabel("C�d.barras:");
+		JLabel lblCodbarras = new JLabel("Cód.barras:");
 		getContentPane().add(lblCodbarras, "cell 0 0");
 
 		JLabel lblespaco2 = new JLabel("      ");
@@ -173,11 +173,11 @@ public class ListagemMedicamento extends JInternalFrame {
 			}
 		});
 
-		JLabel lblGenerico = new JLabel("Gen�rico:");
+		JLabel lblGenerico = new JLabel("Genérico:");
 		getContentPane().add(lblGenerico, "cell 0 8");
 		getContentPane().add(btnPesquisar, "cell 0 11,growx");
 
-		btnGerarXls = new JButton("Relat�rio");
+		btnGerarXls = new JButton("Relatório");
 		btnGerarXls.setPreferredSize(new Dimension(100, 30));
 		btnGerarXls.setBorder(new LineBorder(Color.gray, 2, true));
 		btnGerarXls.setBackground(Color.WHITE);
@@ -264,13 +264,13 @@ public class ListagemMedicamento extends JInternalFrame {
 		getContentPane().add(btnAlterar, "cell 0 13,growx");
 		getContentPane().add(btnGerarXls, "cell 0 14,alignx center");
 
-		String[] pGenerico = { "Sim", "N�o", "" };
+		String[] pGenerico = { "Sim", "Não", "" };
 		cmbGenerico = new JComboBox(pGenerico);
 		cmbGenerico.setBackground(Color.WHITE);
 		cmbGenerico.setSelectedIndex(2);
 		getContentPane().add(cmbGenerico, "flowx,cell 0 9,growx");
 
-		btnProximo = new JButton("Pr�ximo>");
+		btnProximo = new JButton("Próximo>");
 		btnProximo.setBorder(new LineBorder(Color.gray, 2, true));
 		btnProximo.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnProximo.setBackground(Color.WHITE);
@@ -309,7 +309,7 @@ public class ListagemMedicamento extends JInternalFrame {
 		btnProximo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				paginaAtual++;
-				if (paginaAtual == paginaTotal) {
+				if (paginaAtual == totalPaginas) {
 					btnProximo.setEnabled(false);
 				}
 				btnAnterior.setEnabled(true);

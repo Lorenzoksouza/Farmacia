@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -15,6 +16,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,6 +25,8 @@ import controller.ControllerVenda;
 import model.seletor.VendaSeletor;
 import model.vo.Venda;
 import net.miginfocom.swing.MigLayout;
+import util.DateTextField;
+import util.JNumberFormatField;
 
 public class ListagemVenda extends JInternalFrame {
 	private JTable tblVendas;
@@ -33,6 +37,11 @@ public class ListagemVenda extends JInternalFrame {
 	private JLabel lbMax;
 	private int paginaTotal = 1;
 	private JButton btnProximo;
+	private JTextField textFieldId;
+	private JTextField textFieldDataMin;
+	private JTextField textField;
+	private JTextField textFieldValorMin;
+	private JTextField textFieldValorMax;
 
 	/**
 	 * Launch the application.
@@ -60,43 +69,56 @@ public class ListagemVenda extends JInternalFrame {
 		setBorder(new LineBorder(new Color(192, 192, 192), 3));
 		setClosable(true);
 		setBounds(100, 100, 600, 470);
-		getContentPane().setLayout(new MigLayout("", "[][grow]", "[grow][][]"));
+		getContentPane().setLayout(new MigLayout("", "[grow][][grow]", "[][][][][][][][][][][][grow][]"));
 
-		JLabel lblEspaco = new JLabel(" ");
-		getContentPane().add(lblEspaco, "cell 0 0");
+		JLabel lblId = new JLabel("Id");
+		getContentPane().add(lblId, "cell 0 0");
 
 		tblVendas = new JTable();
 		tblVendas.setModel(
 				new DefaultTableModel(new Object[][] {}, new String[] { " ", "    Id", "Valor", "Data da venda" }));
 		tblVendas.getColumnModel().getColumn(0).setPreferredWidth(15);
 		tblVendas.setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
-		getContentPane().add(tblVendas, "flowx,cell 1 0,grow");
+		getContentPane().add(tblVendas, "flowx,cell 2 0 1 12,grow");
 
-		JButton btnProximo = new JButton("Proximo>");
-		btnProximo.setBorder(new LineBorder(Color.gray, 2, true));
-		btnProximo.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnProximo.setBackground(Color.WHITE);
-		btnProximo.setPreferredSize(new Dimension(80, 30));
-		JButton btnAnterior = new JButton("<Anterior");
-		btnAnterior.setBorder(new LineBorder(Color.gray, 2, true));
-		btnAnterior.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnAnterior.setBackground(Color.WHITE);
-		btnAnterior.setPreferredSize(new Dimension(80, 30));
-		btnAnterior.setEnabled(false);
-		btnAnterior.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if (paginaAtual > 1) {
-					paginaAtual--;
-				}
-				if (paginaAtual == 1) {
-					btnAnterior.setEnabled(false);
+		textFieldId = new JTextField();
+		getContentPane().add(textFieldId, "cell 0 1");
+		textFieldId.setColumns(10);
 
-				}
-				btnProximo.setEnabled(true);
-				listarVendas();
-			}
-		});
-		getContentPane().add(btnAnterior, "flowx,cell 1 1,alignx center");
+		JLabel lblDataMinima = new JLabel("Data min.");
+		getContentPane().add(lblDataMinima, "cell 0 2");
+
+		JLabel lblEspaco = new JLabel(" ");
+		getContentPane().add(lblEspaco, "cell 1 2");
+
+		DateTextField dataMin = new DateTextField();
+		dataMin.setDate(Calendar.getInstance().getTime());
+
+		getContentPane().add(dataMin, "cell 0 3,growx");
+
+		JLabel lblDataMax = new JLabel("Data max.");
+		getContentPane().add(lblDataMax, "cell 0 4");
+
+		JLabel lblEspaco_1 = new JLabel(" ");
+		getContentPane().add(lblEspaco_1, "cell 2 2");
+
+		DateTextField dataMax = new DateTextField();
+		dataMax.setDate(Calendar.getInstance().getTime());
+		getContentPane().add(dataMax, "cell 0 5,growx");
+
+		JLabel lblValorMin = new JLabel("Valor min.");
+		getContentPane().add(lblValorMin, "cell 0 6");
+
+		textFieldValorMin = new JNumberFormatField(2);
+		getContentPane().add(textFieldValorMin, "cell 0 7,growx");
+		textFieldValorMin.setColumns(10);
+
+		JLabel lblValorMax = new JLabel("Valor max.");
+		getContentPane().add(lblValorMax, "cell 0 8");
+
+		textFieldValorMax = new JNumberFormatField(2);
+		getContentPane().add(textFieldValorMax, "cell 0 9,growx");
+		textFieldValorMax.setColumns(10);
 
 		JButton btnGerarLista = new JButton("Gerar lista");
 		btnGerarLista.setIcon(new ImageIcon(ListagemVenda.class.getResource("/icons/search.png")));
@@ -109,7 +131,7 @@ public class ListagemVenda extends JInternalFrame {
 				listarVendas();
 			}
 		});
-		getContentPane().add(btnGerarLista, "flowx,cell 1 2,alignx center");
+		getContentPane().add(btnGerarLista, "flowx,cell 0 10,alignx center");
 
 		JButton btnGerarXls = new JButton("Relatório");
 		btnGerarXls.setBorder(new LineBorder(Color.gray, 2, true));
@@ -131,32 +153,55 @@ public class ListagemVenda extends JInternalFrame {
 				}
 			}
 		});
-		getContentPane().add(btnGerarXls, "cell 1 2,alignx center");
+		getContentPane().add(btnGerarXls, "cell 0 10,alignx center");
+
+		JButton btnProximo = new JButton("Proximo>");
+		JButton btnAnterior = new JButton("<Anterior");
+		btnAnterior.setBorder(new LineBorder(Color.gray, 2, true));
+		btnAnterior.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnAnterior.setBackground(Color.WHITE);
+		btnAnterior.setPreferredSize(new Dimension(80, 30));
+		btnAnterior.setEnabled(false);
+		btnAnterior.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (paginaAtual > 1) {
+					paginaAtual--;
+				}
+				if (paginaAtual == 1) {
+					btnAnterior.setEnabled(false);
+
+				}
+				btnProximo.setEnabled(true);
+				listarVendas();
+			}
+		});
+		getContentPane().add(btnAnterior, "flowx,cell 2 12,alignx center");
 
 		lblPaginaAtual = new JLabel("");
 		lblPaginaAtual.setText(paginaAtual + "");
-		getContentPane().add(lblPaginaAtual, "cell 1 1,alignx center");
+		getContentPane().add(lblPaginaAtual, "cell 2 12,alignx center");
 
 		JLabel label = new JLabel("/");
-		getContentPane().add(label, "cell 1 1,alignx center");
+		getContentPane().add(label, "cell 2 12,alignx center");
 
 		lbMax = new JLabel("1");
-		getContentPane().add(lbMax, "cell 1 1,alignx center");
+		getContentPane().add(lbMax, "cell 2 12,alignx center");
 
+		btnProximo.setBorder(new LineBorder(Color.gray, 2, true));
+		btnProximo.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnProximo.setBackground(Color.WHITE);
+		btnProximo.setPreferredSize(new Dimension(80, 30));
 		btnProximo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				paginaAtual++;
-				if (paginaAtual == paginaTotal) {
+				if (paginaAtual == totalPaginas) {
 					btnProximo.setEnabled(false);
 				}
 				btnAnterior.setEnabled(true);
 				listarVendas();
 			}
 		});
-		getContentPane().add(btnProximo, "cell 1 1,alignx center");
-
-		JLabel lblEspaco_1 = new JLabel(" ");
-		getContentPane().add(lblEspaco_1, "cell 1 0");
+		getContentPane().add(btnProximo, "cell 2 12,alignx center");
 
 	}
 

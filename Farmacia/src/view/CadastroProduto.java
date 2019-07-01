@@ -3,6 +3,7 @@ package view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -63,7 +64,7 @@ public class CadastroProduto extends JInternalFrame {
 		setTitle("Cadastro de produto");
 		setClosable(true);
 		setBounds(100, 100, 380, 195);
-		getContentPane().setLayout(new MigLayout("", "[grow][][]", "[][][][][][]"));
+		getContentPane().setLayout(new MigLayout("", "[grow][][]", "[][][][][][][]"));
 
 		JLabel lblNome = new JLabel("Nome:");
 		getContentPane().add(lblNome, "cell 0 0");
@@ -75,11 +76,16 @@ public class CadastroProduto extends JInternalFrame {
 		JLabel lblCodbarras = new JLabel("C\u00F3d.barras:");
 		getContentPane().add(lblCodbarras, "cell 2 0");
 
+		JLabel lblAlteraoGeraSoma = new JLabel("Alteração gera soma do mesmo");
+		lblAlteraoGeraSoma.setForeground(Color.RED);
+		lblAlteraoGeraSoma.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		getContentPane().add(lblAlteraoGeraSoma, "cell 2 3");
+
 		// Pre�o
 
 		txtPreco = new JNumberFormatField(2);
 
-		getContentPane().add(txtPreco, "cell 0 5,alignx left");
+		getContentPane().add(txtPreco, "cell 0 6,alignx left");
 		txtPreco.setColumns(10);
 
 		// Nome
@@ -122,7 +128,7 @@ public class CadastroProduto extends JInternalFrame {
 		cmbCategoria.setBackground(Color.WHITE);
 		cmbCategoria.setModel(new DefaultComboBoxModel(listaCategorias.toArray()));
 		cmbCategoria.setSelectedIndex(-1);
-		getContentPane().add(cmbCategoria, "cell 0 3,growx");
+		getContentPane().add(cmbCategoria, "cell 0 4,growx");
 
 		// Estoque
 
@@ -136,7 +142,7 @@ public class CadastroProduto extends JInternalFrame {
 			}
 		});
 
-		getContentPane().add(txtEstoque, "cell 2 3,alignx left");
+		getContentPane().add(txtEstoque, "cell 2 4,alignx left");
 		txtEstoque.setColumns(10);
 
 		JButton btnSalvar = new JButton("Salvar");
@@ -183,10 +189,10 @@ public class CadastroProduto extends JInternalFrame {
 			}
 		});
 
-		getContentPane().add(btnSalvar, "cell 2 5,alignx right");
+		getContentPane().add(btnSalvar, "cell 2 6,alignx right");
 
 		JLabel lblPreco = new JLabel("Pre\u00E7o:");
-		getContentPane().add(lblPreco, "flowx,cell 0 4");
+		getContentPane().add(lblPreco, "flowx,cell 0 5");
 
 		if (produtoSelecionado != null) {
 			this.produto = produtoSelecionado;

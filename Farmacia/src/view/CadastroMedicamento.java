@@ -3,6 +3,7 @@ package view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -251,6 +252,11 @@ public class CadastroMedicamento extends JInternalFrame {
 			}
 		});
 		getContentPane().add(btnSalvar, "cell 2 11,alignx right");
+
+		JLabel lblAlteraoGeraSoma = new JLabel("Alteração gera soma do mesmo");
+		lblAlteraoGeraSoma.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		lblAlteraoGeraSoma.setForeground(Color.RED);
+		getContentPane().add(lblAlteraoGeraSoma, "cell 0 10");
 
 		if (remedioSelecionado != null) {
 			this.remedio = remedioSelecionado;
