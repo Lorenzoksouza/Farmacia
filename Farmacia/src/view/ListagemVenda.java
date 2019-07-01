@@ -40,6 +40,7 @@ public class ListagemVenda extends JInternalFrame {
 	private DateTextField dataMin;
 	private DateTextField dataMax;
 	private JButton btnProximo;
+	private JButton btnAnterior;
 
 	private List<Venda> vendasConsultadas;
 
@@ -133,6 +134,9 @@ public class ListagemVenda extends JInternalFrame {
 		btnGerarLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listarVendas();
+				if (paginaAtual != totalPaginas) {
+					btnProximo.setEnabled(true);
+				}
 			}
 		});
 		getContentPane().add(btnGerarLista, "flowx,cell 0 10,alignx center");
@@ -159,8 +163,10 @@ public class ListagemVenda extends JInternalFrame {
 		});
 		getContentPane().add(btnGerarXls, "cell 0 10,alignx center");
 
-		JButton btnProximo = new JButton("Proximo>");
-		JButton btnAnterior = new JButton("<Anterior");
+		btnProximo = new JButton("Proximo>");
+		btnProximo.setEnabled(false);
+		btnAnterior = new JButton("<Anterior");
+
 		btnAnterior.setBorder(new LineBorder(Color.gray, 2, true));
 		btnAnterior.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnAnterior.setBackground(Color.WHITE);
@@ -173,7 +179,6 @@ public class ListagemVenda extends JInternalFrame {
 				}
 				if (paginaAtual == 1) {
 					btnAnterior.setEnabled(false);
-
 				}
 				btnProximo.setEnabled(true);
 				listarVendas();
