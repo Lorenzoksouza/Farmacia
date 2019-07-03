@@ -159,7 +159,7 @@ public class CadastroProduto extends JInternalFrame {
 					Produto produto = new Produto();
 					produto.setCodBarra(txtCodBar.getText());
 					produto.setNome(txtNome.getText());
-					produto.setPreco(Double.parseDouble(txtPreco.getText().replace(",", ".")));
+					produto.setPrecoVenda(Double.parseDouble(txtPreco.getText().replace(",", ".")));
 
 					try {
 						produto.setEstoque(Integer.parseInt(txtEstoque.getText().trim()));
@@ -222,7 +222,7 @@ public class CadastroProduto extends JInternalFrame {
 		txtNome.setText(produto.getNome());
 		txtCodBar.setText(produto.getCodBarra());
 		DecimalFormat format = new DecimalFormat("0.00");
-		txtPreco.setText(format.format(produto.getPreco()) + "");
+		txtPreco.setText(format.format(produto.getPrecoVenda()) + "");
 		txtEstoque.setText(produto.getEstoque() + "");
 
 		Optional<Categoria> categoriaSelecionado = listaCategorias.stream()

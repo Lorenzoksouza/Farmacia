@@ -62,7 +62,7 @@ public class ControllerProduto {
 			if (produto.getCategoria().getNomeCategoria() == "") {
 				validacao = "Categoria deve ser selecionado";
 			}
-			if (produto.getPreco() <= 0.0) {
+			if (produto.getPrecoVenda() <= 0.0) {
 				validacao = "Pre�o do produto deve ser maior que zero";
 			}
 		}

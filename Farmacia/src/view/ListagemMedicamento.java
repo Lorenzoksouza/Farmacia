@@ -416,7 +416,7 @@ public class ListagemMedicamento extends JInternalFrame {
 
 			String[] novaLinha = new String[] { remedio.getCodBarra() + "", remedio.getDosagem(),
 					remedio.getComposicao(), generico, remedio.getNome(), sdf.format(remedio.getDataCadastro()),
-					"R$" + format.format(remedio.getPreco()) + "", "" + remedio.getEstoque(),
+					"R$" + format.format(remedio.getPrecoVenda()) + "", "" + remedio.getEstoque(),
 					remedio.getFormaUso().getDescricao(), remedio.getLaboratorio().getNomeLaboratorio() };
 			modelo.addRow(novaLinha);
 		}

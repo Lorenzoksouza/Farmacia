@@ -207,7 +207,7 @@ public class CadastroMedicamento extends JInternalFrame {
 					Remedio remedio = new Remedio();
 					remedio.setNome(txtNome.getText());
 					remedio.setCodBarra(txtCodBar.getText());
-					remedio.setPreco(Double.parseDouble(txtPreco.getText().replace(",", ".")));
+					remedio.setPrecoVenda(Double.parseDouble(txtPreco.getText().replace(",", ".")));
 					remedio.setComposicao(txtComposicao.getText());
 					remedio.setDosagem(txtDosagem.getText());
 
@@ -296,7 +296,7 @@ public class CadastroMedicamento extends JInternalFrame {
 		txtNome.setText(remedio.getNome());
 		txtDosagem.setText(remedio.getDosagem());
 		DecimalFormat format = new DecimalFormat("0.00");
-		txtPreco.setText(format.format(remedio.getPreco()) + "");
+		txtPreco.setText(format.format(remedio.getPrecoVenda()) + "");
 		txtComposicao.setText(remedio.getComposicao());
 
 		// Usando calculo Lambda ;)

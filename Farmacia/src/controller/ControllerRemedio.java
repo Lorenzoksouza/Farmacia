@@ -75,7 +75,7 @@ public class ControllerRemedio {
 			if (remedio.getLaboratorio() == null || remedio.getLaboratorio().getNomeLaboratorio().trim().equals("")) {
 				validacao = "Laborat�rio deve ser selecionado.";
 			}
-			if (remedio.getPreco() <= 0.0) {
+			if (remedio.getPrecoVenda() <= 0.0) {
 				validacao = "Pre�o do rem�dio deve ser maior que zero.";
 			}
 

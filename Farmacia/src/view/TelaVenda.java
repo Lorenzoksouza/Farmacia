@@ -139,7 +139,7 @@ public class TelaVenda extends JInternalFrame {
 					adicionarItem(mercadoriaSelecionada);
 					atualizarTblVenda(mercadoriasParaVenda);
 
-					valorTotal += mercadoriaSelecionada.getPreco() * qtd;
+					valorTotal += mercadoriaSelecionada.getPrecoVenda() * qtd;
 					lblValor.setText("R$" + valorTotal);
 					DecimalFormat df = new DecimalFormat("0.#####");
 					String dx = df.format(valorTotal);
@@ -211,7 +211,7 @@ public class TelaVenda extends JInternalFrame {
 					removerMercadoria(mercadoriaSelecionada);
 					atualizarTblVenda(mercadoriasParaVenda);
 
-					valorTotal -= mercadoriaSelecionada.getPreco() * qtd;
+					valorTotal -= mercadoriaSelecionada.getPrecoVenda() * qtd;
 					lblValor.setText("R$" + valorTotal);
 					DecimalFormat df = new DecimalFormat("0.#####");
 					String dx = df.format(valorTotal);
@@ -360,7 +360,7 @@ public class TelaVenda extends JInternalFrame {
 			// na ORDEM do cabe�alho da tabela
 
 			String[] novaLinha = new String[] { mercadoria.getCodBarra() + "", mercadoria.getNome(),
-					"R$" + mercadoria.getPreco(), "" + mercadoria.getEstoque(), };
+					"R$" + mercadoria.getPrecoVenda(), "" + mercadoria.getEstoque(), };
 			modelo.addRow(novaLinha);
 		}
 	}
@@ -442,7 +442,7 @@ public class TelaVenda extends JInternalFrame {
 
 		for (Mercadoria mercadoria : mercadoriasParaVenda) {
 			String[] novaLinha = new String[] { mercadoria.getNome(), mercadoria.getEstoque() + "",
-					"R$" + mercadoria.getPreco() };
+					"R$" + mercadoria.getPrecoVenda() };
 			modelo.addRow(novaLinha);
 		}
 	}
