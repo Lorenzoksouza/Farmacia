@@ -315,7 +315,6 @@ public class TelaVenda extends JInternalFrame {
 		ControllerVenda controlador = new ControllerVenda();
 		MercadoriaSeletor seletor = new MercadoriaSeletor();
 
-		// TODO descomentar
 		List<Mercadoria> mercadorias = controlador.listarMercadorias(seletor);
 
 		seletor.setLimite(5);
