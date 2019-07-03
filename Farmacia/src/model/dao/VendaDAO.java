@@ -12,6 +12,7 @@ import java.util.List;
 import model.dto.VendaDTO;
 import model.seletor.MercadoriaSeletor;
 import model.seletor.VendaSeletor;
+import model.vo.FormaPagamento;
 import model.vo.Mercadoria;
 import model.vo.Produto;
 import model.vo.Remedio;
@@ -285,6 +286,34 @@ public class VendaDAO {
 		}
 
 		return sql;
+	}
+
+	public ArrayList<FormaPagamento> consultarFormaPagamento() {
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+
+		ArrayList<FormaPagamento> listaFormaPagamento = new ArrayList<FormaPagamento>();
+
+		String query = "SELECT * FROM FORMA_PAGAMENTO";
+		try {
+			resultado = stmt.executeQuery(query);
+			while (resultado.next()) {
+				FormaPagamento fp = new FormaPagamento();
+				fp.setIdFP(Integer.parseInt(resultado.getString(1)));
+				fp.setDescricao(resultado.getString(2));
+				listaFormaPagamento.add(fp);
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao listar as Formas de Pagamento!");
+			e.printStackTrace();
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+
+		return listaFormaPagamento;
 	}
 
 }

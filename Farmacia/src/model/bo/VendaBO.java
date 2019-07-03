@@ -1,5 +1,6 @@
 package model.bo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.dao.ItemProdutoDAO;
@@ -8,6 +9,7 @@ import model.dao.VendaDAO;
 import model.dto.VendaDTO;
 import model.seletor.MercadoriaSeletor;
 import model.seletor.VendaSeletor;
+import model.vo.FormaPagamento;
 import model.vo.ItemProduto;
 import model.vo.ItemRemedio;
 import model.vo.Mercadoria;
@@ -60,4 +62,7 @@ public class VendaBO {
 
 	}
 
+	public ArrayList<FormaPagamento> consultarFormaPagamento() {
+		return vendaDAO.consultarFormaPagamento();
+	}
 }
