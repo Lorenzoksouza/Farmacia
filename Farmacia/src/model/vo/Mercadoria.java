@@ -7,7 +7,8 @@ public abstract class Mercadoria {
 	private String codBarra;
 	private String nome;
 	private Date dataCadastro;
-	private double preco;
+	private double precoVenda;
+	private double precoCusto;
 	private int estoque;
 
 	public String getCodBarra() {
@@ -34,12 +35,20 @@ public abstract class Mercadoria {
 		this.dataCadastro = dataCadastro;
 	}
 
-	public double getPreco() {
-		return preco;
+	public double getPrecoVenda() {
+		return precoVenda;
 	}
 
-	public void setPreco(double preco) {
-		this.preco = preco;
+	public void setPrecoVenda(double precoVenda) {
+		this.precoVenda = precoVenda;
+	}
+
+	public double getPrecoCusto() {
+		return precoCusto;
+	}
+
+	public void setPrecoCusto(double precoCusto) {
+		this.precoCusto = precoCusto;
 	}
 
 	public int getEstoque() {
@@ -55,7 +64,7 @@ public abstract class Mercadoria {
 		this.codBarra = codBarra;
 		this.nome = nome;
 		this.dataCadastro = dataCadastro;
-		this.preco = preco;
+		this.precoVenda = preco;
 		this.estoque = estoque;
 	}
 
@@ -65,7 +74,7 @@ public abstract class Mercadoria {
 	}
 
 	public String toString() {
-		return "C�d: " + codBarra + " - " + "\nNome: " + nome + "\nData Cad.: " + dataCadastro + "\nPre�o: " + preco
-				+ "\nEstoque: " + estoque;
+		return "C�d: " + codBarra + " - " + "\nNome: " + nome + "\nData Cad.: " + dataCadastro + "\nPre�o: "
+				+ precoVenda + "\nEstoque: " + estoque;
 	}
 }

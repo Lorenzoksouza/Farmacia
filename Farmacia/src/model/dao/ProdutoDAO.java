@@ -25,7 +25,7 @@ public class ProdutoDAO {
 		try {
 			prepStmt.setString(1, p.getCodBarra());
 			prepStmt.setString(2, p.getNome());
-			prepStmt.setDouble(3, p.getPreco());
+			prepStmt.setDouble(3, p.getPrecoVenda());
 			prepStmt.setInt(4, p.getEstoque());
 			prepStmt.setInt(5, p.getCategoria().getIdCategoria());
 
@@ -51,7 +51,7 @@ public class ProdutoDAO {
 		try {
 			prepStmt.setString(1, p.getNome());
 			prepStmt.setDate(2, (Date) p.getDataCadastro());
-			prepStmt.setDouble(3, p.getPreco());
+			prepStmt.setDouble(3, p.getPrecoVenda());
 			prepStmt.setInt(4, consultarEstoque(p) + p.getEstoque());
 			prepStmt.setInt(5, p.getCategoria().getIdCategoria());
 			prepStmt.setString(6, p.getCodBarra());
@@ -165,7 +165,7 @@ public class ProdutoDAO {
 			p.setCodBarra(result.getString("COD_BARRA"));
 			p.setNome(result.getString("NM_PRODUTO"));
 			p.setDataCadastro(result.getDate("DT_CADASTRO"));
-			p.setPreco(result.getDouble("PRECO"));
+			p.setPrecoVenda(result.getDouble("PRECO"));
 			p.setEstoque(result.getInt("ESTOQUE"));
 			c.setIdCategoria(result.getInt("ID_CATEGORIA"));
 			c.setNomeCategoria(result.getString("NM_CATEGORIA"));

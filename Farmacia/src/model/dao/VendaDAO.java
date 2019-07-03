@@ -154,7 +154,7 @@ public class VendaDAO {
 
 				remedio.setCodBarra(resultado.getString("COD_BARRA"));
 				remedio.setNome(resultado.getString("NM_REMEDIO"));
-				remedio.setPreco(resultado.getDouble("PRECO"));
+				remedio.setPrecoVenda(resultado.getDouble("PRECO"));
 				remedio.setEstoque(resultado.getInt("ESTOQUE"));
 				mercadorias.add(remedio);
 			}
@@ -164,7 +164,7 @@ public class VendaDAO {
 
 				produto.setCodBarra(resultado.getString("COD_BARRA"));
 				produto.setNome(resultado.getString("NM_PRODUTO"));
-				produto.setPreco(resultado.getDouble("PRECO"));
+				produto.setPrecoVenda(resultado.getDouble("PRECO"));
 				produto.setEstoque(resultado.getInt("ESTOQUE"));
 				mercadorias.add(produto);
 			}

@@ -29,7 +29,7 @@ public class RemedioDAO {
 			prepStmt.setString(3, r.getComposicao());
 			prepStmt.setBoolean(4, r.isGenerico());
 			prepStmt.setString(5, r.getNome());
-			prepStmt.setDouble(6, r.getPreco());
+			prepStmt.setDouble(6, r.getPrecoVenda());
 			prepStmt.setInt(7, r.getEstoque());
 			prepStmt.setInt(8, r.getFormaUso().getIdFormaUso());
 			prepStmt.setInt(9, r.getLaboratorio().getIdLaboratorio());
@@ -57,7 +57,7 @@ public class RemedioDAO {
 			prepStmt.setString(2, r.getComposicao());
 			prepStmt.setBoolean(3, r.isGenerico());
 			prepStmt.setString(4, r.getNome());
-			prepStmt.setDouble(5, r.getPreco());
+			prepStmt.setDouble(5, r.getPrecoVenda());
 			prepStmt.setInt(6, consultarEstoque(r) + r.getEstoque());
 			prepStmt.setInt(7, r.getFormaUso().getIdFormaUso());
 			prepStmt.setInt(8, r.getLaboratorio().getIdLaboratorio());
@@ -198,7 +198,7 @@ public class RemedioDAO {
 
 			// TODO converter java.sql.Date para java.util.Date
 			r.setDataCadastro(result.getDate("DT_CADASTRO"));
-			r.setPreco(result.getDouble("PRECO"));
+			r.setPrecoVenda(result.getDouble("PRECO"));
 
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			String hora = sdf.format(r.getDataCadastro());
