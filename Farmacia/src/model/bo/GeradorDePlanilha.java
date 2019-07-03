@@ -60,7 +60,7 @@ public class GeradorDePlanilha {
 				}
 				novaLinha.createCell(3).setCellValue(isGenerico);
 				novaLinha.createCell(4).setCellValue(remedio.getNome());
-				novaLinha.createCell(6).setCellValue("R$" + remedio.getPreco());
+				novaLinha.createCell(6).setCellValue("R$" + remedio.getPrecoVenda());
 				novaLinha.createCell(7).setCellValue(remedio.getEstoque());
 				novaLinha.createCell(8).setCellValue(remedio.getFormaUso().getDescricao());
 				novaLinha.createCell(9).setCellValue(remedio.getLaboratorio().getNomeLaboratorio());
@@ -124,7 +124,7 @@ public class GeradorDePlanilha {
 				XSSFRow novaLinha = sheet.createRow(count);
 				novaLinha.createCell(0).setCellValue(produto.getCodBarra());
 				novaLinha.createCell(1).setCellValue(produto.getNome());
-				novaLinha.createCell(2).setCellValue("R$" + produto.getPreco());
+				novaLinha.createCell(2).setCellValue("R$" + produto.getPrecoVenda());
 				novaLinha.createCell(3).setCellValue(produto.getCategoria().getNomeCategoria());
 				novaLinha.createCell(4).setCellValue(produto.getEstoque());
 				novaLinha.createCell(5).setCellValue(data.format(produto.getDataCadastro()));
