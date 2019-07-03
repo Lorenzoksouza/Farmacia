@@ -26,6 +26,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.ControllerVenda;
 import model.seletor.MercadoriaSeletor;
+import model.vo.ItemMercadoria;
 import model.vo.ItemProduto;
 import model.vo.ItemRemedio;
 import model.vo.Mercadoria;
@@ -45,7 +46,7 @@ public class TelaVenda extends JInternalFrame {
 	private JTable tblVenda;
 
 	private List<Mercadoria> mercadoriasConsultadas = new ArrayList<Mercadoria>();
-	private List<Mercadoria> mercadoriasParaVenda = new ArrayList<Mercadoria>();
+	private List<ItemMercadoria> mercadoriasParaVenda = new ArrayList<ItemMercadoria>();
 
 	private List<ItemProduto> itensProdutos = new ArrayList<ItemProduto>();
 	private List<ItemRemedio> itensRemedios = new ArrayList<ItemRemedio>();
@@ -131,19 +132,21 @@ public class TelaVenda extends JInternalFrame {
 		btnAddItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (tblPesquisa.getSelectedRow() > 0) {
-					Mercadoria mercadoriaSelecionada = mercadoriasConsultadas.get(tblPesquisa.getSelectedRow() - 1);
+					ItemMercadoria mercadoriaSelecionada = new ItemMercadoria();
 					int qtd = (int) spiQuantidade.getValue();
-					mercadoriaSelecionada.setEstoque(qtd);
-					mercadoriasParaVenda.add(mercadoriaSelecionada);
+					mercadoriaSelecionada.setMercadoria(mercadoriasConsultadas.get(tblPesquisa.getSelectedRow() - 1));
+					mercadoriaSelecionada.setQtd(qtd);
+					boolean validacao = adicionarItem(mercadoriaSelecionada);
+					if (validacao) {
+						mercadoriasParaVenda.add(mercadoriaSelecionada);
+						atualizarTblVenda(mercadoriasParaVenda);
 
-					adicionarItem(mercadoriaSelecionada);
-					atualizarTblVenda(mercadoriasParaVenda);
-
-					valorTotal += mercadoriaSelecionada.getPrecoVenda() * qtd;
-					lblValor.setText("R$" + valorTotal);
-					DecimalFormat df = new DecimalFormat("0.#####");
-					String dx = df.format(valorTotal);
-					lblValor.setText("R$" + dx);
+						valorTotal += mercadoriaSelecionada.getMercadoria().getPrecoVenda() * qtd;
+						lblValor.setText("R$" + valorTotal);
+						DecimalFormat df = new DecimalFormat("0.#####");
+						String dx = df.format(valorTotal);
+						lblValor.setText("R$" + dx);
+					}
 
 					spiQuantidade.setValue(1);
 				} else {
@@ -203,7 +206,7 @@ public class TelaVenda extends JInternalFrame {
 		btnRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (tblVenda.getSelectedRow() > 0) {
-					Mercadoria mercadoriaSelecionada = mercadoriasParaVenda.get(tblVenda.getSelectedRow() - 1);
+					ItemMercadoria mercadoriaSelecionada = mercadoriasParaVenda.get(tblVenda.getSelectedRow() - 1);
 					mercadoriasParaVenda.remove(mercadoriaSelecionada);
 
 					int qtd = Integer.parseInt(tblVenda.getValueAt(tblVenda.getSelectedRow(), 1).toString());
@@ -211,7 +214,7 @@ public class TelaVenda extends JInternalFrame {
 					removerMercadoria(mercadoriaSelecionada);
 					atualizarTblVenda(mercadoriasParaVenda);
 
-					valorTotal -= mercadoriaSelecionada.getPrecoVenda() * qtd;
+					valorTotal -= mercadoriaSelecionada.getMercadoria().getPrecoVenda() * qtd;
 					lblValor.setText("R$" + valorTotal);
 					DecimalFormat df = new DecimalFormat("0.#####");
 					String dx = df.format(valorTotal);
@@ -365,7 +368,8 @@ public class TelaVenda extends JInternalFrame {
 		}
 	}
 
-	private void removerMercadoria(Mercadoria mercadoriaSelecionada) {
+	private void removerMercadoria(ItemMercadoria itemMercadoria) {
+		Mercadoria mercadoriaSelecionada = itemMercadoria.getMercadoria();
 		if (mercadoriaSelecionada instanceof Produto) {
 			ItemProduto itemProduto = obterItemProduto((Produto) mercadoriaSelecionada);
 			itensProdutos.remove(itemProduto);
@@ -377,36 +381,43 @@ public class TelaVenda extends JInternalFrame {
 		}
 	}
 
-	private void removerMercadorias(List<Mercadoria> listaMercadorias) {
-		listaMercadorias.clear();
+	private void removerMercadorias(List<ItemMercadoria> mercadoriasParaVenda) {
+		mercadoriasParaVenda.clear();
 	}
 
-	private void adicionarItem(Mercadoria mercadoriaSelecionada) {
+	private boolean adicionarItem(ItemMercadoria itemMercadoria) {
+		Mercadoria mercadoriaSelecionada = itemMercadoria.getMercadoria();
 		int quantidade = (int) spiQuantidade.getValue();
-		if (mercadoriaSelecionada instanceof Produto) {
-			if (produtos.contains(mercadoriaSelecionada)) {
-				ItemProduto item = obterItemProduto((Produto) mercadoriaSelecionada);
-				item.setQuantidade(item.getQuantidade() + quantidade);
-			} else {
-				ItemProduto novoItem = new ItemProduto();
-				novoItem.setProduto((Produto) mercadoriaSelecionada);
-				novoItem.setQuantidade(quantidade);
+		if (quantidade <= mercadoriaSelecionada.getEstoque()) {
+			if (mercadoriaSelecionada instanceof Produto) {
+				if (produtos.contains(mercadoriaSelecionada)) {
+					ItemProduto item = obterItemProduto((Produto) mercadoriaSelecionada);
+					item.setQuantidade(item.getQuantidade() + quantidade);
+				} else {
+					ItemProduto novoItem = new ItemProduto();
+					novoItem.setProduto((Produto) mercadoriaSelecionada);
+					novoItem.setQuantidade(quantidade);
 
-				itensProdutos.add(novoItem);
+					itensProdutos.add(novoItem);
+				}
 			}
-		}
 
-		if (mercadoriaSelecionada instanceof Remedio) {
-			if (produtos.contains(mercadoriaSelecionada)) {
-				ItemRemedio item = obterItemRemedio((Remedio) mercadoriaSelecionada);
-				item.setQuantidade(item.getQuantidade() + quantidade);
-			} else {
-				ItemRemedio novoItem = new ItemRemedio();
-				novoItem.setRemedio((Remedio) mercadoriaSelecionada);
-				novoItem.setQuantidade(quantidade);
+			if (mercadoriaSelecionada instanceof Remedio) {
+				if (produtos.contains(mercadoriaSelecionada)) {
+					ItemRemedio item = obterItemRemedio((Remedio) mercadoriaSelecionada);
+					item.setQuantidade(item.getQuantidade() + quantidade);
+				} else {
+					ItemRemedio novoItem = new ItemRemedio();
+					novoItem.setRemedio((Remedio) mercadoriaSelecionada);
+					novoItem.setQuantidade(quantidade);
 
-				itensRemedios.add(novoItem);
+					itensRemedios.add(novoItem);
+				}
 			}
+			return true;
+		} else {
+			JOptionPane.showMessageDialog(null, "Não é possivel vender mais do que tem no estoque");
+			return false;
 		}
 	}
 
@@ -434,15 +445,15 @@ public class TelaVenda extends JInternalFrame {
 		return item;
 	}
 
-	private void atualizarTblVenda(List<Mercadoria> mercadoriasParaVenda) {
+	private void atualizarTblVenda(List<ItemMercadoria> mercadoriasParaVenda) {
 		tblVenda.setModel(new DefaultTableModel(new String[][] { { "Nome", "Quantidade", "Preço" } },
 				new String[] { "Nome", "Quantidade", "Preço" }));
 
 		DefaultTableModel modelo = (DefaultTableModel) tblVenda.getModel();
 
-		for (Mercadoria mercadoria : mercadoriasParaVenda) {
-			String[] novaLinha = new String[] { mercadoria.getNome(), mercadoria.getEstoque() + "",
-					"R$" + mercadoria.getPrecoVenda() };
+		for (ItemMercadoria mercadoria : mercadoriasParaVenda) {
+			String[] novaLinha = new String[] { mercadoria.getMercadoria().getNome(), mercadoria.getQtd() + "",
+					"R$" + mercadoria.getMercadoria().getPrecoVenda() };
 			modelo.addRow(novaLinha);
 		}
 	}
