@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -119,6 +121,13 @@ public class TelaVenda extends JInternalFrame {
 		txtCodBar.setColumns(10);
 
 		tblPesquisa = new JTable();
+		tblPesquisa.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				int estoque = mercadoriasConsultadas.get(tblPesquisa.getSelectedRow() - 1).getEstoque();
+				spiQuantidade.setModel(new SpinnerNumberModel(1, 1, estoque, 1));
+			}
+		});
 		tblPesquisa.setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		tblPesquisa.setModel(
 				new DefaultTableModel(new Object[][] {}, new String[] { "Código", "Nome", "Preco", "Estoque" }));
@@ -147,6 +156,8 @@ public class TelaVenda extends JInternalFrame {
 						String dx = df.format(valorTotal);
 						lblValor.setText("R$" + dx);
 
+						diminuirEstoque(mercadoriaSelecionada, qtd);
+						atualizarTabelaMercadorias(mercadoriasConsultadas);
 					}
 
 					spiQuantidade.setValue(1);
@@ -220,6 +231,9 @@ public class TelaVenda extends JInternalFrame {
 					DecimalFormat df = new DecimalFormat("0.#####");
 					String dx = df.format(valorTotal);
 					lblValor.setText("R$" + dx);
+
+					addEstoque(mercadoriaSelecionada, qtd);
+					atualizarTabelaMercadorias(mercadoriasConsultadas);
 				} else {
 					JOptionPane.showMessageDialog(null, "Selecione um item para excluir");
 				}
@@ -307,6 +321,38 @@ public class TelaVenda extends JInternalFrame {
 		});
 		getContentPane().add(btnProximo, "cell 0 10");
 		btnProximo.setEnabled(false);
+
+	}
+
+	protected void addEstoque(ItemMercadoria mercadoriaSelecionada, int qtd) {
+
+		int posicao = 0;
+
+		for (int i = 0; i < mercadoriasConsultadas.size(); i++) {
+			if (mercadoriasConsultadas.get(i).getCodBarra()
+					.equals(mercadoriaSelecionada.getMercadoria().getCodBarra())) {
+				posicao = i;
+			}
+		}
+
+		int estoque = mercadoriasConsultadas.get(posicao).getEstoque();
+		mercadoriasConsultadas.get(posicao).setEstoque(estoque + qtd);
+
+	}
+
+	protected void diminuirEstoque(ItemMercadoria mercadoriaSelecionada, int qtd) {
+
+		int posicao = 0;
+
+		for (int i = 0; i < mercadoriasConsultadas.size(); i++) {
+			if (mercadoriasConsultadas.get(i).getCodBarra()
+					.equals(mercadoriaSelecionada.getMercadoria().getCodBarra())) {
+				posicao = i;
+			}
+		}
+
+		int estoque = mercadoriasConsultadas.get(posicao).getEstoque();
+		mercadoriasConsultadas.get(posicao).setEstoque(estoque - qtd);
 
 	}
 
