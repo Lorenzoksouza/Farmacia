@@ -146,6 +146,7 @@ public class TelaVenda extends JInternalFrame {
 						DecimalFormat df = new DecimalFormat("0.#####");
 						String dx = df.format(valorTotal);
 						lblValor.setText("R$" + dx);
+
 					}
 
 					spiQuantidade.setValue(1);
