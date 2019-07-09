@@ -15,13 +15,16 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
 import controller.ControllerProduto;
 import controller.ControllerVenda;
@@ -38,11 +41,12 @@ public class ListagemVenda extends JInternalFrame {
 	private JTextField txtId;
 	private JTextField txtValorMin;
 	private JTextField txtValorMax;
-	private JTextField txtDataMin;
-	private JTextField txtDataMax;
+	// private JTextField txtDataMin;
+	// private JTextField txtDataMax;
 	private JButton btnProximo;
 	private JButton btnAnterior;
-
+	private JFormattedTextField txtDataMin;
+	private JFormattedTextField txtDataMax;
 	private List<Venda> vendasConsultadas;
 
 	private int paginaTotal = 1;
@@ -78,7 +82,7 @@ public class ListagemVenda extends JInternalFrame {
 		getContentPane().setLayout(new MigLayout("", "[grow][][grow]", "[][][][][][][][][][][][grow][]"));
 
 		JLabel lblId = new JLabel("Id");
-		getContentPane().add(lblId, "cell 0 0");
+		getContentPane().add(lblId, "flowx,cell 0 0,growx");
 
 		tblVendas = new JTable();
 		tblVendas.setModel(
@@ -88,7 +92,7 @@ public class ListagemVenda extends JInternalFrame {
 		getContentPane().add(tblVendas, "flowx,cell 2 0 1 12,grow");
 
 		txtId = new JTextField();
-		getContentPane().add(txtId, "cell 0 1");
+		getContentPane().add(txtId, "flowx,cell 0 1");
 		txtId.setColumns(10);
 
 		JLabel lblDataMinima = new JLabel("Data min. (DD/MM/AAAA)");
@@ -96,8 +100,13 @@ public class ListagemVenda extends JInternalFrame {
 
 		JLabel lblEspaco = new JLabel(" ");
 		getContentPane().add(lblEspaco, "cell 1 2");
+		try {
+			txtDataMin = new JFormattedTextField(new MaskFormatter("##/##/####"));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
-		txtDataMin = new JTextField();
 		txtDataMin.addKeyListener(new KeyAdapter() {
 //			@Override
 //			public void keyTyped(KeyEvent arg0) {
@@ -106,6 +115,7 @@ public class ListagemVenda extends JInternalFrame {
 //					arg0.consume();
 //			}
 		});
+
 		txtDataMin.setDocument(new JTextFieldLimit(10));
 		getContentPane().add(txtDataMin, "cell 0 3,growx");
 
@@ -115,7 +125,12 @@ public class ListagemVenda extends JInternalFrame {
 		JLabel lblEspaco_1 = new JLabel(" ");
 		getContentPane().add(lblEspaco_1, "cell 2 2");
 
-		txtDataMax = new JTextField();
+		try {
+			txtDataMax = new JFormattedTextField(new MaskFormatter("##/##/####"));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		txtDataMax.addKeyListener(new KeyAdapter() {
 //			@Override
 //			public void keyTyped(KeyEvent arg0) {
@@ -228,6 +243,20 @@ public class ListagemVenda extends JInternalFrame {
 			}
 		});
 		getContentPane().add(btnProximo, "cell 2 12,alignx center");
+
+		JLabel lblCancelada = new JLabel("Cancelada:                                  ");
+		getContentPane().add(lblCancelada, "cell 0 0,alignx right");
+
+		JComboBox cmbCancelada = new JComboBox();
+		getContentPane().add(cmbCancelada, "cell 0 1");
+
+		JButton btnCancelarVenda = new JButton("Cancelar Venda");
+		btnCancelarVenda.setForeground(Color.RED);
+		btnCancelarVenda.setBorder(new LineBorder(Color.gray, 2, true));
+		btnCancelarVenda.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnCancelarVenda.setBackground(Color.WHITE);
+		btnCancelarVenda.setPreferredSize(new Dimension(80, 30));
+		getContentPane().add(btnCancelarVenda, "cell 0 10");
 
 	}
 

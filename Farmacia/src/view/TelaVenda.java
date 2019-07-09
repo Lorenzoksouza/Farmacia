@@ -16,6 +16,7 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -92,7 +93,7 @@ public class TelaVenda extends JInternalFrame {
 		setTitle("Vendas");
 		setClosable(true);
 		setBounds(100, 100, 660, 530);
-		getContentPane().setLayout(new MigLayout("", "[grow][][grow]", "[21.00][][][25.00][][][][][][grow][][]"));
+		getContentPane().setLayout(new MigLayout("", "[grow][][grow]", "[21.00][][][25.00][][][][][][grow][][][]"));
 
 		JLabel lblCodbarra = new JLabel("Cód.barra:");
 		getContentPane().add(lblCodbarra, "flowx,cell 0 0,growx");
@@ -133,6 +134,152 @@ public class TelaVenda extends JInternalFrame {
 				new DefaultTableModel(new Object[][] {}, new String[] { "Código", "Nome", "Preco", "Estoque" }));
 		getContentPane().add(tblPesquisa, "cell 0 3 1 7,grow");
 
+		btnProximo = new JButton("Próximo>");
+		btnProximo.setBorder(new LineBorder(Color.gray, 2, true));
+		btnProximo.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnProximo.setBackground(Color.WHITE);
+		btnProximo.setPreferredSize(new Dimension(80, 30));
+
+		JButton btnAnterior = new JButton("<Anterior");
+		btnAnterior.setBorder(new LineBorder(Color.gray, 2, true));
+		btnAnterior.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnAnterior.setBackground(Color.WHITE);
+		btnAnterior.setPreferredSize(new Dimension(80, 30));
+		btnAnterior.setEnabled(false);
+		btnAnterior.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (paginaAtual > 1) {
+					paginaAtual--;
+				}
+				if (paginaAtual == 1) {
+					btnAnterior.setEnabled(false);
+
+				}
+				btnProximo.setEnabled(true);
+				pesquisarMercadorias();
+			}
+		});
+		getContentPane().add(btnAnterior, "flowx,cell 0 10,alignx center");
+
+		JLabel lblTotal = new JLabel("Total:");
+		getContentPane().add(lblTotal, "flowx,cell 2 10,aligny bottom");
+
+		lblValor = new JLabel("R$0.00");
+		lblValor.setForeground(Color.BLUE);
+		lblValor.setBackground(Color.WHITE);
+		lblValor.setFont(new Font("Tahoma", Font.BOLD, 11));
+		getContentPane().add(lblValor, "cell 2 10,aligny bottom");
+
+		JButton btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar.setIcon(new ImageIcon(TelaVenda.class.getResource("/icons/search.png")));
+		btnPesquisar.setBackground(Color.WHITE);
+		btnPesquisar.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnPesquisar.setPreferredSize(new Dimension(200, 30));
+		btnPesquisar.setBorder(new LineBorder(Color.gray, 2, true));
+		btnPesquisar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pesquisarMercadorias();
+				if (paginaAtual != totalPaginas) {
+					btnProximo.setEnabled(false);
+				}
+			}
+		});
+		getContentPane().add(btnPesquisar, "cell 0 2,alignx right");
+
+		JLabel lblNome = new JLabel("Nome:");
+		getContentPane().add(lblNome, "cell 0 0,growx");
+
+		txtNome = new JTextField();
+		txtNome.setDocument(new JTextFieldLimit(150));
+		getContentPane().add(txtNome, "cell 0 1,growx");
+		txtNome.setColumns(10);
+
+		lblPaginaAtual = new JLabel("");
+		lblPaginaAtual.setText(paginaAtual + "");
+		getContentPane().add(lblPaginaAtual, "cell 0 10,alignx center");
+
+		JLabel lbLabel = new JLabel("/");
+		getContentPane().add(lbLabel, "cell 0 10,alignx center");
+
+		lbMax = new JLabel("1");
+		getContentPane().add(lbMax, "cell 0 10,alignx center");
+
+		btnProximo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				paginaAtual++;
+				if (paginaAtual == paginaTotal) {
+					btnProximo.setEnabled(false);
+				}
+				btnAnterior.setEnabled(true);
+				pesquisarMercadorias();
+			}
+		});
+		getContentPane().add(btnProximo, "cell 0 10,alignx center");
+		btnProximo.setEnabled(false);
+
+		JLabel lblEspacovs = new JLabel("                                  ");
+		getContentPane().add(lblEspacovs, "cell 2 10,aligny bottom");
+
+		JLabel lblSelecionarFormaDe = new JLabel("Selecionar Forma de Pagamento:");
+		getContentPane().add(lblSelecionarFormaDe, "cell 2 10,alignx left,aligny bottom");
+
+		JButton btnConcluirVenda = new JButton("Concluir Venda");
+		btnConcluirVenda.setIcon(new ImageIcon(TelaVenda.class.getResource("/icons/check.png")));
+		btnConcluirVenda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String mensagem = "";
+				if (!mercadoriasParaVenda.isEmpty()) {
+					ControllerVenda controllerVenda = new ControllerVenda();
+					mensagem = controllerVenda.salvarVenda(valorTotal, itensProdutos, itensRemedios);
+					if (mensagem == "") {
+						DecimalFormat df = new DecimalFormat("0.#####");
+						String dx = df.format(valorTotal);
+						mensagem = "Venda concluída com sucesso! Valor total de: R$" + dx;
+						removerMercadorias(mercadoriasParaVenda);
+						atualizarTblVenda(mercadoriasParaVenda);
+						valorTotal = 0;
+						lblValor.setText("R$" + valorTotal);
+					}
+				} else {
+					mensagem = "Selecione algum produto para realizar uma venda";
+				}
+				JOptionPane.showMessageDialog(null, mensagem);
+			}
+
+		});
+
+		JButton btnRemover = new JButton("Remover");
+		btnRemover.setIcon(new ImageIcon(TelaVenda.class.getResource("/icons/garbage.png")));
+		btnRemover.setForeground(Color.RED);
+		btnRemover.setBackground(Color.WHITE);
+		btnRemover.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnRemover.setPreferredSize(new Dimension(100, 30));
+		btnRemover.setBorder(new LineBorder(Color.gray, 2, true));
+		btnRemover.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (tblVenda.getSelectedRow() > 0) {
+					ItemMercadoria mercadoriaSelecionada = mercadoriasParaVenda.get(tblVenda.getSelectedRow() - 1);
+					mercadoriasParaVenda.remove(mercadoriaSelecionada);
+
+					int qtd = Integer.parseInt(tblVenda.getValueAt(tblVenda.getSelectedRow(), 1).toString());
+
+					removerMercadoria(mercadoriaSelecionada);
+					atualizarTblVenda(mercadoriasParaVenda);
+
+					valorTotal -= mercadoriaSelecionada.getMercadoria().getPrecoVenda() * qtd;
+					lblValor.setText("R$" + valorTotal);
+					DecimalFormat df = new DecimalFormat("0.#####");
+					String dx = df.format(valorTotal);
+					lblValor.setText("R$" + dx);
+
+					addEstoque(mercadoriaSelecionada, qtd);
+					atualizarTabelaMercadorias(mercadoriasConsultadas);
+				} else {
+					JOptionPane.showMessageDialog(null, "Selecione um item para excluir");
+				}
+			}
+		});
+
 		JButton btnAddItem = new JButton("Adicionar item");
 		btnAddItem.setBackground(Color.WHITE);
 		btnAddItem.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -167,160 +314,23 @@ public class TelaVenda extends JInternalFrame {
 			}
 		});
 
-		btnProximo = new JButton("Próximo>");
-		btnProximo.setBorder(new LineBorder(Color.gray, 2, true));
-		btnProximo.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnProximo.setBackground(Color.WHITE);
-		btnProximo.setPreferredSize(new Dimension(80, 30));
-
-		JButton btnAnterior = new JButton("<Anterior");
-		btnAnterior.setBorder(new LineBorder(Color.gray, 2, true));
-		btnAnterior.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnAnterior.setBackground(Color.WHITE);
-		btnAnterior.setPreferredSize(new Dimension(80, 30));
-		btnAnterior.setEnabled(false);
-		btnAnterior.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if (paginaAtual > 1) {
-					paginaAtual--;
-				}
-				if (paginaAtual == 1) {
-					btnAnterior.setEnabled(false);
-
-				}
-				btnProximo.setEnabled(true);
-				pesquisarMercadorias();
-			}
-		});
-		getContentPane().add(btnAnterior, "flowx,cell 0 10");
-
-		JLabel lblTotal = new JLabel("Total:");
-		getContentPane().add(lblTotal, "flowx,cell 2 10,aligny bottom");
-
-		lblValor = new JLabel("R$0.00");
-		getContentPane().add(lblValor, "cell 2 10,aligny bottom");
-
 		JLabel lblQuantidade = new JLabel("Quantidade:");
-		getContentPane().add(lblQuantidade, "flowx,cell 0 11,aligny center");
+		getContentPane().add(lblQuantidade, "flowx,cell 0 12,aligny center");
 
 		spiQuantidade = new JSpinner();
 		spiQuantidade.setModel(new SpinnerNumberModel(1, 1, 10, 1));
-		getContentPane().add(spiQuantidade, "cell 0 11,aligny center");
-		getContentPane().add(btnAddItem, "cell 0 11,alignx center,aligny bottom");
-
-		JButton btnRemover = new JButton("Remover");
-		btnRemover.setIcon(new ImageIcon(TelaVenda.class.getResource("/icons/garbage.png")));
-		btnRemover.setForeground(Color.RED);
-		btnRemover.setBackground(Color.WHITE);
-		btnRemover.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnRemover.setPreferredSize(new Dimension(100, 30));
-		btnRemover.setBorder(new LineBorder(Color.gray, 2, true));
-		btnRemover.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (tblVenda.getSelectedRow() > 0) {
-					ItemMercadoria mercadoriaSelecionada = mercadoriasParaVenda.get(tblVenda.getSelectedRow() - 1);
-					mercadoriasParaVenda.remove(mercadoriaSelecionada);
-
-					int qtd = Integer.parseInt(tblVenda.getValueAt(tblVenda.getSelectedRow(), 1).toString());
-
-					removerMercadoria(mercadoriaSelecionada);
-					atualizarTblVenda(mercadoriasParaVenda);
-
-					valorTotal -= mercadoriaSelecionada.getMercadoria().getPrecoVenda() * qtd;
-					lblValor.setText("R$" + valorTotal);
-					DecimalFormat df = new DecimalFormat("0.#####");
-					String dx = df.format(valorTotal);
-					lblValor.setText("R$" + dx);
-
-					addEstoque(mercadoriaSelecionada, qtd);
-					atualizarTabelaMercadorias(mercadoriasConsultadas);
-				} else {
-					JOptionPane.showMessageDialog(null, "Selecione um item para excluir");
-				}
-			}
-		});
-		getContentPane().add(btnRemover, "flowx,cell 2 11,alignx center,aligny bottom");
-
-		JLabel lblEspaco2 = new JLabel("                             ");
-		getContentPane().add(lblEspaco2, "cell 2 11");
-
-		JButton btnConcluirVenda = new JButton("Concluir Venda");
-		btnConcluirVenda.setIcon(new ImageIcon(TelaVenda.class.getResource("/icons/check.png")));
-		btnConcluirVenda.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				String mensagem = "";
-				if (!mercadoriasParaVenda.isEmpty()) {
-					ControllerVenda controllerVenda = new ControllerVenda();
-					mensagem = controllerVenda.salvarVenda(valorTotal, itensProdutos, itensRemedios);
-					if (mensagem == "") {
-						DecimalFormat df = new DecimalFormat("0.#####");
-						String dx = df.format(valorTotal);
-						mensagem = "Venda concluída com sucesso! Valor total de: R$" + dx;
-						removerMercadorias(mercadoriasParaVenda);
-						atualizarTblVenda(mercadoriasParaVenda);
-						valorTotal = 0;
-						lblValor.setText("R$" + valorTotal);
-					}
-				} else {
-					mensagem = "Selecione algum produto para realizar uma venda";
-				}
-				JOptionPane.showMessageDialog(null, mensagem);
-			}
-
-		});
+		getContentPane().add(spiQuantidade, "cell 0 12,aligny center");
+		getContentPane().add(btnAddItem, "cell 0 12,alignx center,aligny bottom");
+		getContentPane().add(btnRemover, "flowx,cell 2 12,alignx center,aligny bottom");
 		btnConcluirVenda.setForeground(new Color(0, 128, 0));
 		btnConcluirVenda.setBackground(Color.WHITE);
 		btnConcluirVenda.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnConcluirVenda.setPreferredSize(new Dimension(30, 30));
 		btnConcluirVenda.setBorder(new LineBorder(Color.gray, 2, true));
-		getContentPane().add(btnConcluirVenda, "cell 2 11,alignx center");
+		getContentPane().add(btnConcluirVenda, "cell 2 12,alignx center");
 
-		JButton btnPesquisar = new JButton("Pesquisar");
-		btnPesquisar.setIcon(new ImageIcon(TelaVenda.class.getResource("/icons/search.png")));
-		btnPesquisar.setBackground(Color.WHITE);
-		btnPesquisar.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnPesquisar.setPreferredSize(new Dimension(200, 30));
-		btnPesquisar.setBorder(new LineBorder(Color.gray, 2, true));
-		btnPesquisar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				pesquisarMercadorias();
-				if (paginaAtual != totalPaginas) {
-					btnProximo.setEnabled(false);
-				}
-			}
-		});
-		getContentPane().add(btnPesquisar, "cell 0 2,alignx right");
-
-		JLabel lblNome = new JLabel("Nome:");
-		getContentPane().add(lblNome, "cell 0 0,growx");
-
-		txtNome = new JTextField();
-		txtNome.setDocument(new JTextFieldLimit(150));
-		getContentPane().add(txtNome, "cell 0 1,growx");
-		txtNome.setColumns(10);
-
-		lblPaginaAtual = new JLabel("");
-		lblPaginaAtual.setText(paginaAtual + "");
-		getContentPane().add(lblPaginaAtual, "cell 0 10");
-
-		JLabel lbLabel = new JLabel("/");
-		getContentPane().add(lbLabel, "cell 0 10");
-
-		lbMax = new JLabel("1");
-		getContentPane().add(lbMax, "cell 0 10");
-
-		btnProximo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				paginaAtual++;
-				if (paginaAtual == paginaTotal) {
-					btnProximo.setEnabled(false);
-				}
-				btnAnterior.setEnabled(true);
-				pesquisarMercadorias();
-			}
-		});
-		getContentPane().add(btnProximo, "cell 0 10");
-		btnProximo.setEnabled(false);
+		JComboBox cmbFormaPagamento = new JComboBox();
+		getContentPane().add(cmbFormaPagamento, "cell 2 11,alignx right");
 
 	}
 
