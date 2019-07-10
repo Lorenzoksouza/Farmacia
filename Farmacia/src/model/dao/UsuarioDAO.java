@@ -14,4 +14,9 @@ public class UsuarioDAO {
 		return null;
 	}
 
+	public boolean validarUsuario() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

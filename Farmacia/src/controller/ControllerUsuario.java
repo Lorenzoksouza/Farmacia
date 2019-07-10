@@ -19,4 +19,12 @@ public class ControllerUsuario {
 		return mensagem;
 	}
 
+	public boolean validarUsuario() {
+		if (usuarioBO.validarUsuario()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 }

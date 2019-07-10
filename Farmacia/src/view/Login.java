@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,6 +15,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import controller.ControllerUsuario;
 import net.miginfocom.swing.MigLayout;
 
 public class Login extends JFrame {
@@ -71,6 +74,14 @@ public class Login extends JFrame {
 		contentPane.add(passwordField, "cell 4 3,growx");
 
 		JButton btnEntrar = new JButton("Entrar");
+		btnEntrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ControllerUsuario usuarioController = new ControllerUsuario();
+				if (usuarioController.validarUsuario()) {
+
+				}
+			}
+		});
 		btnEntrar.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		contentPane.add(btnEntrar, "cell 4 5");
 	}

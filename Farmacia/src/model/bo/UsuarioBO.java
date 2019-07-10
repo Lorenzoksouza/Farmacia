@@ -19,4 +19,8 @@ public class UsuarioBO {
 		return usuarioDAO.modificarStatus(usuario);
 	}
 
+	public boolean validarUsuario() {
+		return usuarioDAO.validarUsuario();
+	}
+
 }
