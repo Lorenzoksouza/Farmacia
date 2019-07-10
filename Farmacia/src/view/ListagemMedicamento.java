@@ -98,8 +98,9 @@ public class ListagemMedicamento extends JInternalFrame {
 		tblRemedios = new JTable();
 		tblRemedios.setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		tblRemedios.setColumnSelectionAllowed(true);
-		tblRemedios.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Código de Barras", "Dosagem",
-				"Composição", "Genérico", "Nome", "Data Cad.", "Preço", "Estoque", "Forma Uso", "Laboratório" }));
+		tblRemedios.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "Código de Barras", "Dosagem", "Composição", "Genérico", "Nome", "Data Cad.",
+						"Preço venda", "Preço custo", "Estoque", "Forma Uso", "Laboratório" }));
 		tblRemedios.getColumnModel().getColumn(0).setPreferredWidth(100);
 		tblRemedios.getColumnModel().getColumn(1).setPreferredWidth(58);
 		tblRemedios.getColumnModel().getColumn(2).setPreferredWidth(69);
@@ -394,9 +395,9 @@ public class ListagemMedicamento extends JInternalFrame {
 		// Limpa a tabela
 		tblRemedios.setModel(new DefaultTableModel(
 				new String[][] { { "Código de Barras", "Dosagem", "Composição", "Genérico", "Nome", "Data Cad.",
-						"Preço", "Estoque", "Forma Uso", "Laboratório" }, },
-				new String[] { "Código de Barras", "Dosagem", "Composição", "Genérico", "Nome", "Data Cad.", "Preço",
-						"Estoque", "Forma Uso", "Laboratório" }));
+						"Preço venda", "Preço custo", "Estoque", "Forma Uso", "Laboratório" }, },
+				new String[] { "Código de Barras", "Dosagem", "Composição", "Genérico", "Nome", "Data Cad.",
+						"Preço venda", "Preço custo", "Estoque", "Forma Uso", "Laboratório" }));
 
 		DefaultTableModel modelo = (DefaultTableModel) tblRemedios.getModel();
 
@@ -416,8 +417,9 @@ public class ListagemMedicamento extends JInternalFrame {
 
 			String[] novaLinha = new String[] { remedio.getCodBarra() + "", remedio.getDosagem(),
 					remedio.getComposicao(), generico, remedio.getNome(), sdf.format(remedio.getDataCadastro()),
-					"R$" + format.format(remedio.getPrecoVenda()) + "", "" + remedio.getEstoque(),
-					remedio.getFormaUso().getDescricao(), remedio.getLaboratorio().getNomeLaboratorio() };
+					"R$" + format.format(remedio.getPrecoVenda()), "R$" + format.format(remedio.getPrecoCusto()),
+					"" + remedio.getEstoque(), remedio.getFormaUso().getDescricao(),
+					remedio.getLaboratorio().getNomeLaboratorio() };
 			modelo.addRow(novaLinha);
 		}
 	}

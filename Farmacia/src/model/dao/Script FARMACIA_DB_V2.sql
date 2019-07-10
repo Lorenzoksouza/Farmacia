@@ -9,6 +9,10 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema FARMACIA_DB
 -- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema FARMACIA_DB
+-- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `FARMACIA_DB` DEFAULT CHARACTER SET utf8 ;
 USE `FARMACIA_DB` ;
 
@@ -21,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `FARMACIA_DB`.`FORMA_USO` (
   PRIMARY KEY (`ID_FORMA_USO`))
 ENGINE = InnoDB;
 
+
 -- -----------------------------------------------------
 -- Table `FARMACIA_DB`.`LABORATORIO`
 -- -----------------------------------------------------
@@ -29,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `FARMACIA_DB`.`LABORATORIO` (
   `NM_LABORATORIO` VARCHAR(100) NULL,
   PRIMARY KEY (`ID_LABORATORIO`))
 ENGINE = InnoDB;
+
 
 -- -----------------------------------------------------
 -- Table `FARMACIA_DB`.`REMEDIO`
@@ -59,6 +65,7 @@ CREATE TABLE IF NOT EXISTS `FARMACIA_DB`.`REMEDIO` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+
 -- -----------------------------------------------------
 -- Table `FARMACIA_DB`.`CATEGORIA`
 -- -----------------------------------------------------
@@ -67,6 +74,7 @@ CREATE TABLE IF NOT EXISTS `FARMACIA_DB`.`CATEGORIA` (
   `NM_CATEGORIA` VARCHAR(100) NULL,
   PRIMARY KEY (`ID_CATEGORIA`))
 ENGINE = InnoDB;
+
 
 -- -----------------------------------------------------
 -- Table `FARMACIA_DB`.`PRODUTO`
@@ -87,6 +95,7 @@ CREATE TABLE IF NOT EXISTS `FARMACIA_DB`.`PRODUTO` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+
 -- -----------------------------------------------------
 -- Table `FARMACIA_DB`.`FORMA_PGTO`
 -- -----------------------------------------------------
@@ -97,6 +106,7 @@ CREATE TABLE IF NOT EXISTS `FARMACIA_DB`.`FORMA_PGTO` (
   PRIMARY KEY (`ID_FORMA_PGTO`))
 ENGINE = InnoDB;
 
+
 -- -----------------------------------------------------
 -- Table `FARMACIA_DB`.`NIVEL`
 -- -----------------------------------------------------
@@ -106,13 +116,14 @@ CREATE TABLE IF NOT EXISTS `FARMACIA_DB`.`NIVEL` (
   PRIMARY KEY (`ID_NIVEL`))
 ENGINE = InnoDB;
 
+
 -- -----------------------------------------------------
 -- Table `FARMACIA_DB`.`USUARIO`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `FARMACIA_DB`.`USUARIO` (
   `ID_USUARIO` INT NOT NULL AUTO_INCREMENT,
   `NOME` VARCHAR(45) NULL,
-  `DT_CADASTRO` DATETIME NULL,
+  `DT_CADASTRO` DATE NULL,
   `LOGIN` VARCHAR(20) NULL,
   `SENHA` VARCHAR(20) NULL,
   `ATIVO` TINYINT NULL,
@@ -126,31 +137,33 @@ CREATE TABLE IF NOT EXISTS `FARMACIA_DB`.`USUARIO` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+
 -- -----------------------------------------------------
 -- Table `FARMACIA_DB`.`ENDERECO`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `FARMACIA_DB`.`ENDERECO` (
-  `ID_ENDERECO` INT NOT NULL AUTO_INCREMENT,
-  `CEP` CHAR(8),
-  `RUA` VARCHAR(100),
-  `NUMERO` INT,
-  `COMPLEMENTO` VARCHAR(100),
-  `BAIRRO` VARCHAR(45),
-  `CIDADE` VARCHAR(45),
-  `UF` CHAR(2),
+  `ID_ENDERECO` INT NOT NULL,
+  `CEP` CHAR(8) NOT NULL,
+  `RUA` VARCHAR(100) NOT NULL,
+  `NUMERO` INT NOT NULL,
+  `COMPLEMENTO` VARCHAR(100) NOT NULL,
+  `BAIRRO` VARCHAR(45) NOT NULL,
+  `CIDADE` VARCHAR(45) NOT NULL,
+  `UF` CHAR(2) NOT NULL,
   PRIMARY KEY (`ID_ENDERECO`))
 ENGINE = InnoDB;
+
 
 -- -----------------------------------------------------
 -- Table `FARMACIA_DB`.`CLIENTE`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `FARMACIA_DB`.`CLIENTE` (
   `ID_CLIENTE` INT NOT NULL AUTO_INCREMENT,
-  `CPF` CHAR(11),
+  `CPF` CHAR(11) NOT NULL,
   `NOME` VARCHAR(45) NOT NULL,
-  `DT_NASC` DATE,
+  `DT_NASC` DATE NOT NULL,
   `DT_CADASTRO` DATETIME NOT NULL,
-  `ID_ENDERECO` INT,
+  `ID_ENDERECO` INT NOT NULL,
   PRIMARY KEY (`ID_CLIENTE`),
   UNIQUE INDEX `CPF_UNIQUE` (`CPF` ASC)  ,
   INDEX `fk_CLIENTE_ENDERECO1_idx` (`ID_ENDERECO` ASC)  ,
@@ -161,6 +174,7 @@ CREATE TABLE IF NOT EXISTS `FARMACIA_DB`.`CLIENTE` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+
 -- -----------------------------------------------------
 -- Table `FARMACIA_DB`.`VENDA`
 -- -----------------------------------------------------
@@ -168,10 +182,10 @@ CREATE TABLE IF NOT EXISTS `FARMACIA_DB`.`VENDA` (
   `ID_VENDA` INT NOT NULL AUTO_INCREMENT,
   `DT_VENDA` DATETIME NULL,
   `VALOR_TOTAL` DOUBLE NULL,
-  `ID_FORMA_PGTO` INT NULL,
+  `ID_FORMA_PGTO` INT NOT NULL,
   `CANCELADA` TINYINT NULL,
   `ID_USUARIO` INT NOT NULL,
-  `ID_CLIENTE` INT,
+  `ID_CLIENTE` INT NOT NULL,
   PRIMARY KEY (`ID_VENDA`),
   INDEX `fk_VENDA_FORMA_PGTO_idx` (`ID_FORMA_PGTO` ASC)  ,
   INDEX `fk_VENDA_USUARIO1_idx` (`ID_USUARIO` ASC)  ,
@@ -181,17 +195,18 @@ CREATE TABLE IF NOT EXISTS `FARMACIA_DB`.`VENDA` (
     REFERENCES `FARMACIA_DB`.`FORMA_PGTO` (`ID_FORMA_PGTO`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_VENDA_USUARIO`
+  CONSTRAINT `fk_VENDA_USUARIO1`
     FOREIGN KEY (`ID_USUARIO`)
     REFERENCES `FARMACIA_DB`.`USUARIO` (`ID_USUARIO`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_VENDA_CLIENTE`
+  CONSTRAINT `fk_VENDA_CLIENTE1`
     FOREIGN KEY (`ID_CLIENTE`)
     REFERENCES `FARMACIA_DB`.`CLIENTE` (`ID_CLIENTE`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
 
 -- -----------------------------------------------------
 -- Table `FARMACIA_DB`.`ITEM_REMEDIO`
@@ -216,6 +231,7 @@ CREATE TABLE IF NOT EXISTS `FARMACIA_DB`.`ITEM_REMEDIO` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+
 -- -----------------------------------------------------
 -- Table `FARMACIA_DB`.`ITEM_PRODUTO`
 -- -----------------------------------------------------
@@ -238,6 +254,7 @@ CREATE TABLE IF NOT EXISTS `FARMACIA_DB`.`ITEM_PRODUTO` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
@@ -263,19 +280,3 @@ VALUES( 310012340122, '100mg','Metamizol', 1, 'Dipirona Sódica', NOW(), 24.90, 
 
 INSERT INTO `farmacia_db`.`remedio` (`COD_BARRA`,`DOSAGEM`,`COMPOSICAO`,`GENERICO`,`NM_REMEDIO`,`DT_CADASTRO`,`PRECO`,`ESTOQUE`,`ID_FORMA_USO`,`ID_LABORATORIO`)
 VALUES( 310012340130, '200mg','Panadol', 0, 'Paracetamol', NOW(), 29.90, 19, 1, 2);
-
-INSERT INTO `farmacia_db`.`endereco`(`CEP`,`RUA`,`NUMERO`,`COMPLEMENTO`,`BAIRRO`,`CIDADE`,`UF`)
-VALUES('88130090','Servidão Augusto Haeming',68,'Próximo a praça de palhoça','Centro','Palhoça','SC');
-
-INSERT INTO `farmacia_db`.`cliente` (`CPF`,`NOME`,`DT_NASC`,`DT_CADASTRO`,`ID_ENDERECO`)
-VALUES ('07185434912','Vitor Fabre de Souza','1997-12-29',NOW(),1);
-
-INSERT INTO `farmacia_db`.`nivel`(`DESCRICAO`)
-VALUES('ADMIN');
-INSERT INTO `farmacia_db`.`nivel`(`DESCRICAO`)
-VALUES('GERENTE');
-INSERT INTO `farmacia_db`.`nivel`(`DESCRICAO`)
-VALUES('ATENDENTE');
-
-INSERT INTO `farmacia_db`.`usuario`(`NOME`,`DT_CADASTRO`,`LOGIN`,`SENHA`,`ATIVO`,`ID_NIVEL`)
-VALUES('Administrador',NOW(),'admin','1234',1,1);
