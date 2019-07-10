@@ -6,6 +6,7 @@ import model.bo.VendaBO;
 import model.dto.VendaDTO;
 import model.seletor.MercadoriaSeletor;
 import model.seletor.VendaSeletor;
+import model.vo.FormaPagamento;
 import model.vo.ItemProduto;
 import model.vo.ItemRemedio;
 import model.vo.Mercadoria;
@@ -34,5 +35,9 @@ public class ControllerVenda {
 	public void gerarRelatorio(List<Venda> vendasConsultadas, String caminhoEscolhido, String tipoRelatorioXls) {
 		vendaBO.gerarPlanilha(vendasConsultadas, caminhoEscolhido);
 
+	}
+
+	public List<FormaPagamento> consultarFormaPagamento() {
+		return vendaBO.consultarFormaPagamento();
 	}
 }

@@ -295,7 +295,7 @@ public class VendaDAO {
 
 		ArrayList<FormaPagamento> listaFormaPagamento = new ArrayList<FormaPagamento>();
 
-		String query = "SELECT * FROM FORMA_PAGAMENTO";
+		String query = "SELECT * FROM FORMA_PGTO";
 		try {
 			resultado = stmt.executeQuery(query);
 			while (resultado.next()) {

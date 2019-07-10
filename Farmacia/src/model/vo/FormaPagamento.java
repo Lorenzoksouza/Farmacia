@@ -32,4 +32,9 @@ public class FormaPagamento {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public String toString() {
+		return Descricao;
+	}
+
 }

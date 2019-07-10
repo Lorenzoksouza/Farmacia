@@ -29,6 +29,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.ControllerVenda;
 import model.seletor.MercadoriaSeletor;
+import model.vo.FormaPagamento;
 import model.vo.ItemMercadoria;
 import model.vo.ItemProduto;
 import model.vo.ItemRemedio;
@@ -64,6 +65,8 @@ public class TelaVenda extends JInternalFrame {
 	private JLabel lbMax;
 	private int paginaTotal = 1;
 	private JButton btnProximo;
+	private JComboBox cmbFormaPagamento;
+	private List<FormaPagamento> listaFormaPagamento;
 
 	/**
 	 * Launch the application.
@@ -329,9 +332,16 @@ public class TelaVenda extends JInternalFrame {
 		btnConcluirVenda.setBorder(new LineBorder(Color.gray, 2, true));
 		getContentPane().add(btnConcluirVenda, "cell 2 12,alignx center");
 
-		JComboBox cmbFormaPagamento = new JComboBox();
+		this.consultarFormaPagamento();
+		cmbFormaPagamento = new JComboBox(listaFormaPagamento.toArray());
+		cmbFormaPagamento.setSelectedIndex(-1);
 		getContentPane().add(cmbFormaPagamento, "cell 2 11,alignx right");
 
+	}
+
+	private void consultarFormaPagamento() {
+		ControllerVenda vendaController = new ControllerVenda();
+		listaFormaPagamento = vendaController.consultarFormaPagamento();
 	}
 
 	protected void addEstoque(ItemMercadoria mercadoriaSelecionada, int qtd) {
