@@ -13,12 +13,6 @@ public class ControllerUsuario {
 		return mensagem;
 	}
 
-	private String modificarStatus(Usuario usuario) {
-		String mensagem = "";
-		mensagem = usuarioBO.modificarStatus(usuario);
-		return mensagem;
-	}
-
 	public boolean validarUsuario() {
 		if (usuarioBO.validarUsuario()) {
 			return true;

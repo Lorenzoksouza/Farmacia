@@ -9,14 +9,9 @@ public class UsuarioBO {
 
 	public String salvarUsuario(Usuario usuario) {
 		String mensagem = "";
+		mensagem = usuarioDAO.salvarUsuario(usuario);
 
-		return usuarioDAO.salvarUsuario(usuario);
-	}
-
-	public String modificarStatus(Usuario usuario) {
-		String mensagem = "";
-
-		return usuarioDAO.modificarStatus(usuario);
+		return mensagem;
 	}
 
 	public boolean validarUsuario() {
