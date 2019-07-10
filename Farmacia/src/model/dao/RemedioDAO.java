@@ -18,8 +18,8 @@ public class RemedioDAO {
 
 	public String inserir(Remedio r) {
 		String mensagem = "";
-		String sql = "INSERT INTO REMEDIO(COD_BARRA, DOSAGEM, COMPOSICAO, GENERICO, NM_REMEDIO, DT_CADASTRO, PRECO, ESTOQUE, ID_FORMA_USO, ID_LABORATORIO)"
-				+ " VALUES (?,?,?,?,?,NOW(),?,?,?,?)";
+		String sql = "INSERT INTO REMEDIO(COD_BARRA, DOSAGEM, COMPOSICAO, GENERICO, NM_REMEDIO, DT_CADASTRO, PRECO, PRECO_CUSTO, ESTOQUE, ID_FORMA_USO, ID_LABORATORIO)"
+				+ " VALUES (?,?,?,?,?,NOW(),?,?,?,?,?)";
 
 		Connection conn = Banco.getConnection();
 		PreparedStatement prepStmt = Banco.getPreparedStatement(conn, sql, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -30,9 +30,10 @@ public class RemedioDAO {
 			prepStmt.setBoolean(4, r.isGenerico());
 			prepStmt.setString(5, r.getNome());
 			prepStmt.setDouble(6, r.getPrecoVenda());
-			prepStmt.setInt(7, r.getEstoque());
-			prepStmt.setInt(8, r.getFormaUso().getIdFormaUso());
-			prepStmt.setInt(9, r.getLaboratorio().getIdLaboratorio());
+			prepStmt.setDouble(7, r.getPrecoCusto());
+			prepStmt.setInt(8, r.getEstoque());
+			prepStmt.setInt(9, r.getFormaUso().getIdFormaUso());
+			prepStmt.setInt(10, r.getLaboratorio().getIdLaboratorio());
 
 			prepStmt.execute();
 
@@ -47,7 +48,7 @@ public class RemedioDAO {
 
 	public String atualizar(Remedio r) {
 		String mensagem = "";
-		String sql = "UPDATE REMEDIO R SET DOSAGEM =?, COMPOSICAO=?, GENERICO=?, NM_REMEDIO=?, PRECO=?, ESTOQUE=?, ID_FORMA_USO=?, ID_LABORATORIO=? WHERE R.COD_BARRA= ? ";
+		String sql = "UPDATE REMEDIO R SET DOSAGEM =?, COMPOSICAO=?, GENERICO=?, NM_REMEDIO=?, PRECO=?, PRECO_CUSTO=?, ESTOQUE=?, ID_FORMA_USO=?, ID_LABORATORIO=? WHERE R.COD_BARRA= ? ";
 
 		Connection conn = Banco.getConnection();
 		PreparedStatement prepStmt = Banco.getPreparedStatement(conn, sql, Statement.RETURN_GENERATED_KEYS);
@@ -58,10 +59,11 @@ public class RemedioDAO {
 			prepStmt.setBoolean(3, r.isGenerico());
 			prepStmt.setString(4, r.getNome());
 			prepStmt.setDouble(5, r.getPrecoVenda());
-			prepStmt.setInt(6, consultarEstoque(r) + r.getEstoque());
-			prepStmt.setInt(7, r.getFormaUso().getIdFormaUso());
-			prepStmt.setInt(8, r.getLaboratorio().getIdLaboratorio());
-			prepStmt.setString(9, r.getCodBarra());
+			prepStmt.setDouble(6, r.getPrecoCusto());
+			prepStmt.setInt(7, consultarEstoque(r) + r.getEstoque());
+			prepStmt.setInt(8, r.getFormaUso().getIdFormaUso());
+			prepStmt.setInt(9, r.getLaboratorio().getIdLaboratorio());
+			prepStmt.setString(10, r.getCodBarra());
 
 			prepStmt.execute();
 
@@ -104,7 +106,7 @@ public class RemedioDAO {
 	}
 
 	public List<Remedio> listarComSeletor(RemedioSeletor seletor) {
-		String sql = " SELECT R.COD_BARRA, R.DOSAGEM, R.COMPOSICAO, R.GENERICO, R.NM_REMEDIO, R.DT_CADASTRO, R.PRECO, R.ESTOQUE,FU.ID_FORMA_USO, FU.DESCRICAO, L.ID_LABORATORIO, L.NM_LABORATORIO "
+		String sql = " SELECT R.COD_BARRA, R.DOSAGEM, R.COMPOSICAO, R.GENERICO, R.NM_REMEDIO, R.DT_CADASTRO, R.PRECO, R.PRECO_CUSTO, R.ESTOQUE,FU.ID_FORMA_USO, FU.DESCRICAO, L.ID_LABORATORIO, L.NM_LABORATORIO "
 				+ " FROM REMEDIO R JOIN FORMA_USO FU ON R.ID_FORMA_USO = FU.ID_FORMA_USO"
 				+ " JOIN LABORATORIO L ON R.ID_LABORATORIO = L.ID_LABORATORIO ";
 
