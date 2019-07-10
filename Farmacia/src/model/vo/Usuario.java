@@ -4,12 +4,21 @@ import java.sql.Date;
 
 public class Usuario {
 
+	private int id;
 	private String nome;
 	private String login;
 	private String senha;
 	private Date dt_cadastro;
 	private boolean ativo;
-	private int nivel;
+	private Nivel nivel;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getNome() {
 		return nome;
@@ -51,16 +60,17 @@ public class Usuario {
 		this.ativo = ativo;
 	}
 
-	public int getNivel() {
+	public Nivel getNivel() {
 		return nivel;
 	}
 
-	public void setNivel(int nivel) {
+	public void setNivel(Nivel nivel) {
 		this.nivel = nivel;
 	}
 
-	public Usuario(String nome, String login, String senha, Date dt_cadastro, boolean ativo, int nivel) {
+	public Usuario(int id, String nome, String login, String senha, Date dt_cadastro, boolean ativo, Nivel nivel) {
 		super();
+		this.id = id;
 		this.nome = nome;
 		this.login = login;
 		this.senha = senha;
@@ -73,5 +83,4 @@ public class Usuario {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
 }

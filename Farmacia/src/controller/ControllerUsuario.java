@@ -27,4 +27,9 @@ public class ControllerUsuario {
 		}
 	}
 
+	public Usuario consultarUsuario() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

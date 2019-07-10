@@ -27,6 +27,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
+import model.vo.Usuario;
 import net.miginfocom.swing.MigLayout;
 
 public class Menu extends JFrame {
@@ -43,6 +44,7 @@ public class Menu extends JFrame {
 	TelaVenda telaVenda = null;
 	ListagemVenda listagemVenda = null;
 	TelaSobre telaSobre = null;
+	Usuario usuario;
 
 	/**
 	 * Launch the application.
@@ -51,7 +53,7 @@ public class Menu extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Menu menu = new Menu();
+					Menu menu = new Menu(null);
 					menu.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -62,8 +64,10 @@ public class Menu extends JFrame {
 
 	/**
 	 * Create the application.
+	 * 
+	 * @param usuario
 	 */
-	public Menu() {
+	public Menu(Usuario usuario) {
 		setTitle("NOAH PHARMACY");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/icons/logo.png")));
 		initialize();
@@ -318,6 +322,15 @@ public class Menu extends JFrame {
 		menuBar.add(menuSpace3);
 
 		menuBar.add(mnSobre);
+
+		switch (usuario.getNivel().getId()) {
+		case 1:
+
+		case 2:
+
+		case 3:
+
+		}
 	}
 
 	public boolean temComponenteNaTela(Object frame) {

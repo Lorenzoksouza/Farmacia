@@ -10,19 +10,21 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controller.ControllerUsuario;
+import model.vo.Usuario;
 import net.miginfocom.swing.MigLayout;
 
 public class Login extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JPasswordField passwordField;
+	private JTextField txtLogin;
+	private JPasswordField txtSenha;
 
 	/**
 	 * Launch the application.
@@ -60,25 +62,29 @@ public class Login extends JFrame {
 		lblLogin.setFont(new Font("Tahoma", Font.PLAIN, 21));
 		contentPane.add(lblLogin, "cell 2 1");
 
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 21));
-		contentPane.add(textField, "cell 4 1,growx");
-		textField.setColumns(10);
+		txtLogin = new JTextField();
+		txtLogin.setFont(new Font("Tahoma", Font.PLAIN, 21));
+		contentPane.add(txtLogin, "cell 4 1,growx");
+		txtLogin.setColumns(10);
 
 		JLabel lblSenha = new JLabel("Senha:");
 		lblSenha.setFont(new Font("Tahoma", Font.PLAIN, 21));
 		contentPane.add(lblSenha, "cell 2 3");
 
-		passwordField = new JPasswordField();
-		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 21));
-		contentPane.add(passwordField, "cell 4 3,growx");
+		txtSenha = new JPasswordField();
+		txtSenha.setFont(new Font("Tahoma", Font.PLAIN, 21));
+		contentPane.add(txtSenha, "cell 4 3,growx");
 
 		JButton btnEntrar = new JButton("Entrar");
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ControllerUsuario usuarioController = new ControllerUsuario();
 				if (usuarioController.validarUsuario()) {
-
+					Usuario usuario = usuarioController.consultarUsuario();
+					Menu menu = new Menu(usuario);
+					menu.setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(null, "Usuario invalido, tente novamente");
 				}
 			}
 		});
