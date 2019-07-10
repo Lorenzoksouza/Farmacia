@@ -97,7 +97,7 @@ public class ListagemProduto extends JInternalFrame {
 		tblProdutos.setColumnSelectionAllowed(true);
 		tblProdutos.setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		tblProdutos.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Código", "Nome", "Preço", "Categoria", "Estoque" }));
+				new String[] { "Código", "Nome", "Preço venda", "Preço custo", "Categoria", "Estoque" }));
 		getContentPane().add(tblProdutos, "cell 2 0 1 12,grow");
 
 		txtCodBar = new JTextField();
@@ -332,17 +332,17 @@ public class ListagemProduto extends JInternalFrame {
 	private void atualizarTabelaProdutos(List<Produto> produtos) {
 		produtosConsultados = produtos;
 
-		tblProdutos.setModel(
-				new DefaultTableModel(new String[][] { { "Código", "Nome", "Preço", "Categoria", "Estoque" }, },
-						new String[] { "Código", "Nome", "Preço", "Categoria", "Estoque" }));
+		tblProdutos.setModel(new DefaultTableModel(
+				new String[][] { { "Código", "Nome", "Preço venda", "Preço custo", "Categoria", "Estoque" }, },
+				new String[] { "Código", "Nome", "Preço venda", "Preço custo", "Categoria", "Estoque" }));
 
 		DefaultTableModel modelo = (DefaultTableModel) tblProdutos.getModel();
 		DecimalFormat format = new DecimalFormat("0.00");
 		for (Produto produto : produtos) {
 
 			String[] novaLinha = new String[] { produto.getCodBarra() + "", produto.getNome(),
-					"R$" + format.format(produto.getPrecoVenda()) + "", produto.getCategoria().getNomeCategoria(),
-					produto.getEstoque() + "" };
+					"R$" + format.format(produto.getPrecoVenda()), "R$" + format.format(produto.getPrecoCusto()),
+					produto.getCategoria().getNomeCategoria(), produto.getEstoque() + "" };
 			modelo.addRow(novaLinha);
 		}
 	}
