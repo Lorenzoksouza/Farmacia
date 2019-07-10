@@ -31,7 +31,7 @@ import util.JTextFieldLimit;
 
 public class CadastroProduto extends JInternalFrame {
 	private JTextField txtNome;
-	private JNumberFormatField txtPreco;
+	private JNumberFormatField txtPrecoVenda;
 	private JTextField txtEstoque;
 	private JTextField txtCodBar;
 	private JComboBox<Categoria> cmbCategoria;
@@ -84,10 +84,10 @@ public class CadastroProduto extends JInternalFrame {
 
 		// Pre�o
 
-		txtPreco = new JNumberFormatField(2);
+		txtPrecoVenda = new JNumberFormatField(2);
 
-		getContentPane().add(txtPreco, "flowx,cell 0 6,alignx left");
-		txtPreco.setColumns(10);
+		getContentPane().add(txtPrecoVenda, "flowx,cell 0 6,alignx left");
+		txtPrecoVenda.setColumns(10);
 
 		// Nome
 
@@ -160,8 +160,8 @@ public class CadastroProduto extends JInternalFrame {
 					Produto produto = new Produto();
 					produto.setCodBarra(txtCodBar.getText());
 					produto.setNome(txtNome.getText());
-					produto.setPrecoVenda(Double.parseDouble(txtPreco.getText().replace(",", ".")));
-
+					produto.setPrecoVenda(Double.parseDouble(txtPrecoVenda.getText().replace(",", ".")));
+					produto.setPrecoCusto(Double.parseDouble(txtPrecoCusto.getText().replace(",", ".")));
 					try {
 						produto.setEstoque(Integer.parseInt(txtEstoque.getText().trim()));
 					} catch (NumberFormatException e) {
@@ -227,7 +227,7 @@ public class CadastroProduto extends JInternalFrame {
 	public void limparCampos() {
 		txtNome.setText("");
 		txtCodBar.setText("");
-		txtPreco.setText("");
+		txtPrecoVenda.setText("");
 		txtEstoque.setText("");
 		cmbCategoria.setSelectedIndex(-1);
 	}
@@ -236,7 +236,7 @@ public class CadastroProduto extends JInternalFrame {
 		txtNome.setText(produto.getNome());
 		txtCodBar.setText(produto.getCodBarra());
 		DecimalFormat format = new DecimalFormat("0.00");
-		txtPreco.setText(format.format(produto.getPrecoVenda()) + "");
+		txtPrecoVenda.setText(format.format(produto.getPrecoVenda()) + "");
 		txtEstoque.setText(produto.getEstoque() + "");
 
 		Optional<Categoria> categoriaSelecionado = listaCategorias.stream()

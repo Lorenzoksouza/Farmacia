@@ -39,7 +39,7 @@ public class CadastroMedicamento extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private JTextField txtNome;
 	private JTextField txtCodBar;
-	private JNumberFormatField txtPreco;
+	private JNumberFormatField txtPrecoVenda;
 	private JTextField txtComposicao;
 	private JTextField txtDosagem;
 	private JTextField txtEstoque;
@@ -208,7 +208,8 @@ public class CadastroMedicamento extends JInternalFrame {
 					Remedio remedio = new Remedio();
 					remedio.setNome(txtNome.getText());
 					remedio.setCodBarra(txtCodBar.getText());
-					remedio.setPrecoVenda(Double.parseDouble(txtPreco.getText().replace(",", ".")));
+					remedio.setPrecoVenda(Double.parseDouble(txtPrecoVenda.getText().replace(",", ".")));
+					remedio.setPrecoCusto(Double.parseDouble(txtPrecoCusto.getText().replace(",", ".")));
 					remedio.setComposicao(txtComposicao.getText());
 					remedio.setDosagem(txtDosagem.getText());
 
@@ -262,9 +263,9 @@ public class CadastroMedicamento extends JInternalFrame {
 		JLabel lblNewLabel = new JLabel("");
 		getContentPane().add(lblNewLabel, "cell 0 5,growx");
 
-		txtPreco = new JNumberFormatField(2);
-		getContentPane().add(txtPreco, "cell 0 5,alignx right");
-		txtPreco.setColumns(10);
+		txtPrecoVenda = new JNumberFormatField(2);
+		getContentPane().add(txtPrecoVenda, "cell 0 5,alignx right");
+		txtPrecoVenda.setColumns(10);
 
 		JLabel lblNewLabel_1 = new JLabel("");
 		getContentPane().add(lblNewLabel_1, "cell 0 4,growx");
@@ -296,7 +297,8 @@ public class CadastroMedicamento extends JInternalFrame {
 	public void limparCampos() {
 		txtNome.setText("");
 		txtCodBar.setText("");
-		txtPreco.setText("");
+		txtPrecoVenda.setText("");
+		txtPrecoCusto.setText("");
 		txtComposicao.setText("");
 		txtDosagem.setText("");
 		txtEstoque.setText("");
@@ -310,7 +312,8 @@ public class CadastroMedicamento extends JInternalFrame {
 		txtNome.setText(remedio.getNome());
 		txtDosagem.setText(remedio.getDosagem());
 		DecimalFormat format = new DecimalFormat("0.00");
-		txtPreco.setText(format.format(remedio.getPrecoVenda()) + "");
+		txtPrecoVenda.setText(format.format(remedio.getPrecoVenda()) + "");
+		txtPrecoCusto.setText(format.format(remedio.getPrecoCusto()) + "");
 		txtComposicao.setText(remedio.getComposicao());
 
 		// Usando calculo Lambda ;)
