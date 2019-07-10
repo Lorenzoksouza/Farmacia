@@ -65,4 +65,8 @@ public class VendaBO {
 	public ArrayList<FormaPagamento> consultarFormaPagamento() {
 		return vendaDAO.consultarFormaPagamento();
 	}
+
+	public String cancelarVenda() {
+		return vendaDAO.cancelarVenda();
+	}
 }

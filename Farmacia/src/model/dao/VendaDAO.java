@@ -316,4 +316,9 @@ public class VendaDAO {
 		return listaFormaPagamento;
 	}
 
+	public String cancelarVenda() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
