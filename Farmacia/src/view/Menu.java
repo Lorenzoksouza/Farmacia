@@ -323,13 +323,15 @@ public class Menu extends JFrame {
 
 		menuBar.add(mnSobre);
 
-		switch (usuario.getNivel().getId()) {
-		case 1:
+		if (usuario != null) {
+			switch (usuario.getNivel().getId()) {
+			case 1:
 
-		case 2:
+			case 2:
 
-		case 3:
+			case 3:
 
+			}
 		}
 	}
 
