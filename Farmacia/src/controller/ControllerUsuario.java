@@ -10,11 +10,12 @@ public class ControllerUsuario {
 	private String salvarUsuario(Usuario usuario) {
 		String mensagem = "";
 		mensagem = usuarioBO.salvarUsuario(usuario);
+
 		return mensagem;
 	}
 
-	public boolean validarUsuario() {
-		if (usuarioBO.validarUsuario()) {
+	public boolean validarUsuario(String login, String senha) {
+		if (usuarioBO.validarUsuario(login, senha)) {
 			return true;
 		} else {
 			return false;
