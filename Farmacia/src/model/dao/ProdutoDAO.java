@@ -17,8 +17,8 @@ public class ProdutoDAO {
 
 	public String inserir(Produto p) {
 		String mensagem = "";
-		String sql = "INSERT INTO PRODUTO(COD_BARRA, NM_PRODUTO, DT_CADASTRO, PRECO, ESTOQUE,ID_CATEGORIA)"
-				+ " VALUES (?,?,NOW(),?,?,?)";
+		String sql = "INSERT INTO PRODUTO(COD_BARRA, NM_PRODUTO, DT_CADASTRO, PRECO, PRECO_CUSTO, ESTOQUE,ID_CATEGORIA)"
+				+ " VALUES (?,?,NOW(),?,?,?,?)";
 
 		Connection conn = Banco.getConnection();
 		PreparedStatement prepStmt = Banco.getPreparedStatement(conn, sql, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -26,8 +26,9 @@ public class ProdutoDAO {
 			prepStmt.setString(1, p.getCodBarra());
 			prepStmt.setString(2, p.getNome());
 			prepStmt.setDouble(3, p.getPrecoVenda());
-			prepStmt.setInt(4, p.getEstoque());
-			prepStmt.setInt(5, p.getCategoria().getIdCategoria());
+			prepStmt.setDouble(4, p.getPrecoCusto());
+			prepStmt.setInt(5, p.getEstoque());
+			prepStmt.setInt(6, p.getCategoria().getIdCategoria());
 
 			prepStmt.execute();
 
@@ -42,7 +43,7 @@ public class ProdutoDAO {
 
 	public String atualizar(Produto p) {
 		String mensagem = "";
-		String sql = "UPDATE PRODUTO R SET NM_PRODUTO = ?, DT_CADASTRO = ?, PRECO = ?, ESTOQUE = ?, ID_CATEGORIA = ?"
+		String sql = "UPDATE PRODUTO R SET NM_PRODUTO = ?, DT_CADASTRO = ?, PRECO = ?, PRECO_CUSTO = ?, ESTOQUE = ?, ID_CATEGORIA = ?"
 				+ " WHERE R.COD_BARRA = ?";
 
 		Connection conn = Banco.getConnection();
@@ -52,9 +53,10 @@ public class ProdutoDAO {
 			prepStmt.setString(1, p.getNome());
 			prepStmt.setDate(2, (Date) p.getDataCadastro());
 			prepStmt.setDouble(3, p.getPrecoVenda());
-			prepStmt.setInt(4, consultarEstoque(p) + p.getEstoque());
-			prepStmt.setInt(5, p.getCategoria().getIdCategoria());
-			prepStmt.setString(6, p.getCodBarra());
+			prepStmt.setDouble(4, p.getPrecoCusto());
+			prepStmt.setInt(5, consultarEstoque(p) + p.getEstoque());
+			prepStmt.setInt(6, p.getCategoria().getIdCategoria());
+			prepStmt.setString(7, p.getCodBarra());
 
 			prepStmt.execute();
 
@@ -96,7 +98,7 @@ public class ProdutoDAO {
 	}
 
 	public List<Produto> listarComSeletor(ProdutoSeletor seletor) {
-		String sql = " SELECT P.COD_BARRA, P.NM_PRODUTO, P.DT_CADASTRO, P.PRECO, P.ESTOQUE, C.ID_CATEGORIA, C.NM_CATEGORIA "
+		String sql = " SELECT P.COD_BARRA, P.NM_PRODUTO, P.DT_CADASTRO, P.PRECO, P.PRECO_CUSTO, P.ESTOQUE, C.ID_CATEGORIA, C.NM_CATEGORIA "
 				+ " FROM PRODUTO P JOIN CATEGORIA C ON P.ID_CATEGORIA = C.ID_CATEGORIA";
 
 		if (seletor.temFiltro()) {
@@ -166,6 +168,7 @@ public class ProdutoDAO {
 			p.setNome(result.getString("NM_PRODUTO"));
 			p.setDataCadastro(result.getDate("DT_CADASTRO"));
 			p.setPrecoVenda(result.getDouble("PRECO"));
+			p.setPrecoCusto(result.getDouble("PRECO_CUSTO"));
 			p.setEstoque(result.getInt("ESTOQUE"));
 			c.setIdCategoria(result.getInt("ID_CATEGORIA"));
 			c.setNomeCategoria(result.getString("NM_CATEGORIA"));

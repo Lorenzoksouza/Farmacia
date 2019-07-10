@@ -201,6 +201,7 @@ public class RemedioDAO {
 			// TODO converter java.sql.Date para java.util.Date
 			r.setDataCadastro(result.getDate("DT_CADASTRO"));
 			r.setPrecoVenda(result.getDouble("PRECO"));
+			r.setPrecoCusto(result.getDouble("PRECO_CUSTO"));
 
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			String hora = sdf.format(r.getDataCadastro());
