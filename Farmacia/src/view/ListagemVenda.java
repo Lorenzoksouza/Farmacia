@@ -251,6 +251,12 @@ public class ListagemVenda extends JInternalFrame {
 		getContentPane().add(cmbCancelada, "cell 0 1");
 
 		JButton btnCancelarVenda = new JButton("Cancelar Venda");
+		btnCancelarVenda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ControllerVenda vendaController = new ControllerVenda();
+				String mensagem = vendaController.cancelarVenda();
+			}
+		});
 		btnCancelarVenda.setForeground(Color.RED);
 		btnCancelarVenda.setBorder(new LineBorder(Color.gray, 2, true));
 		btnCancelarVenda.setFont(new Font("Tahoma", Font.BOLD, 11));

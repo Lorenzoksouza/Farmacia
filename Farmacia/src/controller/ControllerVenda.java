@@ -40,4 +40,8 @@ public class ControllerVenda {
 	public List<FormaPagamento> consultarFormaPagamento() {
 		return vendaBO.consultarFormaPagamento();
 	}
+
+	public String cancelarVenda() {
+		return vendaBO.cancelarVenda();
+	}
 }
