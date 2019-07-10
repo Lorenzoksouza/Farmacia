@@ -50,6 +50,7 @@ public class CadastroMedicamento extends JInternalFrame {
 	private ArrayList<FormaUso> listaFormasUso;
 	protected Scanner teclado = new Scanner(System.in);
 	private Remedio remedio;
+	private JTextField txtPrecoCusto;
 
 	/**
 	 * Launch the application.
@@ -117,20 +118,20 @@ public class CadastroMedicamento extends JInternalFrame {
 		getContentPane().add(lblValidacaoTxtCodBar, "cell 2 3,alignx left");
 
 		JLabel lblDosagem = new JLabel("Dosagem:");
-		getContentPane().add(lblDosagem, "cell 0 4");
+		getContentPane().add(lblDosagem, "flowx,cell 0 4");
 
-		JLabel lblPreco = new JLabel("Pre\u00E7o:");
-		getContentPane().add(lblPreco, "cell 2 4");
+		JLabel lblPreoDeCusto = new JLabel("Preço de custo:");
+		getContentPane().add(lblPreoDeCusto, "cell 2 4");
 
 		txtDosagem = new JTextField();
 		txtDosagem.setDocument(new JTextFieldLimit(15));
 
-		getContentPane().add(txtDosagem, "cell 0 5,alignx left");
+		getContentPane().add(txtDosagem, "flowx,cell 0 5,alignx left");
 		txtDosagem.setColumns(10);
 
-		txtPreco = new JNumberFormatField(2);
-		getContentPane().add(txtPreco, "cell 2 5,growx");
-		txtPreco.setColumns(10);
+		txtPrecoCusto = new JNumberFormatField(2);
+		getContentPane().add(txtPrecoCusto, "cell 2 5,growx");
+		txtPrecoCusto.setColumns(10);
 
 		JLabel lblValidacaoTxtDosagem = new JLabel(" ");
 		lblValidacaoTxtDosagem.setForeground(Color.RED);
@@ -257,6 +258,19 @@ public class CadastroMedicamento extends JInternalFrame {
 		lblAlteraoGeraSoma.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		lblAlteraoGeraSoma.setForeground(Color.RED);
 		getContentPane().add(lblAlteraoGeraSoma, "cell 0 10");
+
+		JLabel lblNewLabel = new JLabel("");
+		getContentPane().add(lblNewLabel, "cell 0 5,growx");
+
+		txtPreco = new JNumberFormatField(2);
+		getContentPane().add(txtPreco, "cell 0 5,alignx right");
+		txtPreco.setColumns(10);
+
+		JLabel lblNewLabel_1 = new JLabel("");
+		getContentPane().add(lblNewLabel_1, "cell 0 4,growx");
+
+		JLabel lblPreco = new JLabel("Preço:                          ");
+		getContentPane().add(lblPreco, "cell 0 4");
 
 		if (remedioSelecionado != null) {
 			this.remedio = remedioSelecionado;

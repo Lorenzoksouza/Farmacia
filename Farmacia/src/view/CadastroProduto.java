@@ -37,6 +37,7 @@ public class CadastroProduto extends JInternalFrame {
 	private JComboBox<Categoria> cmbCategoria;
 	private ArrayList<Categoria> listaCategorias;
 	private Produto produto;
+	private JTextField txtPrecoCusto;
 
 	/**
 	 * Launch the application.
@@ -85,7 +86,7 @@ public class CadastroProduto extends JInternalFrame {
 
 		txtPreco = new JNumberFormatField(2);
 
-		getContentPane().add(txtPreco, "cell 0 6,alignx left");
+		getContentPane().add(txtPreco, "flowx,cell 0 6,alignx left");
 		txtPreco.setColumns(10);
 
 		// Nome
@@ -193,6 +194,19 @@ public class CadastroProduto extends JInternalFrame {
 
 		JLabel lblPreco = new JLabel("Pre\u00E7o:");
 		getContentPane().add(lblPreco, "flowx,cell 0 5");
+
+		JLabel label = new JLabel("                        ");
+		getContentPane().add(label, "cell 0 5");
+
+		JLabel lblNewLabel = new JLabel("Preço de custo:");
+		getContentPane().add(lblNewLabel, "cell 0 5");
+
+		JLabel label_1 = new JLabel("            ");
+		getContentPane().add(label_1, "cell 0 6");
+
+		txtPrecoCusto = new JNumberFormatField(2);
+		getContentPane().add(txtPrecoCusto, "cell 0 6");
+		txtPrecoCusto.setColumns(10);
 
 		if (produtoSelecionado != null) {
 			this.produto = produtoSelecionado;
