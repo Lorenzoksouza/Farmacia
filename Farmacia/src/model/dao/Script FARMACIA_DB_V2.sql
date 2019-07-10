@@ -95,7 +95,6 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `FARMACIA_DB`.`FORMA_PGTO` (
   `ID_FORMA_PGTO` INT NOT NULL AUTO_INCREMENT,
   `DESCRICAO` VARCHAR(45) NULL,
-  `ATIVO` TINYINT NULL,
   PRIMARY KEY (`ID_FORMA_PGTO`))
 ENGINE = InnoDB;
 
@@ -280,3 +279,13 @@ VALUES('ATENDENTE');
 
 INSERT INTO `farmacia_db`.`usuario`(`NOME`,`DT_CADASTRO`,`LOGIN`,`SENHA`,`ID_NIVEL`)
 VALUES('Administrador',NOW(),'admin','1234',1);
+
+INSERT INTO `farmacia_db`.`forma_pgto`(`DESCRICAO`)
+VALUES('Débito');
+
+INSERT INTO `farmacia_db`.`forma_pgto`(`DESCRICAO`)
+VALUES('Crédito');
+
+INSERT INTO `farmacia_db`.`forma_pgto`(`DESCRICAO`)
+VALUES('Dinheiro');
+
