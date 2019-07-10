@@ -85,7 +85,7 @@ public class ListagemMedicamento extends JInternalFrame {
 		getContentPane().setBackground(Color.WHITE);
 		setTitle("Pesquisa de medicamentos");
 		setClosable(true);
-		setBounds(100, 100, 680, 540);
+		setBounds(100, 100, 1400, 540);
 		getContentPane()
 				.setLayout(new MigLayout("", "[211.00][][grow]", "[][][][][][][][][][][10px:n][][10px:n][][][grow][]"));
 

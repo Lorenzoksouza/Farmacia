@@ -83,7 +83,7 @@ public class ListagemProduto extends JInternalFrame {
 		setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		setTitle("Pesquisa de produtos");
 		setClosable(true);
-		setBounds(100, 100, 680, 540);
+		setBounds(100, 100, 900, 540);
 		getContentPane()
 				.setLayout(new MigLayout("", "[211.00][][grow]", "[18.00][][][][][][8px:n][][10px:n][][][grow][]"));
 
