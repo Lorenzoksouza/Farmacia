@@ -395,9 +395,9 @@ public class ListagemMedicamento extends JInternalFrame {
 		// Limpa a tabela
 		tblRemedios.setModel(new DefaultTableModel(
 				new String[][] { { "Código de Barras", "Dosagem", "Composição", "Genérico", "Nome", "Data Cad.",
-						"Preço venda", "Preço custo", "Estoque", "Forma Uso", "Laboratório" }, },
+						"Preço venda", "Preço custo", "Lucro", "Estoque", "Forma Uso", "Laboratório" }, },
 				new String[] { "Código de Barras", "Dosagem", "Composição", "Genérico", "Nome", "Data Cad.",
-						"Preço venda", "Preço custo", "Estoque", "Forma Uso", "Laboratório" }));
+						"Preço venda", "Preço custo", "Lucro", "Estoque", "Forma Uso", "Laboratório" }));
 
 		DefaultTableModel modelo = (DefaultTableModel) tblRemedios.getModel();
 
@@ -418,8 +418,8 @@ public class ListagemMedicamento extends JInternalFrame {
 			String[] novaLinha = new String[] { remedio.getCodBarra() + "", remedio.getDosagem(),
 					remedio.getComposicao(), generico, remedio.getNome(), sdf.format(remedio.getDataCadastro()),
 					"R$" + format.format(remedio.getPrecoVenda()), "R$" + format.format(remedio.getPrecoCusto()),
-					"" + remedio.getEstoque(), remedio.getFormaUso().getDescricao(),
-					remedio.getLaboratorio().getNomeLaboratorio() };
+					"R$" + (remedio.getPrecoVenda() - remedio.getPrecoCusto()), "" + remedio.getEstoque(),
+					remedio.getFormaUso().getDescricao(), remedio.getLaboratorio().getNomeLaboratorio() };
 			modelo.addRow(novaLinha);
 		}
 	}

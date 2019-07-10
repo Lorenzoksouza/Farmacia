@@ -333,8 +333,8 @@ public class ListagemProduto extends JInternalFrame {
 		produtosConsultados = produtos;
 
 		tblProdutos.setModel(new DefaultTableModel(
-				new String[][] { { "Código", "Nome", "Preço venda", "Preço custo", "Categoria", "Estoque" }, },
-				new String[] { "Código", "Nome", "Preço venda", "Preço custo", "Categoria", "Estoque" }));
+				new String[][] { { "Código", "Nome", "Preço venda", "Preço custo", "Lucro", "Categoria", "Estoque" }, },
+				new String[] { "Código", "Nome", "Preço venda", "Preço custo", "Lucro", "Categoria", "Estoque" }));
 
 		DefaultTableModel modelo = (DefaultTableModel) tblProdutos.getModel();
 		DecimalFormat format = new DecimalFormat("0.00");
@@ -342,6 +342,7 @@ public class ListagemProduto extends JInternalFrame {
 
 			String[] novaLinha = new String[] { produto.getCodBarra() + "", produto.getNome(),
 					"R$" + format.format(produto.getPrecoVenda()), "R$" + format.format(produto.getPrecoCusto()),
+					"R$" + (produto.getPrecoVenda() - produto.getPrecoCusto()),
 					produto.getCategoria().getNomeCategoria(), produto.getEstoque() + "" };
 			modelo.addRow(novaLinha);
 		}

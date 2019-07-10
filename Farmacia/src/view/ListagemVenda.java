@@ -20,6 +20,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
@@ -255,6 +256,7 @@ public class ListagemVenda extends JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				ControllerVenda vendaController = new ControllerVenda();
 				String mensagem = vendaController.cancelarVenda();
+				JOptionPane.showMessageDialog(null, mensagem);
 			}
 		});
 		btnCancelarVenda.setForeground(Color.RED);
