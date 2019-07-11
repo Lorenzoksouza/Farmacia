@@ -219,6 +219,15 @@ public class TelaVenda extends JInternalFrame {
 		getContentPane().add(lblDesconto, "flowx,cell 2 10");
 
 		txtDesconto = new JNumberFormatField(2);
+		txtDesconto.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				valorTotal = valorTotal - Double.parseDouble(txtDesconto.getText().toString().replace(",", "."));
+				DecimalFormat df = new DecimalFormat("0.#####");
+				String dx = df.format(valorTotal);
+				lblValor.setText("R$" + dx);
+			}
+		});
 		txtDesconto.setForeground(Color.GREEN);
 		txtDesconto.setFont(new Font("Tahoma", Font.BOLD, 11));
 		getContentPane().add(txtDesconto, "cell 2 10");
