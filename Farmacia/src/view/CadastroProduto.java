@@ -212,6 +212,7 @@ public class CadastroProduto extends JInternalFrame {
 			this.produto = produtoSelecionado;
 			this.preencherCampos();
 			this.bloquearCamposEdicao();
+			this.setTitle("Alterar Produto");
 		}
 	}
 
