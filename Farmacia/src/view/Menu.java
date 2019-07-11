@@ -296,7 +296,7 @@ public class Menu extends JFrame {
 		JMenu mnSobre = new JMenu("Sobre");
 		mnSobre.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
 		mnSobre.setBackground(Color.LIGHT_GRAY);
-		mnSobre.setIcon(new ImageIcon(Menu.class.getResource("/icons/network.png")));
+		mnSobre.setIcon(new ImageIcon(Menu.class.getResource("/icons/info.png")));
 		mnSobre.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
 				if (!temComponenteNaTela(telaSobre)) {
@@ -320,6 +320,22 @@ public class Menu extends JFrame {
 		JMenu menuSpace3 = new JMenu("  ");
 		menuSpace3.setEnabled(false);
 		menuBar.add(menuSpace3);
+
+		JMenu mnUsuario = new JMenu("Usuário");
+		mnUsuario.setIcon(new ImageIcon(Menu.class.getResource("/icons/network.png")));
+		menuBar.add(mnUsuario);
+
+		JMenuItem mntmCadastrar = new JMenuItem("Cadastrar");
+		mntmCadastrar.setIcon(new ImageIcon(Menu.class.getResource("/icons/espaco.png")));
+		mnUsuario.add(mntmCadastrar);
+
+		JMenuItem mntmListar = new JMenuItem("Listar");
+		mntmListar.setIcon(new ImageIcon(Menu.class.getResource("/icons/espaco.png")));
+		mnUsuario.add(mntmListar);
+
+		JMenu menu = new JMenu("  ");
+		menu.setEnabled(false);
+		menuBar.add(menu);
 
 		menuBar.add(mnSobre);
 
