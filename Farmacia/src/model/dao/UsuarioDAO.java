@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import model.vo.Nivel;
 import model.vo.Usuario;
 
 public class UsuarioDAO {
@@ -33,27 +34,37 @@ public class UsuarioDAO {
 	}
 
 	public Usuario validarUsuario(String login, String senha) {
-		boolean codigoRetorno = false;
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
+		Usuario u = new Usuario();
 
-		String sql = "SELECT * FROM USUARIO WHERE LOGIN = '" + login + "' AND SENHA = '" + senha + "'";
+		String sql = "SELECT ID_USUARIO, NOME, DT_CADASTRO, LOGIN, SENHA, N.ID_NIVEL, N.DESCRICAO FROM USUARIO U JOIN NIVEL N ON U.ID_NIVEL = N.ID_NIVEL WHERE LOGIN = '"
+				+ login + "' AND SENHA = '" + senha + "'";
 
 		try {
 			resultado = stmt.executeQuery(sql);
 			if (resultado.next()) {
-				codigoRetorno = true;
+				u.setId(resultado.getInt("ID_USUARIO"));
+				u.setNome(resultado.getString("NOME"));
+				u.setDt_cadastro(resultado.getDate("DT_CADASTRO"));
+				u.setLogin(resultado.getString("LOGIN"));
+				u.setSenha(resultado.getString("SENHA"));
+
+				Nivel n = new Nivel();
+				n.setId(resultado.getInt("ID_NIVEL"));
+				n.setDescricao(resultado.getString("DESCRICAO"));
+
+				u.setNivel(n);
 			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao verificar login e senha do usuário. Causa :" + e.getMessage());
-			codigoRetorno = false;
 		} finally {
 			Banco.closeResultSet(resultado);
 			Banco.closeStatement(stmt);
 			Banco.closeConnection(conn);
 		}
-		return codigoRetorno;
+		return u;
 	}
 
 }
