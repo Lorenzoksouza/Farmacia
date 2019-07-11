@@ -56,6 +56,8 @@ public class UsuarioDAO {
 				n.setDescricao(resultado.getString("DESCRICAO"));
 
 				u.setNivel(n);
+			} else {
+				u = null;
 			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao verificar login e senha do usuário. Causa :" + e.getMessage());
