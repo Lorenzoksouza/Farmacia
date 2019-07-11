@@ -14,7 +14,7 @@ public class UsuarioBO {
 		return mensagem;
 	}
 
-	public boolean validarUsuario(String login, String senha) {
+	public Usuario validarUsuario(String login, String senha) {
 		return usuarioDAO.validarUsuario(login, senha);
 	}
 

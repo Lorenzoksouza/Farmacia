@@ -25,6 +25,7 @@ public class Login extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtLogin;
 	private JPasswordField txtSenha;
+	private static Login frame;
 
 	/**
 	 * Launch the application.
@@ -33,7 +34,7 @@ public class Login extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Login frame = new Login();
+					frame = new Login();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -79,10 +80,11 @@ public class Login extends JFrame {
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ControllerUsuario usuarioController = new ControllerUsuario();
-				if (usuarioController.validarUsuario(txtLogin.getText(), txtSenha.getText())) {
-					Usuario usuario = usuarioController.consultarUsuario();
+				Usuario usuario = usuarioController.validarUsuario(txtLogin.getText(), txtSenha.getText());
+				if (usuario != null) {
 					Menu menu = new Menu(usuario);
 					menu.setVisible(true);
+					frame.setVisible(false);
 				} else {
 					JOptionPane.showMessageDialog(null, "Usuario invalido, tente novamente");
 				}

@@ -277,6 +277,7 @@ public class CadastroMedicamento extends JInternalFrame {
 			this.remedio = remedioSelecionado;
 			this.preencherCampos();
 			this.bloquearCamposEdicao();
+			this.setTitle("Alterar Medicamento");
 		}
 	}
 

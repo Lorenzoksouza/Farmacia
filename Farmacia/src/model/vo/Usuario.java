@@ -9,7 +9,6 @@ public class Usuario {
 	private String login;
 	private String senha;
 	private Date dt_cadastro;
-	private boolean ativo;
 	private Nivel nivel;
 
 	public int getId() {
@@ -52,14 +51,6 @@ public class Usuario {
 		this.dt_cadastro = dt_cadastro;
 	}
 
-	public boolean isAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
-	}
-
 	public Nivel getNivel() {
 		return nivel;
 	}
@@ -68,19 +59,17 @@ public class Usuario {
 		this.nivel = nivel;
 	}
 
-	public Usuario(int id, String nome, String login, String senha, Date dt_cadastro, boolean ativo, Nivel nivel) {
+	public Usuario(int id, String nome, String login, String senha, Date dt_cadastro, Nivel nivel) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.login = login;
 		this.senha = senha;
 		this.dt_cadastro = dt_cadastro;
-		this.ativo = ativo;
 		this.nivel = nivel;
 	}
 
 	public Usuario() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 }
