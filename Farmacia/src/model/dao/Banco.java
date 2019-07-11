@@ -10,15 +10,15 @@ import java.sql.Statement;
 /**
  * Classe criada na disciplina de POO (2019/1).
  * 
- * Representa um banco de dados que se conecta à aplicação
+ * Representa um banco de dados que se conecta ï¿½ aplicacao
  * 
- * Encapsula métodos da API JDBC, com a definição, criação e fechamento de
- * conexões à bancos de dados relacionais
+ * Encapsula mï¿½todos da API JDBC, com a definiï¿½ï¿½o, criaï¿½ï¿½o e fechamento de
+ * conexï¿½es ï¿½ bancos de dados relacionais
  * 
- * @author Adriano de Melo Vilmar César Pereira Júnior (continuação em
+ * @author Adriano de Melo Vilmar Cï¿½sar Pereira Jï¿½nior (continuaï¿½ï¿½o em
  *         Desenvolvimento Desktop 2018/2)
  * 
- *         Diferenças entre Statement e PreparedStatement:
+ *         Diferenï¿½as entre Statement e PreparedStatement:
  * 
  *         A maioria dos bancos de dados relacionais lida com uma consulta
  *         (query) JDBC / SQL em quatro passos:
@@ -31,25 +31,25 @@ import java.sql.Statement;
  * 
  *         4- Executar a consulta otimizada, buscando e retornando os dados.
  * 
- *         Um Statement irá sempre passar pelos quatro passos acima para cada
- *         consulta SQL enviada para o banco. Já um Prepared Statement
- *         pré-executa os passos (1) a (3).
+ *         Um Statement irï¿½ sempre passar pelos quatro passos acima para cada
+ *         consulta SQL enviada para o banco. Jï¿½ um Prepared Statement
+ *         prï¿½-executa os passos (1) a (3).
  * 
- *         Então, ao criar um Prepared Statement alguma pré-otimização é feita
- *         de imediato. O efeito disso é que, se você pretende executar a mesma
- *         consulta repetidas vezes mudando apenas os parâmetros de cada uma, a
- *         execução usando Prepared Statements será mais rápida e com menos
+ *         Entï¿½o, ao criar um Prepared Statement alguma prï¿½-otimizaï¿½ï¿½o ï¿½ feita
+ *         de imediato. O efeito disso ï¿½ que, se vocï¿½ pretende executar a mesma
+ *         consulta repetidas vezes mudando apenas os parï¿½metros de cada uma, a
+ *         execuï¿½ï¿½o usando Prepared Statements serï¿½ mais rï¿½pida e com menos
  *         carga sobre o banco.
  * 
- *         Outra vantagem dos Prepared Statements é que, se utilizados
- *         corretamente, ajudam a evitar <b>ataques de Injeção de SQL</b>.
+ *         Outra vantagem dos Prepared Statements ï¿½ que, se utilizados
+ *         corretamente, ajudam a evitar <b>ataques de Injeï¿½ï¿½o de SQL</b>.
  * 
- *         Note que para isso é preciso que os parâmetros da consulta sejam
- *         atribuídos através dos métodos setInt(), setString(), etc. presentes
- *         na interface PreparedStatement e não por concatenação de strings.
+ *         Note que para isso ï¿½ preciso que os parï¿½metros da consulta sejam
+ *         atribuï¿½dos atravï¿½s dos mï¿½todos setInt(), setString(), etc. presentes
+ *         na interface PreparedStatement e nï¿½o por concatenaï¿½ï¿½o de strings.
  * 
- *         Para uma consulta que vai ser executada poucas vezes e não requer
- *         nenhum parâmetro, Statement basta. Para os demais casos, prefira
+ *         Para uma consulta que vai ser executada poucas vezes e nï¿½o requer
+ *         nenhum parï¿½metro, Statement basta. Para os demais casos, prefira
  *         PreparedStatement.
  * 
  *         FONTE:
@@ -68,14 +68,14 @@ public class Banco {
 	public static final int CODIGO_RETORNO_SUCESSO_EXCLUSAO = 1;
 
 	/**
-	 * Estabelece a conexão JBDC considerando as configurações da classe Banco.
+	 * Estabelece a conexï¿½o JBDC considerando as configuraï¿½ï¿½es da classe Banco.
 	 * 
-	 * @return Connection um objeto de conexão JDBC.
+	 * @return Connection um objeto de conexï¿½o JDBC.
 	 * 
 	 * @throws ClassNotFoundException caso o nome completo de DRIVER_MYSQL esteja
 	 *                                incorreto ou o driver JDBC do banco
-	 *                                selecionado não foi adicionado ao projeto (via
-	 *                                .jar ou dependência no pom.xml).
+	 *                                selecionado nï¿½o foi adicionado ao projeto (via
+	 *                                .jar ou dependï¿½ncia no pom.xml).
 	 * 
 	 * @throws SQLException           caso a URL_CONEXAO, USUARIO e/ou SENHA estejam
 	 *                                incorretos.
@@ -87,7 +87,7 @@ public class Banco {
 			conn = DriverManager.getConnection(CONEXAO, USUARIO, SENHA);
 			return conn;
 		} catch (ClassNotFoundException e) {
-			System.out.println("Classe do Driver não foi encontrada. Causa: " + e.getMessage());
+			System.out.println("Classe do Driver nï¿½o foi encontrada. Causa: " + e.getMessage());
 			return null;
 		} catch (SQLException e) {
 			System.out.println("Erro ao obter a Connection. Causa: " + e.getMessage());
@@ -101,20 +101,20 @@ public class Banco {
 				conn.close();
 			}
 		} catch (SQLException e) {
-			System.out.println("Problema no fechamento da conexão. Causa: " + e.getMessage());
+			System.out.println("Problema no fechamento da conexï¿½o. Causa: " + e.getMessage());
 		}
 	}
 
 	/**
 	 * 
-	 * Solicita um objeto Statement para uma conexão. Este objeto serve para
-	 * executar as operações SQL.
+	 * Solicita um objeto Statement para uma conexï¿½o. Este objeto serve para
+	 * executar as operaï¿½ï¿½es SQL.
 	 * 
-	 * Este método deve ser sempre chamado nos DAOs após a criação da expressão SQL,
-	 * geralmente com os métodos execute(sql), executeUpdate(sql) ou
-	 * executeQuery(sql), onde "sql" é do tipo String.
+	 * Este mï¿½todo deve ser sempre chamado nos DAOs apï¿½s a criaï¿½ï¿½o da expressï¿½o SQL,
+	 * geralmente com os mï¿½todos execute(sql), executeUpdate(sql) ou
+	 * executeQuery(sql), onde "sql" ï¿½ do tipo String.
 	 * 
-	 * @param conn uma conexão anteriormente criada.
+	 * @param conn uma conexï¿½o anteriormente criada.
 	 * @return stmt um objeto do tipo Statement
 	 * 
 	 * @throws SQLException
@@ -134,7 +134,7 @@ public class Banco {
 	 * 
 	 * Fecha um objeto Statement anteriormente criado.
 	 * 
-	 * Este método deve ser sempre chamado nos DAOs após a execução da expressão
+	 * Este mï¿½todo deve ser sempre chamado nos DAOs apï¿½s a execuï¿½ï¿½o da expressï¿½o
 	 * SQL.
 	 * 
 	 * @param stmt um objeto do tipo Statement
@@ -154,10 +154,10 @@ public class Banco {
 
 	/**
 	 * 
-	 * Solicita um objeto PreparedStatement para uma conexão. Este objeto serve para
-	 * executar as operações SQL.
+	 * Solicita um objeto PreparedStatement para uma conexï¿½o. Este objeto serve para
+	 * executar as operaï¿½ï¿½es SQL.
 	 * 
-	 * @param conn uma conexão anteriormente criada.
+	 * @param conn uma conexï¿½o anteriormente criada.
 	 * @return stmt um objeto do tipo PreparedStatement
 	 * 
 	 * @throws SQLException
@@ -187,7 +187,7 @@ public class Banco {
 	 * 
 	 * Fecha um objeto PreparedStatement anteriormente criado.
 	 * 
-	 * Este método deve ser sempre chamado nos DAOs após a execução da expressão
+	 * Este mï¿½todo deve ser sempre chamado nos DAOs apï¿½s a execuï¿½ï¿½o da expressï¿½o
 	 * SQL.
 	 * 
 	 * @param stmt um objeto do tipo PreparedStatement
@@ -209,8 +209,8 @@ public class Banco {
 	 * 
 	 * Fecha um objeto ResultSet anteriormente criado.
 	 * 
-	 * Este método deve ser sempre chamado nos DAOs após a consulta de todos os
-	 * resultados e conversão para objetos.
+	 * Este mï¿½todo deve ser sempre chamado nos DAOs apï¿½s a consulta de todos os
+	 * resultados e conversï¿½o para objetos.
 	 * 
 	 * @param result um objeto do tipo ResultSet
 	 * 

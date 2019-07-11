@@ -316,10 +316,10 @@ public class VendaDAO {
 		return listaFormaPagamento;
 	}
 
-	public String cancelarVenda() {
+	public String cancelarVenda(Venda venda) {
 		String mensagem = "";
 
-		String query = "UPDATE CANCELADA FROM VENDA";
+		String query = "UPDATE VENDA V SET CANCELADA = ? WHERE ID_VENDA = " + venda.getIdVenda();
 		Connection conn = Banco.getConnection();
 		PreparedStatement prepStmt = Banco.getPreparedStatement(conn, query);
 
@@ -330,7 +330,7 @@ public class VendaDAO {
 				mensagem = "Erro ao executar query de atualização de status de venda!";
 			}
 		} catch (SQLException e) {
-			System.out.println("Erro ao listar as Formas de Pagamento!");
+			System.out.println("Erro ao cancelar venda!");
 			e.printStackTrace();
 		} finally {
 			Banco.closeStatement(prepStmt);

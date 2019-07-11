@@ -66,7 +66,7 @@ public class VendaBO {
 		return vendaDAO.consultarFormaPagamento();
 	}
 
-	public String cancelarVenda() {
-		return vendaDAO.cancelarVenda();
+	public String cancelarVenda(Venda venda) {
+		return vendaDAO.cancelarVenda(venda);
 	}
 }

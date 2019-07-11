@@ -41,7 +41,7 @@ public class ControllerVenda {
 		return vendaBO.consultarFormaPagamento();
 	}
 
-	public String cancelarVenda() {
-		return vendaBO.cancelarVenda();
+	public String cancelarVenda(Venda venda) {
+		return vendaBO.cancelarVenda(venda);
 	}
 }

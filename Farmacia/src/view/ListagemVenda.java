@@ -255,7 +255,7 @@ public class ListagemVenda extends JInternalFrame {
 		btnCancelarVenda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ControllerVenda vendaController = new ControllerVenda();
-				String mensagem = vendaController.cancelarVenda();
+				String mensagem = vendaController.cancelarVenda(vendasConsultadas.get(tblVendas.getSelectedRow() - 1));
 				JOptionPane.showMessageDialog(null, mensagem);
 			}
 		});
