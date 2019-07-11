@@ -24,6 +24,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -37,6 +38,7 @@ import model.vo.Mercadoria;
 import model.vo.Produto;
 import model.vo.Remedio;
 import net.miginfocom.swing.MigLayout;
+import util.JNumberFormatField;
 import util.JTextFieldLimit;
 
 public class TelaVenda extends JInternalFrame {
@@ -67,6 +69,7 @@ public class TelaVenda extends JInternalFrame {
 	private JButton btnProximo;
 	private JComboBox cmbFormaPagamento;
 	private List<FormaPagamento> listaFormaPagamento;
+	private JTextField txtDesconto;
 
 	/**
 	 * Launch the application.
@@ -164,15 +167,6 @@ public class TelaVenda extends JInternalFrame {
 		});
 		getContentPane().add(btnAnterior, "flowx,cell 0 10,alignx center");
 
-		JLabel lblTotal = new JLabel("Total:");
-		getContentPane().add(lblTotal, "flowx,cell 2 10,aligny bottom");
-
-		lblValor = new JLabel("R$0.00");
-		lblValor.setForeground(Color.BLUE);
-		lblValor.setBackground(Color.WHITE);
-		lblValor.setFont(new Font("Tahoma", Font.BOLD, 11));
-		getContentPane().add(lblValor, "cell 2 10,aligny bottom");
-
 		JButton btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.setIcon(new ImageIcon(TelaVenda.class.getResource("/icons/search.png")));
 		btnPesquisar.setBackground(Color.WHITE);
@@ -219,6 +213,16 @@ public class TelaVenda extends JInternalFrame {
 		});
 		getContentPane().add(btnProximo, "cell 0 10,alignx center");
 		btnProximo.setEnabled(false);
+
+		JLabel lblDesconto = new JLabel("Desconto:");
+		lblDesconto.setVerticalAlignment(SwingConstants.BOTTOM);
+		getContentPane().add(lblDesconto, "flowx,cell 2 10");
+
+		txtDesconto = new JNumberFormatField(2);
+		txtDesconto.setForeground(Color.GREEN);
+		txtDesconto.setFont(new Font("Tahoma", Font.BOLD, 11));
+		getContentPane().add(txtDesconto, "cell 2 10");
+		txtDesconto.setColumns(10);
 
 		JLabel lblEspacovs = new JLabel("                                  ");
 		getContentPane().add(lblEspacovs, "cell 2 10,aligny bottom");
@@ -333,6 +337,18 @@ public class TelaVenda extends JInternalFrame {
 		getContentPane().add(btnConcluirVenda, "cell 2 12,alignx center");
 
 		this.consultarFormaPagamento();
+
+		JLabel lblTotal = new JLabel("Total:");
+		getContentPane().add(lblTotal, "flowx,cell 2 11,alignx left,aligny bottom");
+
+		lblValor = new JLabel("R$0.00");
+		lblValor.setForeground(Color.BLUE);
+		lblValor.setBackground(Color.WHITE);
+		lblValor.setFont(new Font("Tahoma", Font.BOLD, 11));
+		getContentPane().add(lblValor, "cell 2 11,aligny bottom");
+
+		JLabel label = new JLabel("                                                                                ");
+		getContentPane().add(label, "cell 2 11");
 		cmbFormaPagamento = new JComboBox(listaFormaPagamento.toArray());
 		cmbFormaPagamento.setSelectedIndex(0);
 		getContentPane().add(cmbFormaPagamento, "cell 2 11,alignx right");
