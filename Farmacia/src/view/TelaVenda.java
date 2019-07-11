@@ -334,7 +334,7 @@ public class TelaVenda extends JInternalFrame {
 
 		this.consultarFormaPagamento();
 		cmbFormaPagamento = new JComboBox(listaFormaPagamento.toArray());
-		cmbFormaPagamento.setSelectedIndex(-1);
+		cmbFormaPagamento.setSelectedIndex(0);
 		getContentPane().add(cmbFormaPagamento, "cell 2 11,alignx right");
 
 	}

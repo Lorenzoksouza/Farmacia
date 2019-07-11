@@ -317,8 +317,27 @@ public class VendaDAO {
 	}
 
 	public String cancelarVenda() {
-		// TODO Auto-generated method stub
-		return null;
+		String mensagem = "";
+
+		String query = "UPDATE CANCELADA FROM VENDA";
+		Connection conn = Banco.getConnection();
+		PreparedStatement prepStmt = Banco.getPreparedStatement(conn, query);
+
+		try {
+			prepStmt.setBoolean(1, true);
+			int codigoRetorno = prepStmt.executeUpdate();
+			if (codigoRetorno == 0) {
+				mensagem = "Erro ao executar query de atualização de status de venda!";
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao listar as Formas de Pagamento!");
+			e.printStackTrace();
+		} finally {
+			Banco.closeStatement(prepStmt);
+			Banco.closeConnection(conn);
+		}
+
+		return mensagem;
 	}
 
 }
