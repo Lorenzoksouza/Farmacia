@@ -79,8 +79,8 @@ public class Login extends JFrame {
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ControllerUsuario usuarioController = new ControllerUsuario();
-				if (usuarioController.validarUsuario(txtLogin.getText(), txtSenha.getText())) {
-					Usuario usuario = usuarioController.consultarUsuario();
+				Usuario usuario = usuarioController.validarUsuario(txtLogin.getText(), txtSenha.getText());
+				if (usuario != null) {
 					Menu menu = new Menu(usuario);
 					menu.setVisible(true);
 				} else {

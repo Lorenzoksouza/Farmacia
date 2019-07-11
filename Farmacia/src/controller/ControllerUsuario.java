@@ -14,12 +14,9 @@ public class ControllerUsuario {
 		return mensagem;
 	}
 
-	public boolean validarUsuario(String login, String senha) {
-		if (usuarioBO.validarUsuario(login, senha)) {
-			return true;
-		} else {
-			return false;
-		}
+	public Usuario validarUsuario(String login, String senha) {
+		return usuarioBO.validarUsuario(login, senha);
+
 	}
 
 	public Usuario consultarUsuario() {

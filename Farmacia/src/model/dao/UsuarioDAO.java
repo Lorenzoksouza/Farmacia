@@ -32,13 +32,13 @@ public class UsuarioDAO {
 		return mensagem;
 	}
 
-	public boolean validarUsuario(String login, String senha) {
+	public Usuario validarUsuario(String login, String senha) {
 		boolean codigoRetorno = false;
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
 
-		String sql = "SELECT LOGIN, SENHA FROM USUARIO WHERE LOGIN = '" + login + "' AND SENHA = '" + senha + "'";
+		String sql = "SELECT * FROM USUARIO WHERE LOGIN = '" + login + "' AND SENHA = '" + senha + "'";
 
 		try {
 			resultado = stmt.executeQuery(sql);
