@@ -342,7 +342,7 @@ public class ListagemProduto extends JInternalFrame {
 
 			String[] novaLinha = new String[] { produto.getCodBarra() + "", produto.getNome(),
 					"R$" + format.format(produto.getPrecoVenda()), "R$" + format.format(produto.getPrecoCusto()),
-					"R$" + (produto.getPrecoVenda() - produto.getPrecoCusto()),
+					"R$" + format.format(produto.getPrecoVenda() - produto.getPrecoCusto()),
 					produto.getCategoria().getNomeCategoria(), produto.getEstoque() + "" };
 			modelo.addRow(novaLinha);
 		}
