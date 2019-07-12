@@ -108,6 +108,7 @@ public class CadastroUsuario extends JInternalFrame {
 						Nivel nivel = new Nivel();
 						nivel.setId(listaNiveis.get(cmbNivel.getSelectedIndex()).getId());
 						nivel.setDescricao(listaNiveis.get(cmbNivel.getSelectedIndex()).getDescricao());
+						usuario.setNivel(nivel);
 					} else {
 						JOptionPane.showMessageDialog(null, "Verificar se o Nivel foi selecionado.");
 					}

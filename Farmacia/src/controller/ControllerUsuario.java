@@ -15,18 +15,15 @@ public class ControllerUsuario {
 	public String salvarUsuario(Usuario usuario) {
 		String mensagem = "";
 		mensagem = usuarioBO.salvarUsuario(usuario);
-
+		if (mensagem == "") {
+			mensagem = "Usuario salvo com sucesso";
+		}
 		return mensagem;
 	}
 
 	public Usuario validarUsuario(String login, String senha) {
 		return usuarioBO.validarUsuario(login, senha);
 
-	}
-
-	public Usuario consultarUsuario() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	public ArrayList<Nivel> consultarNiveis() {
