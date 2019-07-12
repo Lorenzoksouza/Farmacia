@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -15,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import controller.ControllerUsuario;
 import model.vo.Usuario;
@@ -52,12 +54,12 @@ public class Login extends JFrame {
 		setBackground(Color.WHITE);
 		setAlwaysOnTop(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 245);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][][][][grow][][][grow]", "[][][][][][][]"));
+		contentPane.setLayout(new MigLayout("", "[][][][][grow]", "[][][][][][grow]"));
 
 		JLabel lblLogin = new JLabel("Login:");
 		lblLogin.setFont(new Font("Tahoma", Font.PLAIN, 21));
@@ -77,6 +79,10 @@ public class Login extends JFrame {
 		contentPane.add(txtSenha, "cell 4 3,growx");
 
 		JButton btnEntrar = new JButton("Entrar");
+		btnEntrar.setBackground(Color.WHITE);
+		btnEntrar.setOpaque(true);
+		btnEntrar.setPreferredSize(new Dimension(80, 30));
+		btnEntrar.setBorder(new LineBorder(Color.gray, 2, true));
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ControllerUsuario usuarioController = new ControllerUsuario();
@@ -91,7 +97,7 @@ public class Login extends JFrame {
 			}
 		});
 		btnEntrar.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		contentPane.add(btnEntrar, "cell 4 5");
+		contentPane.add(btnEntrar, "cell 4 5,alignx center");
 		getRootPane().setDefaultButton(btnEntrar);
 	}
 

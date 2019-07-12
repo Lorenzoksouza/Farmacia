@@ -1,6 +1,12 @@
 package view;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -8,12 +14,18 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 
+import controller.ControllerUsuario;
+import model.seletor.UsuarioSeletor;
+import model.vo.Usuario;
 import net.miginfocom.swing.MigLayout;
 
 public class ListagemUsuario extends JInternalFrame {
 	private JTextField txtNome;
 	private JTable table;
+	private List<Usuario> usuariosConsultados;
 
 	/**
 	 * Launch the application.
@@ -35,6 +47,10 @@ public class ListagemUsuario extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public ListagemUsuario() {
+		setFrameIcon(new ImageIcon(ListagemUsuario.class.getResource("/icons/network.png")));
+		setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
+		setClosable(true);
+		getContentPane().setBackground(Color.WHITE);
 		setTitle("Listagem usuário");
 		setBounds(100, 100, 800, 619);
 		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][grow]"));
@@ -43,6 +59,7 @@ public class ListagemUsuario extends JInternalFrame {
 		getContentPane().add(lblNome, "cell 0 0,alignx left");
 
 		table = new JTable();
+		table.setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
 		getContentPane().add(table, "cell 1 0 1 4,grow");
 
 		txtNome = new JTextField();
@@ -51,8 +68,51 @@ public class ListagemUsuario extends JInternalFrame {
 
 		JButton btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.setIcon(new ImageIcon(ListagemUsuario.class.getResource("/icons/search.png")));
+		btnPesquisar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pesquisarUsuarios();
+			}
+		});
 		getContentPane().add(btnPesquisar, "cell 0 2,alignx left");
 
 	}
 
+	private void pesquisarUsuarios() {
+
+		ControllerUsuario controlador = new ControllerUsuario();
+		UsuarioSeletor seletor = new UsuarioSeletor();
+
+		List<Usuario> usuarios = controlador.listarUsuarios(seletor);
+
+		usuarios = controlador.listarUsuarios(seletor);
+		atualizarTabelaUsuarios(usuarios);
+	}
+
+	private void atualizarTabelaUsuarios(List<Usuario> usuarios) {
+		// atualiza o atributo remediosConsultados
+		usuariosConsultados = usuarios;
+
+		// Limpa a tabela
+		table.setModel(new DefaultTableModel(
+				new String[][] { { "Código de Barras", "Dosagem", "Composição", "Genérico", "Nome", "Data Cad.",
+						"Preço venda", "Preço custo", "Lucro", "Estoque", "Forma Uso", "Laboratório" }, },
+				new String[] { "Código de Barras", "Dosagem", "Composição", "Genérico", "Nome", "Data Cad.",
+						"Preço venda", "Preço custo", "Lucro", "Estoque", "Forma Uso", "Laboratório" }));
+
+		DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+		DecimalFormat format = new DecimalFormat("0.00");
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+		/*
+		 * String[] novaLinha = new String[] { remedio.getCodBarra() + "",
+		 * remedio.getDosagem(), remedio.getComposicao(), generico, remedio.getNome(),
+		 * sdf.format(remedio.getDataCadastro()), "R$" +
+		 * format.format(remedio.getPrecoVenda()), "R$" +
+		 * format.format(remedio.getPrecoCusto()), "R$" +
+		 * format.format(remedio.getPrecoVenda() - remedio.getPrecoCusto()), "" +
+		 * remedio.getEstoque(), remedio.getFormaUso().getDescricao(),
+		 * remedio.getLaboratorio().getNomeLaboratorio() }; modelo.addRow(novaLinha); }
+		 */
+	}
 }

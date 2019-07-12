@@ -45,6 +45,8 @@ public class Menu extends JFrame {
 	ListagemVenda listagemVenda = null;
 	TelaSobre telaSobre = null;
 	Usuario usuario;
+	CadastroUsuario cadastroUsuario = null;
+	ListagemUsuario pesquisaUsuario = null;
 
 	/**
 	 * Launch the application.
@@ -322,15 +324,59 @@ public class Menu extends JFrame {
 		menuBar.add(menuSpace3);
 
 		JMenu mnUsuario = new JMenu("Usuário");
+		mnUsuario.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
+		mnUsuario.setBackground(Color.LIGHT_GRAY);
 		mnUsuario.setIcon(new ImageIcon(Menu.class.getResource("/icons/network.png")));
 		menuBar.add(mnUsuario);
 
 		JMenuItem mntmCadastrar = new JMenuItem("Cadastrar");
+		mntmCadastrar.setBorder(new LineBorder(Color.GRAY, 1));
+		mntmCadastrar.setBackground(Color.WHITE);
 		mntmCadastrar.setIcon(new ImageIcon(Menu.class.getResource("/icons/espaco.png")));
+		mntmCadastrar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!temComponenteNaTela(cadastroUsuario)) {
+					cadastroUsuario = new CadastroUsuario();
+					desktopPane.add(cadastroUsuario);
+					// desktopPane.getDesktopManager().maximizeFrame(telaVenda);
+					cadastroUsuario.show();
+
+					cadastroUsuario.addInternalFrameListener(new InternalFrameAdapter() {
+						@Override
+						public void internalFrameClosing(InternalFrameEvent evt) {
+							Menu pai = (Menu) SwingUtilities.getWindowAncestor(cadastroUsuario);
+							pai.chamarPai(cadastroUsuario);
+						}
+					});
+				}
+			}
+		});
 		mnUsuario.add(mntmCadastrar);
 
 		JMenuItem mntmListar = new JMenuItem("Listar");
+		mntmListar.setBorder(new LineBorder(Color.GRAY, 1));
+		mntmListar.setBackground(Color.WHITE);
 		mntmListar.setIcon(new ImageIcon(Menu.class.getResource("/icons/espaco.png")));
+		mntmListar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!temComponenteNaTela(pesquisaUsuario)) {
+					pesquisaUsuario = new ListagemUsuario();
+					desktopPane.add(pesquisaUsuario);
+					// desktopPane.getDesktopManager().maximizeFrame(telaVenda);
+					pesquisaUsuario.show();
+
+					pesquisaUsuario.addInternalFrameListener(new InternalFrameAdapter() {
+						@Override
+						public void internalFrameClosing(InternalFrameEvent evt) {
+							Menu pai = (Menu) SwingUtilities.getWindowAncestor(pesquisaUsuario);
+							pai.chamarPai(pesquisaUsuario);
+						}
+					});
+				}
+			}
+		});
 		mnUsuario.add(mntmListar);
 
 		JMenu menu = new JMenu("  ");

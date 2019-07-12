@@ -5,7 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
+import model.seletor.UsuarioSeletor;
 import model.vo.Nivel;
 import model.vo.Usuario;
 
@@ -66,6 +69,67 @@ public class UsuarioDAO {
 			Banco.closeStatement(stmt);
 			Banco.closeConnection(conn);
 		}
+		return u;
+	}
+
+	public ArrayList<Nivel> consultarNivel() {
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+
+		ArrayList<Nivel> listaNiveis = new ArrayList<Nivel>();
+
+		String query = "SELECT ID_NIVEL FROM USUARIO";
+		try {
+			resultado = stmt.executeQuery(query);
+			while (resultado.next()) {
+				Nivel nivel = new Nivel();
+				nivel.setId(Integer.parseInt(resultado.getString(1)));
+				nivel.setDescricao(resultado.getString(2));
+
+				listaNiveis.add(nivel);
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao listar os Niveis!!");
+			e.printStackTrace();
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+
+		return listaNiveis;
+	}
+
+	public List<Usuario> listarComSeletor(UsuarioSeletor seletor) {
+		String sql = " SELECT R.COD_BARRA, R.DOSAGEM, R.COMPOSICAO, R.GENERICO, R.NM_REMEDIO, R.DT_CADASTRO, R.PRECO, R.PRECO_CUSTO, R.ESTOQUE,FU.ID_FORMA_USO, FU.DESCRICAO, L.ID_LABORATORIO, L.NM_LABORATORIO "
+				+ " FROM REMEDIO R JOIN FORMA_USO FU ON R.ID_FORMA_USO = FU.ID_FORMA_USO"
+				+ " JOIN LABORATORIO L ON R.ID_LABORATORIO = L.ID_LABORATORIO ";
+
+		Connection conexao = Banco.getConnection();
+		PreparedStatement prepStmt = Banco.getPreparedStatement(conexao, sql);
+		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+
+		try {
+			ResultSet result = prepStmt.executeQuery();
+
+			while (result.next()) {
+				Usuario u = construirProdutoDoResultSet(result);
+				usuarios.add(u);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println(usuarios.toString());
+
+		return usuarios;
+
+	}
+
+	private Usuario construirProdutoDoResultSet(ResultSet result) {
+		Usuario u = new Usuario();
+
 		return u;
 	}
 
