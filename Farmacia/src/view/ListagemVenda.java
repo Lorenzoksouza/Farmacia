@@ -15,7 +15,6 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
@@ -244,12 +243,6 @@ public class ListagemVenda extends JInternalFrame {
 			}
 		});
 		getContentPane().add(btnProximo, "cell 2 12,alignx center");
-
-		JLabel lblCancelada = new JLabel("Cancelada:                                  ");
-		getContentPane().add(lblCancelada, "cell 0 0,alignx right");
-
-		JComboBox cmbCancelada = new JComboBox();
-		getContentPane().add(cmbCancelada, "cell 0 1");
 
 		JButton btnCancelarVenda = new JButton("Cancelar Venda");
 		btnCancelarVenda.addActionListener(new ActionListener() {

@@ -13,6 +13,7 @@ import model.vo.FormaPagamento;
 import model.vo.ItemProduto;
 import model.vo.ItemRemedio;
 import model.vo.Mercadoria;
+import model.vo.Usuario;
 import model.vo.Venda;
 
 public class VendaBO {
@@ -24,10 +25,11 @@ public class VendaBO {
 		return vendaDAO.listarVendaDTO(seletor);
 	}
 
-	public String salvar(double valorTotal, List<ItemProduto> itensProdutos, List<ItemRemedio> itensRemedios) {
+	public String salvar(double valorTotal, List<ItemProduto> itensProdutos, List<ItemRemedio> itensRemedios,
+			FormaPagamento formaPgto, Usuario usuario) {
 		Venda novaVenda = new Venda();
 		String mensagem = "";
-		if (vendaDAO.inserirVenda(valorTotal)) {
+		if (vendaDAO.inserirVenda(valorTotal, formaPgto, usuario)) {
 			novaVenda = vendaDAO.pegarUltimaVenda();
 		} else {
 			mensagem = "N�o foi possivel criar a venda (VendaBO30)";

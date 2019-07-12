@@ -179,7 +179,6 @@ public class GeradorDePlanilha {
 			linhaHeader.createCell(0).setCellValue("Id");
 			linhaHeader.createCell(1).setCellValue("Valor");
 			linhaHeader.createCell(2).setCellValue("Data da venda");
-
 			int count = 1;
 			for (Venda venda : vendas) {
 				XSSFRow novaLinha = sheet.createRow(count);

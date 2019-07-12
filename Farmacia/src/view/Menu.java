@@ -41,10 +41,10 @@ public class Menu extends JFrame {
 	ListagemMedicamento pesquisaMedicamento = null;
 	CadastroProduto cadastroProduto = null;
 	ListagemProduto pesquisaProduto = null;
+	Usuario usuarioTela;
 	TelaVenda telaVenda = null;
 	ListagemVenda listagemVenda = null;
 	TelaSobre telaSobre = null;
-	Usuario usuario;
 	CadastroUsuario cadastroUsuario = null;
 	ListagemUsuario pesquisaUsuario = null;
 
@@ -70,6 +70,7 @@ public class Menu extends JFrame {
 	 * @param usuario
 	 */
 	public Menu(Usuario usuario) {
+		usuarioTela = usuario;
 		setTitle("NOAH PHARMACY");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/icons/logo.png")));
 		initialize();
@@ -253,7 +254,7 @@ public class Menu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (!temComponenteNaTela(telaVenda)) {
-					telaVenda = new TelaVenda();
+					telaVenda = new TelaVenda(usuarioTela);
 					desktopPane.add(telaVenda);
 					// desktopPane.getDesktopManager().maximizeFrame(telaVenda);
 					telaVenda.show();
@@ -385,8 +386,8 @@ public class Menu extends JFrame {
 
 		menuBar.add(mnSobre);
 
-		if (usuario != null) {
-			switch (usuario.getNivel().getId()) {
+		if (usuarioTela != null) {
+			switch (usuarioTela.getNivel().getId()) {
 			case 1:
 
 			case 2:

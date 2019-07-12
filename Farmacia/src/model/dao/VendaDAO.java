@@ -16,18 +16,21 @@ import model.vo.FormaPagamento;
 import model.vo.Mercadoria;
 import model.vo.Produto;
 import model.vo.Remedio;
+import model.vo.Usuario;
 import model.vo.Venda;
 
 public class VendaDAO {
 
-	public boolean inserirVenda(double valorTotal) {
-		String sql = "INSERT INTO VENDA(DT_VENDA, VALOR_TOTAL) VALUES (NOW(), ?)";
+	public boolean inserirVenda(double valorTotal, FormaPagamento formaPgto, Usuario usuario) {
+		String sql = "INSERT INTO VENDA(DT_VENDA, VALOR_TOTAL, ID_FORMA_PGTO, ID_USUARIO) VALUES (NOW(), ?, ?, ?)";
 
 		Connection conn = Banco.getConnection();
 		PreparedStatement prepStmt = Banco.getPreparedStatement(conn, sql, PreparedStatement.RETURN_GENERATED_KEYS);
 		boolean result;
 		try {
 			prepStmt.setDouble(1, valorTotal);
+			prepStmt.setInt(2, formaPgto.getIdFP());
+			prepStmt.setInt(3, usuario.getId());
 			prepStmt.execute();
 			result = true;
 		} catch (SQLException e) {

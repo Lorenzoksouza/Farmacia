@@ -10,6 +10,7 @@ import model.vo.FormaPagamento;
 import model.vo.ItemProduto;
 import model.vo.ItemRemedio;
 import model.vo.Mercadoria;
+import model.vo.Usuario;
 import model.vo.Venda;
 
 public class ControllerVenda {
@@ -20,8 +21,9 @@ public class ControllerVenda {
 		return vendaBO.listarVendaDTO(seletor);
 	}
 
-	public String salvarVenda(double valorTotal, List<ItemProduto> itensProdutos, List<ItemRemedio> itensRemedios) {
-		return vendaBO.salvar(valorTotal, itensProdutos, itensRemedios);
+	public String salvarVenda(double valorTotal, List<ItemProduto> itensProdutos, List<ItemRemedio> itensRemedios,
+			FormaPagamento formaPgto, Usuario usuario) {
+		return vendaBO.salvar(valorTotal, itensProdutos, itensRemedios, formaPgto, usuario);
 	}
 
 	public List<Mercadoria> listarMercadorias(MercadoriaSeletor seletor) {

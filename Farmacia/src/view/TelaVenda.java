@@ -37,6 +37,7 @@ import model.vo.ItemRemedio;
 import model.vo.Mercadoria;
 import model.vo.Produto;
 import model.vo.Remedio;
+import model.vo.Usuario;
 import net.miginfocom.swing.MigLayout;
 import util.JNumberFormatField;
 import util.JTextFieldLimit;
@@ -73,6 +74,8 @@ public class TelaVenda extends JInternalFrame {
 	private List<FormaPagamento> listaFormaPagamento;
 	private JTextField txtDesconto;
 
+	private Usuario usuario;
+
 	/**
 	 * Launch the application.
 	 */
@@ -80,7 +83,7 @@ public class TelaVenda extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaVenda frame = new TelaVenda();
+					TelaVenda frame = new TelaVenda(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -91,8 +94,10 @@ public class TelaVenda extends JInternalFrame {
 
 	/**
 	 * Create the frame.
+	 * 
+	 * @param usuario
 	 */
-	public TelaVenda() {
+	public TelaVenda(Usuario usuario) {
 		getContentPane().setBackground(Color.WHITE);
 		setResizable(true);
 		setFrameIcon(new ImageIcon(TelaVenda.class.getResource("/icons/cart (2).png")));
@@ -251,7 +256,10 @@ public class TelaVenda extends JInternalFrame {
 				String mensagem = "";
 				if (!mercadoriasParaVenda.isEmpty()) {
 					ControllerVenda controllerVenda = new ControllerVenda();
-					mensagem = controllerVenda.salvarVenda(valorTotal, itensProdutos, itensRemedios);
+					FormaPagamento formaPgto = new FormaPagamento();
+					formaPgto = listaFormaPagamento.get(cmbFormaPagamento.getSelectedIndex());
+					mensagem = controllerVenda.salvarVenda(valorTotal, itensProdutos, itensRemedios, formaPgto,
+							usuario);
 					if (mensagem == "") {
 						DecimalFormat df = new DecimalFormat("0.#####");
 						String dx = df.format(valorTotal);
