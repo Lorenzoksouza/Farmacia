@@ -59,6 +59,8 @@ public class TelaVenda extends JInternalFrame {
 	private List<Produto> produtos = new ArrayList<Produto>();
 
 	private double valorTotal = 0.0;
+	private double valorDesconto = 0.0;
+	private double valorComDesconto = 0.0;
 	private JLabel lblValor;
 	private JSpinner spiQuantidade;
 	private int totalPaginas = 1;
@@ -220,13 +222,12 @@ public class TelaVenda extends JInternalFrame {
 
 		txtDesconto = new JNumberFormatField(2);
 		txtDesconto.addKeyListener(new KeyAdapter() {
-			@Override
+
 			public void keyReleased(KeyEvent arg0) {
-				valorTotal = valorTotal - Double.parseDouble(txtDesconto.getText().toString().replace(",", "."));
-				DecimalFormat df = new DecimalFormat("0.#####");
-				String dx = df.format(valorTotal);
-				lblValor.setText("R$" + dx);
+				valorDesconto = Double.parseDouble(txtDesconto.getText().toString().replace(",", "."));
+				obterValorDesconto();
 			}
+
 		});
 		txtDesconto.setForeground(Color.GREEN);
 		txtDesconto.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -243,6 +244,10 @@ public class TelaVenda extends JInternalFrame {
 		btnConcluirVenda.setIcon(new ImageIcon(TelaVenda.class.getResource("/icons/check.png")));
 		btnConcluirVenda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				obterValorDesconto();
+				if (valorComDesconto > 0.0) {
+					valorTotal = valorComDesconto;
+				}
 				String mensagem = "";
 				if (!mercadoriasParaVenda.isEmpty()) {
 					ControllerVenda controllerVenda = new ControllerVenda();
@@ -255,6 +260,7 @@ public class TelaVenda extends JInternalFrame {
 						atualizarTblVenda(mercadoriasParaVenda);
 						valorTotal = 0;
 						lblValor.setText("R$" + valorTotal);
+						txtDesconto.setText("0,00");
 					}
 				} else {
 					mensagem = "Selecione algum produto para realizar uma venda";
@@ -281,13 +287,8 @@ public class TelaVenda extends JInternalFrame {
 
 					removerMercadoria(mercadoriaSelecionada);
 					atualizarTblVenda(mercadoriasParaVenda);
-
-					valorTotal -= mercadoriaSelecionada.getMercadoria().getPrecoVenda() * qtd;
-					lblValor.setText("R$" + valorTotal);
-					DecimalFormat df = new DecimalFormat("0.#####");
-					String dx = df.format(valorTotal);
-					lblValor.setText("R$" + dx);
-
+					atualizarValorTotal(mercadoriaSelecionada.getMercadoria().getPrecoVenda() * qtd, 0);
+					obterValorDesconto();
 					addEstoque(mercadoriaSelecionada, qtd);
 					atualizarTabelaMercadorias(mercadoriasConsultadas);
 				} else {
@@ -312,13 +313,8 @@ public class TelaVenda extends JInternalFrame {
 					if (validacao) {
 						mercadoriasParaVenda.add(mercadoriaSelecionada);
 						atualizarTblVenda(mercadoriasParaVenda);
-
-						valorTotal += mercadoriaSelecionada.getMercadoria().getPrecoVenda() * qtd;
-						lblValor.setText("R$" + valorTotal);
-						DecimalFormat df = new DecimalFormat("0.#####");
-						String dx = df.format(valorTotal);
-						lblValor.setText("R$" + dx);
-
+						atualizarValorTotal(mercadoriaSelecionada.getMercadoria().getPrecoVenda() * qtd, 1);
+						obterValorDesconto();
 						diminuirEstoque(mercadoriaSelecionada, qtd);
 						atualizarTabelaMercadorias(mercadoriasConsultadas);
 					}
@@ -362,6 +358,26 @@ public class TelaVenda extends JInternalFrame {
 		cmbFormaPagamento.setSelectedIndex(0);
 		getContentPane().add(cmbFormaPagamento, "cell 2 11,alignx right");
 
+	}
+
+	private void atualizarValorTotal(double valor, int tipo) {
+		if (tipo == 0) {
+			valorTotal -= valor;
+		} else {
+			valorTotal += valor;
+		}
+
+		DecimalFormat df = new DecimalFormat("0.#####");
+		String dx = df.format(valorTotal);
+		lblValor.setText("R$" + dx);
+	}
+
+	private void obterValorDesconto() {
+		valorComDesconto = valorTotal - valorDesconto;
+
+		DecimalFormat df = new DecimalFormat("0.#####");
+		String dx = df.format(valorComDesconto);
+		lblValor.setText("R$" + dx);
 	}
 
 	private void consultarFormaPagamento() {

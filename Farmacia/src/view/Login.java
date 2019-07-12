@@ -92,6 +92,7 @@ public class Login extends JFrame {
 		});
 		btnEntrar.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		contentPane.add(btnEntrar, "cell 4 5");
+		getRootPane().setDefaultButton(btnEntrar);
 	}
 
 }
