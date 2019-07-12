@@ -79,7 +79,7 @@ public class UsuarioDAO {
 
 		ArrayList<Nivel> listaNiveis = new ArrayList<Nivel>();
 
-		String query = "SELECT ID_NIVEL FROM USUARIO";
+		String query = "SELECT * FROM NIVEL";
 		try {
 			resultado = stmt.executeQuery(query);
 			while (resultado.next()) {
@@ -102,9 +102,11 @@ public class UsuarioDAO {
 	}
 
 	public List<Usuario> listarComSeletor(UsuarioSeletor seletor) {
-		String sql = " SELECT R.COD_BARRA, R.DOSAGEM, R.COMPOSICAO, R.GENERICO, R.NM_REMEDIO, R.DT_CADASTRO, R.PRECO, R.PRECO_CUSTO, R.ESTOQUE,FU.ID_FORMA_USO, FU.DESCRICAO, L.ID_LABORATORIO, L.NM_LABORATORIO "
-				+ " FROM REMEDIO R JOIN FORMA_USO FU ON R.ID_FORMA_USO = FU.ID_FORMA_USO"
-				+ " JOIN LABORATORIO L ON R.ID_LABORATORIO = L.ID_LABORATORIO ";
+		String sql = " SELECT * FROM USUARIO U INNER JOIN NIVEL N ON U.ID_NIVEL = N.ID_NIVEL";
+
+		if (seletor.temFiltro()) {
+			sql = criarFiltros(seletor, sql);
+		}
 
 		Connection conexao = Banco.getConnection();
 		PreparedStatement prepStmt = Banco.getPreparedStatement(conexao, sql);
@@ -121,15 +123,41 @@ public class UsuarioDAO {
 			e.printStackTrace();
 		}
 
-		System.out.println(usuarios.toString());
-
 		return usuarios;
 
 	}
 
+	private String criarFiltros(UsuarioSeletor seletor, String sql) {
+		sql += " WHERE ";
+		boolean primeiro = true;
+
+		if ((seletor.getNome() != null) && (seletor.getNome().trim().length() > 0)) {
+			if (!primeiro) {
+				sql += " AND ";
+			}
+			sql += "R.COD_BARRA LIKE '%" + seletor.getNome().trim() + "%'";
+			primeiro = false;
+		}
+
+		// Verificando o que retorna nos filtros
+		// System.out.println(sql);
+		return sql;
+	}
+
 	private Usuario construirProdutoDoResultSet(ResultSet result) {
 		Usuario u = new Usuario();
-
+		try {
+			u.setId(result.getInt("ID_USUARIO"));
+			u.setDt_cadastro(result.getDate("DT_CADASTRO"));
+			u.setNome(result.getString("NOME"));
+			Nivel n = new Nivel();
+			n.setId(result.getInt("ID_NIVEL"));
+			n.setDescricao(result.getString("DESCRICAO"));
+			u.setNivel(n);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return u;
 	}
 

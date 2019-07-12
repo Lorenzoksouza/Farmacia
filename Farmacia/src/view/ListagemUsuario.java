@@ -93,26 +93,20 @@ public class ListagemUsuario extends JInternalFrame {
 		usuariosConsultados = usuarios;
 
 		// Limpa a tabela
-		table.setModel(new DefaultTableModel(
-				new String[][] { { "Código de Barras", "Dosagem", "Composição", "Genérico", "Nome", "Data Cad.",
-						"Preço venda", "Preço custo", "Lucro", "Estoque", "Forma Uso", "Laboratório" }, },
-				new String[] { "Código de Barras", "Dosagem", "Composição", "Genérico", "Nome", "Data Cad.",
-						"Preço venda", "Preço custo", "Lucro", "Estoque", "Forma Uso", "Laboratório" }));
+		table.setModel(new DefaultTableModel(new String[][] { { "Id Usuario", "Nome", "Data de cadastro", "Nivel" }, },
+				new String[] { "Id Usuario", "Nome", "Data de cadastro", "Nivel" }));
 
 		DefaultTableModel modelo = (DefaultTableModel) table.getModel();
 		DecimalFormat format = new DecimalFormat("0.00");
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-		/*
-		 * String[] novaLinha = new String[] { remedio.getCodBarra() + "",
-		 * remedio.getDosagem(), remedio.getComposicao(), generico, remedio.getNome(),
-		 * sdf.format(remedio.getDataCadastro()), "R$" +
-		 * format.format(remedio.getPrecoVenda()), "R$" +
-		 * format.format(remedio.getPrecoCusto()), "R$" +
-		 * format.format(remedio.getPrecoVenda() - remedio.getPrecoCusto()), "" +
-		 * remedio.getEstoque(), remedio.getFormaUso().getDescricao(),
-		 * remedio.getLaboratorio().getNomeLaboratorio() }; modelo.addRow(novaLinha); }
-		 */
+		for (Usuario usuario : usuariosConsultados) {
+			String[] novaLinha = new String[] { usuario.getId() + "", usuario.getNome(),
+					usuario.getDt_cadastro().toString(), usuario.getNivel().getDescricao() };
+			modelo.addRow(novaLinha);
+		}
+		;
+
 	}
 }

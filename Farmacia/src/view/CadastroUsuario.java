@@ -14,6 +14,7 @@ import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
@@ -25,8 +26,7 @@ import net.miginfocom.swing.MigLayout;
 public class CadastroUsuario extends JInternalFrame {
 	private JTextField txtNome;
 	private JTextField txtLogin;
-	private JTextField txtSenha;
-	private JTextField txtAtivo;
+	private JPasswordField txtSenha;
 	private JComboBox<Nivel> cmbNivel;
 	private ArrayList<Nivel> listaNiveis;
 
@@ -78,7 +78,7 @@ public class CadastroUsuario extends JInternalFrame {
 		JLabel lblNivel = new JLabel("Nível:");
 		getContentPane().add(lblNivel, "cell 2 4,alignx left");
 
-		txtSenha = new JTextField();
+		txtSenha = new JPasswordField();
 		getContentPane().add(txtSenha, "cell 0 5,growx");
 		txtSenha.setColumns(10);
 
@@ -89,13 +89,6 @@ public class CadastroUsuario extends JInternalFrame {
 		cmbNivel.setModel(new DefaultComboBoxModel(listaNiveis.toArray()));
 		cmbNivel.setSelectedIndex(-1);
 		getContentPane().add(cmbNivel, "cell 2 5,growx");
-
-		JLabel lblAtivo = new JLabel("Ativo:");
-		getContentPane().add(lblAtivo, "cell 0 7,alignx left");
-
-		txtAtivo = new JTextField();
-		getContentPane().add(txtAtivo, "cell 0 8,growx");
-		txtAtivo.setColumns(10);
 
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.setIcon(new ImageIcon(CadastroMedicamento.class.getResource("/icons/check.png")));
@@ -144,7 +137,6 @@ public class CadastroUsuario extends JInternalFrame {
 		txtNome.setText("");
 		txtLogin.setText("");
 		txtSenha.setText("");
-		txtAtivo.setText("");
 		cmbNivel.setSelectedIndex(-1);
 	}
 }
